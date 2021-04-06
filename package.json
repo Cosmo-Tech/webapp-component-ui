@@ -14,8 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cosmo-Tech/webapp-component-ui.git",
-    "directory": "packages/ui"
+    "url": "git+https://github.com/Cosmo-Tech/webapp-component-ui.git"
   },
   "author": "",
   "license": "MIT",
