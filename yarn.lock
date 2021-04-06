@@ -879,10 +879,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cosmotech/core@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.1.1.tgz#86d18d7cd5e679733db1ad0bb717f7b16d7e6878"
-  integrity sha512-BJ6bbq7BFcchblBNaGZg3D8jgkHNryvtfyRQ+sN6yQUfxhoKyKMDNyfL7A2ZuTgdu8ZniJ0s6W8VqKgUJsjy+w==
+"@cosmotech/core@1.1.1-beta.0":
+  version "1.1.1-beta.0"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.1.1-beta.0.tgz#e838d7104b0e1ba542a60e8f3e4502e6df53ffd6"
+  integrity sha512-WlbeyjE2wLoz6vy483V0tvK+nd2lvP8cs0/QyBihws554q23StgddKlJuSjauGPFeR9uT8W3hNFYkDbctrSzJw==
 
 "@emotion/hash@^0.8.0":
   version "0.8.0"
