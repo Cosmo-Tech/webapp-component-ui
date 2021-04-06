@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cosmo-Tech/webapp-react-components.git",
+    "url": "git+https://github.com/Cosmo-Tech/webapp-component-ui.git",
     "directory": "packages/ui"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Cosmo-Tech/webapp-react-components/issues"
+    "url": "https://github.com/Cosmo-Tech/webapp-component-ui/issues"
   },
-  "homepage": "https://github.com/Cosmo-Tech/webapp-react-components#readme",
+  "homepage": "https://github.com/Cosmo-Tech/webapp-component-ui#readme",
   "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.12.10",
