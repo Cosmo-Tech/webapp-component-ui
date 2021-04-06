@@ -1,3 +1,6 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
+
 export const useButtonBaseStyles = (theme) => ({
 	button: {
 		color: theme.typography.button.color,

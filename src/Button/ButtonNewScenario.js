@@ -1,3 +1,6 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
+
 import React from "react";
 import {withStyles} from "@material-ui/core/styles";
 import AddCircleOutlineOutlined from "@material-ui/icons/AddCircleOutlineOutlined";

@@ -1,3 +1,6 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
+
 const useStyles = theme => ({
   evolution: {
     fontWeight: 'bold',
