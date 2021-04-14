@@ -32,6 +32,9 @@ const useStyles = theme => ({
   },
   menuHead: {
     borderBottom: '1px solid #313030'
+  },
+  docLink: {
+    color: theme.palette.primary.contrastText
   }
 })
 
@@ -89,6 +92,16 @@ const UserInfo = (props) => {
         onClose={handleClick}
       >
         <MenuItem className={classes.menuHead} disabled>{name}</MenuItem>
+        {
+          props.documentationUrl
+            ? <MenuItem data-cy="downloadDocumentation">
+                <a href={props.documentationUrl}
+                  className={classes.docLink}
+                  target="_blank"
+                  rel="noreferrer">Download documentation</a>
+              </MenuItem>
+            : null
+        }
         <MenuItem data-cy="logout" onClick={() => {
           Auth.signOut()
         }}>Logout</MenuItem>
@@ -98,7 +111,8 @@ const UserInfo = (props) => {
 }
 
 UserInfo.propTypes = {
-  classes: PropTypes.any
+  classes: PropTypes.any,
+  documentationUrl: PropTypes.string
 }
 
 export default withStyles(useStyles)(UserInfo)
