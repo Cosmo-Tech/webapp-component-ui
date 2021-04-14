@@ -10,7 +10,7 @@ import profilePlaceholder from '../../assets/profile_placeholder.png'
 const useStyles = theme => ({
   menuTrigger: {
     backgroundRepeat: 'no-repeat',
-    width: '32px',
+    minWidth: '32px',
     height: '32px',
     backgroundSize: '32px',
     borderRadius: '50%',
@@ -19,19 +19,25 @@ const useStyles = theme => ({
     '&:hover': {
       cursor: 'pointer'
     },
-    '&.active': {
-      boxShadow: 'inset 0 0 0 1.5px orange'
-    }
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+    alignItems: 'stretch'
   },
   profilePic: {
     width: '32px',
     height: '32px'
   },
+  userName: {
+    textAlign: 'center',
+    lineHeight: '32px',
+    height: '32px',
+    marginLeft: '8px',
+    marginLeft: '8px'
+  },
   menu: {
     transform: 'translate3d(0,30px,0) !important'
-  },
-  menuHead: {
-    borderBottom: '1px solid #313030'
   },
   docLink: {
     color: theme.palette.primary.contrastText
@@ -82,6 +88,7 @@ const UserInfo = (props) => {
         className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}
       >
         <img className={classes.profilePic} src={picUrl}/>
+        <span className={classes.userName}>{name}</span>
       </Box>
       <Menu
         className={classes.menu}
@@ -91,7 +98,6 @@ const UserInfo = (props) => {
         open={isMenuOpened}
         onClose={handleClick}
       >
-        <MenuItem className={classes.menuHead} disabled>{name}</MenuItem>
         {
           props.documentationUrl
             ? <MenuItem data-cy="downloadDocumentation">
