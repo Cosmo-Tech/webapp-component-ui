@@ -16,3 +16,4 @@ export { default as HierarchicalComboBox } from './HierarchicalComboBox';
 export { default as CreateScenarioButton } from './CreateScenarioButton';
 export { default as PrivateRoute } from './PrivateRoute';
 export { default as PublicRoute } from './PublicRoute';
+export { default as UploadFile } from './UploadFile';
