@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Auth } from '@cosmotech/core'
 import { Box, Menu, MenuItem, withStyles } from '@material-ui/core'
@@ -35,96 +35,70 @@ const useStyles = theme => ({
   }
 })
 
-class UserInfo extends React.Component {
-  constructor (props) {
-    super(props)
-    this._isMounted = false
-    this.state = {
-      id: '',
-      name: '',
-      picUrl: profilePlaceholder,
-      isMenuOpened: false,
-      anchorEl: null
-    }
+const UserInfo = (props) => {
+  const [id, setId] = useState('') // eslint-disable-line no-unused-vars
+  const [name, setName] = useState('')
+  const [picUrl, setPicUrl] = useState(profilePlaceholder)
+  const [isMenuOpened, setIsMenuOpened] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
 
-    this.handleClick = this.handleClick.bind(this)
-  }
-
-  componentDidMount () {
-    this._isMounted = true
+  useEffect(() => {
     // Bind callback to update component on authentication data change
     Auth.onAuthStateChanged(authData => {
-      if (authData && this._isMounted) {
-        this.setState({
-          id: Auth.getUserId(),
-          name: Auth.getUserName(),
-          picUrl: Auth.getUserPicUrl()
-        })
+      if (authData) {
+        setId(Auth.getUserId())
+        setName(Auth.getUserName())
+        setPicUrl(Auth.getUserPicUrl())
       }
     })
     // Get user data if authenticated
-    const id = Auth.getUserId()
-    const name = Auth.getUserName()
-    const picUrl = Auth.getUserPicUrl()
-    const newState = {}
-    if (id !== undefined) {
-      newState.id = id
+    if (Auth.getUserId() !== undefined) {
+      setId(Auth.getUserId())
     }
-    if (name !== undefined) {
-      newState.name = name
+    if (Auth.getUserName() !== undefined) {
+      setName(Auth.getUserName())
     }
-    if (picUrl !== undefined) {
-      newState.picUrl = picUrl
+    if (Auth.getUserPicUrl() !== undefined) {
+      setPicUrl(Auth.getUserPicUrl())
     }
-    this.setState(newState)
+  })
+
+  const handleClick = (e) => {
+    setAnchorEl(e.target)
+    setIsMenuOpened(!isMenuOpened)
   }
 
-  componentWillUnmount () {
-    this._isMounted = false
-  }
-
-  handleClick (e) {
-    this.setState({ anchorEl: e.target })
-    this.setState({ isMenuOpened: !this.state.isMenuOpened })
-  }
-
-  render () {
-    const { classes } = this.props
-    return (
-      <React.Fragment>
-        <Box
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          data-cy="user-profile-menu"
-          onClick={this.handleClick}
-          className={`${classes.menuTrigger} ${this.state.isMenuOpened ? 'active' : ''}`}
-        >
-          <img className={classes.profilePic} src={this.state.picUrl}/>
-        </Box>
-        <Menu
-          className={classes.menu}
-          id="simple-menu"
-          keepMounted
-          anchorEl={this.state.anchorEl}
-          open={this.state.isMenuOpened}
-          onClose={this.handleClick}
-        >
-          <MenuItem className={classes.menuHead} disabled>{this.state.name}</MenuItem>
-          <MenuItem data-cy="logout" onClick={() => {
-            Auth.signOut()
-          }}>Logout</MenuItem>
-        </Menu>
-      </React.Fragment>
-    )
-  }
+  const { classes } = props
+  return (
+    <React.Fragment>
+      <Box
+        aria-controls="simple-menu"
+        aria-haspopup="true"
+        data-cy="user-profile-menu"
+        onClick={handleClick}
+        className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}
+      >
+        <img className={classes.profilePic} src={picUrl}/>
+      </Box>
+      <Menu
+        className={classes.menu}
+        id="simple-menu"
+        keepMounted
+        anchorEl={anchorEl}
+        open={isMenuOpened}
+        onClose={handleClick}
+      >
+        <MenuItem className={classes.menuHead} disabled>{name}</MenuItem>
+        <MenuItem data-cy="logout" onClick={() => {
+          Auth.signOut()
+        }}>Logout</MenuItem>
+      </Menu>
+    </React.Fragment>
+  )
 }
 
 UserInfo.propTypes = {
-  className: PropTypes.string,
-  classes: PropTypes.any,
-  'classes.menuTrigger': PropTypes.any,
-  'classes.menu': PropTypes.any,
-  'classes.menuHead': PropTypes.any
+  classes: PropTypes.any
 }
 
 export default withStyles(useStyles)(UserInfo)
