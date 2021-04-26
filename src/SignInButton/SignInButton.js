@@ -57,9 +57,9 @@ const SignInButton = (props) => {
             src={microsoftLogo}
           />
         </Grid>
-        <Grid item zeroMinWidth wrap="nowrap">
+        <Grid item zeroMinWidth>
           <Typography noWrap className={classes.signin}>
-           {t('genericcomponent.button.login.msal.title', 'Sign in with Microsoft')}
+            {t('genericcomponent.button.login.msal.title', 'Sign in with Microsoft')}
           </Typography>
         </Grid>
       </Grid>
