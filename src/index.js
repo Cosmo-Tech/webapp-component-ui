@@ -10,3 +10,4 @@ export { default as BasicNumberInput } from './BasicInputs/BasicNumberInput';
 export { default as BasicEnumTypes } from './BasicInputs/BasicEnumInput';
 export { default as BasicToggleInput } from './BasicInputs/BasicToggleInput';
 export { default as SimpleTwoActionsDialog } from './SimpleTwoActionsDialog';
+export { default as Dashboard } from './Dashboard';
