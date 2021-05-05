@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Auth } from '@cosmotech/core'
 import { Box, Menu, MenuItem, withStyles } from '@material-ui/core'
 import {
   ArrowRight as ArrowRightIcon,
@@ -57,35 +56,11 @@ const useStyles = theme => ({
 })
 
 const UserInfo = (props) => {
-  const [id, setId] = useState('') // eslint-disable-line no-unused-vars
-  const [name, setName] = useState('')
-  const [picUrl, setPicUrl] = useState(profilePlaceholder)
   const [isMenuOpened, setIsMenuOpened] = useState(false)
   const [isLangMenuOpened, setLangIsMenuOpened] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [langAnchorEl, setLangAnchorEl] = useState(null)
   const { t, i18n } = useTranslation()
-
-  useEffect(() => {
-    // Bind callback to update component on authentication data change
-    Auth.onAuthStateChanged(authData => {
-      if (authData) {
-        setId(Auth.getUserId())
-        setName(Auth.getUserName())
-        setPicUrl(Auth.getUserPicUrl())
-      }
-    })
-    // Get user data if authenticated
-    if (Auth.getUserId() !== undefined) {
-      setId(Auth.getUserId())
-    }
-    if (Auth.getUserName() !== undefined) {
-      setName(Auth.getUserName())
-    }
-    if (Auth.getUserPicUrl() !== undefined) {
-      setPicUrl(Auth.getUserPicUrl())
-    }
-  })
 
   const handleClick = (e) => {
     setAnchorEl(e.target)
@@ -117,8 +92,8 @@ const UserInfo = (props) => {
         onClick={handleClick}
         className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}
       >
-        <img className={classes.profilePic} src={picUrl}/>
-        <span className={classes.userName}>{name}</span>
+        <img className={classes.profilePic} src={profilePictureUrl}/>
+        <span className={classes.userName}>{props.userName}</span>
       </Box>
       <Menu
         className={classes.menu}
@@ -151,9 +126,9 @@ const UserInfo = (props) => {
               </MenuItem>
             : null
         }
-        <MenuItem data-cy="logout" onClick={() => {
-          Auth.signOut()
-        }}>{t('genericcomponent.userinfo.button.logout', 'Log out')}</MenuItem>
+        <MenuItem data-cy="logout" onClick={props.onLogout} >
+          { t('genericcomponent.userinfo.button.logout', 'Log out') }
+        </MenuItem>
       </Menu>
       {
         props.languages
@@ -197,7 +172,10 @@ const UserInfo = (props) => {
 UserInfo.propTypes = {
   classes: PropTypes.any,
   documentationUrl: PropTypes.string,
-  languages: PropTypes.objectOf(PropTypes.string)
+  languages: PropTypes.objectOf(PropTypes.string),
+  profilePictureUrl: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired
 }
 
 export default withStyles(useStyles)(UserInfo)
