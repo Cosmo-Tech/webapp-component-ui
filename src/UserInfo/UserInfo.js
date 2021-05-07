@@ -1,16 +1,20 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Auth } from '@cosmotech/core'
 import { Box, Menu, MenuItem, withStyles } from '@material-ui/core'
+import {
+  ArrowRight as ArrowRightIcon,
+  Check as CheckIcon
+} from '@material-ui/icons'
 import profilePlaceholder from '../../assets/profile_placeholder.png'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = theme => ({
   menuTrigger: {
     backgroundRepeat: 'no-repeat',
-    width: '32px',
+    minWidth: '32px',
     height: '32px',
     backgroundSize: '32px',
     borderRadius: '50%',
@@ -19,112 +23,155 @@ const useStyles = theme => ({
     '&:hover': {
       cursor: 'pointer'
     },
-    '&.active': {
-      boxShadow: 'inset 0 0 0 1.5px orange'
-    }
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+    alignItems: 'stretch'
   },
   profilePic: {
     width: '32px',
     height: '32px'
   },
+  userName: {
+    textAlign: 'center',
+    lineHeight: '32px',
+    height: '32px',
+    marginLeft: '8px'
+  },
   menu: {
     transform: 'translate3d(0,30px,0) !important'
   },
-  menuHead: {
-    borderBottom: '1px solid #313030'
+  menuContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  menuIcon: {
+    marginLeft: '20px'
+  },
+  docLink: {
+    color: theme.palette.primary.contrastText
   }
 })
 
-class UserInfo extends React.Component {
-  constructor (props) {
-    super(props)
-    this._isMounted = false
-    this.state = {
-      id: '',
-      name: '',
-      picUrl: profilePlaceholder,
-      isMenuOpened: false,
-      anchorEl: null
-    }
+const UserInfo = (props) => {
+  const [isMenuOpened, setIsMenuOpened] = useState(false)
+  const [isLangMenuOpened, setLangIsMenuOpened] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [langAnchorEl, setLangAnchorEl] = useState(null)
+  const { t, i18n } = useTranslation()
 
-    this.handleClick = this.handleClick.bind(this)
+  const handleClick = (e) => {
+    setAnchorEl(e.target)
+    setIsMenuOpened(!isMenuOpened)
   }
 
-  componentDidMount () {
-    this._isMounted = true
-    // Bind callback to update component on authentication data change
-    Auth.onAuthStateChanged(authData => {
-      if (authData && this._isMounted) {
-        this.setState({
-          id: Auth.getUserId(),
-          name: Auth.getUserName(),
-          picUrl: Auth.getUserPicUrl()
-        })
+  const handleLanguageMenuClick = (e) => {
+    setLangAnchorEl(e.target)
+    setLangIsMenuOpened(!isLangMenuOpened)
+  }
+
+  const setLanguage = (lang) => {
+    setIsMenuOpened(false)
+    setLangIsMenuOpened(false)
+    i18n.changeLanguage(lang)
+  }
+
+  const { classes, userName, profilePictureUrl, languages, documentationUrl, onLogout } = props
+
+  const userProfilePictureUrl = profilePictureUrl
+    ? profilePictureUrl
+    : profilePlaceholder
+
+  return (
+    <React.Fragment>
+      <Box
+        data-cy="user-profile-menu"
+        aria-controls="user-profile-button"
+        aria-haspopup="true"
+        onClick={handleClick}
+        className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}>
+        <img className={classes.profilePic} src={userProfilePictureUrl}/>
+        <span className={classes.userName}>{userName}</span>
+      </Box>
+      <Menu
+        className={classes.menu}
+        data-cy="main-menu"
+        keepMounted
+        anchorEl={anchorEl}
+        open={isMenuOpened}
+        onClose={handleClick}>
+        {
+          languages
+              &&
+              (<MenuItem data-cy="change-language"
+                onClick={handleLanguageMenuClick}
+                className={classes.menuContainer}>
+                { t('genericcomponent.userinfo.button.changeLanguage', 'Change language') }
+                <ArrowRightIcon className={classes.menuIcon}/>
+              </MenuItem>)
+        }
+        {
+          documentationUrl
+              &&
+             (<MenuItem data-cy="download-documentation">
+                <a href={documentationUrl}
+                  className={classes.docLink}
+                  target="_blank"
+                  rel="noreferrer">
+                    {t('genericcomponent.userinfo.button.downloadDocumentation', 'Download documentation')}
+                </a>
+              </MenuItem>)
+        }
+        <MenuItem data-cy="logout" onClick={onLogout} >
+          { t('genericcomponent.userinfo.button.logout', 'Log out') }
+        </MenuItem>
+      </Menu>
+      {
+        languages
+          &&
+          (<Menu
+              className={classes.menu}
+              id="simple-menu"
+              keepMounted
+              anchorEl={langAnchorEl}
+              getContentAnchorEl={null}
+              anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+              transformOrigin={{ vertical: 'center', horizontal: 'right' }}
+              open={isLangMenuOpened}
+              onClose={handleLanguageMenuClick}>
+              {
+                // Language menu items
+                Object.entries(languages).map(
+                  ([langKey, langLabel]) =>
+                  <MenuItem
+                    data-cy={ 'set-lang-' + langKey }
+                    key={langKey}
+                    onClick={ () => setLanguage(langKey) }
+                    className={classes.menuContainer}>
+                    {langLabel}
+                    {
+                      // Add a check mark for the currently selected language
+                      langKey === i18n.language
+                        &&
+                      (<CheckIcon className={classes.menuIcon}/>)
+                    }
+                  </MenuItem>)
+              }
+          </Menu>)
       }
-    })
-    // Get user data if authenticated
-    const id = Auth.getUserId()
-    const name = Auth.getUserName()
-    const picUrl = Auth.getUserPicUrl()
-    const newState = {}
-    if (id !== undefined) {
-      newState.id = id
-    }
-    if (name !== undefined) {
-      newState.name = name
-    }
-    if (picUrl !== undefined) {
-      newState.picUrl = picUrl
-    }
-    this.setState(newState)
-  }
-
-  componentWillUnmount () {
-    this._isMounted = false
-  }
-
-  handleClick (e) {
-    this.setState({ anchorEl: e.target })
-    this.setState({ isMenuOpened: !this.state.isMenuOpened })
-  }
-
-  render () {
-    const { classes } = this.props
-    return (
-      <React.Fragment>
-        <Box
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          data-cy="user-profile-menu"
-          onClick={this.handleClick}
-          className={`${classes.menuTrigger} ${this.state.isMenuOpened ? 'active' : ''}`}
-        >
-          <img className={classes.profilePic} src={this.state.picUrl}/>
-        </Box>
-        <Menu
-          className={classes.menu}
-          id="simple-menu"
-          keepMounted
-          anchorEl={this.state.anchorEl}
-          open={this.state.isMenuOpened}
-          onClose={this.handleClick}
-        >
-          <MenuItem className={classes.menuHead} disabled>{this.state.name}</MenuItem>
-          <MenuItem data-cy="logout" onClick={() => {
-            Auth.signOut()
-          }}>Logout</MenuItem>
-        </Menu>
-      </React.Fragment>
-    )
-  }
+    </React.Fragment>
+  )
 }
 
 UserInfo.propTypes = {
-  className: PropTypes.string,
   classes: PropTypes.any,
-  'classes.menuTrigger': PropTypes.any,
-  'classes.menu': PropTypes.any,
-  'classes.menuHead': PropTypes.any
+  documentationUrl: PropTypes.string,
+  languages: PropTypes.objectOf(PropTypes.string),
+  profilePictureUrl: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired
 }
 
 export default withStyles(useStyles)(UserInfo)
