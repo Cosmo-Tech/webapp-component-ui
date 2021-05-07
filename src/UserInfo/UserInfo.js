@@ -108,7 +108,7 @@ const UserInfo = (props) => {
               (<MenuItem data-cy="change-language"
                 onClick={handleLanguageMenuClick}
                 className={classes.menuContainer}>
-                { t('genericcomponent.userinfo.button.changeLanguage', 'Change language') }
+                { t('genericcomponent.userinfo.button.change.language', 'Change language') }
                 <ArrowRightIcon className={classes.menuIcon}/>
               </MenuItem>)
         }
@@ -120,7 +120,7 @@ const UserInfo = (props) => {
                   className={classes.docLink}
                   target="_blank"
                   rel="noreferrer">
-                    {t('genericcomponent.userinfo.button.downloadDocumentation', 'Download documentation')}
+                    {t('genericcomponent.userinfo.button.download.documentation', 'Download documentation')}
                 </a>
               </MenuItem>)
         }
