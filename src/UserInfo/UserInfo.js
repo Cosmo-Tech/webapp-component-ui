@@ -78,9 +78,10 @@ const UserInfo = (props) => {
     i18n.changeLanguage(lang)
   }
 
-  const { classes } = props
-  const profilePictureUrl = props.profilePictureUrl
-    ? props.profilePictureUrl
+  const { classes, userName, profilePictureUrl, languages, documentationUrl, onLogout } = props
+
+  const userProfilePictureUrl = profilePictureUrl
+    ? profilePictureUrl
     : profilePlaceholder
 
   return (
@@ -90,10 +91,9 @@ const UserInfo = (props) => {
         aria-controls="user-profile-button"
         aria-haspopup="true"
         onClick={handleClick}
-        className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}
-      >
-        <img className={classes.profilePic} src={profilePictureUrl}/>
-        <span className={classes.userName}>{props.userName}</span>
+        className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}>
+        <img className={classes.profilePic} src={userProfilePictureUrl}/>
+        <span className={classes.userName}>{userName}</span>
       </Box>
       <Menu
         className={classes.menu}
@@ -101,38 +101,37 @@ const UserInfo = (props) => {
         keepMounted
         anchorEl={anchorEl}
         open={isMenuOpened}
-        onClose={handleClick}
-      >
+        onClose={handleClick}>
         {
-          props.languages
-            ? <MenuItem data-cy="change-language"
+          languages
+              &&
+              (<MenuItem data-cy="change-language"
                 onClick={handleLanguageMenuClick}
-                className={classes.menuContainer}
-              >
+                className={classes.menuContainer}>
                 { t('genericcomponent.userinfo.button.changeLanguage', 'Change language') }
                 <ArrowRightIcon className={classes.menuIcon}/>
-              </MenuItem>
-            : null
+              </MenuItem>)
         }
         {
-          props.documentationUrl
-            ? <MenuItem data-cy="download-documentation">
-                <a href={props.documentationUrl}
+          documentationUrl
+              &&
+             (<MenuItem data-cy="download-documentation">
+                <a href={documentationUrl}
                   className={classes.docLink}
                   target="_blank"
                   rel="noreferrer">
                     {t('genericcomponent.userinfo.button.downloadDocumentation', 'Download documentation')}
                 </a>
-              </MenuItem>
-            : null
+              </MenuItem>)
         }
-        <MenuItem data-cy="logout" onClick={props.onLogout} >
+        <MenuItem data-cy="logout" onClick={onLogout} >
           { t('genericcomponent.userinfo.button.logout', 'Log out') }
         </MenuItem>
       </Menu>
       {
-        props.languages
-          ? <Menu
+        languages
+          &&
+          (<Menu
               className={classes.menu}
               id="simple-menu"
               keepMounted
@@ -141,29 +140,26 @@ const UserInfo = (props) => {
               anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
               transformOrigin={{ vertical: 'center', horizontal: 'right' }}
               open={isLangMenuOpened}
-              onClose={handleLanguageMenuClick}
-            >
+              onClose={handleLanguageMenuClick}>
               {
                 // Language menu items
-                Object.entries(props.languages).map(
+                Object.entries(languages).map(
                   ([langKey, langLabel]) =>
                   <MenuItem
                     data-cy={ 'set-lang-' + langKey }
                     key={langKey}
                     onClick={ () => setLanguage(langKey) }
-                    className={classes.menuContainer}
-                  >
+                    className={classes.menuContainer}>
                     {langLabel}
                     {
                       // Add a check mark for the currently selected language
                       langKey === i18n.language
-                        ? <CheckIcon className={classes.menuIcon}/>
-                        : null
+                        &&
+                      (<CheckIcon className={classes.menuIcon}/>)
                     }
                   </MenuItem>)
               }
-            </Menu>
-          : null
+          </Menu>)
       }
     </React.Fragment>
   )
