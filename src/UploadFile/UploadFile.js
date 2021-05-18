@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +20,13 @@ import Tooltip from '@material-ui/core/Tooltip'
 const useStyles = theme => ({
 })
 
-const UploadFile = () => {
+const UploadFile = (props) => {
+
+  // Props
+  const {
+    acceptedFiles
+  } = props;
+
   // Translation
   const { t } = useTranslation()
 
@@ -46,7 +53,7 @@ const UploadFile = () => {
       <Grid item>
         <Button variant="contained" component="label" onChange={uploadFile}>
           {t('genericcomponent.uploadfile.button.browse', 'Browse')}
-          <input type="file" accept="text/csv" hidden />
+          <input type="file" accept={acceptedFiles} hidden />
         </Button>
       </Grid>
       <Grid item>
@@ -80,5 +87,14 @@ const UploadFile = () => {
     </Grid>
   )
 }
+
+UploadFile.propTypes = {
+  classes: PropTypes.any,
+  acceptedFiles : PropTypes.string
+};
+
+UploadFile.defaultProps = {
+  acceptedFiles : '*'
+};
 
 export default withStyles(useStyles)(UploadFile)
