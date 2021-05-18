@@ -12,7 +12,17 @@ const useStyles = theme => ({
 });
 
 const BasicEnumInput = (props) => {
-  const { classes, label, containerProps, labelProps, textFieldProps, enumValues, changeEnumField } = props;
+  const { classes, label, textFieldProps, enumValues, changeEnumField } = props;
+  let { containerProps, labelProps } = props;
+  containerProps = containerProps || {
+    direction: 'row',
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    spacing: 2
+  };
+  labelProps = labelProps || {
+    variant: 'subtitle2'
+  };
 
   // REQUIREMENT: the keyValueMap cannot have duplicate values to work
   const getKeyFromValue = (value, keyValueMap) => {
@@ -51,11 +61,11 @@ const BasicEnumInput = (props) => {
 BasicEnumInput.propTypes = {
   classes: PropTypes.any,
   label: PropTypes.string.isRequired,
-  containerProps: PropTypes.object.isRequired,
-  labelProps: PropTypes.object.isRequired,
   textFieldProps: PropTypes.object.isRequired,
   changeEnumField: PropTypes.func.isRequired,
-  enumValues: PropTypes.array.isRequired
+  enumValues: PropTypes.array.isRequired,
+  containerProps: PropTypes.object,
+  labelProps: PropTypes.object
 };
 
 export default withStyles(useStyles)(BasicEnumInput);

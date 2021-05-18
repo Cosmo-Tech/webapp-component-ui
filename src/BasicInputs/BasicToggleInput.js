@@ -12,7 +12,17 @@ const useStyles = theme => ({
 });
 
 const BasicToggleInput = (props) => {
-  const { classes, label, containerProps, switchProps, labelProps, changeSwitchType } = props;
+  const { classes, label, switchProps, changeSwitchType } = props;
+  let { containerProps, labelProps } = props;
+  containerProps = containerProps || {
+    direction: 'row',
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    spacing: 2
+  };
+  labelProps = labelProps || {
+    variant: 'subtitle2'
+  };
 
   return (
 
@@ -34,10 +44,10 @@ const BasicToggleInput = (props) => {
 BasicToggleInput.propTypes = {
   classes: PropTypes.any,
   label: PropTypes.string.isRequired,
-  containerProps: PropTypes.object.isRequired,
-  labelProps: PropTypes.object.isRequired,
   changeSwitchType: PropTypes.func.isRequired,
-  switchProps: PropTypes.object.isRequired
+  switchProps: PropTypes.object.isRequired,
+  containerProps: PropTypes.object,
+  labelProps: PropTypes.object,
 };
 
 export default withStyles(useStyles)(BasicToggleInput);
