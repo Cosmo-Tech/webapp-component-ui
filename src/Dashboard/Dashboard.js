@@ -30,9 +30,9 @@ const Dashboard = (props) => {
 
   const classes = useStyles();
 
-  const { iframeTitle, url, scenarioName, ...otherProps } = props;
+  const { iframeTitle, url, scenarioName, scenarioId, ...otherProps } = props;
 
-  const formattedUrl = url.replaceAll('<ScenarioName>', scenarioName);
+  const formattedUrl = url.replaceAll('<ScenarioName>', scenarioName).replaceAll('<ScenarioId>', scenarioId);
 
   return (
     <>
@@ -65,7 +65,8 @@ const Dashboard = (props) => {
 Dashboard.propTypes = {
   iframeTitle: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  scenarioName: PropTypes.string.isRequired
+  scenarioName: PropTypes.string,
+  scenarioId: PropTypes.string
 };
 
 export default withStyles(useStyles)(Dashboard);
