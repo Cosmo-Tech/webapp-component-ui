@@ -5,38 +5,57 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
-import { useTranslation } from 'react-i18next';
-import {
-  Typography,
-  Grid
-} from '@material-ui/core';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import DashboardPlaceholder from './components';
 
 const useStyles = makeStyles(theme => ({
-  gridContainer: {
-    height: '100%'
-  },
   iframe: {
     display: 'block',
     height: '100%',
     width: '100%'
-  },
-  label: {
-    size: 14
   }
 }));
 
 const Dashboard = (props) => {
-  const { t } = useTranslation();
-
   const classes = useStyles();
-
-  const { iframeTitle, url, scenarioName, scenarioId, ...otherProps } = props;
-
+  const {
+    iframeTitle,
+    url,
+    scenarioName,
+    scenarioId,
+    scenarioState,
+    ...otherProps
+  } = props;
   const formattedUrl = url.replaceAll('<ScenarioName>', scenarioName).replaceAll('<ScenarioId>', scenarioId);
+
+  // Handle optional status property
+  const noRun = scenarioState === 'Created';
+  const runInProgress = scenarioState === 'Running';
+  const hasError = scenarioState === 'Failed';
+  const isReady = scenarioState === undefined || scenarioState === 'Successful';
 
   return (
     <>
-      { formattedUrl !== '' &&
+      {
+        noRun && <DashboardPlaceholder
+          labelKey='commoncomponents.iframe.scenario.results.text.uninitialized'
+          defaultLabel='The scenario has not been run yet'
+        />
+      }
+      {
+        runInProgress && <DashboardPlaceholder
+          labelKey='commoncomponents.iframe.scenario.results.text.running'
+          defaultLabel='Scenario run in progress...'
+          icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
+        />
+      }
+      {
+        hasError && <DashboardPlaceholder
+          labelKey='commoncomponents.iframe.scenario.results.text.error'
+          defaultLabel='An error occured during the scenario run'
+        />
+      }
+      { isReady && formattedUrl !== '' &&
         <iframe
           className={classes.iframe}
           title={iframeTitle}
@@ -45,18 +64,10 @@ const Dashboard = (props) => {
           src={formattedUrl} {...otherProps}
         />
       }
-      { formattedUrl === '' &&
-        <Grid container justify="center" alignItems="center" className={classes.gridContainer}>
-          <Grid item>
-            <Typography
-              component="h2"
-              color="textSecondary"
-              className={classes.label}
-            >
-              {t('commoncomponents.iframe.scenario.results.text.no.result', 'No dashboards for this scenario.')}
-            </Typography>
-          </Grid>
-        </Grid>
+      { isReady && formattedUrl === '' && <DashboardPlaceholder
+        labelKey='commoncomponents.iframe.scenario.results.text.no.result'
+        defaultLabel='No dashboards for this scenario.'
+      />
       }
     </>
   );
@@ -66,7 +77,8 @@ Dashboard.propTypes = {
   iframeTitle: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   scenarioName: PropTypes.string,
-  scenarioId: PropTypes.string
+  scenarioId: PropTypes.string,
+  scenarioState: PropTypes.string
 };
 
 export default withStyles(useStyles)(Dashboard);
