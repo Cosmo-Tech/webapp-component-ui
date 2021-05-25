@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import fileDownload from 'js-file-download'
 
 const useStyles = theme => ({
 });
@@ -24,87 +25,146 @@ const UploadFile = (props) => {
   // Props
   const {
     classes,
-    acceptedFiles,
-    propFileName
+    acceptedFileTypes,
+    uploadFile,
+    deleteFile,
+    downloadFile
   } = props;
+
+  // Available status
+  const UPLOAD_FILE_STATUS_KEY = {
+  DOWNLOADING: 'DOWNLOADING',
+  UPLOADING: 'UPLOADING',
+  DELETING: 'DELETING',
+  IDLE: 'IDLE'
+};
 
   // Translation
   const { t } = useTranslation();
 
   // States
-  const [fileName, setFileName] = useState(propFileName);
-  const [fileStatus, setFileStatus] = useState('IDLE');
+  const [fileToDownload, setFileToDownload] = useState({ name: '' } );
+  const [fileCache, setFileCache] = useState(null);
+  const [fileStatus, setFileStatus] = useState(UPLOAD_FILE_STATUS_KEY.IDLE);
   const [isFileValid, setFileValid] = useState(true);
+  const [isUploadButtonDisabled, setUploadButtonDisabled] = useState(false);
 
   // Methods
-  const uploadFile = (event) => {
-    const file = event.target.files[0]
-    setFileName(file.name)
+  const handleUploadFile = (event) => {
+    const file = event.target.files[0];
+    if (file === undefined)
+    {
+      return;
+    }
+    const uploadPromise = new Promise((resolve) => {
+      setFileStatus(UPLOAD_FILE_STATUS_KEY.UPLOADING);
+      setUploadButtonDisabled(true);
+      uploadFile(file);
+      resolve('File ' + file.name + ' succefully uploaded');
+    });
+    uploadPromise.then(result => {
+      setFileCache(file);
+      setFileToDownload(file);
+      setFileStatus(UPLOAD_FILE_STATUS_KEY.IDLE);
+      setUploadButtonDisabled(false);
+    });
   };
 
-  const deleteFile = () => {
-    setFileName(null);
+  const handleDeleteFile = () => {
+    const deletePromise = new Promise((resolve) => {
+      setFileStatus(UPLOAD_FILE_STATUS_KEY.DELETING);
+      setUploadButtonDisabled(true);
+      deleteFile(fileCache.name);
+      resolve('File ' + fileCache.name + ' succefully deleted');
+    });
+    deletePromise.then(result => {
+      setFileToDownload({ name: ''})
+      setFileCache(null);
+      setFileStatus(UPLOAD_FILE_STATUS_KEY.IDLE);
+      setUploadButtonDisabled(false);
+    });
   };
 
-  const downloadFile = () => {
-
+  const handleDownloadFile = () => {
+    const downloadPromise = new Promise((resolve) => {
+      setFileStatus(UPLOAD_FILE_STATUS_KEY.DOWNLOADING);
+      setUploadButtonDisabled(true);
+      downloadFile(fileToDownload.name)
+      // setFileCache(downloadFile(fileName));
+      resolve('File ' + fileToDownload.name + ' succefully downloaded');
+    });
+    downloadPromise.then(result =>  {
+      setFileStatus(UPLOAD_FILE_STATUS_KEY.IDLE);
+      setUploadButtonDisabled(false);
+      fileDownload(fileCache, fileCache.name);
+    });
   };
 
   // Render
   return (
-    <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
-      <Grid item>
-        <Button variant="contained" component="label" onChange={uploadFile}>
-          {t('genericcomponent.uploadfile.button.browse', 'Browse')}
-          <input type="file" accept={acceptedFiles} hidden />
-        </Button>
-      </Grid>
-      <Grid item>
-      { fileName &&
-        <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
-          <Grid item>
-            <GetAppIcon style={{ color: '#FFFFFF', fontSize: 20 }} />
-          </Grid>
-          <Grid item>
-            <Typography>
-              <Link href="#" onClick={downloadFile}>
-                {fileName}
-              </Link>
-            </Typography>
-          </Grid>
-          <Grid item>
-            <IconButton aria-label="delete" onClick={deleteFile}>
-              <DeleteForeverIcon />
-            </IconButton>
-          </Grid>
-          { fileStatus != 'IDLE' &&
-            <Grid item>
-              <CircularProgress color="secondary" />
+    <div className={classes.root}>
+      <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
+        <Grid item>
+          <Button disabled={isUploadButtonDisabled} variant="contained" component="label" onChange={handleUploadFile}>
+            {fileToDownload.name
+              ? t('genericcomponent.uploadfile.button.update')
+              : t('genericcomponent.uploadfile.button.browse')
+            }
+            <input type="file" accept={acceptedFileTypes} hidden />
+          </Button>
+        </Grid>
+        <Grid item>
+          { fileToDownload.name && fileStatus === UPLOAD_FILE_STATUS_KEY.IDLE &&
+            <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
+              <Grid item>
+                <Link component="button" onClick={handleDownloadFile} download>
+                  <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
+                    <Grid item>
+                      <GetAppIcon/>
+                    </Grid>
+                    <Grid item>
+                      <Typography>
+                        {fileCache.name}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Link>
+              </Grid>
+              <Grid item>
+                <IconButton aria-label="delete" onClick={handleDeleteFile}>
+                  <DeleteForeverIcon />
+                </IconButton>
+              </Grid>
             </Grid>
           }
-          { !isFileValid &&
-          <Grid item>
-            <Tooltip title="Error: column name must be a string." placement="right-end">
-              <ErrorIcon color="error" />
-            </Tooltip>
-          </Grid>
+        </Grid>
+        <Grid item>
+          { fileStatus !== UPLOAD_FILE_STATUS_KEY.IDLE &&
+            <CircularProgress color="secondary" />
           }
         </Grid>
-      }
+          { !isFileValid &&
+            <Grid item>
+              <Tooltip title="Error: column name must be a string." placement="right-end">
+                <ErrorIcon color="error" />
+              </Tooltip>
+            </Grid>
+          }
       </Grid>
-    </Grid>
+    </div>
   );
 };
 
 UploadFile.propTypes = {
   classes: PropTypes.any,
-  acceptedFiles: PropTypes.string,
-  propFileName: PropTypes.string
+  acceptedFileTypes: PropTypes.string,
+  uploadFile: PropTypes.func.isRequired,
+  deleteFile: PropTypes.func.isRequired,
+  downloadFile: PropTypes.func.isRequired
 };
 
 UploadFile.defaultProps = {
-  acceptedFiles: '*',
-  propFileName: null
+  acceptedFileTypes: '*'
 };
 
 export default withStyles(useStyles)(UploadFile);
