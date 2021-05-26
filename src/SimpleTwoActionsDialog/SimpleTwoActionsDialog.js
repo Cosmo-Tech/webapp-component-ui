@@ -29,9 +29,7 @@ const SimpleTwoActionsDialog = ({
                 fullWidth={true}
                 disableBackdropClick>
             <DialogTitle id="discard-changes-dialog-title">
-                <Typography variant='h3' >
-                    {t(dialogTitleKey, 'Dialog title')}
-                </Typography>
+              {t(dialogTitleKey, 'Dialog title')}
             </DialogTitle>
             <DialogContent>
                 <Typography variant='body1'>{t(dialogBodyKey, 'Dialog Body')}</Typography>
