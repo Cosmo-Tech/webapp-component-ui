@@ -8,7 +8,7 @@ import NumberFormat from 'react-number-format';
 function NumberFormatCustom(props) {
   const { inputRef, onChange, max, min, ...other } = props;
 
-  const withValueLimit = (inputObj) => {
+  const valuesRange = (inputObj) => {
     const { value } = inputObj;
     if (min <= value && value <= max) return inputObj;
   };
@@ -17,12 +17,11 @@ function NumberFormatCustom(props) {
     <NumberFormat
       {...other}
       getInputRef={inputRef}
-      isAllowed={withValueLimit}
+      isAllowed={valuesRange}
       onValueChange={(values) => {
         onChange({
           target: {
-            name: props.name,
-            value: values.value,
+            value: values.value
           },
         });
       }}
@@ -33,7 +32,6 @@ function NumberFormatCustom(props) {
 
 NumberFormatCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
 };
 
