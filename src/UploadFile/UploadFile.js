@@ -145,7 +145,7 @@ const UploadFile = (props) => {
         </Grid>
           { !isFileValid &&
             <Grid item>
-              <Tooltip title="Error: column name must be a string." placement="right-end">
+              <Tooltip title="genericcomponent.uploadfile.tooltip.isvalidfile" placement="right-end">
                 <ErrorIcon color="error" />
               </Tooltip>
             </Grid>
