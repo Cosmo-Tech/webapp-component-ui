@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import fileDownload from 'js-file-download'
+import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants'
 
 const useStyles = theme => ({
 });
@@ -26,87 +26,27 @@ const UploadFile = (props) => {
   const {
     classes,
     acceptedFileTypes,
-    uploadFile,
-    deleteFile,
-    downloadFile
+    handleUploadFile,
+    handleDeleteFile,
+    handleDownloadFile,
+    fileName,
+    fileCache,
+    fileStatus,
+    editMode
   } = props;
-
-  // Available status
-  const UPLOAD_FILE_STATUS_KEY = {
-  DOWNLOADING: 'DOWNLOADING',
-  UPLOADING: 'UPLOADING',
-  DELETING: 'DELETING',
-  IDLE: 'IDLE'
-};
 
   // Translation
   const { t } = useTranslation();
-
   // States
-  const [fileToDownload, setFileToDownload] = useState({ name: '' } );
-  const [fileCache, setFileCache] = useState(null);
-  const [fileStatus, setFileStatus] = useState(UPLOAD_FILE_STATUS_KEY.IDLE);
   const [isFileValid, setFileValid] = useState(true);
-  const [isUploadButtonDisabled, setUploadButtonDisabled] = useState(false);
-
-  // Methods
-  const handleUploadFile = (event) => {
-    const file = event.target.files[0];
-    if (file === undefined)
-    {
-      return;
-    }
-    const uploadPromise = new Promise((resolve) => {
-      setFileStatus(UPLOAD_FILE_STATUS_KEY.UPLOADING);
-      setUploadButtonDisabled(true);
-      uploadFile(file);
-      resolve('File ' + file.name + ' succefully uploaded');
-    });
-    uploadPromise.then(result => {
-      setFileCache(file);
-      setFileToDownload(file);
-      setFileStatus(UPLOAD_FILE_STATUS_KEY.IDLE);
-      setUploadButtonDisabled(false);
-    });
-  };
-
-  const handleDeleteFile = () => {
-    const deletePromise = new Promise((resolve) => {
-      setFileStatus(UPLOAD_FILE_STATUS_KEY.DELETING);
-      setUploadButtonDisabled(true);
-      deleteFile(fileCache.name);
-      resolve('File ' + fileCache.name + ' succefully deleted');
-    });
-    deletePromise.then(result => {
-      setFileToDownload({ name: ''})
-      setFileCache(null);
-      setFileStatus(UPLOAD_FILE_STATUS_KEY.IDLE);
-      setUploadButtonDisabled(false);
-    });
-  };
-
-  const handleDownloadFile = () => {
-    const downloadPromise = new Promise((resolve) => {
-      setFileStatus(UPLOAD_FILE_STATUS_KEY.DOWNLOADING);
-      setUploadButtonDisabled(true);
-      downloadFile(fileToDownload.name)
-      // setFileCache(downloadFile(fileName));
-      resolve('File ' + fileToDownload.name + ' succefully downloaded');
-    });
-    downloadPromise.then(result =>  {
-      setFileStatus(UPLOAD_FILE_STATUS_KEY.IDLE);
-      setUploadButtonDisabled(false);
-      fileDownload(fileCache, fileCache.name);
-    });
-  };
 
   // Render
   return (
     <div className={classes.root}>
       <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
         <Grid item>
-          <Button disabled={isUploadButtonDisabled} variant="contained" component="label" onChange={handleUploadFile}>
-            {fileToDownload.name
+          <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
+            {fileName
               ? t('genericcomponent.uploadfile.button.update')
               : t('genericcomponent.uploadfile.button.browse')
             }
@@ -114,24 +54,32 @@ const UploadFile = (props) => {
           </Button>
         </Grid>
         <Grid item>
-          { fileToDownload.name && fileStatus === UPLOAD_FILE_STATUS_KEY.IDLE &&
+          { (fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD
+            || fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
             <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
               <Grid item>
-                <Link component="button" onClick={handleDownloadFile} download>
-                  <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
-                    <Grid item>
-                      <GetAppIcon/>
+                { fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
+                  <Link component="button" onClick={handleDownloadFile} download>
+                    <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
+                      <Grid item>
+                        <GetAppIcon/>
+                      </Grid>
+                      <Grid item>
+                        <Typography>
+                          {fileName}
+                        </Typography>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <Typography>
-                        {fileCache.name}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Link>
+                  </Link>
+                }
+                { fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD &&
+                  <Typography>
+                    {fileCache.name}
+                  </Typography>
+                }
               </Grid>
               <Grid item>
-                <IconButton aria-label="delete" onClick={handleDeleteFile}>
+                <IconButton disabled={!editMode} aria-label="delete" onClick={handleDeleteFile}>
                   <DeleteForeverIcon />
                 </IconButton>
               </Grid>
@@ -139,7 +87,9 @@ const UploadFile = (props) => {
           }
         </Grid>
         <Grid item>
-          { fileStatus !== UPLOAD_FILE_STATUS_KEY.IDLE &&
+          { fileStatus === UPLOAD_FILE_STATUS_KEY.UPLOADING
+            || fileStatus === UPLOAD_FILE_STATUS_KEY.DOWNLOADING
+            || fileStatus === UPLOAD_FILE_STATUS_KEY.DELETING &&
             <CircularProgress color="secondary" />
           }
         </Grid>
@@ -158,9 +108,13 @@ const UploadFile = (props) => {
 UploadFile.propTypes = {
   classes: PropTypes.any,
   acceptedFileTypes: PropTypes.string,
-  uploadFile: PropTypes.func.isRequired,
-  deleteFile: PropTypes.func.isRequired,
-  downloadFile: PropTypes.func.isRequired
+  handleUploadFile: PropTypes.func.isRequired,
+  handleDeleteFile: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func.isRequired,
+  fileCache: PropTypes.object,
+  fileName: PropTypes.string,
+  fileStatus: PropTypes.string.isRequired,
+  editMode: PropTypes.bool.isRequired
 };
 
 UploadFile.defaultProps = {
