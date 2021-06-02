@@ -3,7 +3,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, withStyles } from '@material-ui/core'
+import { Typography } from '@material-ui/core'
 import CallMadeIcon from '@material-ui/icons/CallMade'
 import CallReceivedIcon from '@material-ui/icons/CallReceived'
 
@@ -24,7 +24,7 @@ class EvolutionText extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
+    const classes = useStyles();
     const dir = this.getDirection(this.props.value)
     if (dir === DIRECTION.UNKNOWN || dir === DIRECTION.NONE) {
       return (
@@ -63,7 +63,7 @@ class EvolutionText extends React.Component {
   }
 
   getClass (value, shift) {
-    const { classes } = this.props
+    const classes = useStyles();
 
     const direction = this.getDirection(value)
     if (direction === DIRECTION.UNKNOWN) return classes.default
@@ -79,7 +79,7 @@ class EvolutionText extends React.Component {
   }
 
   getIcon (value, shift) {
-    const { classes } = this.props
+    const classes = useStyles();
     const colorClass = this.getClass(value, shift)
 
     const direction = this.getDirection(value)
@@ -96,8 +96,7 @@ class EvolutionText extends React.Component {
 
 EvolutionText.propTypes = {
   shiftColors: PropTypes.bool,
-  value: PropTypes.string,
-  classes: PropTypes.any
+  value: PropTypes.string
 }
 
-export default withStyles(useStyles)(EvolutionText)
+export default EvolutionText

@@ -1,7 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
+import { makeStyles } from '@material-ui/core';
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles(theme => ({
   card: {
     minWidth: 120,
     height: 96,
@@ -64,6 +65,6 @@ const useStyles = (theme) => ({
     letterSpacing: 0,
     lineHeight: '14px'
   }
-})
+}))
 
 export default useStyles

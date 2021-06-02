@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Box, Menu, MenuItem, withStyles } from '@material-ui/core'
+import { Box, Menu, MenuItem, makeStyles } from '@material-ui/core'
 import {
   ArrowRight as ArrowRightIcon,
   Check as CheckIcon
@@ -11,7 +11,7 @@ import {
 import profilePlaceholder from '../../assets/profile_placeholder.png'
 import { useTranslation } from 'react-i18next'
 
-const useStyles = theme => ({
+const useStyles = makeStyles(theme => ({
   menuTrigger: {
     backgroundRepeat: 'no-repeat',
     minWidth: '32px',
@@ -53,9 +53,10 @@ const useStyles = theme => ({
   docLink: {
     color: theme.palette.primary.contrastText
   }
-})
+}))
 
 const UserInfo = (props) => {
+  const classes = useStyles();
   const [isMenuOpened, setIsMenuOpened] = useState(false)
   const [isLangMenuOpened, setLangIsMenuOpened] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
@@ -78,7 +79,7 @@ const UserInfo = (props) => {
     i18n.changeLanguage(lang)
   }
 
-  const { classes, userName, profilePictureUrl, languages, documentationUrl, onLogout } = props
+  const { userName, profilePictureUrl, languages, documentationUrl, onLogout } = props
 
   const userProfilePictureUrl = profilePictureUrl
     ? profilePictureUrl
@@ -166,7 +167,6 @@ const UserInfo = (props) => {
 }
 
 UserInfo.propTypes = {
-  classes: PropTypes.any,
   documentationUrl: PropTypes.string,
   languages: PropTypes.objectOf(PropTypes.string),
   profilePictureUrl: PropTypes.string.isRequired,
@@ -174,4 +174,4 @@ UserInfo.propTypes = {
   onLogout: PropTypes.func.isRequired
 }
 
-export default withStyles(useStyles)(UserInfo)
+export default UserInfo

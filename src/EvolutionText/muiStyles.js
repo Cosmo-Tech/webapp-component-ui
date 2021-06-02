@@ -1,7 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-const useStyles = theme => ({
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
   evolution: {
     fontWeight: 'bold',
     textAlign: 'left',
@@ -28,6 +30,6 @@ const useStyles = theme => ({
   elem: {
     display: 'inline-flex'
   }
-})
+}))
 
 export default useStyles

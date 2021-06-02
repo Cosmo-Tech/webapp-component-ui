@@ -3,12 +3,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/styles';
 import { useTranslation } from 'react-i18next';
 import {
   Typography,
-  Grid
+  Grid,
+  makeStyles
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -24,8 +23,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const DashboardPlaceholder = (props) => {
-  const { t } = useTranslation();
   const classes = useStyles();
+  const { t } = useTranslation();
   const { labelKey, defaultLabel, icon } = props;
 
   return (
@@ -54,4 +53,4 @@ DashboardPlaceholder.propTypes = {
   icon: PropTypes.object
 };
 
-export default withStyles(useStyles)(DashboardPlaceholder);
+export default DashboardPlaceholder;

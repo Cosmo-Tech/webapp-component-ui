@@ -1,19 +1,20 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, TextField, Typography, withStyles } from '@material-ui/core';
+import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NumberFormatCustom } from './components'
 
-const useStyles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   }
-});
+}));
 
 const BasicNumberInput = (props) => {
-  const { classes, label, textFieldProps, inputProps, changeNumberField } = props;
+  const classes = useStyles();
+  const { label, textFieldProps, inputProps, changeNumberField } = props;
   // Optional props for UI
   let { containerProps, labelProps } = props;
   containerProps = containerProps || {
@@ -54,7 +55,6 @@ const BasicNumberInput = (props) => {
 };
 
 BasicNumberInput.propTypes = {
-  classes: PropTypes.any,
   label: PropTypes.string.isRequired,
   textFieldProps: PropTypes.object.isRequired,
   changeNumberField: PropTypes.func.isRequired,
@@ -63,4 +63,4 @@ BasicNumberInput.propTypes = {
   labelProps: PropTypes.object
 };
 
-export default withStyles(useStyles)(BasicNumberInput);
+export default BasicNumberInput;

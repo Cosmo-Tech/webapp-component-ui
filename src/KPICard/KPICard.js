@@ -7,8 +7,7 @@ import {
   Box,
   Card,
   CardContent,
-  Typography,
-  withStyles
+  Typography
 } from '@material-ui/core'
 
 import EvolutionText from '../EvolutionText'
@@ -81,7 +80,7 @@ class CardKPI extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
+    const classes = useStyles();
     // Retrieve value & evolution to display from props
     const { value, evolution } = this.processData()
 
@@ -173,8 +172,7 @@ CardKPI.propTypes = {
   shiftColors: PropTypes.bool,
   title: PropTypes.string,
   value: PropTypes.number,
-  reference: PropTypes.number,
-  classes: PropTypes.any
+  reference: PropTypes.number
 }
 
 CardKPI.defaultProps = {
@@ -183,4 +181,4 @@ CardKPI.defaultProps = {
   shiftColors: false
 }
 
-export default withStyles(useStyles)(CardKPI)
+export default CardKPI

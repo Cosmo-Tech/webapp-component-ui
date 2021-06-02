@@ -1,18 +1,19 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, TextField, Typography, withStyles } from '@material-ui/core';
+import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   }
-});
+}));
 
 const BasicTextInput = (props) => {
-  const { classes, label, textFieldProps, changeTextField } = props;
+  const classes = useStyles();
+  const { label, textFieldProps, changeTextField } = props;
   let { containerProps, labelProps } = props;
   containerProps = containerProps || {
     direction: 'row',
@@ -37,7 +38,6 @@ const BasicTextInput = (props) => {
 };
 
 BasicTextInput.propTypes = {
-  classes: PropTypes.any,
   label: PropTypes.string.isRequired,
   changeTextField: PropTypes.func.isRequired,
   textFieldProps: PropTypes.object.isRequired,
@@ -45,4 +45,4 @@ BasicTextInput.propTypes = {
   labelProps: PropTypes.object
 };
 
-export default withStyles(useStyles)(BasicTextInput);
+export default BasicTextInput;

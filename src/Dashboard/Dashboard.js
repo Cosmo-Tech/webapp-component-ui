@@ -3,8 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import DashboardPlaceholder from './components';
 
@@ -81,4 +80,4 @@ Dashboard.propTypes = {
   scenarioState: PropTypes.string
 };
 
-export default withStyles(useStyles)(Dashboard);
+export default Dashboard;

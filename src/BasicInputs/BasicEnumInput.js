@@ -1,18 +1,19 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, MenuItem, TextField, Typography, withStyles } from '@material-ui/core';
+import { Grid, MenuItem, TextField, Typography, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   }
-});
+}));
 
 const BasicEnumInput = (props) => {
-  const { classes, label, textFieldProps, enumValues, changeEnumField } = props;
+  const classes = useStyles();
+  const { label, textFieldProps, enumValues, changeEnumField } = props;
   let { containerProps, labelProps } = props;
   containerProps = containerProps || {
     direction: 'row',
@@ -59,7 +60,6 @@ const BasicEnumInput = (props) => {
 };
 
 BasicEnumInput.propTypes = {
-  classes: PropTypes.any,
   label: PropTypes.string.isRequired,
   textFieldProps: PropTypes.object.isRequired,
   changeEnumField: PropTypes.func.isRequired,
@@ -68,4 +68,4 @@ BasicEnumInput.propTypes = {
   labelProps: PropTypes.object
 };
 
-export default withStyles(useStyles)(BasicEnumInput);
+export default BasicEnumInput;

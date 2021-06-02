@@ -3,16 +3,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Switch, Typography, withStyles } from '@material-ui/core';
+import { Grid, Switch, Typography, makeStyles } from '@material-ui/core';
 
-const useStyles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1
   }
-});
+}));
 
 const BasicToggleInput = (props) => {
-  const { classes, label, switchProps, changeSwitchType } = props;
+  const classes = useStyles();
+  const { label, switchProps, changeSwitchType } = props;
   let { containerProps, labelProps } = props;
   containerProps = containerProps || {
     direction: 'row',
@@ -42,7 +43,6 @@ const BasicToggleInput = (props) => {
 };
 
 BasicToggleInput.propTypes = {
-  classes: PropTypes.any,
   label: PropTypes.string.isRequired,
   changeSwitchType: PropTypes.func.isRequired,
   switchProps: PropTypes.object.isRequired,
@@ -50,4 +50,4 @@ BasicToggleInput.propTypes = {
   labelProps: PropTypes.object,
 };
 
-export default withStyles(useStyles)(BasicToggleInput);
+export default BasicToggleInput;
