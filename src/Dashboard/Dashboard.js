@@ -28,7 +28,7 @@ const Dashboard = (props) => {
   const formattedUrl = url.replaceAll('<ScenarioName>', scenarioName).replaceAll('<ScenarioId>', scenarioId);
 
   // Handle optional status property
-  const noRun = scenarioState === 'Created';
+  const noRun = scenarioState === 'Created' || scenarioState === null;
   const runInProgress = scenarioState === 'Running';
   const hasError = scenarioState === 'Failed';
   const isReady = scenarioState === undefined || scenarioState === 'Successful';
