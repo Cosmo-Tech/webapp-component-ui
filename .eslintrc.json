@@ -18,6 +18,7 @@
         "react"
     ],
     "rules": {
+      "semi": [2, "always"]
     },
     "settings": {
         "react": {
