@@ -27,29 +27,20 @@ const BasicNumberInput = (props) => {
     variant: 'subtitle2'
   };
 
-  const handleChange = (event) => {
-    changeNumberField(event.target.value);
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
   return (
     <Grid container className={classes.root} {...containerProps}>
-        <Grid item >
-            <Typography {...labelProps}>{label}</Typography>
-        </Grid>
-        <Grid item >
-            <TextField
-                onChange={(event) => handleChange}
-                inputProps={inputProps}
-                {...textFieldProps}
-                InputProps={{
-                  inputComponent: NumberFormatCustom
-                }}
-              />
-        </Grid>
+      <Grid item >
+        <Typography {...labelProps}>{label}</Typography>
+      </Grid>
+      <Grid item >
+        <TextField {...textFieldProps}
+          onChange={(event) => changeNumberField(parseFloat(event.target.value))}
+          inputProps={inputProps}
+          InputProps={{
+            inputComponent: NumberFormatCustom
+          }}
+        />
+      </Grid>
     </Grid>
   );
 };
