@@ -31,7 +31,9 @@ const BasicTextInput = (props) => {
                 <Typography {...labelProps}>{label}</Typography>
             </Grid>
             <Grid item >
-                <TextField {...textFieldProps} onChange={(event) => changeTextField(event.target.value)} />
+                <TextField {...textFieldProps}
+                  onChange={(event) => changeTextField(event.target.value)}
+                />
             </Grid>
         </Grid>
   );

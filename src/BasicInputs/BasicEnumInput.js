@@ -25,37 +25,27 @@ const BasicEnumInput = (props) => {
     variant: 'subtitle2'
   };
 
-  // REQUIREMENT: the keyValueMap cannot have duplicate values to work
-  const getKeyFromValue = (value, keyValueMap) => {
-    let key = '';
-    for (const keyValue of keyValueMap) {
-      if (keyValue.value === value) {
-        key = keyValue.key;
-        break;
-      }
-    }
-    return key;
-  };
-
   return (
-        <Grid container className={classes.root} {...containerProps}>
-            <Grid item >
-                <Typography {...labelProps}>{label}</Typography>
-            </Grid>
-            <Grid item >
-                <TextField
-                    select
-                    {...textFieldProps}
-                    onChange={(event) => changeEnumField(getKeyFromValue(event.target.value, enumValues))}
-                >
-                    {enumValues.map((option) => (
-                        <MenuItem key={option.key} value={option.value}>
-                            {option.value}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </Grid>
-        </Grid>
+    <Grid container className={classes.root} {...containerProps}>
+      <Grid item >
+        <Typography {...labelProps}>{label}</Typography>
+      </Grid>
+      <Grid item >
+        <TextField
+          select
+          {...textFieldProps}
+          onChange={(event) => {
+            return changeEnumField(event.target.value);
+          }}
+        >
+          {enumValues.map((option) => (
+            <MenuItem key={option.key} value={option.key}>
+              {option.value}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+    </Grid>
   );
 };
 

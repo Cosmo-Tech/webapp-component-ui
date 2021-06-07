@@ -47,7 +47,7 @@ BasicToggleInput.propTypes = {
   changeSwitchType: PropTypes.func.isRequired,
   switchProps: PropTypes.object.isRequired,
   containerProps: PropTypes.object,
-  labelProps: PropTypes.object,
+  labelProps: PropTypes.object
 };
 
 export default BasicToggleInput;
