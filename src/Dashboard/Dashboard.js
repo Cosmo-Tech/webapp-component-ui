@@ -22,10 +22,14 @@ const Dashboard = (props) => {
     url,
     scenarioName,
     scenarioId,
+    csmSimulationRun,
     scenarioState,
     ...otherProps
   } = props;
-  const formattedUrl = url.replaceAll('<ScenarioName>', scenarioName).replaceAll('<ScenarioId>', scenarioId);
+  const formattedUrl = url
+    .replaceAll('<ScenarioName>', scenarioName)
+    .replaceAll('<ScenarioId>', scenarioId)
+    .replaceAll('<CsmSimulationRun>', csmSimulationRun);
 
   // Handle optional status property
   const noRun = scenarioState === 'Created' || scenarioState === null;
@@ -77,6 +81,7 @@ Dashboard.propTypes = {
   url: PropTypes.string.isRequired,
   scenarioName: PropTypes.string,
   scenarioId: PropTypes.string,
+  csmSimulationRun: PropTypes.string,
   scenarioState: PropTypes.string
 };
 
