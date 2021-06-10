@@ -5,7 +5,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Tooltip } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { getFormattedOptionsList } from './utils';
 
 const HierarchicalComboBox = ({
   values,
@@ -17,25 +16,23 @@ const HierarchicalComboBox = ({
   renderInputToolType,
   ...props
 }) => {
-  const optionsList = [];
-  getFormattedOptionsList(optionsList, values, 0, separator, maxCharLength);
 
   return (
     <Autocomplete
-        {...props}
+      {...props}
+      onChange={(event, node) => (handleChange(event, node))}
       disableClearable
       disabled={disabled}
-      onChange={(event, node) => (handleChange(event, node))}
-      options={optionsList}
-      getOptionLabel={(option) => Object.keys(option).length !== 0 ? option.name : ''}
+      options={values}
       getOptionSelected={(option, value) => option.id === value.id}
+      getOptionLabel={(option) => Object.keys(option).length !== 0 ? option.name : ''}
       renderOption={(option) => (
-          <span
-            data-testid={'option-' + option.id}
-            style={{ marginLeft: option.depth * 20 }}
-          >
-            {option.fullName}
-          </span>
+        <span
+          data-testid={'option-' + option.id}
+          style={{ marginLeft: option.depth * 20 }}
+        >
+          {option.name}
+        </span>
       )}
       renderInput={(params) => (
         <Tooltip arrow title={renderInputToolType}>
