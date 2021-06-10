@@ -65,6 +65,6 @@ const useStyles = makeStyles(theme => ({
     letterSpacing: 0,
     lineHeight: '14px'
   }
-}))
+}));
 
-export default useStyles
+export default useStyles;

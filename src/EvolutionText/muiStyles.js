@@ -30,6 +30,6 @@ const useStyles = makeStyles(theme => ({
   elem: {
     display: 'inline-flex'
   }
-}))
+}));
 
-export default useStyles
+export default useStyles;

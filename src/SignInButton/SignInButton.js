@@ -1,11 +1,11 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React from 'react'
-import { makeStyles, Grid, Typography, Avatar } from '@material-ui/core'
-import { useTranslation } from 'react-i18next'
-import PropTypes from 'prop-types'
-import microsoftLogo from '../../assets/microsoft_logo.png'
+import React from 'react';
+import { makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
+import microsoftLogo from '../../assets/microsoft_logo.png';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,11 +29,11 @@ const useStyles = makeStyles(theme => ({
     weight: 600,
     color: '#FFFFFF'
   }
-}))
+}));
 
 const SignInButton = (props) => {
-  const classes = useStyles()
-  const { t } = useTranslation()
+  const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <button className={classes.root} onClick={props.onClick} data-cy="sign-in-with-microsoft-button">
@@ -59,11 +59,11 @@ const SignInButton = (props) => {
         </Grid>
       </Grid>
     </button>
-  )
-}
+  );
+};
 
 SignInButton.propTypes = {
   onClick: PropTypes.func.isRequired
-}
+};
 
-export default SignInButton
+export default SignInButton;
