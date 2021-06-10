@@ -13,3 +13,4 @@ export { default as BasicDateInput } from './BasicInputs/BasicDateInput';
 export { default as SimpleTwoActionsDialog } from './SimpleTwoActionsDialog';
 export { default as Dashboard } from './Dashboard';
 export { default as HierarchicalComboBox } from './HierarchicalComboBox';
+export { default as CreateScenarioButton } from './CreateScenarioButton';
