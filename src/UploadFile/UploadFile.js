@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -29,15 +29,14 @@ const UploadFile = (props) => {
     handleUploadFile,
     handleDeleteFile,
     handleDownloadFile,
-    fileName,
-    fileCache,
-    fileStatus,
+    file,
     editMode
   } = props;
 
   // Translation
   const { t } = useTranslation();
   // States
+  //TODO manage this state correctly or pass it through props
   const [isFileValid, setFileValid] = useState(true);
 
   // Render
@@ -46,7 +45,7 @@ const UploadFile = (props) => {
       <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
         <Grid item>
           <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
-            {fileName
+            {file.name
               ? t('genericcomponent.uploadfile.button.update')
               : t('genericcomponent.uploadfile.button.browse')
             }
@@ -54,11 +53,11 @@ const UploadFile = (props) => {
           </Button>
         </Grid>
         <Grid item>
-          { (fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD
-            || fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
+          { (file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD
+            || file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
             <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
               <Grid item>
-                { fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
+                { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
                   <Link component="button" onClick={handleDownloadFile} download>
                     <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
                       <Grid item>
@@ -66,15 +65,15 @@ const UploadFile = (props) => {
                       </Grid>
                       <Grid item>
                         <Typography>
-                          {fileName}
+                          {file.name}
                         </Typography>
                       </Grid>
                     </Grid>
                   </Link>
                 }
-                { fileStatus === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD &&
+                { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD &&
                   <Typography>
-                    {fileCache.name}
+                    {file.name}
                   </Typography>
                 }
               </Grid>
@@ -87,9 +86,9 @@ const UploadFile = (props) => {
           }
         </Grid>
         <Grid item>
-          { fileStatus === UPLOAD_FILE_STATUS_KEY.UPLOADING
-            || fileStatus === UPLOAD_FILE_STATUS_KEY.DOWNLOADING
-            || fileStatus === UPLOAD_FILE_STATUS_KEY.DELETING &&
+          { file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING
+            || file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING
+            || file.status === UPLOAD_FILE_STATUS_KEY.DELETING &&
             <CircularProgress color="secondary" />
           }
         </Grid>
@@ -111,9 +110,7 @@ UploadFile.propTypes = {
   handleUploadFile: PropTypes.func.isRequired,
   handleDeleteFile: PropTypes.func.isRequired,
   handleDownloadFile: PropTypes.func.isRequired,
-  fileCache: PropTypes.object,
-  fileName: PropTypes.string,
-  fileStatus: PropTypes.string.isRequired,
+  file: PropTypes.object,
   editMode: PropTypes.bool.isRequired
 };
 
