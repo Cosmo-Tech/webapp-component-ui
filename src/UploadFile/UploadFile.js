@@ -45,10 +45,7 @@ const UploadFile = (props) => {
       <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
         <Grid item>
           <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
-            {file.name
-              ? t('genericcomponent.uploadfile.button.update')
-              : t('genericcomponent.uploadfile.button.browse')
-            }
+            {t('genericcomponent.uploadfile.button.browse', 'Browse')}
             <input type="file" accept={acceptedFileTypes} hidden />
           </Button>
         </Grid>
