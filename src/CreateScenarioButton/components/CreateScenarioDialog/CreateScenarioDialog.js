@@ -18,21 +18,7 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import HierarchicalComboBox from '../../../HierarchicalComboBox/HierarchicalComboBox';
-import {
-  CREATE_SCENARIO_DIALOG_CANCEL_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_CREATE_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_DATASET_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_DATASET_PLACEHOLDER_KEY,
-  CREATE_SCENARIO_DIALOG_PARENT_SCENARIO_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_SCENARIO_MASTER_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_SCENARIO_NAME_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_SCENARIO_TYPE_LABEL_KEY,
-  CREATE_SCENARIO_DIALOG_SCENARIO_TYPE_PLACEHOLDER_KEY,
-  CREATE_SCENARIO_DIALOG_TITLE_LABEL_KEY,
-  ERROR_SCENARIO_NAME_EMPTY_LABEL_KEY,
-  ERROR_SCENARIO_NAME_EXISTING_LABEL_KEY,
-  ERROR_SCENARIO_NAME_FORBIDDEN_CHARS_KEY
-} from './CreateScenarioDialogButtonConstants';
+import { CREATE_SCENARIO_LABELS } from './CreateScenarioDialogButtonConstants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -115,14 +101,14 @@ const CreateScenarioDialog = ({
     let errorKey = '';
     let hasErrors = false;
     if (newScenarioName.length === 0) {
-      errorKey = ERROR_SCENARIO_NAME_EMPTY_LABEL_KEY;
+      errorKey = CREATE_SCENARIO_LABELS.ERROR_NAME_EMPTY;
       hasErrors = true;
     } else {
       if (newScenarioName.match(nameValidator) === null) {
-        errorKey = ERROR_SCENARIO_NAME_FORBIDDEN_CHARS_KEY;
+        errorKey = CREATE_SCENARIO_LABELS.ERROR_NAME_FORBIDDEN_CHARS;
         hasErrors = true;
       } else if (ScenarioUtils.scenarioExistsInList(newScenarioName, scenarios)) {
-        errorKey = ERROR_SCENARIO_NAME_EXISTING_LABEL_KEY;
+        errorKey = CREATE_SCENARIO_LABELS.ERROR_NAME_EXISTING;
         hasErrors = true;
       }
     }
@@ -198,7 +184,7 @@ const CreateScenarioDialog = ({
       fullWidth={true}
       disableBackdropClick >
       <DialogTitle id="form-dialog-title">
-        {t(CREATE_SCENARIO_DIALOG_TITLE_LABEL_KEY, 'Create alternative scenario')}
+        {t(CREATE_SCENARIO_LABELS.DIALOG_TITLE, 'Create alternative scenario')}
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid container spacing={2}>
@@ -210,7 +196,7 @@ const CreateScenarioDialog = ({
              id="scenarioName"
              value={scenarioNameFieldValues.value}
              error={scenarioNameFieldValues.hasError}
-             label={t(CREATE_SCENARIO_DIALOG_SCENARIO_NAME_LABEL_KEY)}
+             label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_NAME)}
              helperText={t(scenarioNameFieldValues.errorKey)}
              fullWidth />
           </Grid>
@@ -224,7 +210,7 @@ const CreateScenarioDialog = ({
                   id="isScenarioMaster"
                   color="primary" />
               }
-              label={t(CREATE_SCENARIO_DIALOG_SCENARIO_MASTER_LABEL_KEY, 'Master')}/>
+              label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_MASTER, 'Master')}/>
           </Grid>
           }
           <Grid item xs={12}>
@@ -243,15 +229,15 @@ const CreateScenarioDialog = ({
                     (params) => (
                       <TextField
                         {...params}
-                        placeholder={t(CREATE_SCENARIO_DIALOG_DATASET_PLACEHOLDER_KEY, 'Dataset')}
-                        label={t(CREATE_SCENARIO_DIALOG_DATASET_LABEL_KEY, 'Select a dataset')}
+                        placeholder={t(CREATE_SCENARIO_LABELS.DIALOG_DATASET_PLACEHOLDER, 'Dataset')}
+                        label={t(CREATE_SCENARIO_LABELS.DIALOG_DATASET, 'Select a dataset')}
                         variant="outlined"/>)
                   }/>
                 )
               : (<HierarchicalComboBox
                   values={scenarios}
                   defaultValue={defaultParentScenario.current}
-                  label={t(CREATE_SCENARIO_DIALOG_PARENT_SCENARIO_LABEL_KEY)}
+                  label={t(CREATE_SCENARIO_LABELS.DIALOG_PARENT_SCENARIO, 'Parent scenario')}
                   handleChange={
                     (event, newParentScenario) => (handleChangeParentScenario(newParentScenario))
                   }/>
@@ -273,8 +259,8 @@ const CreateScenarioDialog = ({
                 (params) => (
                   <TextField
                     {...params}
-                    placeholder={t(CREATE_SCENARIO_DIALOG_SCENARIO_TYPE_PLACEHOLDER_KEY, 'Scenario')}
-                    label={t(CREATE_SCENARIO_DIALOG_SCENARIO_TYPE_LABEL_KEY, 'Scenario Type')}
+                    placeholder={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_TYPE_PLACEHOLDER, 'Scenario')}
+                    label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_TYPE, 'Scenario Type')}
                     variant="outlined"/>
                 )}/>
           </Grid>
@@ -284,13 +270,13 @@ const CreateScenarioDialog = ({
           <Button id="cancel"
                   onClick={handleCloseDialog}
                   color="primary">
-              {t(CREATE_SCENARIO_DIALOG_CANCEL_LABEL_KEY, 'Cancel')}
+              {t(CREATE_SCENARIO_LABELS.DIALOG_CANCEL, 'Cancel')}
           </Button>
           <Button id="create"
                   disabled={createScenarioDisabled}
                   onClick={handleCreateScenario}
                   color="primary">
-              {t(CREATE_SCENARIO_DIALOG_CREATE_LABEL_KEY, 'Create')}
+              {t(CREATE_SCENARIO_LABELS.DIALOG_CREATE, 'Create')}
           </Button>
       </DialogActions>
     </Dialog>
