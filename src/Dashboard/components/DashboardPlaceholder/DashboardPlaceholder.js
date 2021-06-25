@@ -25,16 +25,10 @@ const useStyles = makeStyles(theme => ({
 const DashboardPlaceholder = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { title, label, icon } = props;
+  const { labelKey, defaultLabel, icon } = props;
 
   return (
-    <Grid container spacing={2} direction="column" justify="center" wrap="nowrap"
-      alignItems="center" className={classes.gridContainer}>
-      <Grid>
-        <Typography variant="h2" >
-          {title}
-        </Typography>
-      </Grid>
+    <Grid container justify="center" alignItems="center" className={classes.gridContainer}>
       <Grid item>
         { icon !== undefined &&
           <div className={classes.iconContainer}>
@@ -42,10 +36,11 @@ const DashboardPlaceholder = (props) => {
           </div>
         }
         <Typography
+          component="h2"
           color="textSecondary"
           className={classes.label}
         >
-          {label}
+          {t(labelKey, defaultLabel)}
         </Typography>
       </Grid>
     </Grid>
@@ -53,13 +48,9 @@ const DashboardPlaceholder = (props) => {
 };
 
 DashboardPlaceholder.propTypes = {
-  label: PropTypes.string.isRequired,
-  title: PropTypes.string,
+  labelKey: PropTypes.string.isRequired,
+  defaultLabel: PropTypes.string.isRequired,
   icon: PropTypes.object
-};
-
-DashboardPlaceholder.defaultProps = {
-  title: null
 };
 
 export default DashboardPlaceholder;

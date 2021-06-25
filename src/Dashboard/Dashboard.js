@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import DashboardPlaceholder from './components';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   iframe: {
@@ -25,45 +24,38 @@ const Dashboard = (props) => {
     scenarioId,
     csmSimulationRun,
     scenarioState,
-    noScenario,
     ...otherProps
   } = props;
-
   const formattedUrl = url
     .replaceAll('<ScenarioName>', scenarioName)
     .replaceAll('<ScenarioId>', scenarioId)
     .replaceAll('<CsmSimulationRun>', csmSimulationRun);
 
-  const { t } = useTranslation();
-
   // Handle optional status property
   const noRun = scenarioState === 'Created' || scenarioState === null;
   const runInProgress = scenarioState === 'Running';
   const hasError = scenarioState === 'Failed';
-  const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
+  const isReady = scenarioState === undefined || scenarioState === 'Successful';
 
   return (
     <>
-      { noScenario && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.noscenario.label',
-            'You can create a scenario by clicking on') + ' "'
-            + t('commoncomponents.button.create.scenario.label', 'Create Alternative Scenario') + '"'}
-          title={t('commoncomponents.iframe.scenario.noscenario.title', 'No scenario yet')}
+      {
+        noRun && <DashboardPlaceholder
+          labelKey='commoncomponents.iframe.scenario.results.text.uninitialized'
+          defaultLabel='The scenario has not been run yet'
         />
       }
-      { noRun && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.results.label.uninitialized',
-            'The scenario has not been run yet')}
-        />
-      }
-      { runInProgress && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.results.label.running', 'Scenario run in progress...')}
+      {
+        runInProgress && <DashboardPlaceholder
+          labelKey='commoncomponents.iframe.scenario.results.text.running'
+          defaultLabel='Scenario run in progress...'
           icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
         />
       }
-      { hasError && <DashboardPlaceholder
-          labelKey={t('commoncomponents.iframe.scenario.results.label.error',
-            'An error occured during the scenario run')}
+      {
+        hasError && <DashboardPlaceholder
+          labelKey='commoncomponents.iframe.scenario.results.text.error'
+          defaultLabel='An error occured during the scenario run'
         />
       }
       { isReady && formattedUrl !== '' &&
@@ -76,7 +68,8 @@ const Dashboard = (props) => {
         />
       }
       { isReady && formattedUrl === '' && <DashboardPlaceholder
-        label={t('commoncomponents.iframe.scenario.results.label.no.result', 'No dashboards for this scenario.')}
+        labelKey='commoncomponents.iframe.scenario.results.text.no.result'
+        defaultLabel='No dashboards for this scenario.'
       />
       }
     </>
@@ -85,17 +78,11 @@ const Dashboard = (props) => {
 
 Dashboard.propTypes = {
   iframeTitle: PropTypes.string.isRequired,
-  url: PropTypes.string,
+  url: PropTypes.string.isRequired,
   scenarioName: PropTypes.string,
   scenarioId: PropTypes.string,
   csmSimulationRun: PropTypes.string,
-  scenarioState: PropTypes.string,
-  noScenario: PropTypes.bool
+  scenarioState: PropTypes.string
 };
-
-Dashboard.defaultProps = {
-  noScenario: false
-};
-
 
 export default Dashboard;
