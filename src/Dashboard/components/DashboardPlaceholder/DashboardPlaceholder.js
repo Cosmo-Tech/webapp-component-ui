@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Typography,
   Grid,
+  Button,
   makeStyles
 } from '@material-ui/core';
 
@@ -25,11 +26,17 @@ const useStyles = makeStyles(theme => ({
 const DashboardPlaceholder = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
-  const { title, label, icon } = props;
+  const { title, label, icon, downloadLogsFile } = props;
 
   return (
-    <Grid container spacing={2} direction="column" justify="center" wrap="nowrap"
-      alignItems="center" className={classes.gridContainer}>
+    <Grid container 
+      spacing={2}
+      direction="column"
+      justify="center"
+      wrap="nowrap"
+      alignItems="center"
+      className={classes.gridContainer}
+    >
       <Grid>
         <Typography variant="h2" >
           {title}
@@ -48,6 +55,13 @@ const DashboardPlaceholder = (props) => {
           {label}
         </Typography>
       </Grid>
+      { downloadLogsFile &&
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={downloadLogsFile}>
+            {t('commoncomponents.iframe.scenario.results.button.downloadlogs', 'Download logs')}
+          </Button>
+        </Grid>
+      }
     </Grid>
   );
 };
@@ -55,7 +69,8 @@ const DashboardPlaceholder = (props) => {
 DashboardPlaceholder.propTypes = {
   label: PropTypes.string.isRequired,
   title: PropTypes.string,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  downloadLogsFile: PropTypes.func
 };
 
 DashboardPlaceholder.defaultProps = {

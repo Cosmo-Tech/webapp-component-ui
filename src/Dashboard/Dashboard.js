@@ -26,6 +26,7 @@ const Dashboard = (props) => {
     csmSimulationRun,
     scenarioState,
     noScenario,
+    downloadLogsFile,
     ...otherProps
   } = props;
 
@@ -61,9 +62,10 @@ const Dashboard = (props) => {
           icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
         />
       }
-      { hasError && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.results.label.error',
-            'An error occured during the scenario run')}
+      {
+        hasError && <DashboardPlaceholder
+          label={t('commoncomponents.iframe.scenario.results.text.error', 'An error occured during the scenario run')}
+          downloadLogsFile={downloadLogsFile}
         />
       }
       { isReady && formattedUrl !== '' &&
@@ -90,7 +92,8 @@ Dashboard.propTypes = {
   scenarioId: PropTypes.string,
   csmSimulationRun: PropTypes.string,
   scenarioState: PropTypes.string,
-  noScenario: PropTypes.bool
+  noScenario: PropTypes.bool,
+  downloadLogsFile: PropTypes.func
 };
 
 Dashboard.defaultProps = {
