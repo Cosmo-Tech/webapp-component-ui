@@ -47,8 +47,8 @@ const Dashboard = (props) => {
     <>
       { noScenario && <DashboardPlaceholder
           label={t('commoncomponents.iframe.scenario.noscenario.label',
-            'You can create a scenario by clicking on') + ' "'
-            + t('commoncomponents.button.create.scenario.label', 'Create Alternative Scenario') + '"'}
+            'You can create a scenario by clicking on') + ' "' +
+            t('commoncomponents.button.create.scenario.label', 'Create Alternative Scenario') + '"'}
           title={t('commoncomponents.iframe.scenario.noscenario.title', 'No scenario yet')}
         />
       }
@@ -99,6 +99,5 @@ Dashboard.propTypes = {
 Dashboard.defaultProps = {
   noScenario: false
 };
-
 
 export default Dashboard;

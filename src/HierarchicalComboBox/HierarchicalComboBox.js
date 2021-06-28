@@ -16,7 +16,6 @@ const HierarchicalComboBox = ({
   renderInputToolType,
   ...props
 }) => {
-
   return (
     <Autocomplete
       {...props}

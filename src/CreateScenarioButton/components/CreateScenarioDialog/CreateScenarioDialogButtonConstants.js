@@ -18,4 +18,4 @@ export const CREATE_SCENARIO_LABELS = {
   DIALOG_SCENARIO_TYPE_PLACEHOLDER: 'commoncomponents.dialog.create.scenario.dropdown.scenariotype.placeholder',
   DIALOG_CREATE: 'commoncomponents.dialog.create.scenario.button.create',
   DIALOG_CANCEL: 'commoncomponents.dialog.create.scenario.button.cancel'
-}
+};

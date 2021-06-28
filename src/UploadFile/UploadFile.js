@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
@@ -15,13 +15,12 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants'
+import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
 const useStyles = theme => ({
 });
 
 const UploadFile = (props) => {
-
   // Props
   const {
     classes,
@@ -36,7 +35,7 @@ const UploadFile = (props) => {
   // Translation
   const { t } = useTranslation();
   // States
-  //TODO manage this state correctly or pass it through props
+  // TODO manage this state correctly or pass it through props
   const [isFileValid, setFileValid] = useState(true);
 
   // Render
@@ -50,8 +49,8 @@ const UploadFile = (props) => {
           </Button>
         </Grid>
         <Grid item>
-          { (file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD
-            || file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
+          { (file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
+            file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
             <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
               <Grid item>
                 { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
@@ -83,9 +82,9 @@ const UploadFile = (props) => {
           }
         </Grid>
         <Grid item>
-          { file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING
-            || file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING
-            || file.status === UPLOAD_FILE_STATUS_KEY.DELETING &&
+          { file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
+            file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
+            file.status === UPLOAD_FILE_STATUS_KEY.DELETING &&
             <CircularProgress color="secondary" />
           }
         </Grid>

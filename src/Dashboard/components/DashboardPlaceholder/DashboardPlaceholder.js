@@ -29,7 +29,7 @@ const DashboardPlaceholder = (props) => {
   const { title, label, icon, downloadLogsFile } = props;
 
   return (
-    <Grid container 
+    <Grid container
       spacing={2}
       direction="column"
       justify="center"
