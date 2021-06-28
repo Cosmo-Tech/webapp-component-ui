@@ -82,9 +82,9 @@ const UploadFile = (props) => {
           }
         </Grid>
         <Grid item>
-          { file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
+          { (file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
             file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
-            file.status === UPLOAD_FILE_STATUS_KEY.DELETING &&
+            file.status === UPLOAD_FILE_STATUS_KEY.DELETING) &&
             <CircularProgress color="secondary" />
           }
         </Grid>
