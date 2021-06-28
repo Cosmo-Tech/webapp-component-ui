@@ -65,7 +65,8 @@ const CreateScenarioDialog = ({
   createScenario,
   workspaceId,
   solution,
-  nameValidator
+  nameValidator,
+  datasetsFilter
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -84,6 +85,10 @@ const CreateScenarioDialog = ({
   const defaultParentScenario = useRef({});
   const defaultScenarioType = useRef({});
 
+  let filteredDatasets = datasets;
+  if (datasetsFilter) {
+    filteredDatasets = datasets.filter(datasetsFilter);
+  }
   useEffect(() => {
     if (currentScenarioSelected) {
       defaultParentScenario.current = currentScenario.data;
@@ -218,7 +223,7 @@ const CreateScenarioDialog = ({
               ? (<Autocomplete
                   disableClearable={true}
                   id='dataset'
-                  options={datasets}
+                  options={filteredDatasets}
                   defaultValue={datasetFieldValues}
                   onChange={
                       (event, newDataset) => (handleChangeDataset(newDataset))
@@ -294,7 +299,8 @@ CreateScenarioDialog.propTypes = {
   createScenario: PropTypes.func.isRequired,
   workspaceId: PropTypes.string.isRequired,
   solution: PropTypes.object.isRequired,
-  nameValidator: PropTypes.instanceOf(RegExp)
+  nameValidator: PropTypes.instanceOf(RegExp),
+  datasetsFilter: PropTypes.func
 };
 
 export default CreateScenarioDialog;

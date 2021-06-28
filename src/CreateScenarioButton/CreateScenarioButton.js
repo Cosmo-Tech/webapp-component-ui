@@ -38,6 +38,10 @@ const CreateScenarioButton = ({
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
+  const datasetsFilter = (dataset) => {
+    if (dataset.tags === null) return false;
+    return dataset.tags.includes('dataset');
+  };
 
   return (
     <div>
@@ -68,6 +72,7 @@ const CreateScenarioButton = ({
         scenarios={scenarios}
         user={user}
         nameValidator={nameValidator}
+        datasetsFilter={datasetsFilter}
       />
     </div>
   );
