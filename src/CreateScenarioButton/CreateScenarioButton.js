@@ -1,24 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tooltip, makeStyles } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { useTranslation } from 'react-i18next';
 import CreateScenarioDialog from './components';
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    height: '100%'
-  },
-  dialogContent: {
-    marginLeft: '20px',
-    marginRight: '20px'
-  },
-  dialogActions: {
-    marginRight: '30px',
-    marginTop: '20px',
-    marginBottom: '5px'
-  }
-}));
 
 const CreateScenarioButton = ({
   currentScenario,
@@ -33,7 +18,6 @@ const CreateScenarioButton = ({
   buttonTooltip,
   nameValidator
 }) => {
-  const classes = useStyles();
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
@@ -66,7 +50,6 @@ const CreateScenarioButton = ({
         open={open}
         currentScenario={currentScenario}
         datasets={datasets}
-        classes={classes}
         closeDialog={closeDialog}
         runTemplates={runTemplates}
         scenarios={scenarios}
