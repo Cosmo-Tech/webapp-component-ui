@@ -6,7 +6,7 @@ import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import DashboardPlaceholder from '../Dashboard/components';
-import { PowerBIUtils } from '@cosmotech/core';
+import { PowerBIUtils } from '@cosmotech/azure';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 
@@ -17,7 +17,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenario, scenarioList, lang, downloadLogsFile }) => {
+function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
+  if (pageName !== undefined && pageName[lang] !== undefined) {
+    newConfig.pageName = pageName[lang];
+  }
+
+  if (settings !== undefined) {
+    newConfig.settings = settings;
+  }
+
+  if (staticFilters !== undefined || additionalFilters !== undefined) {
+    let filters = [];
+    if (staticFilters !== undefined) {
+      filters = filters.concat(staticFilters);
+    }
+    if (additionalFilters !== undefined) {
+      filters = filters.concat(additionalFilters);
+    }
+    newConfig.filters = filters;
+  }
+}
+
+const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenario, lang, downloadLogsFile }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
@@ -34,7 +55,7 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
   let additionalFilters = [];
 
   if (scenario) {
-    const scenarioDTO = useMemo( () => PowerBIUtils.constructScenarioDTO(scenario, scenarioList), [scenario,scenarioList]);
+    const scenarioDTO = useMemo( () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
     additionalFilters = useMemo(() => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO), [dynamicFilters, scenarioDTO]);
     noScenario = scenarioDTO === null;
     scenarioState = scenarioDTO.state;
@@ -49,28 +70,10 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
       type: 'report',
       id: reportId,
       tokenType: 1,
-      embedUrl: reports.data?.embedUrl[reportId]?.embedUrl,
+      embedUrl: reports.data?.reportsInfo[reportId]?.embedUrl,
       accessToken: reports.data?.accessToken
     };
-
-    if (pageName !== undefined && pageName[lang] !== undefined) {
-      newConfig.pageName = pageName[lang];
-    }
-
-    if (settings !== undefined) {
-      newConfig.settings = settings;
-    }
-
-    if (staticFilters !== undefined || additionalFilters !== undefined) {
-      let filters = [];
-      if (staticFilters !== undefined) {
-        filters = filters.concat(staticFilters);
-      }
-      if (additionalFilters !== undefined) {
-        filters = filters.concat(additionalFilters);
-      }
-      newConfig.filters = filters;
-    }
+    addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
     setEmbedConfig(newConfig);
   }, [reports, staticFilters, settings, additionalFilters, reportId, pageName, lang]);
 
@@ -111,7 +114,6 @@ SimplePowerBIReportEmbed.propTypes = {
   reports: PropTypes.object.isRequired,
   reportConfiguration: PropTypes.array.isRequired,
   scenario: PropTypes.object.isRequired,
-  scenarioList: PropTypes.array.isRequired,
   lang: PropTypes.string.isRequired,
   downloadLogsFile: PropTypes.func
 };
