@@ -10,7 +10,7 @@ function NumberFormatCustom (props) {
 
   const valuesRange = (inputObj) => {
     const { value } = inputObj;
-    if (min <= value && value <= max) return inputObj;
+    if ((value === '-' && min < 0) || (min <= value && value <= max)) return inputObj;
   };
 
   return (
