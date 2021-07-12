@@ -55,12 +55,12 @@
     "react-router-dom": "^5.2.0"
   },
   "dependencies": {
-    "@cosmotech/core": "^1.1.3",
     "@cosmotech/azure": "^0.8.7",
+    "@cosmotech/core": "^1.1.3",
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/pickers": "^3.3.10",
     "date-fns": "^2.22.1",
-    "react-number-format": "^4.5.5",
-    "powerbi-client-react": "^1.3.3"
+    "powerbi-client-react": "^1.3.3",
+    "react-number-format": "^4.5.5"
   }
 }
