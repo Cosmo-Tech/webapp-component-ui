@@ -21,3 +21,4 @@ export { default as SimplePowerBIReportEmbed } from './SimplePowerBIReportEmbed'
 export { default as LoadingLine } from './LoadingLine';
 export { default as EditModeButton } from './EditModeButton';
 export { default as NormalModeButton } from './NormalModeButton';
+export { default as ScenarioParametersTabs} from './ScenarioParametersTabs';
