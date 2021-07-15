@@ -19,3 +19,5 @@ export { default as PublicRoute } from './PublicRoute';
 export { default as UploadFile, UPLOAD_FILE_STATUS_KEY } from './UploadFile';
 export { default as SimplePowerBIReportEmbed } from './SimplePowerBIReportEmbed';
 export { default as LoadingLine } from './LoadingLine';
+export { default as EditModeButton } from './EditModeButton';
+export { default as NormalModeButton } from './NormalModeButton';
