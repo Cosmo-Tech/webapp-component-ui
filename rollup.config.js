@@ -19,6 +19,23 @@ export default {
       format: 'esm'
     }
   ],
+  external: [
+    'react',
+    'react-dom',
+    'react-dnd',
+    'prop-types',
+    'react-dnd-html5-backend',
+    '@nosferatu500/react-dnd-scrollzone',
+    'react-virtualized',
+    'lodash.isequal',
+    '@material-ui/core',
+    '@material-ui/icons',
+    '@material-ui/lab',
+    '@material-ui/styles',
+    'lodash',
+    'react-i18next',
+    'react-router-dom'
+  ],
   plugins: [
     external(),
     postcss(),
