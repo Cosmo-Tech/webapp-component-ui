@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
+function addDynamicParameters (pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
   if (pageName !== undefined && pageName[lang] !== undefined) {
     newConfig.pageName = pageName[lang];
   }
@@ -51,12 +51,20 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
     tokenType: 1 // 1 Embed or 0 Aad
   });
 
-  let noRun = false, scenarioState = 'Created', runInProgress = false, hasError = false, isReady = false, noScenario = true;
+  let noRun = false;
+  let scenarioState = 'Created';
+  let runInProgress = false;
+  let hasError = false;
+  let isReady = false;
+  let noScenario = true;
   let additionalFilters = [];
 
   if (scenario) {
-    const scenarioDTO = useMemo( () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
-    additionalFilters = useMemo(() => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO), [dynamicFilters, scenarioDTO]);
+    const scenarioDTO = useMemo(
+      () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
+    additionalFilters = useMemo(
+      () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
+      [dynamicFilters, scenarioDTO]);
     noScenario = scenarioDTO === null;
     scenarioState = scenarioDTO.state;
     noRun = scenarioState === 'Created' || scenarioState === null;
@@ -81,14 +89,14 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
       <>
         { noScenario && <DashboardPlaceholder
             label={t('commoncomponents.iframe.scenario.noscenario.label',
-                'You can create a scenario by clicking on') + ' "' +
+              'You can create a scenario by clicking on') + ' "' +
             t('commoncomponents.button.create.scenario.label', 'Create Alternative Scenario') + '"'}
             title={t('commoncomponents.iframe.scenario.noscenario.title', 'No scenario yet')}
         />
         }
         { noRun && <DashboardPlaceholder
             label={t('commoncomponents.iframe.scenario.results.label.uninitialized',
-                'The scenario has not been run yet')}
+              'The scenario has not been run yet')}
         />
         }
         { runInProgress && <DashboardPlaceholder
@@ -98,8 +106,8 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
         }
         {
           hasError && <DashboardPlaceholder
-              label={t('commoncomponents.iframe.scenario.results.text.error', 'An error occured during the scenario run')}
-              downloadLogsFile={downloadLogsFile}
+            label={t('commoncomponents.iframe.scenario.results.text.error', 'An error occured during the scenario run')}
+            downloadLogsFile={downloadLogsFile}
           />
         }
         {
@@ -120,6 +128,5 @@ SimplePowerBIReportEmbed.propTypes = {
 SimplePowerBIReportEmbed.defaultProps = {
   index: 0
 };
-
 
 export default SimplePowerBIReportEmbed;
