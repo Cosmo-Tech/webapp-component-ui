@@ -1,6 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
+import FileUpload from "./UploadFile/FileUpload";
+
 export { default as EvolutionText } from './EvolutionText';
 export { default as KPICard } from './KPICard';
 export { default as UserInfo } from './UserInfo';
@@ -16,7 +18,7 @@ export { default as HierarchicalComboBox } from './HierarchicalComboBox';
 export { default as CreateScenarioButton } from './CreateScenarioButton';
 export { default as PrivateRoute } from './PrivateRoute';
 export { default as PublicRoute } from './PublicRoute';
-export { default as UploadFile, UPLOAD_FILE_STATUS_KEY } from './UploadFile';
+export { FileUpload } from './UploadFile';
 export { default as SimplePowerBIReportEmbed } from './SimplePowerBIReportEmbed';
 export { default as LoadingLine } from './LoadingLine';
 export { default as EditModeButton } from './EditModeButton';

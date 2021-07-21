@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
+import { UPLOAD_FILE_STATUS_KEY } from "@cosmotech/core";
 
 const useStyles = theme => ({
 });
