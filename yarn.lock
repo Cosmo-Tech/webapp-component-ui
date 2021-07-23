@@ -957,10 +957,10 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     to-fast-properties "^2.0.0"
 
-"@cosmotech/azure@^0.8.7":
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.9.tgz#40cb8d62848d81eef576676f176d9a147f2ad573"
-  integrity sha512-fBAcTnMGPQPeUVJtBKGvidckGBOXVDmEK8fPvhQWy72Uca81ViMs0/PmtgqE5FdkKeGZ2GJeOntue489Lo+t8A==
+"@cosmotech/azure@^0.8.10":
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.10.tgz#ac63cbeb9421a3df785a63e55877e7fc42e4a138"
+  integrity sha512-INitjGoQV4pKXooKdPyX6ab1TfbMimgNu0Krl3jtHIYYmVGZ9Iw53LaUHBzNg/wHL/T9XoVou0CqBfWylD9lNg==
   dependencies:
     "@azure/msal-browser" "^2.8.0"
 
