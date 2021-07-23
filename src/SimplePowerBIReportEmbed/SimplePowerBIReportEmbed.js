@@ -51,27 +51,17 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
     tokenType: 1 // 1 Embed or 0 Aad
   });
 
-  let noRun = false;
-  let scenarioState = 'Created';
-  let runInProgress = false;
-  let hasError = false;
-  let isReady = false;
-  let noScenario = true;
-  let additionalFilters = [];
-
-  if (scenario) {
-    const scenarioDTO = useMemo(
+  const scenarioDTO = useMemo(
       () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
-    additionalFilters = useMemo(
+  const additionalFilters = useMemo(
       () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
       [dynamicFilters, scenarioDTO]);
-    noScenario = scenarioDTO === null;
-    scenarioState = scenarioDTO.state;
-    noRun = scenarioState === 'Created' || scenarioState === null;
-    runInProgress = scenarioState === 'Running';
-    hasError = scenarioState === 'Failed';
-    isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
-  }
+  const noScenario = scenario === null;
+  const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
+  const noRun = scenarioState === 'Created' || scenarioState === null;
+  const runInProgress = scenarioState === 'Running';
+  const hasError = scenarioState === 'Failed';
+  const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
 
   useEffect(() => {
     const newConfig = {
