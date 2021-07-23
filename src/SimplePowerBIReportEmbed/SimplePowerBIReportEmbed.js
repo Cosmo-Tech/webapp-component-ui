@@ -111,7 +111,7 @@ SimplePowerBIReportEmbed.propTypes = {
   index: PropTypes.number,
   reports: PropTypes.object.isRequired,
   reportConfiguration: PropTypes.array.isRequired,
-  scenario: PropTypes.object.isRequired,
+  scenario: PropTypes.object,
   lang: PropTypes.string.isRequired,
   downloadLogsFile: PropTypes.func
 };
