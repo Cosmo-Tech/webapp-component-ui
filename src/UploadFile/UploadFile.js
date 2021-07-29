@@ -1,27 +1,24 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Link,
+  Tooltip,
+  Typography
+} from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
-const useStyles = theme => ({
-});
-
 const UploadFile = (props) => {
-  // Props
   const {
     classes,
     acceptedFileTypes,
@@ -29,16 +26,11 @@ const UploadFile = (props) => {
     handleDeleteFile,
     handleDownloadFile,
     file,
-    editMode
+    editMode,
+    isFileValid
   } = props;
-
-  // Translation
   const { t } = useTranslation();
-  // States
-  // TODO manage this state correctly or pass it through props
-  const [isFileValid, setFileValid] = useState(true);
 
-  // Render
   return (
     <div className={classes.root}>
       <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
@@ -88,7 +80,7 @@ const UploadFile = (props) => {
             <CircularProgress color="secondary" />
           }
         </Grid>
-          { !isFileValid &&
+          { (isFileValid === false) &&
             <Grid item>
               <Tooltip title="genericcomponent.uploadfile.tooltip.isvalidfile" placement="right-end">
                 <ErrorIcon color="error" />
@@ -107,11 +99,12 @@ UploadFile.propTypes = {
   handleDeleteFile: PropTypes.func.isRequired,
   handleDownloadFile: PropTypes.func.isRequired,
   file: PropTypes.object,
-  editMode: PropTypes.bool.isRequired
+  editMode: PropTypes.bool.isRequired,
+  isFileValid: PropTypes.bool
 };
 
 UploadFile.defaultProps = {
   acceptedFileTypes: '*'
 };
 
-export default withStyles(useStyles)(UploadFile);
+export default UploadFile;
