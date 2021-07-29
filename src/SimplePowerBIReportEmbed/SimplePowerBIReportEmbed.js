@@ -52,10 +52,10 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
   });
 
   const scenarioDTO = useMemo(
-      () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
+    () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
   const additionalFilters = useMemo(
-      () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
-      [dynamicFilters, scenarioDTO]);
+    () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
+    [dynamicFilters, scenarioDTO]);
   const noScenario = scenario === null;
   const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
   const noRun = scenarioState === 'Created' || scenarioState === null;
