@@ -1,14 +1,14 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { TextField, Typography } from '@material-ui/core';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
-import ScenarioNode from './components';
+import { ScenarioNode } from './components';
 import useStyles from './style';
 
 const ScenarioManagerTreeList = (props) => {
@@ -17,14 +17,41 @@ const ScenarioManagerTreeList = (props) => {
   const {
     datasets,
     scenarios,
-    moveScenario
+    deleteScenario,
+    moveScenario,
+    userId
   } = props;
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
-  const rstScenarios = useMemo(() => formatScenariosToRSTList(datasets, scenarios), [datasets, scenarios]);
+  const expandedNodes = useRef([]);
+  const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios]);
 
   const [searchText, setSearchText] = useState('');
   const [treeData, setTreeData] = useState(rstScenarios);
+
+  // On scenarios list update, re-apply current filter on the new list of scenarios
+  useEffect(() => {
+    filterScenarios(searchText);
+  }, [scenarios]);
+
+  function formatScenariosToRSTList (treeScenarios) {
+    const rstScenarios = treeScenarios.map((scenario) => {
+      const showDeleteIcon = scenario.ownerId === userId;
+      return {
+        expanded: expandedNodes.current[scenario.id] || false,
+        parentId: scenario.parentId,
+        id: scenario.id,
+        name: scenario.name,
+        title: <ScenarioNode
+          datasets={datasets}
+          scenario={scenario}
+          showDeleteIcon={showDeleteIcon}
+          deleteScenario={deleteScenario}
+        />
+      };
+    });
+    return ScenarioUtils.getScenarioTree(rstScenarios, (scenA, scenB) => (scenA.name.localeCompare(scenB.name)));
+  }
 
   function filterScenarios (searchStr) {
     // Reset scenario list if search field is empty
@@ -40,7 +67,7 @@ const ScenarioManagerTreeList = (props) => {
       }
     }
     // Format list and set as tree data
-    setTreeData(formatScenariosToRSTList(datasets, filtered));
+    setTreeData(formatScenariosToRSTList(filtered));
   }
 
   function buildSearchInfo () {
@@ -82,6 +109,7 @@ const ScenarioManagerTreeList = (props) => {
           onChange={ (treeData) => { setTreeData(treeData); } }
           getNodeKey={ ({ node }) => node.id }
           onMoveNode={ (moveData) => { moveScenario(moveData); } }
+          onVisibilityToggle={ ({ node, expanded }) => { expandedNodes.current[node.id] = expanded; } }
           canDrag={false}
           rowHeight={150}
         />
@@ -93,21 +121,10 @@ const ScenarioManagerTreeList = (props) => {
 ScenarioManagerTreeList.propTypes = {
   datasets: PropTypes.array.isRequired,
   scenarios: PropTypes.array.isRequired,
-  moveScenario: PropTypes.func.isRequired
+  deleteScenario: PropTypes.func.isRequired,
+  moveScenario: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired
 };
-
-function formatScenariosToRSTList (datasets, scenarios) {
-  const rstScenarios = scenarios.map((scenario) => {
-    return {
-      parentId: scenario.parentId,
-      id: scenario.id,
-      name: scenario.name,
-      title: <ScenarioNode datasets={datasets} scenario={scenario}/>
-    };
-  });
-  return ScenarioUtils.getScenarioTree(rstScenarios,
-    (scenA, scenB) => (scenA.name.localeCompare(scenB.name)));
-}
 
 // Function to ignore drag & drop events in the parent div, to prevent
 // some behavior such as text drag & drop opening a new tab in the browser

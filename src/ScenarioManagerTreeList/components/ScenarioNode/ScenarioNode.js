@@ -1,19 +1,32 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { DatasetUtils } from '@cosmotech/core';
+import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';
 
 const ScenarioNode = ({
   datasets,
-  scenario
+  scenario,
+  showDeleteIcon,
+  deleteScenario
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
+
+  const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const openConfirmDialog = () => { setIsConfirmDialogOpen(true); };
+  const closeConfirmDialog = () => { setIsConfirmDialogOpen(false); };
+
+  function confirmScenarioDelete () {
+    closeConfirmDialog();
+    deleteScenario(scenario.id);
+  }
 
   function getStatusLabel () {
     return t('commoncomponents.scenariomanager.treelist.node.status.label', 'Run status') + ':';
@@ -35,11 +48,29 @@ const ScenarioNode = ({
 
   return (
     <React.Fragment>
+      <ConfirmDeleteDialog
+        open={isConfirmDialogOpen}
+        closeDialog={ closeConfirmDialog }
+        confirmDelete={ confirmScenarioDelete }
+      >
+      </ConfirmDeleteDialog>
       <Typography className={classes.scenarioHeader} color="textSecondary" gutterBottom>
         <span>
           <span className={classes.scenarioHeaderItem}>{scenario.ownerName}</span>
           <span className={classes.scenarioHeaderItem}>-</span>
           <span className={classes.scenarioHeaderItem}>{scenario.creationDate.toLocaleString()}</span>
+          {
+            showDeleteIcon && (
+              <IconButton
+                color="default"
+                aria-label="delete scenario"
+                size="small"
+                onClick={ openConfirmDialog }
+              >
+                <DeleteForeverIcon fontSize="small"/>
+              </IconButton>
+            )
+          }
         </span>
       </Typography>
       <Typography className={classes.scenarioTitle} variant="h4" data-content={scenario.name}>
@@ -63,7 +94,9 @@ const ScenarioNode = ({
 
 ScenarioNode.propTypes = {
   datasets: PropTypes.array.isRequired,
-  scenario: PropTypes.object.isRequired
+  scenario: PropTypes.object.isRequired,
+  showDeleteIcon: PropTypes.bool.isRequired,
+  deleteScenario: PropTypes.func.isRequired
 };
 
 function getStatusClassName (classes, scenarioState) {
