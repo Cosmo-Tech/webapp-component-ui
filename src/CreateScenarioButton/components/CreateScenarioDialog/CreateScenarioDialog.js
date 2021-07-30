@@ -180,6 +180,12 @@ const CreateScenarioDialog = ({
     closeDialog();
   };
 
+  const onClose = (event, reason) => {
+    if (reason !=='backdropClick') {
+      handleCloseDialog();
+    }
+  };
+
   return (
     <Dialog
       open={open}
@@ -187,7 +193,8 @@ const CreateScenarioDialog = ({
       aria-labelledby="form-dialog-title"
       maxWidth={'sm'}
       fullWidth={true}
-      disableBackdropClick >
+      onClose={onClose}
+    >
       <DialogTitle id="form-dialog-title">
         {t(CREATE_SCENARIO_LABELS.DIALOG_TITLE, 'Create alternative scenario')}
       </DialogTitle>
@@ -196,7 +203,7 @@ const CreateScenarioDialog = ({
           <Grid item xs={12}>
             <TextField
              onChange={handleChangeScenarioName}
-             onBlur = {handleChangeScenarioName}
+             onBlur={handleChangeScenarioName}
              autoFocus
              id="scenarioName"
              value={scenarioNameFieldValues.value}

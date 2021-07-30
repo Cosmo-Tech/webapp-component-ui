@@ -23,26 +23,34 @@ const SimpleTwoActionsDialog = ({
   handleClickOnValidate
 }) => {
   const { t } = useTranslation();
+
+  const onClose = (event, reason) => {
+    if (reason !=='backdropClick') {
+      handleClickOnCancel();
+    }
+  };
+
   return (
-        <Dialog open={open} aria-labelledby="discard-changes-dialog"
-                maxWidth={'xs'}
-                fullWidth={true}
-                disableBackdropClick>
-            <DialogTitle id="discard-changes-dialog-title">
-              {t(dialogTitleKey, 'Dialog title')}
-            </DialogTitle>
-            <DialogContent>
-                <Typography variant='body1'>{t(dialogBodyKey, 'Dialog Body')}</Typography>
-            </DialogContent>
-            <DialogActions >
-                <Button id="ButtonCancel" onClick={handleClickOnCancel} color="primary">
-                    {t(cancelLabelKey, 'Cancel label')}
-                </Button>
-                <Button id="ButtonDiscard" onClick={handleClickOnValidate} color="primary">
-                    {t(validateLabelKey, 'Validate label')}
-                </Button>
-            </DialogActions>
-        </Dialog>
+    <Dialog open={open} aria-labelledby="discard-changes-dialog"
+      maxWidth={'xs'}
+      fullWidth={true}
+      onClose={onClose}
+    >
+      <DialogTitle id="discard-changes-dialog-title">
+        {t(dialogTitleKey, 'Dialog title')}
+      </DialogTitle>
+      <DialogContent>
+        <Typography variant='body1'>{t(dialogBodyKey, 'Dialog Body')}</Typography>
+      </DialogContent>
+      <DialogActions >
+        <Button id="ButtonCancel" onClick={handleClickOnCancel} color="primary">
+          {t(cancelLabelKey, 'Cancel label')}
+        </Button>
+        <Button id="ButtonDiscard" onClick={handleClickOnValidate} color="primary">
+          {t(validateLabelKey, 'Validate label')}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
