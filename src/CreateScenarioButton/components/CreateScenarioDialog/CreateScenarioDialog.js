@@ -188,6 +188,7 @@ const CreateScenarioDialog = ({
 
   return (
     <Dialog
+      data-cy="create-scenario-dialog"
       open={open}
       aria-labelledby="form-dialog-title"
       maxWidth={'sm'}
@@ -201,21 +202,24 @@ const CreateScenarioDialog = ({
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
-             onChange={handleChangeScenarioName}
-             onBlur={handleChangeScenarioName}
-             autoFocus
-             id="scenarioName"
-             value={scenarioNameFieldValues.value}
-             error={scenarioNameFieldValues.hasError}
-             label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_NAME)}
-             helperText={t(scenarioNameFieldValues.errorKey)}
-             fullWidth />
+              data-cy="create-scenario-dialog-name-textfield"
+              onChange={handleChangeScenarioName}
+              onBlur = {handleChangeScenarioName}
+              autoFocus
+              id="scenarioName"
+              value={scenarioNameFieldValues.value}
+              error={scenarioNameFieldValues.hasError}
+              label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_NAME)}
+              helperText={t(scenarioNameFieldValues.errorKey)}
+              fullWidth
+            />
           </Grid>
           {currentScenarioSelected &&
           <Grid item xs={12}>
             <FormControlLabel
               control={
                 <Checkbox
+                  data-cy="create-scenario-dialog-master-checkbox"
                   checked={isMaster}
                   onChange={handleChangeScenarioMaster}
                   id="isScenarioMaster"
@@ -227,8 +231,9 @@ const CreateScenarioDialog = ({
           <Grid item xs={12}>
             { isMaster || !currentScenarioSelected
               ? (<Autocomplete
+                  data-cy="create-scenario-dialog-dataset-select"
+                  id="dataset"
                   disableClearable={true}
-                  id='dataset'
                   options={filteredDatasets}
                   defaultValue={datasetFieldValues}
                   onChange={
@@ -257,6 +262,7 @@ const CreateScenarioDialog = ({
           </Grid>
           <Grid item xs={12}>
             <Autocomplete
+              data-cy="create-scenario-dialog-type-select"
               id='scenarioType'
               disableClearable={true}
               value={scenarioTypeFieldValues}
@@ -278,17 +284,22 @@ const CreateScenarioDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-          <Button id="cancel"
-                  onClick={handleCloseDialog}
-                  color="primary">
-              {t(CREATE_SCENARIO_LABELS.DIALOG_CANCEL, 'Cancel')}
-          </Button>
-          <Button id="create"
-                  disabled={createScenarioDisabled}
-                  onClick={handleCreateScenario}
-                  color="primary">
-              {t(CREATE_SCENARIO_LABELS.DIALOG_CREATE, 'Create')}
-          </Button>
+        <Button
+          id="cancel"
+          onClick={handleCloseDialog}
+          color="primary"
+        >
+          {t(CREATE_SCENARIO_LABELS.DIALOG_CANCEL, 'Cancel')}
+        </Button>
+        <Button
+          id="create"
+          data-cy="create-scenario-dialog-submit-button"
+          disabled={createScenarioDisabled}
+          onClick={handleCreateScenario}
+          color="primary"
+        >
+          {t(CREATE_SCENARIO_LABELS.DIALOG_CREATE, 'Create')}
+        </Button>
       </DialogActions>
     </Dialog>
   );
