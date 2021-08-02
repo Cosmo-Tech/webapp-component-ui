@@ -16,7 +16,7 @@ const BasicNumberInput = (props) => {
   const classes = useStyles();
   const { label, textFieldProps, inputProps, changeNumberField } = props;
   // Optional props for UI
-  let { containerProps, labelProps } = props;
+  let { containerProps, labelProps, ...otherProps } = props;
   containerProps = containerProps || {
     direction: 'row',
     alignItems: 'center',
@@ -28,7 +28,7 @@ const BasicNumberInput = (props) => {
   };
 
   return (
-    <Grid container className={classes.root} {...containerProps}>
+    <Grid container className={classes.root} {...containerProps} {...otherProps}>
       <Grid item >
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
