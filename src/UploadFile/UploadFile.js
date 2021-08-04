@@ -20,7 +20,6 @@ import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
 const UploadFile = (props) => {
   const {
-    classes,
     acceptedFileTypes,
     handleUploadFile,
     handleDeleteFile,
@@ -32,7 +31,7 @@ const UploadFile = (props) => {
   const { t } = useTranslation();
 
   return (
-    <div className={classes.root}>
+    <div>
       <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
         <Grid item>
           <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
@@ -93,7 +92,6 @@ const UploadFile = (props) => {
 };
 
 UploadFile.propTypes = {
-  classes: PropTypes.any,
   acceptedFileTypes: PropTypes.string,
   handleUploadFile: PropTypes.func.isRequired,
   handleDeleteFile: PropTypes.func.isRequired,
