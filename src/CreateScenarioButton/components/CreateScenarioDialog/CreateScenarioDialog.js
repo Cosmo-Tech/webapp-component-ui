@@ -181,7 +181,7 @@ const CreateScenarioDialog = ({
   };
 
   const onClose = (event, reason) => {
-    if (reason !=='backdropClick') {
+    if (reason !== 'backdropClick') {
       handleCloseDialog();
     }
   };
@@ -189,7 +189,6 @@ const CreateScenarioDialog = ({
   return (
     <Dialog
       open={open}
-      onClose={handleCloseDialog}
       aria-labelledby="form-dialog-title"
       maxWidth={'sm'}
       fullWidth={true}

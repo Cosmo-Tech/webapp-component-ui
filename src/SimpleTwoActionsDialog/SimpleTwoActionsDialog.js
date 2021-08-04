@@ -25,7 +25,7 @@ const SimpleTwoActionsDialog = ({
   const { t } = useTranslation();
 
   const onClose = (event, reason) => {
-    if (reason !=='backdropClick') {
+    if (reason !== 'backdropClick') {
       handleClickOnCancel();
     }
   };
