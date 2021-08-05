@@ -958,9 +958,9 @@
     to-fast-properties "^2.0.0"
 
 "@cosmotech/azure@^0.8.10":
-  version "0.8.13"
-  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.13.tgz#55adec985ae649131e5eaadfbcea24aa63097610"
-  integrity sha512-X0go8jLFO4lmGV24AFm1ddKuo8whs4FB/V8NXrucMNq2pM30dMFrRD6+nFnCqjZcF5XXJvZBrUjT4xnMNlv3dQ==
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.14.tgz#5a18a2a2dcca84a8acb34e83879524fcf3aa4e95"
+  integrity sha512-8mJHvNldwNIX3U3Kw7BCcbpdHOlSn6MQ03SVNb0ltYAwHTBZ8hfZM0APvaHm11FIX7Fh1e/zZV2zPi7Kf7rU6g==
   dependencies:
     "@azure/msal-browser" "^2.8.0"
 
