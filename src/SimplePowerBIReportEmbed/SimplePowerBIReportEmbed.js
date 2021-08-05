@@ -73,7 +73,7 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
     };
     addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
     setEmbedConfig(newConfig);
-  }, [reports, staticFilters, settings, additionalFilters, reportId, pageName, lang]);
+  }, [lang, scenario]);
 
   return (
       <>
@@ -100,9 +100,12 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
             downloadLogsFile={downloadLogsFile}
           />
         }
-        {
-          isReady && <PowerBIEmbed cssClassName={classes.divContainer} embedConfig={embedConfig} />
-        }
+        <div className={classes.divContainer} hidden={!isReady}>
+          <PowerBIEmbed
+            cssClassName={classes.divContainer}
+            embedConfig={embedConfig}
+          />
+        </div>
       </>
   );
 };
