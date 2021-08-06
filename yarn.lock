@@ -957,17 +957,17 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
-"@cosmotech/azure@^0.8.10":
-  version "0.8.14"
-  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.14.tgz#5a18a2a2dcca84a8acb34e83879524fcf3aa4e95"
-  integrity sha512-8mJHvNldwNIX3U3Kw7BCcbpdHOlSn6MQ03SVNb0ltYAwHTBZ8hfZM0APvaHm11FIX7Fh1e/zZV2zPi7Kf7rU6g==
+"@cosmotech/azure@^0.8.15":
+  version "0.8.15"
+  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.15.tgz#5639bb62ebeddcbd0017181ac53bfb2e8054fdfe"
+  integrity sha512-kYPgeByfvrgGQkgoGbOiD++VqNquz8eMsTtL/RYq5qoiRP8b/t5zY91VrJao+mKGtSDMDy87yEBXjXyzT64j6A==
   dependencies:
     "@azure/msal-browser" "^2.8.0"
 
-"@cosmotech/core@^1.1.3":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.3.1.tgz#0dedccf068e0c6a2e78da377350930ac0141d4fa"
-  integrity sha512-UeHqqnnpErBDT7spIpjgw6v37xuPUGPK/NjY3f1T9NguO4rAYupbJfsA7qZy1SoO7UNk2kDN7gITWt+rTjtofw==
+"@cosmotech/core@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.3.2.tgz#e13d9618cddbacfc3a4dac67072910139784e0ee"
+  integrity sha512-bzyD1Inh3j2ijFM2J0hQgZBa9isxi2axq5qtnt4TlBAHW2UVdZ2blARp3cO0KK0pN5TIsL31HB86UBzYX/Y9+g==
 
 "@date-io/core@1.x", "@date-io/core@^1.3.13":
   version "1.3.13"
