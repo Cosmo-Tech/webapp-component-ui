@@ -32,7 +32,7 @@ const DashboardPlaceholder = (props) => {
     <Grid container
       spacing={2}
       direction="column"
-      justify="center"
+      justifyContent="center"
       wrap="nowrap"
       alignItems="center"
       className={classes.gridContainer}

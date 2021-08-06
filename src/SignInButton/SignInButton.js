@@ -43,7 +43,7 @@ const SignInButton = (props) => {
         className={classes.mainGrid}
         direction="row"
         alignItems="center"
-        justify="flex-start"
+        justifyContent="flex-start"
       >
         <Grid item>
           <Avatar

@@ -32,7 +32,7 @@ const UploadFile = (props) => {
 
   return (
     <div>
-      <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
+      <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
         <Grid item>
           <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
             {t('genericcomponent.uploadfile.button.browse', 'Browse')}
@@ -42,11 +42,11 @@ const UploadFile = (props) => {
         <Grid item>
           { (file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
             file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
-            <Grid container spacing={3} direction="row" justify="flex-start" alignItems="center">
+            <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item>
                 { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
                   <Link component="button" onClick={handleDownloadFile} download>
-                    <Grid container spacing={2} direction="row" justify="flex-start" alignItems="center">
+                    <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                       <Grid item>
                         <GetAppIcon/>
                       </Grid>
