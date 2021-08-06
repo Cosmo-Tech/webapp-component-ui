@@ -25,14 +25,17 @@ const HierarchicalComboBox = ({
       options={values}
       getOptionSelected={(option, value) => option.id === value.id}
       getOptionLabel={(option) => Object.keys(option).length !== 0 ? option.name : ''}
-      renderOption={(option) => (
-        <span
-          data-testid={'option-' + option.id}
-          style={{ marginLeft: option.depth * 20 }}
-        >
-          {option.name}
-        </span>
-      )}
+      renderOption={(option) => {
+        const marginLeft = option.depth * 20 || 0;
+        return (
+          <span
+            data-testid={'option-' + option.id}
+            style={{ marginLeft: marginLeft }}
+          >
+            {option.name}
+          </span>
+        );
+      } }
       renderInput={(params) => (
         <Tooltip arrow title={renderInputToolType}>
           <TextField
