@@ -24,6 +24,7 @@ const ScenarioManagerTreeList = (props) => {
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
   const expandedNodes = useRef([]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios]);
 
   const [searchText, setSearchText] = useState('');
@@ -32,7 +33,8 @@ const ScenarioManagerTreeList = (props) => {
   // On scenarios list update, re-apply current filter on the new list of scenarios
   useEffect(() => {
     filterScenarios(searchText);
-  }, [scenarios]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenarios, searchText]);
 
   function formatScenariosToRSTList (treeScenarios) {
     const rstScenarios = treeScenarios.map((scenario) => {

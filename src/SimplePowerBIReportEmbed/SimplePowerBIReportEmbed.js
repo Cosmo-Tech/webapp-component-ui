@@ -73,6 +73,7 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
     };
     addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
     setEmbedConfig(newConfig);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, scenario]);
 
   return (
