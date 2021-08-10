@@ -13,47 +13,43 @@ import {
 import EvolutionText from '../EvolutionText';
 import useStyles from './muiStyles';
 
-class CardKPI extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-    };
-  }
+const CardKPI = (props) => {
+  const classes = useStyles();
 
-  formatValue (value) {
-    if (this.props.isTime) {
+  const formatValue = (value) => {
+    if (props.isTime) {
       return formatAsTime(value);
     }
     return formatFloat(value);
-  }
+  };
 
-  processData () {
+  const processData = () => {
     // Default values if data is missing
-    if (this.props.value === undefined) {
+    if (props.value === undefined) {
       return { value: '---', evolution: undefined };
     }
 
     // Format new indicator value
     let formattedValue;
-    let value = Number(this.props.value);
+    let value = Number(props.value);
     if (Number.isNaN(value)) {
       value = 0;
     }
-    formattedValue = this.formatValue(value);
+    formattedValue = formatValue(value);
 
     // Compute evolution between new & reference value
     let diff;
     let formattedDiff;
-    if (this.props.reference !== undefined) {
-      let ref = Number(this.props.reference);
+    if (props.reference !== undefined) {
+      let ref = Number(props.reference);
       if (Number.isNaN(ref)) {
         ref = 0;
       }
       // If "diff" comparison is enabled, show the difference instead of the
       // percent change
-      if (this.props.diff) {
+      if (props.diff) {
         diff = value - ref;
-        formattedDiff = this.formatValue(diff);
+        formattedDiff = formatValue(diff);
         if (diff > 0) {
           formattedDiff = '+' + formattedDiff;
         }
@@ -61,7 +57,7 @@ class CardKPI extends React.Component {
       // expressed as a percentage
       } else if (ref === 0 && value !== 0) {
         // Do not use percentage if reference value is zero
-        formattedDiff = '+' + this.formatValue(value);
+        formattedDiff = '+' + formatValue(value);
       } else {
         diff = 100.0 * (value - ref) / ref;
         formattedDiff = formatFloat(diff);
@@ -72,38 +68,35 @@ class CardKPI extends React.Component {
       }
     }
 
-    formattedValue = this.props.isTime ? formatTimeAsJsx(value) : formattedValue;
+    formattedValue = props.isTime ? formatTimeAsJsx(value) : formattedValue;
     return {
       value: formattedValue,
       evolution: formattedDiff
     };
-  }
+  };
 
-  render () {
-    const classes = useStyles();
-    // Retrieve value & evolution to display from props
-    const { value, evolution } = this.processData();
+  // Retrieve value & evolution to display from props
+  const { value, evolution } = processData();
 
-    return (
-      <Card className={classes.card}>
-        <CardContent className={classes.content}>
-          <Typography className={classes.title} color="textSecondary">
-            {this.props.title}
+  return (
+    <Card className={classes.card}>
+      <CardContent className={classes.content}>
+        <Typography className={classes.title} color="textSecondary">
+          {props.title}
+        </Typography>
+        <Box className={classes.numerics}>
+          <EvolutionText
+              value={evolution}
+              shiftColors={props.shiftColors}
+          />
+          <Typography className={classes.value}>
+            {value}
           </Typography>
-          <Box className={classes.numerics}>
-            <EvolutionText
-                value={evolution}
-                shiftColors={this.props.shiftColors}
-            />
-            <Typography className={classes.value}>
-              {value}
-            </Typography>
-          </Box>
-        </CardContent>
-      </Card>
-    );
-  }
-}
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
 
 function formatFloat (value) {
   let newVal = Number(value).toFixed(2);

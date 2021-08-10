@@ -16,56 +16,22 @@ const DIRECTION = {
   NONE: 3
 };
 
-class EvolutionText extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-    };
-  }
+const EvolutionText = (props) => {
+  const classes = useStyles();
+  const {
+    shiftColors,
+    value
+  } = props;
 
-  render () {
-    const classes = useStyles();
-    const dir = this.getDirection(this.props.value);
-    if (dir === DIRECTION.UNKNOWN || dir === DIRECTION.NONE) {
-      return (
-        <div className={classes.elem}>
-        </div>
-      );
-    }
-
-    return (
-      <div className={classes.elem}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          {this.getIcon(this.props.value, this.props.shiftColors)}
-        </div>
-        <div className={classes.elem}>
-          <Typography className={classes.evolution}>
-            <span
-              className={this.getClass(this.props.value,
-                this.props.shiftColors)}
-            >
-              {this.props.value}
-            </span>
-          </Typography>
-        </div>
-      </div>
-    );
-  }
-
-  getDirection (value) {
+  const getDirection = (value) => {
     if (value === undefined) return DIRECTION.UNKNOWN;
     if (value[0] === '-') return DIRECTION.DOWN;
     if (value[0] === '+') return DIRECTION.UP;
     return DIRECTION.NONE;
-  }
+  };
 
-  getClass (value, shift) {
-    const classes = useStyles();
-
-    const direction = this.getDirection(value);
+  const getClass = (classes, value, shift) => {
+    const direction = getDirection(value);
     if (direction === DIRECTION.UNKNOWN) return classes.default;
     if (shift === true) {
       // Shift colors if option is enabled
@@ -76,23 +42,45 @@ class EvolutionText extends React.Component {
       if (direction === DIRECTION.UP) return classes.up;
     }
     return classes.down;
-  }
+  };
 
-  getIcon (value, shift) {
-    const classes = useStyles();
-    const colorClass = this.getClass(value, shift);
-
-    const direction = this.getDirection(value);
+  const getIcon = (classes, value, shift) => {
+    const colorClass = getClass(classes, value, shift);
+    const direction = getDirection(value);
     if (direction === DIRECTION.UNKNOWN) return;
-    if (direction === DIRECTION.DOWN) return (<CallReceivedIcon className={[classes.downArrow, colorClass].join(' ')} />);
+    if (direction === DIRECTION.DOWN) {
+      return (<CallReceivedIcon className={[classes.downArrow, colorClass].join(' ')} />);
+    }
     if (direction === DIRECTION.UP) return (<CallMadeIcon className={[classes.upArrow, colorClass].join(' ')} />);
+    return (<CallReceivedIcon className={[classes.downArrow, colorClass].join(' ')} />);
+  };
+
+  const dir = getDirection(props.value);
+  if (dir === DIRECTION.UNKNOWN || dir === DIRECTION.NONE) {
     return (
-      <CallReceivedIcon
-        className={[classes.downArrow, colorClass].join(' ')}
-      />
+      <div className={classes.elem}>
+      </div>
     );
   }
-}
+
+  return (
+    <div className={classes.elem}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center'
+      }}>
+        {getIcon(classes, value, shiftColors)}
+      </div>
+      <div className={classes.elem}>
+        <Typography className={classes.evolution}>
+          <span className={getClass(classes, value, shiftColors)}>
+            {value}
+          </span>
+        </Typography>
+      </div>
+    </div>
+  );
+};
 
 EvolutionText.propTypes = {
   shiftColors: PropTypes.bool,
