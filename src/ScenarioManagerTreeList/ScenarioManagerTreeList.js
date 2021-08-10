@@ -74,12 +74,12 @@ const ScenarioManagerTreeList = (props) => {
     return t('commoncomponents.scenariomanager.treelist.search.info',
       '{{count}} scenarios found',
       { count: ScenarioUtils.countScenariosInTree(treeData) });
-  };
+  }
 
   function onSearchTextChange (event) {
     setSearchText(event.target.value);
     filterScenarios(event.target.value);
-  };
+  }
 
   // Function to generate the buttons in the scenario tree
   function generateNodeProps ({ node, path }) {
@@ -130,6 +130,6 @@ ScenarioManagerTreeList.propTypes = {
 // some behavior such as text drag & drop opening a new tab in the browser
 function ignoreEvent (event) {
   event.preventDefault();
-};
+}
 
 export default ScenarioManagerTreeList;
