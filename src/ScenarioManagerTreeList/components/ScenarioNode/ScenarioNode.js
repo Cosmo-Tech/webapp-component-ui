@@ -58,7 +58,7 @@ const ScenarioNode = ({
         <span>
           <span className={classes.scenarioHeaderItem}>{scenario.ownerName}</span>
           <span className={classes.scenarioHeaderItem}>-</span>
-          <span className={classes.scenarioHeaderItem}>{scenario.creationDate.toLocaleString()}</span>
+          <span className={classes.scenarioHeaderItem}>{new Date(scenario.creationDate).toLocaleString()}</span>
           {
             showDeleteIcon && (
               <IconButton
