@@ -14,9 +14,9 @@ const useStyles = makeStyles(theme => ({
 
 const BasicNumberInput = (props) => {
   const classes = useStyles();
-  const { label, textFieldProps, inputProps, changeNumberField } = props;
+  const { label, textFieldProps, inputProps, changeNumberField, ...otherProps } = props;
   // Optional props for UI
-  let { containerProps, labelProps, ...otherProps } = props;
+  let { containerProps, labelProps } = props;
   containerProps = containerProps || {
     direction: 'row',
     alignItems: 'center',
