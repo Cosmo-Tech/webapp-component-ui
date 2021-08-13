@@ -32,6 +32,7 @@ const CreateScenarioButton = ({
       <Tooltip arrow title={buttonTooltip}>
         <div>
           <Button
+            data-cy="create-scenario-button"
             size="medium"
             startIcon={<AddIcon />}
             variant="text"

@@ -40,6 +40,7 @@ const HierarchicalComboBox = ({
         <Tooltip arrow title={renderInputToolType}>
           <TextField
             {...params}
+            data-cy="scenario-select-input"
             placeholder={label}
             label={label}
             variant="outlined"

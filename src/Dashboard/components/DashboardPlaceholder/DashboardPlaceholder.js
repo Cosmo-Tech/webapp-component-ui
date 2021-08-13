@@ -49,6 +49,7 @@ const DashboardPlaceholder = (props) => {
           </div>
         }
         <Typography
+          data-cy="dashboard-placeholder"
           color="textSecondary"
           className={classes.label}
         >
