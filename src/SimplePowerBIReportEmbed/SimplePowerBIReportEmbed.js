@@ -4,7 +4,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import IconButton from '@material-ui/core/IconButton';
+import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +37,9 @@ const useStyles = makeStyles(theme => ({
   errorDescription: {
     fontWeight: 'bold',
     fontSize: 'small'
+  },
+  toolbar: {
+    height: '10px'
   }
 }));
 
@@ -82,6 +86,8 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
 
+  // PowerBI Report object (received via callback)
+  const [report, setReport] = useState();
   const [embedConfig, setEmbedConfig] = useState({
     type: 'report',
     id: reportId,
@@ -152,9 +158,17 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
           />
         }
         <div className={classes.divContainer} hidden={!isReady}>
+          <div className={classes.toolbar}>
+            <IconButton aria-label="refresh" disabled={!report} color="primary" onClick={() => { report.refresh(); }}>
+              <RefreshIcon />
+            </IconButton>
+          </div>
           <PowerBIEmbed
             cssClassName={classes.divContainer}
             embedConfig={embedConfig}
+            getEmbeddedComponent={ (embedObject) => {
+              setReport(embedObject);
+            } }
           />
         </div>
       </div>
