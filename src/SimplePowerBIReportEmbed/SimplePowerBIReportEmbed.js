@@ -68,7 +68,7 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
       type: 'report',
       id: reportId,
       tokenType: 1,
-      embedUrl: reports.data?.reportsInfo[reportId]?.embedUrl,
+      embedUrl: reports.data?.reportsInfo?.[reportId]?.embedUrl,
       accessToken: reports.data?.accessToken
     };
     addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
