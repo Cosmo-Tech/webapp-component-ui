@@ -11,11 +11,50 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    height: '100%',
+    width: '100%',
+    position: 'relative'
+  },
   divContainer: {
     height: '100%',
     width: '100%'
+  },
+  errorContainer: {
+    height: '50px',
+    width: '100%',
+    position: 'absolute',
+    textAlign: 'center',
+    padding: '5px 0',
+    backgroundColor: theme.palette.error.dark,
+    color: theme.palette.error.contrastText
+  },
+  errorTitle: {
+    fontWeight: 'bold',
+    fontSize: 'large'
+  },
+  errorDescription: {
+    fontWeight: 'bold',
+    fontSize: 'small'
   }
 }));
+
+function getErrorCode (t, reports) {
+  let errorCode = t('commoncomponents.iframe.scenario.error.unknown.label', 'Unknown error');
+  if (reports?.error?.status && reports?.error?.statusText) {
+    errorCode = `${reports?.error?.status} - ${reports?.error?.statusText}`;
+  }
+  return errorCode;
+}
+
+function getErrorDescription (t, reports) {
+  let errorDescription = t('commoncomponents.iframe.scenario.error.unknown.details',
+    'Something went wrong when fetching PowerBI reports info');
+  if (reports?.error?.powerBIErrorInfo) {
+    errorDescription = reports?.error?.powerBIErrorInfo;
+  }
+  return errorDescription;
+}
 
 function addDynamicParameters (pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
   if (pageName !== undefined && pageName[lang] !== undefined) {
@@ -76,8 +115,19 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, scenario]);
 
+  const errorCode = getErrorCode(t, reports);
+  const errorDescription = getErrorDescription(t, reports);
+
   return (
-      <>
+      <div className={classes.root}>
+        <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
+          <div className={classes.errorTitle}>
+            { errorCode }
+          </div>
+          <div className={classes.errorDescription}>
+            { errorDescription }
+          </div>
+        </div>
         { noScenario && <DashboardPlaceholder
             label={t('commoncomponents.iframe.scenario.noscenario.label',
               'You can create a scenario by clicking on') + ' "' +
@@ -107,7 +157,7 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
             embedConfig={embedConfig}
           />
         </div>
-      </>
+      </div>
   );
 };
 
