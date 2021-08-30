@@ -958,16 +958,16 @@
     to-fast-properties "^2.0.0"
 
 "@cosmotech/azure@^0.8.15":
-  version "0.8.19"
-  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.19.tgz#226d07cbcc6ce0f7b2f55647ae94d30a1545ada3"
-  integrity sha512-DHGofCPHpltyJtgRGM+Wx4wjCG5FIOKxHFwtFIJq9MCQ1a6qk1CBY1fqOMibO3Fnq2c4z2KgBI6x1f3/KNRUWg==
+  version "0.8.20"
+  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.20.tgz#18d4221196bce6da3e79b797f060b28c6f814fde"
+  integrity sha512-YVo3oTFmxg2ceOjw3DxKoMtrY5s9g6QZvh5O9jMyzaJBkFWcpxYgAFyj9BNsNTECVgpNHDJ7MPV7OQbMCnWNfw==
   dependencies:
     "@azure/msal-browser" "^2.8.0"
 
 "@cosmotech/core@^1.3.2":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.3.6.tgz#6b08cc2fe7bba0a5e707f86e2b7e872abe90d8e3"
-  integrity sha512-h300vGFneQKUNSDiEznK5MxDWWEf+6m4HLE4dsSL1W4rxHcy/sX5yGL+VfWqts9SqrlGyGAX2fefvcnC4qz8RQ==
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.3.7.tgz#f891722adf48a1eab012ace1dae96ef52d631e18"
+  integrity sha512-mqhlkEVOeaC3UIUJdNLBsPfJFAQQamuySNCuHDSoSWa9O42SaUSe/WMwWj5WmLxzd8wEYuHwRwL4McGr+SKMWw==
 
 "@date-io/core@1.x", "@date-io/core@^1.3.13":
   version "1.3.13"
