@@ -43,10 +43,18 @@ const SimpleTwoActionsDialog = ({
         <Typography variant='body1'>{t(dialogBodyKey, 'Dialog Body')}</Typography>
       </DialogContent>
       <DialogActions >
-        <Button id="ButtonCancel" onClick={handleClickOnCancel} color="primary">
+        <Button
+          id="ButtonCancel"
+          onClick={handleClickOnCancel}
+          color="primary">
           {t(cancelLabelKey, 'Cancel label')}
         </Button>
-        <Button id="ButtonDiscard" onClick={handleClickOnValidate} color="primary">
+        <Button
+          data-cy='dialog-discard-button'
+          id="ButtonDiscard"
+          onClick={handleClickOnValidate}
+          color="primary"
+        >
           {t(validateLabelKey, 'Validate label')}
         </Button>
       </DialogActions>
