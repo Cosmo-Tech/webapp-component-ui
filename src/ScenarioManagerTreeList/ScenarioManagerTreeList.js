@@ -93,7 +93,11 @@ const ScenarioManagerTreeList = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.searchContainer}>
-        <TextField id="standard-search" label="Search field" type="search"
+        <TextField
+          data-cy="scenario-manager-search-field"
+          id="standard-search"
+          label="Search field"
+          type="search"
           className={classes.searchField}
           value={searchText}
           onChange={onSearchTextChange}/>
