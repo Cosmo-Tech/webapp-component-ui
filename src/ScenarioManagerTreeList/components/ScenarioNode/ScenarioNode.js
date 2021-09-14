@@ -54,7 +54,11 @@ const ScenarioNode = ({
         confirmDelete={ confirmScenarioDelete }
       >
       </ConfirmDeleteDialog>
-      <Typography className={classes.scenarioHeader} color="textSecondary" gutterBottom>
+      <Typography
+        className={classes.scenarioHeader}
+        color="textSecondary"
+        gutterBottom
+      >
         <span>
           <span className={classes.scenarioHeaderItem}>{scenario.ownerName}</span>
           <span className={classes.scenarioHeaderItem}>-</span>
@@ -62,6 +66,7 @@ const ScenarioNode = ({
           {
             showDeleteIcon && (
               <IconButton
+                data-cy="scenario-delete-button"
                 color="default"
                 aria-label="delete scenario"
                 size="small"
@@ -73,7 +78,11 @@ const ScenarioNode = ({
           }
         </span>
       </Typography>
-      <Typography className={classes.scenarioTitle} variant="h4" data-content={scenario.name}>
+      <Typography
+        className={classes.scenarioTitle}
+        variant="h4"
+        data-content={scenario.name}
+      >
         {scenario.name}
       </Typography>
       <Typography color="textSecondary">

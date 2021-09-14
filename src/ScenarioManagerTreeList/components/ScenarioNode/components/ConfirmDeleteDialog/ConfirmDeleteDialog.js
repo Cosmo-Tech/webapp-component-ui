@@ -37,6 +37,7 @@ const ConfirmDeleteDialog = ({
 
   return (
     <Dialog
+      data-cy="confirm-scenario-delete-dialog"
       className={classes.root}
       open={open}
       onClose={closeDialog}
