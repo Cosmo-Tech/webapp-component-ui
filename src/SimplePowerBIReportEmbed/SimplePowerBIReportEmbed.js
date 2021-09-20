@@ -4,12 +4,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
+import { IconButton, Tooltip, makeStyles } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -81,13 +80,14 @@ function addDynamicParameters (pageName, lang, newConfig, settings, staticFilter
   }
 }
 
-const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenario, lang, downloadLogsFile }) => {
+const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenario, lang, downloadLogsFile, refreshable, refreshTimeout }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
 
   // PowerBI Report object (received via callback)
   const [report, setReport] = useState();
+  const [disabled, setDisabled] = useState(false);
   const [embedConfig, setEmbedConfig] = useState({
     type: 'report',
     id: reportId,
@@ -124,6 +124,14 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
   const errorCode = getErrorCode(t, reports);
   const errorDescription = getErrorDescription(t, reports);
 
+  const refreshReport = () => {
+    report.refresh();
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    },refreshTimeout);
+  }
+
   return (
       <div className={classes.root}>
         <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
@@ -158,11 +166,15 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
           />
         }
         <div className={classes.divContainer} hidden={!isReady}>
+          { refreshable &&
           <div className={classes.toolbar}>
-            <IconButton aria-label="refresh" disabled={!report} color="primary" onClick={() => { report.refresh(); }}>
-              <RefreshIcon />
-            </IconButton>
+            <Tooltip title={t('commoncomponents.iframe.scenario.results.button.refresh', 'Refresh')}>
+                <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+                  <RefreshIcon/>
+                </IconButton>
+            </Tooltip>)
           </div>
+          }
           <PowerBIEmbed
             cssClassName={classes.divContainer}
             embedConfig={embedConfig}
@@ -181,10 +193,13 @@ SimplePowerBIReportEmbed.propTypes = {
   reportConfiguration: PropTypes.array.isRequired,
   scenario: PropTypes.object,
   lang: PropTypes.string.isRequired,
-  downloadLogsFile: PropTypes.func
+  downloadLogsFile: PropTypes.func,
+  refreshable: PropTypes.bool
 };
 SimplePowerBIReportEmbed.defaultProps = {
-  index: 0
+  index: 0,
+  refreshable: true,
+  refreshTimeout: 15000
 };
 
 export default SimplePowerBIReportEmbed;
