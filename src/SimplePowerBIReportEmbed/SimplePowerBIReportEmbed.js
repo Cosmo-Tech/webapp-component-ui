@@ -80,7 +80,16 @@ function addDynamicParameters (pageName, lang, newConfig, settings, staticFilter
   }
 }
 
-const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenario, lang, downloadLogsFile, refreshable, refreshTimeout }) => {
+const SimplePowerBIReportEmbed = ({
+  index,
+  reports,
+  reportConfiguration,
+  scenario,
+  lang,
+  downloadLogsFile,
+  refreshable,
+  refreshTimeout
+}) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
@@ -129,8 +138,8 @@ const SimplePowerBIReportEmbed = ({ index, reports, reportConfiguration, scenari
     setDisabled(true);
     setTimeout(() => {
       setDisabled(false);
-    },refreshTimeout);
-  }
+    }, refreshTimeout);
+  };
 
   return (
       <div className={classes.root}>
@@ -194,7 +203,8 @@ SimplePowerBIReportEmbed.propTypes = {
   scenario: PropTypes.object,
   lang: PropTypes.string.isRequired,
   downloadLogsFile: PropTypes.func,
-  refreshable: PropTypes.bool
+  refreshable: PropTypes.bool,
+  refreshTimeout: PropTypes.number
 };
 SimplePowerBIReportEmbed.defaultProps = {
   index: 0,
