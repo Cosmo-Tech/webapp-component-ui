@@ -181,7 +181,7 @@ const SimplePowerBIReportEmbed = ({
                 <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
                   <RefreshIcon/>
                 </IconButton>
-            </Tooltip>)
+            </Tooltip>
           </div>
           }
           <PowerBIEmbed
