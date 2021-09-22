@@ -10,12 +10,21 @@ import {
   IconButton,
   Link,
   Tooltip,
-  Typography
+  Typography,
+  makeStyles
 } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
+
+const useStyles = makeStyles(theme => ({
+  uploadFileContainer: {
+    '& > div': {
+      margin: '0'
+    }
+  }
+}));
 
 export const UploadFile = (props) => {
   const {
@@ -26,14 +35,24 @@ export const UploadFile = (props) => {
     file,
     editMode,
     isFileValid,
-    labels
+    labels,
+    ...otherProps
   } = props;
+  const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.uploadFileContainer} {...otherProps}>
       <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
+        <Typography>{labels.label}</Typography>
         <Grid item>
-          <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
+          <Button
+            data-cy="browse-button"
+            id="browse-button"
+            disabled={!editMode}
+            variant="contained"
+            component="label"
+            onChange={handleUploadFile}
+          >
             {labels.button}
             <input type="file" accept={acceptedFileTypes} hidden />
           </Button>
@@ -44,7 +63,13 @@ export const UploadFile = (props) => {
             <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item>
                 { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
-                  <Link component="button" onClick={handleDownloadFile} download>
+                  <Link
+                    data-cy="download-button"
+                    id="download-button"
+                    component="button"
+                    onClick={handleDownloadFile}
+                    download
+                  >
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                       <Grid item>
                         <GetAppIcon/>
@@ -64,7 +89,13 @@ export const UploadFile = (props) => {
                 }
               </Grid>
               <Grid item>
-                <IconButton disabled={!editMode} aria-label="delete" onClick={handleDeleteFile}>
+                <IconButton
+                  data-cy="delete-button"
+                  id="delete-button"
+                  disabled={!editMode}
+                  aria-label="delete"
+                  onClick={handleDeleteFile}
+                >
                   <DeleteForeverIcon />
                 </IconButton>
               </Grid>
@@ -111,12 +142,8 @@ UploadFile.propTypes = {
    * Uploaded file data:
    * Structure :
    * <pre>
-      {
-      parameterId: 'string',
-      description: 'string',
-      initialName: 'string',
+    {
       name: '',
-      file: null,
       status: One Of UPLOAD_FILE_STATUS_KEY.*
     }
     </pre>
@@ -138,13 +165,15 @@ UploadFile.propTypes = {
    * <pre>
      {
       button: 'string',
-      invalidFileMessage: 'string'
+      invalidFileMessage: 'string',
+      label: 'string'
     }
    </pre>
    */
   labels: PropTypes.shape({
     button: PropTypes.string.isRequired,
-    invalidFileMessage: PropTypes.string.isRequired
+    invalidFileMessage: PropTypes.string.isRequired,
+    label: PropTypes.string
   })
 };
 
@@ -154,6 +183,7 @@ UploadFile.defaultProps = {
 
 UploadFile.defaultProps = {
   labels: {
+    label: '',
     button: 'Browse',
     invalidFileMessage: 'Your file is invalid'
   }
