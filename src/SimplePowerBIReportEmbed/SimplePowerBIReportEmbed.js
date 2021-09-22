@@ -18,6 +18,12 @@ const useStyles = makeStyles(theme => ({
   },
   divContainer: {
     height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  report: {
+    height: '100%',
     width: '100%'
   },
   errorContainer: {
@@ -38,7 +44,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: 'small'
   },
   toolbar: {
-    height: '10px'
+    height: '100%'
   }
 }));
 
@@ -174,18 +180,21 @@ const SimplePowerBIReportEmbed = ({
             downloadLogsFile={downloadLogsFile}
           />
         }
-        <div className={classes.divContainer} hidden={!isReady}>
+        <div className={classes.divContainer} style={!isReady ? { display: 'none' } : { }}>
           { refreshable &&
           <div className={classes.toolbar}>
             <Tooltip title={t('commoncomponents.iframe.scenario.results.button.refresh', 'Refresh')}>
-                <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+                <IconButton aria-label="refresh"
+                            disabled={!report || disabled}
+                            color="primary"
+                            onClick={refreshReport}>
                   <RefreshIcon/>
                 </IconButton>
             </Tooltip>
           </div>
           }
           <PowerBIEmbed
-            cssClassName={classes.divContainer}
+            cssClassName={classes.report}
             embedConfig={embedConfig}
             getEmbeddedComponent={ (embedObject) => {
               setReport(embedObject);
