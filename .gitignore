@@ -15,6 +15,9 @@ yarn-error.log
 # idea
 .idea
 
+# docz (https://github.com/doczjs/docz)
+.docz
+
 # npm: use only warn lock file
 package-lock.json
 
