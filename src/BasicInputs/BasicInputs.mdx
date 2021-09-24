@@ -1,0 +1,67 @@
+---
+name: BasicInputs
+route: /BasicInputs
+menu: Inputs
+---
+import { Playground, Props } from 'docz'
+import { BasicEnumInput } from './BasicEnumInput'
+
+# Basic Inputs
+
+The part will list all basic inputs that you can use.
+
+We use react-i18next for translation.
+
+If you want to change button's label, you have to define, in your translation files,
+json path `genericcomponent.button.login.msal.title`
+
+## BasicEnumInput
+
+### Props
+
+<Props of={ BasicEnumInput }/>
+
+### Basic Usage
+
+<Playground>
+{ () => {
+     class BasicEnumInputExample extends React.Component {
+             constructor (props) {
+                 super(props)
+                 this.state = { value: '' }
+             }
+             changeEnumValue(value) {
+                this.setState({ value: value })
+             };
+             render () {
+                return (
+                        <>
+                            <BasicEnumInput
+                             label='Here is a label'
+                             value={this.state.value}
+                             changeEnumField={(value) => this.changeEnumValue(value)}
+                             textFieldProps={
+                                {
+                                  id: 'basic-text-input-id'
+                                }
+                            }
+                             enumValues={
+                                 [{
+                                   key: 'USD',
+                                   value: 'A'
+                                 },
+                                 {
+                                   key: 'EUR',
+                                   value: 'Z'
+                                 }]
+                             }
+                           />
+                       </>
+                )
+            }
+     }
+   return <BasicEnumInputExample/>;
+   }
+}
+
+</Playground>
