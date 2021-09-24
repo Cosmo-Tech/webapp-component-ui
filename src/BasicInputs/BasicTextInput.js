@@ -44,7 +44,7 @@ BasicTextInput.propTypes = {
    */
   changeTextField: PropTypes.func.isRequired,
   /**
-   * Additional props that you can specified for the BasicTextInput's textField that display the enum value selected
+   * Additional props that you can specified for the BasicTextInput's textField that display the text value selected
    */
   textFieldProps: PropTypes.object,
   /**
