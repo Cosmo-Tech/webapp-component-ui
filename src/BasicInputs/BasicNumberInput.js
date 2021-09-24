@@ -58,7 +58,7 @@ BasicNumberInput.propTypes = {
    */
   changeNumberField: PropTypes.func.isRequired,
   /**
-   * Additional props that you can specified for the BasicNumberInput's textField that display the enum value selected
+   * Additional props that you can specified for the BasicNumberInput's textField that display the number value selected
    */
   textFieldProps: PropTypes.object,
   /**
