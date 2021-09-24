@@ -86,5 +86,4 @@ BasicEnumInput.defaultProps = {
   labelProps: {
     variant: 'subtitle2'
   }
-
 };
