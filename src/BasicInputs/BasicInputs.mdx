@@ -7,6 +7,7 @@ import { Playground, Props } from 'docz'
 import { BasicEnumInput } from './BasicEnumInput'
 import { BasicNumberInput } from './BasicNumberInput'
 import { BasicTextInput } from './BasicTextInput'
+import { BasicToggleInput } from './BasicToggleInput'
 
 # Basic Inputs
 
@@ -147,6 +148,48 @@ json path `genericcomponent.button.login.msal.title`
             }
      }
    return <BasicTextInputExample/>;
+   }
+}
+
+</Playground>
+
+
+## BasicToggleInput
+
+### Props
+
+<Props of={ BasicToggleInput }/>
+
+### Basic Usage
+
+<Playground>
+{ () => {
+     class BasicToggleInputExample extends React.Component {
+             constructor (props) {
+                 super(props)
+                 this.state = { value: '' }
+             }
+             changeSwitchValue(value) {
+                this.setState({ value: value })
+             };
+             render () {
+                return (
+                        <>
+                            <BasicToggleInput
+                                 label='Here is a label'
+                                 value={this.state.value}
+                                 changeSwitchType={(value) => this.changeSwitchValue(value)}
+                                 textFieldProps={
+                                    {
+                                      id: 'basic-switch-input-id'
+                                    }
+                                 }
+                           />
+                       </>
+                )
+            }
+     }
+   return <BasicToggleInputExample/>;
    }
 }
 
