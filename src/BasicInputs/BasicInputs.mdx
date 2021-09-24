@@ -5,6 +5,7 @@ menu: Inputs
 ---
 import { Playground, Props } from 'docz'
 import { BasicEnumInput } from './BasicEnumInput'
+import { BasicNumberInput } from './BasicNumberInput'
 
 # Basic Inputs
 
@@ -61,6 +62,48 @@ json path `genericcomponent.button.login.msal.title`
             }
      }
    return <BasicEnumInputExample/>;
+   }
+}
+
+</Playground>
+
+
+## BasicNumberInput
+
+### Props
+
+<Props of={ BasicNumberInput }/>
+
+### Basic Usage
+
+<Playground>
+{ () => {
+     class BasicNumberInputExample extends React.Component {
+             constructor (props) {
+                 super(props)
+                 this.state = { value: '' }
+             }
+             changeNumberValue(value) {
+                this.setState({ value: value })
+             };
+             render () {
+                return (
+                        <>
+                            <BasicNumberInput
+                                 label='Here is a label'
+                                 value={this.state.value}
+                                 changeNumberField={(value) => this.changeNumberValue(value)}
+                                 textFieldProps={
+                                    {
+                                      id: 'basic-number-input-id'
+                                    }
+                                 }
+                           />
+                       </>
+                )
+            }
+     }
+   return <BasicNumberInputExample/>;
    }
 }
 
