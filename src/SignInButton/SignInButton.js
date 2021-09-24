@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignInButton = (props) => {
+export const SignInButton = (props) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -63,7 +63,11 @@ const SignInButton = (props) => {
 };
 
 SignInButton.propTypes = {
+  /**
+   * Function used when the button is clicked.
+   * As you can specify it, you can use custom auth providers:
+   * - Microsoft Authentication Library provider (defined in @cosmotech/azure package)
+   * - Custom one: to do this, use the **Auth.js** file (defined in @cosmotech/core package) as pattern
+   */
   onClick: PropTypes.func.isRequired
 };
-
-export default SignInButton;
