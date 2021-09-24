@@ -55,7 +55,7 @@ BasicEnumInput.propTypes = {
    */
   textFieldProps: PropTypes.object,
   /**
-   * Function used when the user change the BasicEnumInput value
+   * Function used when the user changes the BasicEnumInput value
    */
   changeEnumField: PropTypes.func.isRequired,
   /**

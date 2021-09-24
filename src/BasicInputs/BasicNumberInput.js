@@ -54,7 +54,7 @@ BasicNumberInput.propTypes = {
    */
   value: PropTypes.string.isRequired,
   /**
-   * Function used when the user change the BasicNumberInput value
+   * Function used when the user changes the BasicNumberInput value
    */
   changeNumberField: PropTypes.func.isRequired,
   /**

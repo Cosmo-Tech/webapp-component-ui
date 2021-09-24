@@ -11,19 +11,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasicTextInput = (props) => {
+export const BasicTextInput = (props) => {
   const classes = useStyles();
-  const { label, textFieldProps, changeTextField } = props;
-  let { containerProps, labelProps } = props;
-  containerProps = containerProps || {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2
-  };
-  labelProps = labelProps || {
-    variant: 'subtitle2'
-  };
+  const { label, value, textFieldProps, changeTextField, containerProps, labelProps } = props;
 
   return (
         <Grid container className={classes.root} {...containerProps}>
@@ -32,6 +22,7 @@ const BasicTextInput = (props) => {
             </Grid>
             <Grid item >
                 <TextField {...textFieldProps}
+                  value={value}
                   onChange={(event) => changeTextField(event.target.value)}
                 />
             </Grid>
@@ -40,11 +31,40 @@ const BasicTextInput = (props) => {
 };
 
 BasicTextInput.propTypes = {
+  /**
+   * BasicTextInput's label
+   */
   label: PropTypes.string.isRequired,
+  /**
+   * BasicTextInput's value
+   */
+  value: PropTypes.string.isRequired,
+  /**
+   * Function used when the user changes the BasicTextInput value
+   */
   changeTextField: PropTypes.func.isRequired,
-  textFieldProps: PropTypes.object.isRequired,
+  /**
+   * Additional props that you can specified for the BasicTextInput's textField that display the enum value selected
+   */
+  textFieldProps: PropTypes.object,
+  /**
+   * Additional props that you can specified for the BasicTextInput's Grid container that display both label and input
+   */
   containerProps: PropTypes.object,
+  /**
+   * Additional props that you can specified for the BasicTextInput's label
+   */
   labelProps: PropTypes.object
 };
 
-export default BasicTextInput;
+BasicTextInput.defaultProps = {
+  containerProps: {
+    direction: 'row',
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    spacing: 2
+  },
+  labelProps: {
+    variant: 'subtitle2'
+  }
+};
