@@ -8,6 +8,7 @@ import { BasicEnumInput } from './BasicEnumInput'
 import { BasicNumberInput } from './BasicNumberInput'
 import { BasicTextInput } from './BasicTextInput'
 import { BasicToggleInput } from './BasicToggleInput'
+import { BasicDateInput } from './BasicDateInput'
 
 # Basic Inputs
 
@@ -190,6 +191,54 @@ json path `genericcomponent.button.login.msal.title`
             }
      }
    return <BasicToggleInputExample/>;
+   }
+}
+
+</Playground>
+
+
+## BasicDateInput
+
+### Props
+
+<Props of={ BasicDateInput }/>
+
+### Basic Usage
+
+<Playground>
+{ () => {
+     class BasicDateInputExample extends React.Component {
+             constructor (props) {
+                 super(props)
+                 this.state = { value: '09/03/2021' }
+             }
+             changeDateValue(value) {
+                this.setState({ value: value })
+             };
+             render () {
+                return (
+                        <>
+                            <BasicDateInput
+                                 value={this.state.value}
+                                 changeSelectedDate={(value) => this.changeDateValue(value)}
+                                 format={"MM/dd/yyyy"}
+                                 label={'Pick a date'}
+                                 dateProps={
+                                    {
+                                        id: 'basic-date-input-id',
+                                        minDate: new Date('2014-01-01'),
+                                        maxDate: new Date('2023-01-01'),
+                                        minDateMessage: 'Minimum date is not respected',
+                                        maxDateMessage: 'Maximum date is not respected',
+                                        invalidDateMessage: 'Date is invalid'
+                                    }
+                                 }
+                           />
+                       </>
+                )
+            }
+     }
+   return <BasicDateInputExample/>;
    }
 }
 

@@ -5,4 +5,4 @@ export { BasicTextInput } from './BasicTextInput';
 export { BasicNumberInput } from './BasicNumberInput';
 export { BasicEnumInput } from './BasicEnumInput';
 export { BasicToggleInput } from './BasicToggleInput';
-export { default as BasicDateInput } from './BasicDateInput';
+export { BasicDateInput } from './BasicDateInput';
