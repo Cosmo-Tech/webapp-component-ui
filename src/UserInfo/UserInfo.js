@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     lineHeight: '32px',
     height: '32px',
-    marginLeft: '8px'
+    marginLeft: '8px',
+    color: theme.palette.text.primary
   },
   menu: {
     transform: 'translate3d(0,30px,0) !important'

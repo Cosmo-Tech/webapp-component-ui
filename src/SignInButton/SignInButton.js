@@ -10,7 +10,7 @@ import microsoftLogo from '../../assets/microsoft_logo.png';
 const useStyles = makeStyles(theme => ({
   root: {
     border: 0,
-    background: '#2F2F2F',
+    background: theme.palette.background.signInButton,
     boxShadow: 'none',
     borderRadius: '0px',
     height: '41px',
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '15px',
     font: 'Sogoe UI Regular',
     weight: 600,
-    color: '#FFFFFF'
+    color: theme.palette.text.primary
   }
 }));
 

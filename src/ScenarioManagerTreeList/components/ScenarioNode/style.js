@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
   scenarioTitle: {
     maxWidth: '500px',
-    color: '#F2AE35',
+    color: theme.palette.primary.main,
     marginBottom: '8px',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -24,23 +24,21 @@ const useStyles = makeStyles(theme => ({
       position: 'absolute',
       bottom: '20px',
       padding: '10px',
-      background: '#000',
-      color: '#fff',
       fontSize: '12px',
       whiteSpace: 'break-spaces'
     }
   },
   statusCreated: {
     marginLeft: '5px',
-    color: '#E3E3E3'
+    color: theme.palette.text.info
   },
   statusSuccessful: {
     marginLeft: '5px',
-    color: '#A7CE1F'
+    color: theme.palette.text.success
   },
   statusFailed: {
     marginLeft: '5px',
-    color: '#BD4A02'
+    color: theme.palette.text.error
   },
   datasets: {
     marginLeft: '15px'

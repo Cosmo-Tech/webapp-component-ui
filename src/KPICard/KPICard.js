@@ -79,9 +79,9 @@ const CardKPI = (props) => {
   const { value, evolution } = processData();
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.surface}>
       <CardContent className={classes.content}>
-        <Typography className={classes.title} color="textSecondary">
+        <Typography className={classes.title}>
           {props.title}
         </Typography>
         <Box className={classes.numerics}>

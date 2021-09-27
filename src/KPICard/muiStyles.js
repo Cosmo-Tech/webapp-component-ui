@@ -3,7 +3,7 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
-  card: {
+  surface: {
     minWidth: 120,
     height: 96,
     marginRight: `calc(1.5 * ${theme.spacing(1)}px)`,

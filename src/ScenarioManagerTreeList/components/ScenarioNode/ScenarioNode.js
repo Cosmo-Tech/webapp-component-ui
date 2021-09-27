@@ -56,7 +56,6 @@ const ScenarioNode = ({
       </ConfirmDeleteDialog>
       <Typography
         className={classes.scenarioHeader}
-        color="textSecondary"
         gutterBottom
       >
         <span>
@@ -67,7 +66,6 @@ const ScenarioNode = ({
             showDeleteIcon && (
               <IconButton
                 data-cy="scenario-delete-button"
-                color="default"
                 aria-label="delete scenario"
                 size="small"
                 onClick={ openConfirmDialog }
@@ -85,7 +83,7 @@ const ScenarioNode = ({
       >
         {scenario.name}
       </Typography>
-      <Typography color="textSecondary">
+      <Typography>
         { getStatusLabel() }
         <span className={ getStatusClassName(classes, scenario.state) }>
           { getTranslatedStatus(scenario.state) }
