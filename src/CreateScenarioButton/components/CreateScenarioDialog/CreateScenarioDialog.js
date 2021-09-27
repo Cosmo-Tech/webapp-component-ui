@@ -66,7 +66,8 @@ const CreateScenarioDialog = ({
   workspaceId,
   solution,
   nameValidator,
-  datasetsFilter
+  datasetsFilter,
+  labels
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -317,7 +318,8 @@ CreateScenarioDialog.propTypes = {
   workspaceId: PropTypes.string.isRequired,
   solution: PropTypes.object.isRequired,
   nameValidator: PropTypes.instanceOf(RegExp),
-  datasetsFilter: PropTypes.func
+  datasetsFilter: PropTypes.func,
+  labels: PropTypes.object
 };
 
 export default CreateScenarioDialog;
