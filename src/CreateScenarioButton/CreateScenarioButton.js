@@ -5,7 +5,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { useTranslation } from 'react-i18next';
 import CreateScenarioDialog from './components';
 
-const CreateScenarioButton = ({
+export const CreateScenarioButton = ({
   currentScenario,
   datasets,
   scenarios,
@@ -16,7 +16,8 @@ const CreateScenarioButton = ({
   solution,
   disabled,
   buttonTooltip,
-  nameValidator
+  nameValidator,
+  dialogLabels
 }) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -57,6 +58,7 @@ const CreateScenarioButton = ({
         user={user}
         nameValidator={nameValidator}
         datasetsFilter={datasetsFilter}
+        labels={dialogLabels}
       />
     </div>
   );
@@ -73,11 +75,10 @@ CreateScenarioButton.propTypes = {
   solution: PropTypes.object.isRequired,
   buttonTooltip: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
-  nameValidator: PropTypes.instanceOf(RegExp)
+  nameValidator: PropTypes.instanceOf(RegExp),
+  dialogLabels: PropTypes.object
 };
 
 CreateScenarioButton.defaultProps = {
   disabled: false
 };
-
-export default CreateScenarioButton;
