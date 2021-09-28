@@ -3,7 +3,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import {
   Typography,
   Button,
@@ -14,48 +13,44 @@ import {
 } from '@material-ui/core';
 
 export const SimpleTwoActionsDialog = ({
+  id,
   open,
-  dialogTitleKey,
-  dialogBodyKey,
-  cancelLabelKey,
-  handleClickOnCancel,
-  validateLabelKey,
-  handleClickOnValidate
+  labels,
+  handleClickOnButton1,
+  handleClickOnButton2
 }) => {
-  const { t } = useTranslation();
-
   const onClose = (event, reason) => {
     if (reason !== 'backdropClick') {
-      handleClickOnCancel();
+      handleClickOnButton1();
     }
   };
 
   return (
-    <Dialog open={open} aria-labelledby="discard-changes-dialog"
+    <Dialog open={open} aria-labelledby={labels.ariaLabelledby}
       maxWidth={'xs'}
       fullWidth={true}
       onClose={onClose}
     >
-      <DialogTitle id="discard-changes-dialog-title">
-        {t(dialogTitleKey, 'Dialog title')}
+      <DialogTitle id={id + '-dialog-title'}>
+        {labels.title}
       </DialogTitle>
       <DialogContent>
-        <Typography variant='body1'>{t(dialogBodyKey, 'Dialog Body')}</Typography>
+        <Typography variant='body1'>{labels.body}</Typography>
       </DialogContent>
       <DialogActions >
         <Button
-          id="ButtonCancel"
-          onClick={handleClickOnCancel}
+          id={id + 'id-button1'}
+          onClick={handleClickOnButton1}
           color="primary">
-          {t(cancelLabelKey, 'Cancel label')}
+          {labels.button1}
         </Button>
         <Button
-          data-cy='dialog-discard-button'
-          id="ButtonDiscard"
-          onClick={handleClickOnValidate}
+          data-cy={id + '-button2'}
+          id={id + 'id-button2'}
+          onClick={handleClickOnButton2}
           color="primary"
         >
-          {t(validateLabelKey, 'Validate label')}
+          {labels.button2}
         </Button>
       </DialogActions>
     </Dialog>
@@ -64,49 +59,46 @@ export const SimpleTwoActionsDialog = ({
 
 SimpleTwoActionsDialog.propTypes = {
   /**
+   * Dialog's id
+   */
+  id: PropTypes.string.isRequired,
+  /**
    *  ## Define the SimpleTwoActionsDialog's state:
    *  - true : the dialog is opened
    *  - false : the dialog is closed
    */
-  open: PropTypes.bool.isRequired,
+  open: PropTypes.bool,
   /**
-   *  ## The translation key for dialog title
-   *  We used **react-i18next** for translation.
-   *  You can referred to desired sentence by specifing the json path of translation files.
-   *
-   *  **e.g**: 'commoncomponents.dialog.mywonderfuldialog.title'
+   *  ## Labels for dialog
+   * Structure:
+   * <pre>
+   * {
+   *  title:'This is a title',
+   *  body:'This is a body',
+   *  button1: 'Action1',
+   *  button2: 'Action2',
+   *  ariaLabelledby: 'Wonderful dialog
+   *}
+   *</pre>
    */
-  dialogTitleKey: PropTypes.string.isRequired,
+  labels: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    button1: PropTypes.string.isRequired,
+    button2: PropTypes.string.isRequired,
+    ariaLabelledby: PropTypes.string.isRequired
+  }).isRequired,
   /**
-   *  ## The translation key for dialog body:
-   *  We used react-i18next for translation.
-   *  You can referred to desired sentence by specifing the json path of translation files.
-   *
-   *  **e.g**: 'commoncomponents.dialog.mywonderfuldialog.body'
+   *  ## Function used when button1 is clicked
    */
-  dialogBodyKey: PropTypes.string.isRequired,
+  handleClickOnButton1: PropTypes.func.isRequired,
+
   /**
-   *  ## The translation key for cancel button:
-   *  We used react-i18next for translation.
-   *  You can referred to desired sentence by specifing the json path of translation files.
-   *
-   *  **e.g**: 'commoncomponents.dialog.mywonderfuldialog.button.cancel'
+   *  ## Function used when button2 is clicked
    */
-  cancelLabelKey: PropTypes.string.isRequired,
-  /**
-   *  ## Function used when cancel button is clicked
-   */
-  handleClickOnCancel: PropTypes.func.isRequired,
-  /**
-   *  ## The translation key for validate button:
-   *  We used react-i18next for translation.
-   *  You can referred to desired sentence by specifing the json path of translation files.
-   *
-   *  **e.g**: 'commoncomponents.dialog.mywonderfuldialog.button.validate'
-   */
-  validateLabelKey: PropTypes.string.isRequired,
-  /**
-   *  ## Function used when validate button is clicked
-   */
-  handleClickOnValidate: PropTypes.func.isRequired
+  handleClickOnButton2: PropTypes.func.isRequired
+};
+
+SimpleTwoActionsDialog.defaultProps = {
+  open: false
 };
