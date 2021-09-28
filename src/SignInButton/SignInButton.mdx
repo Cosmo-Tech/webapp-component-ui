@@ -5,16 +5,12 @@ menu: Buttons
 ---
 import { Playground, Props } from 'docz'
 import { SignInButton } from './SignInButton'
+import { withStyles } from '@material-ui/core/styles'
+import img from '../../assets/microsoft_logo.png'
 
 # Microsoft Sign In Button
 
-The aim of this component is to easily display a sign in button with Microsoft logo.
-
-We use react-i18next for translation.
-
-If you want to change button's label, you have to define, in your translation files,
-json path `genericcomponent.button.login.msal.title`
-
+The aim of this component is to easily display a sign-in button
 
 ## Props
 
@@ -24,6 +20,8 @@ json path `genericcomponent.button.login.msal.title`
 
 <Playground>
     <SignInButton
-      onClick={() => alert('Use auth provider you want ')}
-    />
+              id={'microsoft'}
+              label={'Sign In button'}
+              logo={img}
+              onClick={() => alert('Use auth provider you want')} />
 </Playground>
