@@ -18,7 +18,6 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import HierarchicalComboBox from '../../../HierarchicalComboBox/HierarchicalComboBox';
-import { CREATE_SCENARIO_LABELS } from './CreateScenarioDialogButtonConstants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -67,7 +66,8 @@ const CreateScenarioDialog = ({
   solution,
   nameValidator,
   datasetsFilter,
-  labels
+  dialogLabels,
+  errorLabels
 }) => {
   const classes = useStyles();
   const { t } = useTranslation();
@@ -75,7 +75,7 @@ const CreateScenarioDialog = ({
   const scenarioNameInitialState = {
     value: '',
     hasError: false,
-    errorKey: ''
+    error: ''
   };
   const [scenarioNameFieldValues, setScenarioNameFieldValues] = useState(scenarioNameInitialState);
   const [isMaster, setMaster] = useState(false);
@@ -104,24 +104,24 @@ const CreateScenarioDialog = ({
 
   const handleChangeScenarioName = (event) => {
     const newScenarioName = event.target.value;
-    let errorKey = '';
+    let error = '';
     let hasErrors = false;
     if (newScenarioName.length === 0) {
-      errorKey = CREATE_SCENARIO_LABELS.ERROR_NAME_EMPTY;
+      error = errorLabels.emptyScenarioName;
       hasErrors = true;
     } else {
       if (newScenarioName.match(nameValidator) === null) {
-        errorKey = CREATE_SCENARIO_LABELS.ERROR_NAME_FORBIDDEN_CHARS;
+        error = errorLabels.forbiddenCharsInScenarioName;
         hasErrors = true;
       } else if (ScenarioUtils.scenarioExistsInList(newScenarioName, scenarios)) {
-        errorKey = CREATE_SCENARIO_LABELS.ERROR_NAME_EXISTING;
+        error = errorLabels.existingScenarioName;
         hasErrors = true;
       }
     }
     setScenarioNameFieldValues({
       ...scenarioNameFieldValues,
       value: newScenarioName,
-      errorKey: errorKey,
+      error: error,
       hasError: hasErrors
     });
   };
@@ -197,7 +197,7 @@ const CreateScenarioDialog = ({
       onClose={onClose}
     >
       <DialogTitle id="form-dialog-title">
-        {t(CREATE_SCENARIO_LABELS.DIALOG_TITLE, 'Create new scenario')}
+        {dialogLabels.title}
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid container spacing={2}>
@@ -210,8 +210,8 @@ const CreateScenarioDialog = ({
               id="scenarioName"
               value={scenarioNameFieldValues.value}
               error={scenarioNameFieldValues.hasError}
-              label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_NAME)}
-              helperText={t(scenarioNameFieldValues.errorKey)}
+              label={dialogLabels.scenarioName}
+              helperText={scenarioNameFieldValues.error}
               fullWidth
             />
           </Grid>
@@ -226,7 +226,7 @@ const CreateScenarioDialog = ({
                   id="isScenarioMaster"
                   color="primary" />
               }
-              label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_MASTER, 'Master')}/>
+              label={dialogLabels.scenarioMaster}/>
           </Grid>
           }
           <Grid item xs={12}>
@@ -246,15 +246,15 @@ const CreateScenarioDialog = ({
                     (params) => (
                       <TextField
                         {...params}
-                        placeholder={t(CREATE_SCENARIO_LABELS.DIALOG_DATASET_PLACEHOLDER, 'Dataset')}
-                        label={t(CREATE_SCENARIO_LABELS.DIALOG_DATASET, 'Select a dataset')}
+                        placeholder={dialogLabels.datasetPlaceholder}
+                        label={dialogLabels.dataset}
                         variant="outlined"/>)
                   }/>
                 )
               : (<HierarchicalComboBox
                   values={scenarios}
                   defaultValue={defaultParentScenario.current}
-                  label={t(CREATE_SCENARIO_LABELS.DIALOG_PARENT_SCENARIO, 'Parent scenario')}
+                  label={dialogLabels.scenarioParent}
                   handleChange={
                     (event, newParentScenario) => (handleChangeParentScenario(newParentScenario))
                   }/>
@@ -277,8 +277,8 @@ const CreateScenarioDialog = ({
                 (params) => (
                   <TextField
                     {...params}
-                    placeholder={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_TYPE_PLACEHOLDER, 'Scenario')}
-                    label={t(CREATE_SCENARIO_LABELS.DIALOG_SCENARIO_TYPE, 'Scenario Type')}
+                    placeholder={dialogLabels.scenarioTypePlaceholder}
+                    label={dialogLabels.scenarioType}
                     variant="outlined"/>
                 )}/>
           </Grid>
@@ -290,7 +290,7 @@ const CreateScenarioDialog = ({
           onClick={handleCloseDialog}
           color="primary"
         >
-          {t(CREATE_SCENARIO_LABELS.DIALOG_CANCEL, 'Cancel')}
+          {dialogLabels.cancel}
         </Button>
         <Button
           id="create"
@@ -299,7 +299,7 @@ const CreateScenarioDialog = ({
           onClick={handleCreateScenario}
           color="primary"
         >
-          {t(CREATE_SCENARIO_LABELS.DIALOG_CREATE, 'Create')}
+          {dialogLabels.create}
         </Button>
       </DialogActions>
     </Dialog>
@@ -319,7 +319,23 @@ CreateScenarioDialog.propTypes = {
   solution: PropTypes.object.isRequired,
   nameValidator: PropTypes.instanceOf(RegExp),
   datasetsFilter: PropTypes.func,
-  labels: PropTypes.object
+  dialogLabels: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    scenarioName: PropTypes.string.isRequired,
+    scenarioMaster: PropTypes.string.isRequired,
+    scenarioParent: PropTypes.string.isRequired,
+    scenarioTypePlaceholder: PropTypes.string.isRequired,
+    scenarioType: PropTypes.string.isRequired,
+    datasetPlaceholder: PropTypes.string.isRequired,
+    dataset: PropTypes.string.isRequired,
+    cancel: PropTypes.string.isRequired,
+    create: PropTypes.string.isRequired
+  }).isRequired,
+  errorLabels: PropTypes.shape({
+    emptyScenarioName: PropTypes.string.isRequired,
+    existingScenarioName: PropTypes.string.isRequired,
+    forbiddenCharsInScenarioName: PropTypes.string.isRequired
+  }).isRequired
 };
 
 export default CreateScenarioDialog;
