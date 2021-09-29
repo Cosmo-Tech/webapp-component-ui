@@ -12,8 +12,6 @@ import { CreateScenarioButton } from './CreateScenarioButton'
 The aim of this component is to easily display a create scenario button.
 This button will display a popup that guide users through scenario creation
 
-We use react-i18next for translation.
-
 ### Props
 
 <Props of={ CreateScenarioButton }/>
@@ -39,6 +37,11 @@ We use react-i18next for translation.
               scenarioType: 'Scenario Type',
               cancel: 'Cancel',
               create: 'Create'
+            },
+            errors: {
+             emptyScenarioName:'Scenario name should not be empty',
+             existingScenarioName:'Scenario name already exists',
+             forbiddenCharsInScenarioName:'Scenario name is not valid'
             }
         }
       }
