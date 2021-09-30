@@ -22,8 +22,6 @@ describe('HierarchicalComboBox test suite', () => {
       <HierarchicalComboBox
         label="Video Games"
         values={videoGamesList}
-        separator={separator}
-        maxCharLength={maxLengthChar}
         handleChange={jest.fn()}
       />
     );
