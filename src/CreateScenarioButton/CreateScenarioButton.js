@@ -148,5 +148,28 @@ CreateScenarioButton.propTypes = {
 };
 
 CreateScenarioButton.defaultProps = {
-  disabled: false
+  disabled: false,
+  labels: {
+    button: {
+      title: 'Create scenario',
+      tooltip: 'Create a scenario'
+    },
+    dialog: {
+      title: 'Create a scenario',
+      scenarioName: 'Scenario Name',
+      scenarioMaster: 'Master',
+      scenarioParent: 'Scenario Parent',
+      datasetPlaceholder: 'Dataset',
+      dataset: 'Dataset',
+      scenarioTypePlaceholder: 'Scenario run type',
+      scenarioType: 'Run type',
+      cancel: 'Cancel',
+      create: 'Create'
+    },
+    errors: {
+      emptyScenarioName: 'Scenario Name should not be empty',
+      existingScenarioName: 'Scenario Name already exists',
+      forbiddenCharsInScenarioName: 'Forbidden chars in Scenario Name'
+    }
+  }
 };

@@ -37,7 +37,7 @@ BasicToggleInput.propTypes = {
   /**
    * BasicToggleInput's label
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * BasicToggleInput's checked
    */

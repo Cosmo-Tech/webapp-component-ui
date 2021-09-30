@@ -34,7 +34,7 @@ BasicTextInput.propTypes = {
   /**
    * BasicTextInput's label
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * BasicTextInput's value
    */

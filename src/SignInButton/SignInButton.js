@@ -72,7 +72,7 @@ SignInButton.propTypes = {
   /**
    * Button's label
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * Function used when the button is clicked.
    * As you can specify it, you can use custom auth providers:
@@ -83,5 +83,6 @@ SignInButton.propTypes = {
 };
 
 SignInButton.defaultProps = {
-  logo: '../../assets/microsoft_logo.png'
+  logo: '../../assets/microsoft_logo.png',
+  label: 'Sign in'
 };

@@ -45,7 +45,7 @@ BasicEnumInput.propTypes = {
   /**
    * BasicEnumInput's label
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * BasicEnumInput's value
    */
