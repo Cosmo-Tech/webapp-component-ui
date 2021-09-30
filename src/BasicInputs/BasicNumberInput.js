@@ -48,7 +48,7 @@ BasicNumberInput.propTypes = {
   /**
    * BasicNumberInput's label
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * BasicNumberInput's value
    */

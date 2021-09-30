@@ -87,7 +87,7 @@ SimpleTwoActionsDialog.propTypes = {
     button1: PropTypes.string.isRequired,
     button2: PropTypes.string.isRequired,
     ariaLabelledby: PropTypes.string.isRequired
-  }).isRequired,
+  }),
   /**
    *  ## Function used when button1 is clicked
    */
@@ -100,5 +100,21 @@ SimpleTwoActionsDialog.propTypes = {
 };
 
 SimpleTwoActionsDialog.defaultProps = {
-  open: false
+  open: false,
+  labels:
+      {
+        title: 'What A Wonderful Dialog',
+        body: `
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Vivamus quis efficitur odio, sit amet auctor nunc.
+              Curabitur et ante a nulla dapibus ultricies.
+              Proin porttitor tempor libero euismod convallis.
+              Etiam quis sollicitudin mauris. Curabitur hendrerit felis quis ligula volutpat posuere.
+              Sed gravida arcu in porttitor ornare.
+              Nulla ac rhoncus dui.
+          `,
+        button1: 'Cancel',
+        button2: 'Validate',
+        ariaLabelledby: 'simple-two-actions-dialog'
+      }
 };
