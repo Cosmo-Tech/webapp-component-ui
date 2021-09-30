@@ -3,7 +3,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import {
   Typography,
   Grid,
@@ -25,8 +24,7 @@ const useStyles = makeStyles(theme => ({
 
 const DashboardPlaceholder = (props) => {
   const classes = useStyles();
-  const { t } = useTranslation();
-  const { title, label, icon, downloadLogsFile } = props;
+  const { title, label, icon, downloadLogsFile, downloadLabel } = props;
 
   return (
     <Grid container
@@ -59,7 +57,7 @@ const DashboardPlaceholder = (props) => {
       { downloadLogsFile &&
         <Grid item>
           <Button variant="contained" color="primary" onClick={downloadLogsFile}>
-            {t('commoncomponents.iframe.scenario.results.button.downloadlogs', 'Download logs')}
+            {downloadLabel}
           </Button>
         </Grid>
       }
@@ -71,7 +69,8 @@ DashboardPlaceholder.propTypes = {
   label: PropTypes.string.isRequired,
   title: PropTypes.string,
   icon: PropTypes.object,
-  downloadLogsFile: PropTypes.func
+  downloadLogsFile: PropTypes.func,
+  downloadLabel: PropTypes.string
 };
 
 DashboardPlaceholder.defaultProps = {

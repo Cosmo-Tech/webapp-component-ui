@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import DashboardPlaceholder from './components';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   iframe: {
@@ -16,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Dashboard = (props) => {
+export const Dashboard = (props) => {
   const classes = useStyles();
   const {
     iframeTitle,
@@ -27,6 +26,7 @@ const Dashboard = (props) => {
     scenarioState,
     noScenario,
     downloadLogsFile,
+    labels,
     ...otherProps
   } = props;
 
@@ -34,8 +34,6 @@ const Dashboard = (props) => {
     .replaceAll('<ScenarioName>', scenarioName)
     .replaceAll('<ScenarioId>', scenarioId)
     .replaceAll('<CsmSimulationRun>', csmSimulationRun);
-
-  const { t } = useTranslation();
 
   // Handle optional status property
   const noRun = scenarioState === 'Created' || scenarioState === null;
@@ -46,26 +44,27 @@ const Dashboard = (props) => {
   return (
     <>
       { noScenario && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.noscenario.label',
-            'You can create a scenario by clicking on') + ' "' +
-            t('commoncomponents.button.create.scenario.label', 'Create new Scenario') + '"'}
-          title={t('commoncomponents.iframe.scenario.noscenario.title', 'No scenario yet')}
+          label={labels.noScenario.label}
+          title={labels.noScenario.title}
         />
       }
       { noRun && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.results.label.uninitialized',
-            'The scenario has not been run yet')}
+          label={labels.noRun.label}
+          title={labels.noRun.title}
         />
       }
       { runInProgress && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.results.label.running', 'Scenario run in progress...')}
+          label={labels.inProgress.label}
+          title={labels.inProgress.title}
           icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
         />
       }
       {
         hasError && <DashboardPlaceholder
-          label={t('commoncomponents.iframe.scenario.results.text.error', 'An error occured during the scenario run')}
+          label={labels.hasErrors.label}
+          title={labels.hasErrors.title}
           downloadLogsFile={downloadLogsFile}
+          downloadLabel={labels.downloadButton}
         />
       }
       { isReady && formattedUrl !== '' &&
@@ -78,7 +77,8 @@ const Dashboard = (props) => {
         />
       }
       { isReady && formattedUrl === '' && <DashboardPlaceholder
-        label={t('commoncomponents.iframe.scenario.results.label.no.result', 'No dashboards for this scenario.')}
+        label={labels.noResult.label}
+        title={labels.noResult.title}
       />
       }
     </>
@@ -86,18 +86,114 @@ const Dashboard = (props) => {
 };
 
 Dashboard.propTypes = {
+  /**
+   *  Iframe's title
+   */
   iframeTitle: PropTypes.string.isRequired,
-  url: PropTypes.string,
+  /**
+   *  Dashboard's url
+   */
+  url: PropTypes.string.isRequired,
+  /**
+   *  Current scenario name
+   */
   scenarioName: PropTypes.string,
+  /**
+   *  Current scenario id
+   */
   scenarioId: PropTypes.string,
+  /**
+   *  Current scenario, last run id
+   */
   csmSimulationRun: PropTypes.string,
+  /**
+   *  Current scenario state
+   */
   scenarioState: PropTypes.string,
+  /**
+   *  Has scenario or not
+   */
   noScenario: PropTypes.bool,
-  downloadLogsFile: PropTypes.func
+  /**
+   * Function linked to download logs button
+   */
+  downloadLogsFile: PropTypes.func,
+  /**
+   * Structure:
+   * <pre>
+   * {
+      noScenario: {
+        title:'string',
+        label:'string'
+        },
+      noRun: {
+        title: 'string',
+        label: 'string'
+        },
+      inProgress: {
+        title: 'string',
+        label:'string'
+        },
+      hasErrors: {
+        title:'string',
+        label: 'string'
+      },
+      downloadButton: 'string',
+      noResult: {
+        title: 'string',
+        label: 'string'
+      }
+   }
+   * </pre>
+   */
+  labels: PropTypes.shape({
+    noScenario: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    noRun: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    inProgress: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    hasErrors: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    downloadButton: PropTypes.string.isRequired,
+    noResult: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired
+  })
 };
 
 Dashboard.defaultProps = {
-  noScenario: false
+  noScenario: false,
+  labels: {
+    noScenario: {
+      title: 'No scenario yet',
+      label: 'You can create a scenario by clicking on Create new Scenario'
+    },
+    noRun: {
+      title: '',
+      label: 'The scenario has not been run yet'
+    },
+    inProgress: {
+      title: '',
+      label: 'Scenario run in progress...'
+    },
+    hasErrors: {
+      title: '',
+      label: 'An error occured during the scenario run'
+    },
+    downloadButton: 'Download logs',
+    noResult: {
+      title: '',
+      label: 'No dashboards for this scenario.'
+    }
+  }
 };
-
-export default Dashboard;
