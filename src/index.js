@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-export { default as UserInfo } from './UserInfo';
+export { UserInfo } from './UserInfo';
 export { SignInButton } from './SignInButton';
 export { BasicTextInput } from './BasicInputs/BasicTextInput';
 export { BasicNumberInput } from './BasicInputs/BasicNumberInput';
