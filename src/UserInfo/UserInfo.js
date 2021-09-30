@@ -8,8 +8,6 @@ import {
   ArrowRight as ArrowRightIcon,
   Check as CheckIcon
 } from '@material-ui/icons';
-import profilePlaceholder from '../../assets/profile_placeholder.png';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   menuTrigger: {
@@ -57,13 +55,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserInfo = (props) => {
+export const UserInfo = (props) => {
   const classes = useStyles();
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [isLangMenuOpened, setLangIsMenuOpened] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [langAnchorEl, setLangAnchorEl] = useState(null);
-  const { t, i18n } = useTranslation();
 
   const handleClick = (e) => {
     setAnchorEl(e.target);
@@ -78,12 +75,14 @@ const UserInfo = (props) => {
   const setLanguage = (lang) => {
     setIsMenuOpened(false);
     setLangIsMenuOpened(false);
-    i18n.changeLanguage(lang);
+    changeLanguage(lang);
   };
 
-  const { userName, profilePictureUrl, languages, documentationUrl, onLogout } = props;
-
-  const userProfilePictureUrl = profilePictureUrl || profilePlaceholder;
+  const {
+    userName, profilePlaceholder,
+    languages, documentationUrl,
+    onLogout, changeLanguage, language, labels
+  } = props;
 
   return (
     <React.Fragment>
@@ -93,7 +92,7 @@ const UserInfo = (props) => {
         aria-haspopup="true"
         onClick={handleClick}
         className={`${classes.menuTrigger} ${isMenuOpened ? 'active' : ''}`}>
-        <img className={classes.profilePic} src={userProfilePictureUrl}/>
+        <img className={classes.profilePic} src={profilePlaceholder}/>
         <span className={classes.userName}>{userName}</span>
       </Box>
       <Menu
@@ -108,7 +107,7 @@ const UserInfo = (props) => {
             (<MenuItem data-cy="change-language"
               onClick={handleLanguageMenuClick}
               className={classes.menuContainer}>
-              { t('genericcomponent.userinfo.button.change.language', 'Change language') }
+              { labels.language }
               <ArrowRightIcon className={classes.menuIcon}/>
             </MenuItem>)
         }
@@ -119,12 +118,12 @@ const UserInfo = (props) => {
                 className={classes.docLink}
                 target="_blank"
                 rel="noreferrer">
-                  {t('genericcomponent.userinfo.button.download.documentation', 'Download documentation')}
+                  {labels.documentation}
               </a>
             </MenuItem>)
         }
         <MenuItem data-cy="logout" onClick={onLogout} >
-          { t('genericcomponent.userinfo.button.logout', 'Log out') }
+          { labels.logOut }
         </MenuItem>
       </Menu>
       {
@@ -150,7 +149,7 @@ const UserInfo = (props) => {
                   {langLabel}
                   {
                     // Add a check mark for the currently selected language
-                    langKey === i18n.language &&
+                    langKey === language &&
                     (<CheckIcon className={classes.menuIcon}/>)
                   }
                 </MenuItem>
@@ -163,11 +162,57 @@ const UserInfo = (props) => {
 };
 
 UserInfo.propTypes = {
+  /**
+   * Documentation url
+   */
   documentationUrl: PropTypes.string,
+  /**
+   * List of available languages
+   */
   languages: PropTypes.objectOf(PropTypes.string),
-  profilePictureUrl: PropTypes.string.isRequired,
+  /**
+   * User's profile picture
+   */
+  profilePlaceholder: PropTypes.string,
+  /**
+   * User name
+   */
   userName: PropTypes.string.isRequired,
-  onLogout: PropTypes.func.isRequired
+  /**
+   * Function bound on log out item's menu
+   */
+  onLogout: PropTypes.func.isRequired,
+  /**
+   * Function bound on change language item's menu
+   */
+  changeLanguage: PropTypes.func.isRequired,
+  /**
+   * Current language
+   */
+  language: PropTypes.string.isRequired,
+  /**
+   * Component's labels:
+   * Structure:
+   * <pre>
+   {
+      language: 'string',
+      documentation: 'string',
+      logOut: 'string'
+    }
+   *   </pre>
+   */
+  labels: PropTypes.shape({
+    language: PropTypes.string.isRequired,
+    documentation: PropTypes.string.isRequired,
+    logOut: PropTypes.string.isRequired
+  })
 };
 
-export default UserInfo;
+UserInfo.defaultProps = {
+  profilePictureUrl: '../../assets/profile_placeholder.png',
+  labels: {
+    language: 'Change language',
+    documentation: 'Download documentation',
+    logOut: 'Log out'
+  }
+};
