@@ -1,0 +1,36 @@
+---
+name: UploadFile
+route: /UploadFile
+menu: Inputs
+---
+import { Playground, Props } from 'docz'
+import { UploadFile } from './UploadFile'
+import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants'
+
+# Upload File
+
+The aim of this component is to easily display a upload file component
+
+## Props
+
+<Props of={ UploadFile }/>
+
+## Basic Usage
+
+<Playground>
+    <UploadFile
+            handleUploadFile={() => console.log('File uploaded')}
+            handleDeleteFile={() => console.log('File deleted')}
+            handleDownloadFile={() => console.log('File downloaded')}
+            editMode={true}
+            file={
+                {
+                      parameterId: 'parameter1',
+                      initialName: '',
+                      name: '',
+                      file: null,
+                      status: UPLOAD_FILE_STATUS_KEY.EMPTY
+                }
+            }
+         />
+</Playground>
