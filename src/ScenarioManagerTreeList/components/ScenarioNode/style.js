@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
       bottom: '20px',
       padding: '10px',
       fontSize: '12px',
-      whiteSpace: 'break-spaces',
+      whiteSpace: 'break-spaces'
     }
   },
   statusCreated: {
