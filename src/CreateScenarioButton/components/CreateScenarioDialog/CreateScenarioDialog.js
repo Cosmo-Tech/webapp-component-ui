@@ -196,7 +196,7 @@ const CreateScenarioDialog = ({
       onClose={onClose}
     >
       <DialogTitle id="form-dialog-title">
-        {t(CREATE_SCENARIO_LABELS.DIALOG_TITLE, 'Create alternative scenario')}
+        {t(CREATE_SCENARIO_LABELS.DIALOG_TITLE, 'Create new scenario')}
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid container spacing={2}>

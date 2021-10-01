@@ -35,12 +35,12 @@ const CreateScenarioButton = ({
             data-cy="create-scenario-button"
             size="medium"
             startIcon={<AddIcon />}
-            variant="text"
+            variant="contained"
             onClick={openDialog}
             color="primary"
             disabled={disabled}
           >
-            {t('commoncomponents.button.create.scenario.label', 'Create Alternative Scenario')}
+            {t('commoncomponents.button.create.scenario.label', 'Create new Scenario')}
           </Button>
         </div>
       </Tooltip>
