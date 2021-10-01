@@ -20,12 +20,14 @@ const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     '&:hover::before': {
+      background: theme.palette.black,
+      color: theme.palette.white,
       content: 'attr(data-content)',
       position: 'absolute',
       bottom: '20px',
       padding: '10px',
       fontSize: '12px',
-      whiteSpace: 'break-spaces'
+      whiteSpace: 'break-spaces',
     }
   },
   statusCreated: {
