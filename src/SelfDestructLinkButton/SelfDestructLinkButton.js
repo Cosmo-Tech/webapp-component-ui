@@ -19,7 +19,6 @@ const SelfDestructLinkButton = (props) => {
   const classes = useStyles();
   const {
     generate,
-    download,
     height,
     width,
     labels,
@@ -46,15 +45,16 @@ const SelfDestructLinkButton = (props) => {
   const startLinkGeneration = async () => {
     setStatus(STATUS.GENERATING);
     const downloadLink = await generate();
-    if (downloadLink) {
+    if (downloadLink && downloadLink.length > 0) {
       setDownloadLink(downloadLink);
       setStatus(STATUS.READY);
       startTimeout();
+    } else {
+      setStatus(STATUS.IDLE);
     }
   };
 
   const startDownload = async () => {
-    download(downloadLink);
     reset();
   };
 
@@ -71,7 +71,14 @@ const SelfDestructLinkButton = (props) => {
         <CircularProgress size={30}/>
       }
       { status === STATUS.READY &&
-        <Button variant="contained" color="primary" onClick={startDownload} style={dimensions}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={startDownload}
+          style={dimensions}
+          target="_blank"
+          href={downloadLink}
+        >
           { labels.download }
         </Button>
       }
@@ -81,7 +88,6 @@ const SelfDestructLinkButton = (props) => {
 
 SelfDestructLinkButton.propTypes = {
   generate: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired,
   height: PropTypes.string,
   width: PropTypes.string,
   labels: PropTypes.object,
