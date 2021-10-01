@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     height: '32px'
   },
   userName: {
+    fontSize: '16px',
     textAlign: 'center',
     lineHeight: '32px',
     height: '32px',
