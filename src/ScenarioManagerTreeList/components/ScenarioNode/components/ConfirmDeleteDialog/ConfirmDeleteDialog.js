@@ -3,7 +3,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import {
   Button,
   Dialog,
@@ -27,13 +26,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ConfirmDeleteDialog = ({
+export const ConfirmDeleteDialog = ({
   open,
   closeDialog,
-  confirmDelete
+  confirmDelete,
+  labels
 }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
 
   return (
     <Dialog
@@ -45,24 +44,19 @@ const ConfirmDeleteDialog = ({
       aria-describedby="confirm-scenario-delete-description"
     >
       <DialogTitle id="confirm-scenario-delete">
-        {t('commoncomponents.dialog.confirm.delete.title', 'Confirm delete?')}
+        {labels.title}
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <DialogContentText id="confirm-scenario-delete-description">
-          {
-            t('commoncomponents.dialog.confirm.delete.description',
-              'The scenario will be deleted. If this scenario has children, ' +
-              'then its parent will become the new parent of all these scenarios.'
-            )
-          }
+          {labels.description}
         </DialogContentText>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
         <Button onClick={closeDialog} color="primary" autoFocus>
-          {t('commoncomponents.dialog.confirm.delete.button.cancel', 'Cancel')}
+          {labels.cancel}
         </Button>
         <Button onClick={confirmDelete} color="primary">
-          {t('commoncomponents.dialog.confirm.delete.button.confirm', 'Confirm')}
+          {labels.confirm}
         </Button>
       </DialogActions>
     </Dialog>
@@ -72,7 +66,21 @@ const ConfirmDeleteDialog = ({
 ConfirmDeleteDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   closeDialog: PropTypes.func.isRequired,
-  confirmDelete: PropTypes.func.isRequired
+  confirmDelete: PropTypes.func.isRequired,
+  labels: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    cancel: PropTypes.string.isRequired,
+    confirm: PropTypes.string.isRequired
+  })
 };
 
-export default ConfirmDeleteDialog;
+ConfirmDeleteDialog.defaultProps = {
+  labels: {
+    title: 'Confirm delete?',
+    description: 'The scenario will be deleted. If this scenario has children, ' +
+      'then its parent will become the new parent of all these scenarios.',
+    cancel: 'Cancel',
+    confirm: 'Confirm'
+  }
+};

@@ -17,7 +17,6 @@ export const ScenarioNode = ({
   labels
 }) => {
   const classes = useStyles();
-
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const openConfirmDialog = () => { setIsConfirmDialogOpen(true); };
   const closeConfirmDialog = () => { setIsConfirmDialogOpen(false); };
@@ -28,14 +27,14 @@ export const ScenarioNode = ({
   }
 
   function getStatusLabel () {
-    return labels.status.label + ':';
+    return labels.status + ':';
   }
 
   function getTranslatedStatus (scenarioState) {
     if (!scenarioState) {
       return '';
     }
-    return labels.status[scenarioState.toLowerCase()] ? labels.status[scenarioState.toLowerCase()] : scenarioState;
+    return labels[scenarioState.toLowerCase()] ? labels[scenarioState.toLowerCase()] : scenarioState;
   }
 
   function getDatasetsLabel () {
@@ -48,6 +47,7 @@ export const ScenarioNode = ({
         open={isConfirmDialogOpen}
         closeDialog={ closeConfirmDialog }
         confirmDelete={ confirmScenarioDelete }
+        labels={labels.deleteDialog}
       >
       </ConfirmDeleteDialog>
       <Typography
@@ -120,36 +120,42 @@ ScenarioNode.propTypes = {
    *  Structure:
    * <pre>
    *   {
-        status: {
-          label: 'string',
-          successful: 'string',
-          failed: 'string',
-          created: 'string'
-        },
-        dataset: 'string'
+        status: 'string',
+        successful: 'string',
+        failed: 'string',
+        created: 'string'
+        dataset: 'string',
+        deleteDialog : {
+          title: 'string',
+          description: 'string',
+          cancel: 'string',
+          confirm: 'string'
+        }
    *   }
-   *    </pre>
+   * </pre>
    */
   labels: PropTypes.shape({
-    status: PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      successful: PropTypes.string.isRequired,
-      failed: PropTypes.string.isRequired,
-      created: PropTypes.string.isRequired
-    }).isRequired,
-    dataset: PropTypes.string.isRequired
+    status: PropTypes.string.isRequired,
+    successful: PropTypes.string.isRequired,
+    failed: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired,
+    dataset: PropTypes.string.isRequired,
+    deleteDialog: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      cancel: PropTypes.string.isRequired,
+      confirm: PropTypes.string.isRequired
+    }).isRequired
   })
 };
 
 ScenarioNode.defaultProps = {
   showDeleteIcon: false,
   labels: {
-    status: {
-      label: 'Run status',
-      successful: 'Successful',
-      failed: 'Failed',
-      created: 'Created'
-    },
+    status: 'Run status',
+    successful: 'Successful',
+    failed: 'Failed',
+    created: 'Created',
     dataset: 'Datasets'
   }
 };
