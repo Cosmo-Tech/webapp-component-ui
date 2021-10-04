@@ -9,7 +9,7 @@ export { BasicEnumInput } from './BasicInputs/BasicEnumInput';
 export { BasicToggleInput } from './BasicInputs/BasicToggleInput';
 export { BasicDateInput } from './BasicInputs/BasicDateInput';
 export { SimpleTwoActionsDialog } from './SimpleTwoActionsDialog';
-export { default as SelfDestructLinkButton } from './SelfDestructLinkButton';
+export { SelfDestructLinkButton } from './SelfDestructLinkButton';
 export { Dashboard } from './Dashboard';
 export { HierarchicalComboBox } from './HierarchicalComboBox';
 export { CreateScenarioButton } from './CreateScenarioButton';
