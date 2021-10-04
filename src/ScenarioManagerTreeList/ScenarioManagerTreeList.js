@@ -36,9 +36,21 @@ const ScenarioManagerTreeList = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scenarios, searchText]);
 
+  const labels = {
+    status: {
+      label: t('commoncomponents.scenariomanager.treelist.node.status.label'),
+      successful: t('commoncomponents.scenariomanager.treelist.node.status.successful'),
+      failed: t('commoncomponents.scenariomanager.treelist.node.status.failed'),
+      created: t('commoncomponents.scenariomanager.treelist.node.status.created')
+    }
+  };
+
   function formatScenariosToRSTList (treeScenarios) {
     const rstScenarios = treeScenarios.map((scenario) => {
       const showDeleteIcon = scenario.ownerId === userId;
+      labels.dataset = t('commoncomponents.scenariomanager.treelist.node.dataset',
+        { count: scenario.datasetList?.length || 0 }
+      );
       return {
         expanded: expandedNodes.current[scenario.id] || false,
         parentId: scenario.parentId,
@@ -49,6 +61,7 @@ const ScenarioManagerTreeList = (props) => {
           scenario={scenario}
           showDeleteIcon={showDeleteIcon}
           deleteScenario={deleteScenario}
+          labels={labels}
         />
       };
     });
