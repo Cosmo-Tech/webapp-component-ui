@@ -17,4 +17,4 @@ export { default as PrivateRoute } from './PrivateRoute';
 export { default as PublicRoute } from './PublicRoute';
 export { UploadFile, UPLOAD_FILE_STATUS_KEY } from './UploadFile';
 export { SimplePowerBIReportEmbed } from './SimplePowerBIReportEmbed';
-export { default as ScenarioManagerTreeList } from './ScenarioManagerTreeList';
+export { ScenarioManagerTreeList } from './ScenarioManagerTreeList';

@@ -3,7 +3,6 @@
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { TextField, Typography } from '@material-ui/core';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
@@ -11,15 +10,17 @@ import { ScenarioUtils } from '@cosmotech/core';
 import { ScenarioNode } from './components';
 import useStyles from './style';
 
-const ScenarioManagerTreeList = (props) => {
+export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const {
     datasets,
     scenarios,
     deleteScenario,
     moveScenario,
-    userId
+    userId,
+    buildSearchInfo,
+    buildDatasetInfo,
+    labels
   } = props;
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
@@ -36,21 +37,10 @@ const ScenarioManagerTreeList = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scenarios, searchText]);
 
-  const labels = {
-    status: {
-      label: t('commoncomponents.scenariomanager.treelist.node.status.label'),
-      successful: t('commoncomponents.scenariomanager.treelist.node.status.successful'),
-      failed: t('commoncomponents.scenariomanager.treelist.node.status.failed'),
-      created: t('commoncomponents.scenariomanager.treelist.node.status.created')
-    }
-  };
-
   function formatScenariosToRSTList (treeScenarios) {
     const rstScenarios = treeScenarios.map((scenario) => {
       const showDeleteIcon = scenario.ownerId === userId;
-      labels.dataset = t('commoncomponents.scenariomanager.treelist.node.dataset',
-        { count: scenario.datasetList?.length || 0 }
-      );
+      labels.dataset = buildDatasetInfo(scenario.datasetList);
       return {
         expanded: expandedNodes.current[scenario.id] || false,
         parentId: scenario.parentId,
@@ -85,10 +75,8 @@ const ScenarioManagerTreeList = (props) => {
     setTreeData(formatScenariosToRSTList(filtered));
   }
 
-  function buildSearchInfo () {
-    return t('commoncomponents.scenariomanager.treelist.search.info',
-      '{{count}} scenarios found',
-      { count: ScenarioUtils.countScenariosInTree(treeData) });
+  function buildSearchInfoLabel () {
+    return buildSearchInfo(ScenarioUtils.countScenariosInTree(treeData));
   }
 
   function onSearchTextChange (event) {
@@ -115,7 +103,7 @@ const ScenarioManagerTreeList = (props) => {
           value={searchText}
           onChange={onSearchTextChange}/>
         <Typography className={classes.searchInfo}>
-          <em>{ buildSearchInfo() }</em>
+          <em>{ buildSearchInfoLabel() }</em>
         </Typography>
       </div>
       <div className={classes.treeContainer}
@@ -138,11 +126,57 @@ const ScenarioManagerTreeList = (props) => {
 };
 
 ScenarioManagerTreeList.propTypes = {
+  /**
+   * Dataset's list
+   */
   datasets: PropTypes.array.isRequired,
+  /**
+   * Scenario's list
+   */
   scenarios: PropTypes.array.isRequired,
+  /**
+   * Function bound to handle a scenario deletion
+   */
   deleteScenario: PropTypes.func.isRequired,
+  /**
+   * Function bound to handle a scenario movement
+   */
   moveScenario: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired
+  /**
+   * Current user id
+   */
+  userId: PropTypes.string.isRequired,
+  /**
+   * Function that build scenario search label
+   */
+  buildSearchInfo: PropTypes.func.isRequired,
+  /**
+   * Function that build scenario dataset label
+   */
+  buildDatasetInfo: PropTypes.func.isRequired,
+  /**
+   * Structure
+   * <pre>
+   {
+    status: 'string',
+    successful: 'string',
+    failed: 'string',
+    created: 'string',
+    dataset: 'string'
+  }
+   * </pre>
+   */
+  labels: PropTypes.object
+};
+
+ScenarioManagerTreeList.defaultProps = {
+  labels: {
+    status: 'Run status',
+    successful: 'Successful',
+    failed: 'Failed',
+    created: 'Created',
+    dataset: 'Dataset'
+  }
 };
 
 // Function to ignore drag & drop events in the parent div, to prevent
@@ -150,5 +184,3 @@ ScenarioManagerTreeList.propTypes = {
 function ignoreEvent (event) {
   event.preventDefault();
 }
-
-export default ScenarioManagerTreeList;
