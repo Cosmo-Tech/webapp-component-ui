@@ -15,7 +15,7 @@ const STATUS = {
   READY: 'READY'
 };
 
-const SelfDestructLinkButton = (props) => {
+export const SelfDestructLinkButton = (props) => {
   const classes = useStyles();
   const {
     generate,
@@ -87,10 +87,33 @@ const SelfDestructLinkButton = (props) => {
 };
 
 SelfDestructLinkButton.propTypes = {
+  /**
+   * Function bound on button
+   */
   generate: PropTypes.func.isRequired,
+  /**
+   * Button's height
+   */
   height: PropTypes.string,
+  /**
+   * Button's width
+   */
   width: PropTypes.string,
+  /**
+   *  Labels.
+   *
+   *  Structure:
+   * <pre>
+   *   {
+        generateLink: 'string',
+        download: 'string'
+   *   }
+   *    </pre>
+   */
   labels: PropTypes.object,
+  /**
+   * Timeout before download link is unavailable
+   */
   timeout: PropTypes.number // Expressed in seconds
 };
 
@@ -103,5 +126,3 @@ SelfDestructLinkButton.defaultProps = {
   },
   timeout: 15 // Expressed in seconds
 };
-
-export default SelfDestructLinkButton;
