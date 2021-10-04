@@ -144,7 +144,7 @@ CreateScenarioButton.propTypes = {
       existingScenarioName: PropTypes.string.isRequired,
       forbiddenCharsInScenarioName: PropTypes.string.isRequired
     }).isRequired
-  }).isRequired
+  })
 };
 
 CreateScenarioButton.defaultProps = {
