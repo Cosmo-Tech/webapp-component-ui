@@ -151,11 +151,11 @@ CreateScenarioButton.defaultProps = {
   disabled: false,
   labels: {
     button: {
-      title: 'Create scenario',
-      tooltip: 'Create a scenario'
+      title: 'Create new Scenario',
+      tooltip: 'Create new Scenario'
     },
     dialog: {
-      title: 'Create a scenario',
+      title: 'Create new Scenario',
       scenarioName: 'Scenario Name',
       scenarioMaster: 'Master',
       scenarioParent: 'Scenario Parent',
