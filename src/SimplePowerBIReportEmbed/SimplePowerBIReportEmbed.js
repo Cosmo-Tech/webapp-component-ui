@@ -160,7 +160,7 @@ const SimplePowerBIReportEmbed = ({
         { noScenario && <DashboardPlaceholder
             label={t('commoncomponents.iframe.scenario.noscenario.label',
               'You can create a scenario by clicking on') + ' "' +
-            t('commoncomponents.button.create.scenario.label', 'Create Alternative Scenario') + '"'}
+            t('commoncomponents.button.create.scenario.label', 'Create new Scenario') + '"'}
             title={t('commoncomponents.iframe.scenario.noscenario.title', 'No scenario yet')}
         />
         }
