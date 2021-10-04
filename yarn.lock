@@ -9,20 +9,6 @@
   dependencies:
     tslib "~2.0.1"
 
-"@azure/msal-browser@^2.8.0":
-  version "2.17.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-2.17.0.tgz#beb7d91e6123534b42c0d2ce85eda42a136a8555"
-  integrity sha512-NDK0NfsiRkjUU4V4jTt++aUPVg3JnRF4zV3B6WEOXDMH3OCbSJyqdO1WhdUWgMNQZz6Dk9bO/c6Bf4vUEgg+WA==
-  dependencies:
-    "@azure/msal-common" "^5.0.0"
-
-"@azure/msal-common@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-5.0.0.tgz#4e927b9bdc3715e0b043ece01360c73739ef52c1"
-  integrity sha512-b3QXfW0BlGZs3mQ59rkVGcArzeMGd1RjHxyRez5bCB1F/F3jRmn2nY9jGamrILPBFz7weGpJiouW1VmDmAuk7Q==
-  dependencies:
-    debug "^4.1.1"
-
 "@babel/cli@^7.14.3", "@babel/cli@^7.5.5":
   version "7.15.7"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.15.7.tgz#62658abedb786d09c1f70229224b11a65440d7a1"
@@ -1105,13 +1091,6 @@
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
-
-"@cosmotech/azure@^0.8.22":
-  version "0.8.24"
-  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-0.8.24.tgz#f0ad11cf8f7ab049980d20cf0ad4df2803b6cd8e"
-  integrity sha512-j/ZYSAhK3CjKxDILT16a7RL3oArkEqg4vxdd3tZx0iO7Pk2hu3yYd1+Rp9ZCWf0DL9K+j5zLaZE8o1TYp0H+lQ==
-  dependencies:
-    "@azure/msal-browser" "^2.8.0"
 
 "@cosmotech/core@^1.3.2":
   version "1.3.9"
