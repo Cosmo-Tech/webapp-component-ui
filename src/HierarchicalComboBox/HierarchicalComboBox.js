@@ -6,13 +6,11 @@ import PropTypes from 'prop-types';
 import { TextField, Tooltip } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-const HierarchicalComboBox = ({
+export const HierarchicalComboBox = ({
   values,
   label,
   disabled,
   handleChange,
-  separator,
-  maxCharLength,
   renderInputToolType,
   ...props
 }) => {
@@ -52,20 +50,32 @@ const HierarchicalComboBox = ({
 };
 
 HierarchicalComboBox.propTypes = {
+  /**
+   * HierarchicalComboBox's label
+   */
   label: PropTypes.string,
-  handleChange: PropTypes.func,
+  /**
+   * Function bound on onChange event
+   */
+  handleChange: PropTypes.func.isRequired,
+  /**
+   *  Define the HierarchicalComboBox's state:
+   *  - true : the button is disabled (the tooltip will guide users on how to enable the button)
+   *  - false : the button is enabled
+   */
   disabled: PropTypes.bool,
-  values: PropTypes.array,
-  separator: PropTypes.string,
-  maxCharLength: PropTypes.number,
+  /**
+   * HierarchicalComboBox's values.
+   * Each value should at least contain **name, parentId, depth, id** attributes
+   */
+  values: PropTypes.array.isRequired,
+  /**
+   * Tooltip on HierarchicalComboBox
+   */
   renderInputToolType: PropTypes.string
 };
 
 HierarchicalComboBox.defaultProps = {
   disabled: false,
-  separator: ' ... ',
-  maxCharLength: -1,
   renderInputToolType: ''
 };
-
-export default HierarchicalComboBox;

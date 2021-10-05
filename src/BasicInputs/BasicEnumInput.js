@@ -11,19 +11,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasicEnumInput = (props) => {
+export const BasicEnumInput = (props) => {
   const classes = useStyles();
-  const { label, textFieldProps, enumValues, changeEnumField } = props;
-  let { containerProps, labelProps } = props;
-  containerProps = containerProps || {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2
-  };
-  labelProps = labelProps || {
-    variant: 'subtitle2'
-  };
+  const { label, value, textFieldProps, enumValues, changeEnumField } = props;
+  const { containerProps, labelProps } = props;
 
   return (
     <Grid container className={classes.root} {...containerProps}>
@@ -33,6 +24,7 @@ const BasicEnumInput = (props) => {
       <Grid item >
         <TextField
           select
+          value={value}
           {...textFieldProps}
           onChange={(event) => {
             return changeEnumField(event.target.value);
@@ -50,12 +42,48 @@ const BasicEnumInput = (props) => {
 };
 
 BasicEnumInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  textFieldProps: PropTypes.object.isRequired,
+  /**
+   * BasicEnumInput's label
+   */
+  label: PropTypes.string,
+  /**
+   * BasicEnumInput's value
+   */
+  value: PropTypes.string.isRequired,
+  /**
+   * Additional props that you can specify for the BasicEnumInput's textField that displays the enum value selected
+   */
+  textFieldProps: PropTypes.object,
+  /**
+   * Function used when the user changes the BasicEnumInput value
+   */
   changeEnumField: PropTypes.func.isRequired,
+  /**
+   * List of all possible BasicEnumInput values. A value (JS object) has two attributes : **key** and **value**
+   *  `{
+         key: 'thisIsAKey',
+         value: 'This is a Value'
+       }`
+   */
   enumValues: PropTypes.array.isRequired,
+  /**
+   * Additional props that you can specify for the BasicEnumInput's Grid container that displays both label and input
+   */
   containerProps: PropTypes.object,
+  /**
+   * Additional props that you can specify for the BasicEnumInput's label
+   */
   labelProps: PropTypes.object
 };
 
-export default BasicEnumInput;
+BasicEnumInput.defaultProps = {
+  containerProps: {
+    direction: 'row',
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    spacing: 2
+  },
+  labelProps: {
+    variant: 'subtitle2'
+  }
+};

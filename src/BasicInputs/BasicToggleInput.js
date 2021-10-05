@@ -11,19 +11,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasicToggleInput = (props) => {
+export const BasicToggleInput = (props) => {
   const classes = useStyles();
-  const { label, switchProps, changeSwitchType } = props;
-  let { containerProps, labelProps } = props;
-  containerProps = containerProps || {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2
-  };
-  labelProps = labelProps || {
-    variant: 'subtitle2'
-  };
+  const { label, value, switchProps, changeSwitchType, containerProps, labelProps } = props;
 
   return (
 
@@ -34,6 +24,7 @@ const BasicToggleInput = (props) => {
           <Grid item >
               <Switch
                 onChange={(event) => changeSwitchType(event.target.checked)}
+                checked = {value}
                 {...switchProps}
               />
           </Grid>
@@ -43,11 +34,40 @@ const BasicToggleInput = (props) => {
 };
 
 BasicToggleInput.propTypes = {
-  label: PropTypes.string.isRequired,
+  /**
+   * BasicToggleInput's label
+   */
+  label: PropTypes.string,
+  /**
+   * BasicToggleInput's checked
+   */
+  value: PropTypes.bool.isRequired,
+  /**
+   * Function used when the user changes the BasicToggleInput value
+   */
   changeSwitchType: PropTypes.func.isRequired,
-  switchProps: PropTypes.object.isRequired,
+  /**
+   * Additional props that you can specify for the BasicToggleInput's toggle
+   */
+  switchProps: PropTypes.object,
+  /**
+   * Additional props that you can specify for the BasicToggleInput's Grid container that displays both label and input
+   */
   containerProps: PropTypes.object,
+  /**
+   * Additional props that you can specify for the BasicToggleInput's label
+   */
   labelProps: PropTypes.object
 };
 
-export default BasicToggleInput;
+BasicToggleInput.defaultProps = {
+  containerProps: {
+    direction: 'row',
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    spacing: 2
+  },
+  labelProps: {
+    variant: 'subtitle2'
+  }
+};

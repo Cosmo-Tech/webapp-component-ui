@@ -3,7 +3,6 @@
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { TextField, Typography } from '@material-ui/core';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
@@ -11,21 +10,23 @@ import { ScenarioUtils } from '@cosmotech/core';
 import { ScenarioNode } from './components';
 import useStyles from './style';
 
-const ScenarioManagerTreeList = (props) => {
+export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
-  const { t } = useTranslation();
   const {
     datasets,
     scenarios,
     deleteScenario,
     moveScenario,
-    userId
+    userId,
+    buildSearchInfo,
+    buildDatasetInfo,
+    labels
   } = props;
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
   const expandedNodes = useRef([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios]);
+  const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios, labels]);
 
   const [searchText, setSearchText] = useState('');
   const [treeData, setTreeData] = useState(rstScenarios);
@@ -34,11 +35,12 @@ const ScenarioManagerTreeList = (props) => {
   useEffect(() => {
     filterScenarios(searchText);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scenarios, searchText]);
+  }, [scenarios, searchText, labels]);
 
   function formatScenariosToRSTList (treeScenarios) {
     const rstScenarios = treeScenarios.map((scenario) => {
       const showDeleteIcon = scenario.ownerId === userId;
+      labels.dataset = buildDatasetInfo(scenario.datasetList);
       return {
         expanded: expandedNodes.current[scenario.id] || false,
         parentId: scenario.parentId,
@@ -49,6 +51,7 @@ const ScenarioManagerTreeList = (props) => {
           scenario={scenario}
           showDeleteIcon={showDeleteIcon}
           deleteScenario={deleteScenario}
+          labels={labels}
         />
       };
     });
@@ -72,10 +75,8 @@ const ScenarioManagerTreeList = (props) => {
     setTreeData(formatScenariosToRSTList(filtered));
   }
 
-  function buildSearchInfo () {
-    return t('commoncomponents.scenariomanager.treelist.search.info',
-      '{{count}} scenarios found',
-      { count: ScenarioUtils.countScenariosInTree(treeData) });
+  function buildSearchInfoLabel () {
+    return buildSearchInfo(ScenarioUtils.countScenariosInTree(treeData));
   }
 
   function onSearchTextChange (event) {
@@ -96,13 +97,13 @@ const ScenarioManagerTreeList = (props) => {
         <TextField
           data-cy="scenario-manager-search-field"
           id="standard-search"
-          label="Search field"
+          label={labels.searchField}
           type="search"
           className={classes.searchField}
           value={searchText}
           onChange={onSearchTextChange}/>
         <Typography className={classes.searchInfo}>
-          <em>{ buildSearchInfo() }</em>
+          <em>{ buildSearchInfoLabel() }</em>
         </Typography>
       </div>
       <div className={classes.treeContainer}
@@ -125,17 +126,63 @@ const ScenarioManagerTreeList = (props) => {
 };
 
 ScenarioManagerTreeList.propTypes = {
+  /**
+   * Datasets list
+   */
   datasets: PropTypes.array.isRequired,
+  /**
+   * Scenarios list
+   */
   scenarios: PropTypes.array.isRequired,
+  /**
+   * Function bound to handle a scenario deletion
+   */
   deleteScenario: PropTypes.func.isRequired,
+  /**
+   * Function bound to handle a scenario movement (moving a scenario = changing its parent)
+   */
   moveScenario: PropTypes.func.isRequired,
-  userId: PropTypes.string.isRequired
+  /**
+   * Current user id
+   */
+  userId: PropTypes.string.isRequired,
+  /**
+   * Function building scenario search label
+   */
+  buildSearchInfo: PropTypes.func.isRequired,
+  /**
+   * Function building scenario dataset label
+   */
+  buildDatasetInfo: PropTypes.func.isRequired,
+  /**
+   * Structure
+   * <pre>
+   {
+    status: 'string',
+    successful: 'string',
+    failed: 'string',
+    created: 'string',
+    dataset: 'string',
+    searchField: 'string'
+  }
+   * </pre>
+   */
+  labels: PropTypes.object
+};
+
+ScenarioManagerTreeList.defaultProps = {
+  labels: {
+    status: 'Run status',
+    successful: 'Successful',
+    failed: 'Failed',
+    created: 'Created',
+    dataset: 'Dataset',
+    searchField: 'Search'
+  }
 };
 
 // Function to ignore drag & drop events in the parent div, to prevent
-// some behavior such as text drag & drop opening a new tab in the browser
+// some behaviors such as text drag & drop opening a new tab in the browser
 function ignoreEvent (event) {
   event.preventDefault();
 }
-
-export default ScenarioManagerTreeList;

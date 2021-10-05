@@ -3,7 +3,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import {
   Button,
   CircularProgress,
@@ -18,7 +17,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
-const UploadFile = (props) => {
+export const UploadFile = (props) => {
   const {
     acceptedFileTypes,
     handleUploadFile,
@@ -26,16 +25,16 @@ const UploadFile = (props) => {
     handleDownloadFile,
     file,
     editMode,
-    isFileValid
+    isFileValid,
+    labels
   } = props;
-  const { t } = useTranslation();
 
   return (
     <div>
       <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
         <Grid item>
           <Button disabled={!editMode} variant="contained" component="label" onChange={handleUploadFile}>
-            {t('genericcomponent.uploadfile.button.browse', 'Browse')}
+            {labels.button}
             <input type="file" accept={acceptedFileTypes} hidden />
           </Button>
         </Grid>
@@ -81,7 +80,7 @@ const UploadFile = (props) => {
         </Grid>
           { (isFileValid === false) &&
             <Grid item>
-              <Tooltip title="genericcomponent.uploadfile.tooltip.isvalidfile" placement="right-end">
+              <Tooltip title={labels.invalidFileMessage} placement="right-end">
                 <ErrorIcon color="error" />
               </Tooltip>
             </Grid>
@@ -92,17 +91,70 @@ const UploadFile = (props) => {
 };
 
 UploadFile.propTypes = {
+  /**
+   * Pre-filter extension files for upload
+   */
   acceptedFileTypes: PropTypes.string,
+  /**
+   * Function bound on "upload" button
+   */
   handleUploadFile: PropTypes.func.isRequired,
+  /**
+   * Function bound on "delete" icon
+   */
   handleDeleteFile: PropTypes.func.isRequired,
+  /**
+   * Function bound on "download" icon
+   */
   handleDownloadFile: PropTypes.func.isRequired,
+  /**
+   * Uploaded file data:
+   * Structure :
+   * <pre>
+      {
+      parameterId: 'string',
+      description: 'string',
+      initialName: 'string',
+      name: '',
+      file: null,
+      status: One Of UPLOAD_FILE_STATUS_KEY.*
+    }
+    </pre>
+   */
   file: PropTypes.object,
+  /**
+   *  Define the UploadFile's state:
+   *  - true : the button is enabled
+   *  - false : the button is disabled
+   */
   editMode: PropTypes.bool.isRequired,
-  isFileValid: PropTypes.bool
+  /**
+   *  Defines if the uploaded file is valid or not
+   */
+  isFileValid: PropTypes.bool,
+  /**
+   * Component's labels:
+   * Structure:
+   * <pre>
+     {
+      button: 'string',
+      invalidFileMessage: 'string'
+    }
+   </pre>
+   */
+  labels: PropTypes.shape({
+    button: PropTypes.string.isRequired,
+    invalidFileMessage: PropTypes.string.isRequired
+  })
 };
 
 UploadFile.defaultProps = {
   acceptedFileTypes: '*'
 };
 
-export default UploadFile;
+UploadFile.defaultProps = {
+  labels: {
+    button: 'Browse',
+    invalidFileMessage: 'Your file is invalid'
+  }
+};

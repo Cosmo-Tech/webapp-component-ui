@@ -3,9 +3,7 @@
 
 import React from 'react';
 import { makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import microsoftLogo from '../../assets/microsoft_logo.png';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '12px',
     marginRight: '12px'
   },
-  signin: {
+  label: {
     fontSize: '15px',
     font: 'Sogoe UI Regular',
     weight: 600,
@@ -31,16 +29,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignInButton = (props) => {
+export const SignInButton = (props) => {
   const classes = useStyles();
-  const { t } = useTranslation();
+
+  const { id, label, logo, onClick } = props;
 
   return (
-    <button className={classes.root} onClick={props.onClick} data-cy="sign-in-with-microsoft-button">
+    <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
       <Grid
         container
         spacing={0}
-        className={classes.mainGrid}
         direction="row"
         alignItems="center"
         justifyContent="flex-start"
@@ -49,12 +47,12 @@ const SignInButton = (props) => {
           <Avatar
             className={classes.logo}
             variant="square"
-            src={microsoftLogo}
+            src={logo}
           />
         </Grid>
         <Grid item zeroMinWidth>
-          <Typography noWrap className={classes.signin}>
-            {t('genericcomponent.button.login.msal.title', 'Sign in with Microsoft')}
+          <Typography noWrap className={classes.label}>
+            {label}
           </Typography>
         </Grid>
       </Grid>
@@ -63,7 +61,28 @@ const SignInButton = (props) => {
 };
 
 SignInButton.propTypes = {
+  /**
+   * Button's id
+   */
+  id: PropTypes.string.isRequired,
+  /**
+   * Logo to display
+   */
+  logo: PropTypes.string,
+  /**
+   * Button's label
+   */
+  label: PropTypes.string,
+  /**
+   * Function used when the button is clicked.
+   * As you can specify it, you can use custom auth providers:
+   * - Microsoft Authentication Library provider (defined in @cosmotech/azure package)
+   * - Custom one: to do this, use the **Auth.js** file (defined in @cosmotech/core package) as pattern
+   */
   onClick: PropTypes.func.isRequired
 };
 
-export default SignInButton;
+SignInButton.defaultProps = {
+  logo: '../../assets/microsoft_logo.png',
+  label: 'Sign in'
+};

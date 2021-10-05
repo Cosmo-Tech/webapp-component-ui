@@ -8,7 +8,6 @@ import { IconButton, Tooltip, makeStyles } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,17 +47,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function getErrorCode (t, reports) {
-  let errorCode = t('commoncomponents.iframe.scenario.error.unknown.label', 'Unknown error');
+function getErrorCode (labels, reports) {
+  let errorCode = labels.errors.unknown;
   if (reports?.error?.status && reports?.error?.statusText) {
     errorCode = `${reports?.error?.status} - ${reports?.error?.statusText}`;
   }
   return errorCode;
 }
 
-function getErrorDescription (t, reports) {
-  let errorDescription = t('commoncomponents.iframe.scenario.error.unknown.details',
-    'Something went wrong when fetching PowerBI reports info');
+function getErrorDescription (labels, reports) {
+  let errorDescription = labels.errors.details;
   if (reports?.error?.powerBIErrorInfo) {
     errorDescription = reports?.error?.powerBIErrorInfo;
   }
@@ -86,7 +84,7 @@ function addDynamicParameters (pageName, lang, newConfig, settings, staticFilter
   }
 }
 
-const SimplePowerBIReportEmbed = ({
+export const SimplePowerBIReportEmbed = ({
   index,
   reports,
   reportConfiguration,
@@ -94,9 +92,9 @@ const SimplePowerBIReportEmbed = ({
   lang,
   downloadLogsFile,
   refreshable,
-  refreshTimeout
+  refreshTimeout,
+  labels
 }) => {
-  const { t } = useTranslation();
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
 
@@ -136,8 +134,8 @@ const SimplePowerBIReportEmbed = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, scenario, reports.status]);
 
-  const errorCode = getErrorCode(t, reports);
-  const errorDescription = getErrorDescription(t, reports);
+  const errorCode = getErrorCode(labels, reports);
+  const errorDescription = getErrorDescription(labels, reports);
 
   const refreshReport = () => {
     report.refresh();
@@ -158,32 +156,33 @@ const SimplePowerBIReportEmbed = ({
           </div>
         </div>
         { noScenario && <DashboardPlaceholder
-            label={t('commoncomponents.iframe.scenario.noscenario.label',
-              'You can create a scenario by clicking on') + ' "' +
-            t('commoncomponents.button.create.scenario.label', 'Create new Scenario') + '"'}
-            title={t('commoncomponents.iframe.scenario.noscenario.title', 'No scenario yet')}
+            label={labels.noScenario.label}
+            title={labels.noScenario.title}
         />
         }
         { noRun && <DashboardPlaceholder
-            label={t('commoncomponents.iframe.scenario.results.label.uninitialized',
-              'The scenario has not been run yet')}
+          label={labels.noRun.label}
+          title={labels.noRun.title}
         />
         }
         { runInProgress && <DashboardPlaceholder
-            label={t('commoncomponents.iframe.scenario.results.label.running', 'Scenario run in progress...')}
-            icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
+          label={labels.inProgress.label}
+          title={labels.inProgress.title}
+          icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
         />
         }
         {
           hasError && <DashboardPlaceholder
-            label={t('commoncomponents.iframe.scenario.results.text.error', 'An error occured during the scenario run')}
-            downloadLogsFile={downloadLogsFile}
+          label={labels.hasErrors.label}
+          title={labels.hasErrors.title}
+          downloadLogsFile={downloadLogsFile}
+          downloadLabel={labels.downloadButton}
           />
         }
         <div className={classes.divContainer} style={!isReady ? { display: 'none' } : { }}>
           { refreshable &&
           <div className={classes.toolbar}>
-            <Tooltip title={t('commoncomponents.iframe.scenario.results.button.refresh', 'Refresh')}>
+            <Tooltip title={labels.refreshTooltip}>
                 <IconButton aria-label="refresh"
                             disabled={!report || disabled}
                             color="primary"
@@ -206,19 +205,118 @@ const SimplePowerBIReportEmbed = ({
 };
 
 SimplePowerBIReportEmbed.propTypes = {
+  /**
+   * Index of reportConfiguration
+   */
   index: PropTypes.number,
+  /**
+   * List of available reports
+   */
   reports: PropTypes.object.isRequired,
+  /**
+   * List of configuration report
+   */
   reportConfiguration: PropTypes.array.isRequired,
+  /**
+   * Current scenario
+   */
   scenario: PropTypes.object,
+  /**
+   * Current language
+   */
   lang: PropTypes.string.isRequired,
+  /**
+   * Function bound on "Download logs" button
+   */
   downloadLogsFile: PropTypes.func,
+  /**
+   *  Defines the refreshButton's state:
+   *  - true : the refreshButton appears
+   *  - false : the refreshButton is hidden
+   */
   refreshable: PropTypes.bool,
-  refreshTimeout: PropTypes.number
+  /**
+   *  Defines the time during which the refresh button is disabled
+   *  (PowerBI allows refresh actions only every 15 seconds)
+   */
+  refreshTimeout: PropTypes.number,
+  /**
+   * Structure:
+   * <pre>
+   * {
+      noScenario: {
+        title:'string',
+        label:'string'
+        },
+      noRun: {
+        title: 'string',
+        label: 'string'
+        },
+      inProgress: {
+        title: 'string',
+        label:'string'
+        },
+      hasErrors: {
+        title:'string',
+        label: 'string'
+      },
+      downloadButton: 'string',
+      refreshButton: 'string',
+      errors: {
+        unknown : 'string',
+        details : 'string'
+      }
+   }
+   * </pre>
+   */
+  labels: PropTypes.shape({
+    noScenario: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    noRun: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    inProgress: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    hasErrors: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired
+    }).isRequired,
+    downloadButton: PropTypes.string.isRequired,
+    refreshTooltip: PropTypes.string.isRequired,
+    errors: PropTypes.shape({
+      unknown: PropTypes.string.isRequired,
+      details: PropTypes.string.isRequired
+    }).isRequired
+  })
 };
 SimplePowerBIReportEmbed.defaultProps = {
   index: 0,
   refreshable: true,
-  refreshTimeout: 15000
+  refreshTimeout: 15000,
+  labels: {
+    noScenario: {
+      title: 'No scenario yet',
+      label: 'You can create a scenario by clicking on Create new scenario'
+    },
+    noRun: {
+      label: 'The scenario has not been run yet'
+    },
+    inProgress: {
+      label: 'Scenario run in progress...'
+    },
+    hasErrors: {
+      label: 'An error occured during the scenario run'
+    },
+    downloadButton: 'Download logs',
+    refreshTooltip: 'Refresh',
+    errors: {
+      unknown: 'Unknown error',
+      details: 'Something went wrong when fetching PowerBI reports info'
+    }
+  }
 };
-
-export default SimplePowerBIReportEmbed;

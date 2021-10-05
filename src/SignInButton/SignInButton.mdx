@@ -1,0 +1,26 @@
+---
+name: SignInButton
+route: /SignInButton
+menu: Buttons
+---
+import { Playground, Props } from 'docz'
+import { SignInButton } from './SignInButton'
+import { withStyles } from '@material-ui/core/styles'
+import img from '../../assets/microsoft_logo.png'
+
+# Microsoft Sign In Button
+
+The aim of this component is to easily display a sign-in button
+
+## Props
+
+<Props of={ SignInButton }/>
+
+## Basic Usage
+
+<Playground>
+	<SignInButton
+		id={'microsoft'}
+		logo={img}
+		onClick={() => alert('Use auth provider you want')} />
+</Playground>

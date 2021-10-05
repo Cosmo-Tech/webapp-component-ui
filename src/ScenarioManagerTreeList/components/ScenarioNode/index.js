@@ -1,1 +1,1 @@
-export { default } from './ScenarioNode';
+export { ScenarioNode } from './ScenarioNode';

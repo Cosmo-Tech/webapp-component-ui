@@ -12,20 +12,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasicNumberInput = (props) => {
+export const BasicNumberInput = (props) => {
   const classes = useStyles();
-  const { label, textFieldProps, inputProps, changeNumberField, ...otherProps } = props;
-  // Optional props for UI
-  let { containerProps, labelProps } = props;
-  containerProps = containerProps || {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2
-  };
-  labelProps = labelProps || {
-    variant: 'subtitle2'
-  };
+  const {
+    label,
+    value,
+    textFieldProps,
+    inputProps,
+    changeNumberField,
+    containerProps,
+    labelProps,
+    ...otherProps
+  } = props;
 
   return (
     <Grid container className={classes.root} {...containerProps} {...otherProps}>
@@ -34,6 +32,7 @@ const BasicNumberInput = (props) => {
       </Grid>
       <Grid item >
         <TextField {...textFieldProps}
+          value={value}
           onChange={(event) => changeNumberField(parseFloat(event.target.value))}
           inputProps={inputProps}
           InputProps={{
@@ -46,12 +45,48 @@ const BasicNumberInput = (props) => {
 };
 
 BasicNumberInput.propTypes = {
-  label: PropTypes.string.isRequired,
-  textFieldProps: PropTypes.object.isRequired,
+  /**
+   * BasicNumberInput's label
+   */
+  label: PropTypes.string,
+  /**
+   * BasicNumberInput's value
+   */
+  value: PropTypes.number.isRequired,
+  /**
+   * Function used when the user changes the BasicNumberInput value
+   */
   changeNumberField: PropTypes.func.isRequired,
-  inputProps: PropTypes.object.isRequired,
+  /**
+   * Additional props that you can specify for the BasicNumberInput's textField that displays the number value selected
+   */
+  textFieldProps: PropTypes.object,
+  /**
+   * Additional props that you can specify for the BasicNumberInput's Grid container that displays both label and input
+   */
+  inputProps: PropTypes.object,
+  /**
+   * Additional props that you can specify for the BasicNumberInput's Grid container that displays both label and input
+   */
   containerProps: PropTypes.object,
+  /**
+   * Additional props that you can specify for the BasicNumberInput's label
+   */
   labelProps: PropTypes.object
 };
 
-export default BasicNumberInput;
+BasicNumberInput.defaultProps = {
+  containerProps: {
+    direction: 'row',
+    alignItems: 'center',
+    alignContent: 'flex-start',
+    spacing: 2
+  },
+  labelProps: {
+    variant: 'subtitle2'
+  },
+  inputProps: {
+    min: -9999,
+    max: 9999
+  }
+};

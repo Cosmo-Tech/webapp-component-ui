@@ -3,22 +3,20 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import { IconButton, Typography } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';
 
-const ScenarioNode = ({
+export const ScenarioNode = ({
   datasets,
   scenario,
   showDeleteIcon,
-  deleteScenario
+  deleteScenario,
+  labels
 }) => {
   const classes = useStyles();
-  const { t } = useTranslation();
-
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const openConfirmDialog = () => { setIsConfirmDialogOpen(true); };
   const closeConfirmDialog = () => { setIsConfirmDialogOpen(false); };
@@ -29,21 +27,18 @@ const ScenarioNode = ({
   }
 
   function getStatusLabel () {
-    return t('commoncomponents.scenariomanager.treelist.node.status.label', 'Run status') + ':';
+    return labels.status + ':';
   }
 
   function getTranslatedStatus (scenarioState) {
     if (!scenarioState) {
       return '';
     }
-    return t('commoncomponents.scenariomanager.treelist.node.status.' + scenarioState.toLowerCase(), scenarioState);
+    return labels[scenarioState.toLowerCase()] ? labels[scenarioState.toLowerCase()] : scenarioState;
   }
 
-  function getDatasetsLabel (scenarioDatasets) {
-    return t('commoncomponents.scenariomanager.treelist.node.dataset',
-      'Datasets',
-      { count: scenarioDatasets?.length || 0 }
-    ) + ':';
+  function getDatasetsLabel () {
+    return labels.dataset + ':';
   }
 
   return (
@@ -52,6 +47,7 @@ const ScenarioNode = ({
         open={isConfirmDialogOpen}
         closeDialog={ closeConfirmDialog }
         confirmDelete={ confirmScenarioDelete }
+        labels={labels.deleteDialog}
       >
       </ConfirmDeleteDialog>
       <Typography
@@ -89,7 +85,7 @@ const ScenarioNode = ({
           { getTranslatedStatus(scenario.state) }
         </span>
         <br/>
-        { getDatasetsLabel(scenario.datasetList) }
+        { getDatasetsLabel() }
         <br/>
         <span className={classes.datasets}>
           { DatasetUtils.getDatasetNames(datasets, scenario.datasetList) }
@@ -100,10 +96,68 @@ const ScenarioNode = ({
 };
 
 ScenarioNode.propTypes = {
+  /**
+   * Datasets list
+   */
   datasets: PropTypes.array.isRequired,
+  /**
+   * Scenario to display
+   */
   scenario: PropTypes.object.isRequired,
+  /**
+   *  Define the ScenarioNode's delete button state:
+   *  - true : the button is shown
+   *  - false : the button is hidden
+   */
   showDeleteIcon: PropTypes.bool.isRequired,
-  deleteScenario: PropTypes.func.isRequired
+  /**
+   *  Function bound on delete button
+   */
+  deleteScenario: PropTypes.func.isRequired,
+  /**
+   *  Labels.
+   *
+   *  Structure:
+   * <pre>
+   *   {
+        status: 'string',
+        successful: 'string',
+        failed: 'string',
+        created: 'string'
+        dataset: 'string',
+        deleteDialog : {
+          title: 'string',
+          description: 'string',
+          cancel: 'string',
+          confirm: 'string'
+        }
+   *   }
+   * </pre>
+   */
+  labels: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+    successful: PropTypes.string.isRequired,
+    failed: PropTypes.string.isRequired,
+    created: PropTypes.string.isRequired,
+    dataset: PropTypes.string.isRequired,
+    deleteDialog: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      cancel: PropTypes.string.isRequired,
+      confirm: PropTypes.string.isRequired
+    }).isRequired
+  })
+};
+
+ScenarioNode.defaultProps = {
+  showDeleteIcon: false,
+  labels: {
+    status: 'Run status',
+    successful: 'Successful',
+    failed: 'Failed',
+    created: 'Created',
+    dataset: 'Datasets'
+  }
 };
 
 function getStatusClassName (classes, scenarioState) {
@@ -115,5 +169,3 @@ function getStatusClassName (classes, scenarioState) {
   }
   return classes.statusCreated;
 }
-
-export default ScenarioNode;
