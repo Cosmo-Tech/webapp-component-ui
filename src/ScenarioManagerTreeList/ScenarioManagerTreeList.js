@@ -127,11 +127,11 @@ export const ScenarioManagerTreeList = (props) => {
 
 ScenarioManagerTreeList.propTypes = {
   /**
-   * Dataset's list
+   * Datasets list
    */
   datasets: PropTypes.array.isRequired,
   /**
-   * Scenario's list
+   * Scenarios list
    */
   scenarios: PropTypes.array.isRequired,
   /**
@@ -139,7 +139,7 @@ ScenarioManagerTreeList.propTypes = {
    */
   deleteScenario: PropTypes.func.isRequired,
   /**
-   * Function bound to handle a scenario movement
+   * Function bound to handle a scenario movement (moving a scenario = changing its parent)
    */
   moveScenario: PropTypes.func.isRequired,
   /**
@@ -147,11 +147,11 @@ ScenarioManagerTreeList.propTypes = {
    */
   userId: PropTypes.string.isRequired,
   /**
-   * Function that build scenario search label
+   * Function building scenario search label
    */
   buildSearchInfo: PropTypes.func.isRequired,
   /**
-   * Function that build scenario dataset label
+   * Function building scenario dataset label
    */
   buildDatasetInfo: PropTypes.func.isRequired,
   /**
@@ -182,7 +182,7 @@ ScenarioManagerTreeList.defaultProps = {
 };
 
 // Function to ignore drag & drop events in the parent div, to prevent
-// some behavior such as text drag & drop opening a new tab in the browser
+// some behaviors such as text drag & drop opening a new tab in the browser
 function ignoreEvent (event) {
   event.preventDefault();
 }

@@ -58,19 +58,19 @@ BasicNumberInput.propTypes = {
    */
   changeNumberField: PropTypes.func.isRequired,
   /**
-   * Additional props that you can specified for the BasicNumberInput's textField that display the number value selected
+   * Additional props that you can specify for the BasicNumberInput's textField that displays the number value selected
    */
   textFieldProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicNumberInput's Grid container that display both label and input
+   * Additional props that you can specify for the BasicNumberInput's Grid container that displays both label and input
    */
   inputProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicNumberInput's Grid container that display both label and input
+   * Additional props that you can specify for the BasicNumberInput's Grid container that displays both label and input
    */
   containerProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicNumberInput's label
+   * Additional props that you can specify for the BasicNumberInput's label
    */
   labelProps: PropTypes.object
 };

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/pickers';
 
 export const BasicDateInput = (props) => {
-  const { label, format, value, dateProps, changeSelectedDate } = props;
+  const { id, label, format, value, dateProps, changeSelectedDate } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -21,6 +21,8 @@ export const BasicDateInput = (props) => {
         margin="normal"
         format={format}
         label={label}
+        id={id}
+        data-cy={id + '-date-input'}
         onChange={changeSelectedDate}
         KeyboardButtonProps={{
           'aria-label': 'change date'
@@ -34,6 +36,10 @@ export const BasicDateInput = (props) => {
 
 BasicDateInput.propTypes = {
   /**
+   * BasicDateInput's id
+   */
+  id: PropTypes.string.isRequired,
+  /**
    * BasicDateInput's label
    */
   label: PropTypes.string,
@@ -44,13 +50,17 @@ BasicDateInput.propTypes = {
   /**
    * BasicDateInput's date format
    */
-  format: PropTypes.string.isRequired,
+  format: PropTypes.string,
   /**
    * Function used when the user changes the BasicDateInput value
    */
   changeSelectedDate: PropTypes.func.isRequired,
   /**
-   * Additional props that you can specified for the BasicDateInput's input
+   * Additional props that you can specify for the BasicDateInput's input
    */
   dateProps: PropTypes.object.isRequired
+};
+
+BasicDateInput.defaultProps = {
+  format: 'MM/dd/yyyy'
 };

@@ -44,15 +44,15 @@ BasicTextInput.propTypes = {
    */
   changeTextField: PropTypes.func.isRequired,
   /**
-   * Additional props that you can specified for the BasicTextInput's textField that display the text value selected
+   * Additional props that you can specify for the BasicTextInput's textField that displays the text value selected
    */
   textFieldProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicTextInput's Grid container that display both label and input
+   * Additional props that you can specify for the BasicTextInput's Grid container that displays both label and input
    */
   containerProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicTextInput's label
+   * Additional props that you can specify for the BasicTextInput's label
    */
   labelProps: PropTypes.object
 };

@@ -18,13 +18,13 @@ The aim of this component is to easily display a link generation button with sel
 ### Basic Usage
 
 <Playground>
-    <SelfDestructLinkButton
-        generate={ async function ()
-            {
-                console.log('Simulate Asynchronous behaviour')
-                await new Promise(resolve => setTimeout(resolve, 5000));
-                return '_thisisafakedownloadlink';
-             }
-        }
-    />
+	<SelfDestructLinkButton
+		generate={ async function ()
+			{
+				console.log('Simulate Asynchronous behaviour')
+				await new Promise(resolve => setTimeout(resolve, 5000));
+				return '_thisisafakedownloadlink';
+			}
+		}
+	/>
 </Playground>

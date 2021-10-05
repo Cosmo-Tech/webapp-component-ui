@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 export const BasicToggleInput = (props) => {
   const classes = useStyles();
-  const { label, checked, switchProps, changeSwitchType, containerProps, labelProps } = props;
+  const { label, value, switchProps, changeSwitchType, containerProps, labelProps } = props;
 
   return (
 
@@ -24,7 +24,7 @@ export const BasicToggleInput = (props) => {
           <Grid item >
               <Switch
                 onChange={(event) => changeSwitchType(event.target.checked)}
-                checked = {checked}
+                checked = {value}
                 {...switchProps}
               />
           </Grid>
@@ -41,21 +41,21 @@ BasicToggleInput.propTypes = {
   /**
    * BasicToggleInput's checked
    */
-  checked: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   /**
    * Function used when the user changes the BasicToggleInput value
    */
   changeSwitchType: PropTypes.func.isRequired,
   /**
-   * Additional props that you can specified for the BasicToggleInput's toggle
+   * Additional props that you can specify for the BasicToggleInput's toggle
    */
   switchProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicToggleInput's Grid container that display both label and input
+   * Additional props that you can specify for the BasicToggleInput's Grid container that displays both label and input
    */
   containerProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicToggleInput's label
+   * Additional props that you can specify for the BasicToggleInput's label
    */
   labelProps: PropTypes.object
 };

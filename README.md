@@ -1,13 +1,13 @@
 # WebApp Component UI
 
-The ***WebApp Component UI*** aims to be a library of [React](https://reactjs.org/) components that can be used for customize/enhance our [Azure Sample Webapp](https://github.com/Cosmo-Tech/azure-sample-webapp).
+The ***Webapp UI components library*** aims to be a library of [React](https://reactjs.org/) components that can be used to customize/enhance our [Azure Sample Webapp](https://github.com/Cosmo-Tech/azure-sample-webapp).
 
 This project documents and shows how to use the components.
 
 You can use this project as a component library to build a front-end for your own Digital Twin solution.
 
-Feel free to contribute to this library. 
-More we have components, easier your webapp customization will be.
+Feel free to contribute to this library.
+The more components we have, the easier your webapp customization will be.
 
 We use [docz](https://github.com/doczjs/docz) to build our documentation.
 

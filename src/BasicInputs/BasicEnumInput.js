@@ -51,7 +51,7 @@ BasicEnumInput.propTypes = {
    */
   value: PropTypes.string.isRequired,
   /**
-   * Additional props that you can specified for the BasicEnumInput's textField that display the enum value selected
+   * Additional props that you can specify for the BasicEnumInput's textField that displays the enum value selected
    */
   textFieldProps: PropTypes.object,
   /**
@@ -59,7 +59,7 @@ BasicEnumInput.propTypes = {
    */
   changeEnumField: PropTypes.func.isRequired,
   /**
-   * List of all BasicEnumInput's value possible. A value (JS object) has two attributes : **key** and **value**
+   * List of all possible BasicEnumInput values. A value (JS object) has two attributes : **key** and **value**
    *  `{
          key: 'thisIsAKey',
          value: 'This is a Value'
@@ -67,11 +67,11 @@ BasicEnumInput.propTypes = {
    */
   enumValues: PropTypes.array.isRequired,
   /**
-   * Additional props that you can specified for the BasicEnumInput's Grid container that display both label and input
+   * Additional props that you can specify for the BasicEnumInput's Grid container that displays both label and input
    */
   containerProps: PropTypes.object,
   /**
-   * Additional props that you can specified for the BasicEnumInput's label
+   * Additional props that you can specify for the BasicEnumInput's label
    */
   labelProps: PropTypes.object
 };

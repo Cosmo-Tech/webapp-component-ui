@@ -64,7 +64,7 @@ export const CreateScenarioButton = ({
 
 CreateScenarioButton.propTypes = {
   /**
-   * Scenario selected in context
+   * Selected scenario in context
    */
   currentScenario: PropTypes.object,
   /**
@@ -80,7 +80,7 @@ CreateScenarioButton.propTypes = {
    */
   runTemplates: PropTypes.array.isRequired,
   /**
-   * User information (will be send for scenario creation)
+   * User information (will be sent for scenario creation)
    */
   user: PropTypes.object.isRequired,
   /**
@@ -96,8 +96,8 @@ CreateScenarioButton.propTypes = {
    */
   solution: PropTypes.object.isRequired,
   /**
-   *  Define the CreateScenarioButton's state:
-   *  - true : the button is disabled
+   *  Defines the CreateScenarioButton's state:
+   *  - true : the button is disabled (the tooltip will guide users on how to enable the button)
    *  - false : the button is enabled
    */
   disabled: PropTypes.bool.isRequired,
@@ -169,7 +169,7 @@ CreateScenarioButton.defaultProps = {
     errors: {
       emptyScenarioName: 'Scenario Name should not be empty',
       existingScenarioName: 'Scenario Name already exists',
-      forbiddenCharsInScenarioName: 'Forbidden chars in Scenario Name'
+      forbiddenCharsInScenarioName: 'Forbidden characters in Scenario Name'
     }
   }
 };

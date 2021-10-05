@@ -129,7 +129,7 @@ UploadFile.propTypes = {
    */
   editMode: PropTypes.bool.isRequired,
   /**
-   *  Define the uploaded file is valid or not
+   *  Defines if the uploaded file is valid or not
    */
   isFileValid: PropTypes.bool,
   /**

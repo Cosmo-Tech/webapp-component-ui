@@ -39,7 +39,8 @@ export const SimpleTwoActionsDialog = ({
       </DialogContent>
       <DialogActions >
         <Button
-          id={id + '-button1'}
+          data-cy={id + '-button1'}
+          id={id + 'id-button1'}
           onClick={handleClickOnButton1}
           color="primary">
           {labels.button1}

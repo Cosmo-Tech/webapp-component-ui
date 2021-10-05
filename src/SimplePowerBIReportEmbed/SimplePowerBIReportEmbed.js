@@ -237,6 +237,7 @@ SimplePowerBIReportEmbed.propTypes = {
   refreshable: PropTypes.bool,
   /**
    *  Defines the time during which the refresh button is disabled
+   *  (PowerBI allows refresh actions only every 15 seconds)
    */
   refreshTimeout: PropTypes.number,
   /**

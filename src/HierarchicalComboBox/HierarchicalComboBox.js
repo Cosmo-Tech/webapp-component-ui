@@ -60,13 +60,13 @@ HierarchicalComboBox.propTypes = {
   handleChange: PropTypes.func.isRequired,
   /**
    *  Define the HierarchicalComboBox's state:
-   *  - true : the button is disabled
+   *  - true : the button is disabled (the tooltip will guide users on how to enable the button)
    *  - false : the button is enabled
    */
   disabled: PropTypes.bool,
   /**
    * HierarchicalComboBox's values.
-   * Each value should at least contains **name, parentId, depth, id** attributes
+   * Each value should at least contain **name, parentId, depth, id** attributes
    */
   values: PropTypes.array.isRequired,
   /**

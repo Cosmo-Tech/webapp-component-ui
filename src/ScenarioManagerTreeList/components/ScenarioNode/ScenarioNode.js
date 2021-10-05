@@ -97,7 +97,7 @@ export const ScenarioNode = ({
 
 ScenarioNode.propTypes = {
   /**
-   * Dataset's list
+   * Datasets list
    */
   datasets: PropTypes.array.isRequired,
   /**

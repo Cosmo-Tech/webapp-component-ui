@@ -9,7 +9,7 @@ import profilePic from '../../assets/profile_placeholder.png'
 
 # User Information
 
-The aim of this component is to easily display a  user information
+The aim of this component is to easily display user information
 
 ## Props
 
@@ -18,17 +18,18 @@ The aim of this component is to easily display a  user information
 ## Basic Usage
 
 <Playground>
-    <UserInfo
-              documentationUrl={'http://google.com'}
-              languages={
-                {
-                  en: 'English',
-                  fr: 'Français'
-                }
-              }
-              changeLanguage={(lang) => alert('Language has changed for ' + lang)}
-              language={'en'}
-              profilePlaceholder={profilePic}
-              userName={'Bob Bobinson'}
-              onLogout={() => alert('Use log out function from your auth provider')} />
+	<UserInfo
+		documentationUrl={'http://google.com'}
+		languages={
+			{
+				en: 'English',
+				fr: 'Français'
+			}
+		}
+		changeLanguage={(lang) => alert('Language has changed for ' + lang)}
+		language={'en'}
+		profilePlaceholder={profilePic}
+		userName={'Bob Bobinson'}
+		onLogout={() => alert('Use log out function from your auth provider')}
+	/>
 </Playground>
