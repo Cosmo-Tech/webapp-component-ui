@@ -41,7 +41,7 @@ BasicToggleInput.propTypes = {
   /**
    * BasicToggleInput's checked
    */
-  value: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
   /**
    * Function used when the user changes the BasicToggleInput value
    */

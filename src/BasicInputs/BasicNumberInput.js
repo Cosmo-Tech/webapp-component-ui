@@ -52,7 +52,7 @@ BasicNumberInput.propTypes = {
   /**
    * BasicNumberInput's value
    */
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   /**
    * Function used when the user changes the BasicNumberInput value
    */
