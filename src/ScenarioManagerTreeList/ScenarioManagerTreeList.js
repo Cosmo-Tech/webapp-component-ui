@@ -26,7 +26,7 @@ export const ScenarioManagerTreeList = (props) => {
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
   const expandedNodes = useRef([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios]);
+  const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios, labels]);
 
   const [searchText, setSearchText] = useState('');
   const [treeData, setTreeData] = useState(rstScenarios);
@@ -35,7 +35,7 @@ export const ScenarioManagerTreeList = (props) => {
   useEffect(() => {
     filterScenarios(searchText);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scenarios, searchText]);
+  }, [scenarios, searchText, labels]);
 
   function formatScenariosToRSTList (treeScenarios) {
     const rstScenarios = treeScenarios.map((scenario) => {
@@ -97,7 +97,7 @@ export const ScenarioManagerTreeList = (props) => {
         <TextField
           data-cy="scenario-manager-search-field"
           id="standard-search"
-          label="Search field"
+          label={labels.searchField}
           type="search"
           className={classes.searchField}
           value={searchText}
@@ -162,7 +162,8 @@ ScenarioManagerTreeList.propTypes = {
     successful: 'string',
     failed: 'string',
     created: 'string',
-    dataset: 'string'
+    dataset: 'string',
+    searchField: 'string'
   }
    * </pre>
    */
@@ -175,7 +176,8 @@ ScenarioManagerTreeList.defaultProps = {
     successful: 'Successful',
     failed: 'Failed',
     created: 'Created',
-    dataset: 'Dataset'
+    dataset: 'Dataset',
+    searchField: 'Search'
   }
 };
 
