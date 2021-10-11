@@ -13,8 +13,12 @@ We use [docz](https://github.com/doczjs/docz) to build our documentation.
 
 Here are some useful command lines (extracted from docz documentation):
 
+## Build project
+`yarn build` will package the project.
 
-## Build
+This command will allow you to use `yarn link` and `ỳarn link @cosmotech/ui` commands to deal with this project locally.
+
+## Build Documentation
 
 `yarn docz:build` will generate a static site for your site in `.docz/dist/`.
 
@@ -22,7 +26,7 @@ You can try it out with `yarn docz:serve` or by serving the generated site with 
 
 You can have `yarn docz:build` emit to a different directory by providing a path to the `dest` field in your **doczrc.js** or from the command line : `yarn docz:build --dest docs-site-directory`.
 
-## Deploy
+## Deploy Documentation
 
 The output of docz consists of static assets only. This allows you to deploy your generated `docz` site with any static site hosting provider you'd like.
 
