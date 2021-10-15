@@ -3,7 +3,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Grid, Button, makeStyles } from '@material-ui/core';
+import { Typography, Grid, Button } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {

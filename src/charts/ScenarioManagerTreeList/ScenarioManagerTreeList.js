@@ -3,7 +3,7 @@
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Typography } from '@material-ui/core';
+import { TextField, Typography } from '@mui/material';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';

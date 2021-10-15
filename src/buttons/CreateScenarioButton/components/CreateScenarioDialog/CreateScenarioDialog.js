@@ -14,9 +14,9 @@ import {
   FormControlLabel,
   Grid,
   TextField,
-  makeStyles,
-} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import Autocomplete from '@mui/material/Autocomplete';
 import { HierarchicalComboBox } from '../../../../inputs';
 
 const useStyles = makeStyles((theme) => ({
@@ -242,7 +242,7 @@ const CreateScenarioDialog = ({
                 defaultValue={datasetFieldValues}
                 onChange={(event, newDataset) => handleChangeDataset(newDataset)}
                 getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
-                getOptionSelected={(option, value) => option.id === value.id}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -270,7 +270,7 @@ const CreateScenarioDialog = ({
               options={runTemplates}
               onChange={(event, newScenarioType) => handleScenarioTypeChange(newScenarioType)}
               getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
-              getOptionSelected={(option, value) => option.id === value.id}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
                   {...params}

@@ -3,7 +3,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Switch, Typography, makeStyles } from '@material-ui/core';
+import { Grid, Switch, Typography } from '@mui/material';
+
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   root: {

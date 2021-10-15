@@ -4,8 +4,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
-import { IconButton, Tooltip, makeStyles } from '@material-ui/core';
-import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
+import { IconButton, Tooltip } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
 
@@ -172,7 +173,13 @@ export const SimplePowerBIReportEmbed = ({
         {refreshable && (
           <div className={classes.toolbar}>
             <Tooltip title={labels.refreshTooltip}>
-              <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+              <IconButton
+                aria-label="refresh"
+                disabled={!report || disabled}
+                color="primary"
+                onClick={refreshReport}
+                size="large"
+              >
                 <RefreshIcon />
               </IconButton>
             </Tooltip>

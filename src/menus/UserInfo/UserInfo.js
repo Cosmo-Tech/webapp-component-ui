@@ -3,8 +3,9 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Menu, MenuItem, makeStyles } from '@material-ui/core';
-import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@material-ui/icons';
+import { Box, Menu, MenuItem } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme) => ({
   menuTrigger: {

@@ -1,7 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
+import { Grid, TextField, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NumberFormatCustom } from '../../../misc/formatters';

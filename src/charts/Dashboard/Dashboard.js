@@ -3,8 +3,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import makeStyles from '@mui/styles/makeStyles';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DashboardPlaceholder from './components';
 
 const useStyles = makeStyles((theme) => ({

@@ -1,7 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, MenuItem, TextField, Typography, makeStyles } from '@material-ui/core';
+import { Grid, MenuItem, TextField, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 

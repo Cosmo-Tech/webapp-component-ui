@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, Typography } from '@material-ui/core';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { IconButton, Typography } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';

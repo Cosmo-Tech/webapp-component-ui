@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tooltip } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Button, Tooltip } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import CreateScenarioDialog from './components';
 
 export const CreateScenarioButton = ({

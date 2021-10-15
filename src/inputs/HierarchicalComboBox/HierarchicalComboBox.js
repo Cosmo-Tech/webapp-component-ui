@@ -3,8 +3,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Tooltip } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField, Tooltip } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 
 export const HierarchicalComboBox = ({ values, label, disabled, handleChange, renderInputToolType, ...props }) => {
   return (
@@ -14,7 +14,7 @@ export const HierarchicalComboBox = ({ values, label, disabled, handleChange, re
       disableClearable
       disabled={disabled}
       options={values}
-      getOptionSelected={(option, value) => option.id === value.id}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
       renderOption={(option) => {
         const marginLeft = option.depth * 20 || 0;
