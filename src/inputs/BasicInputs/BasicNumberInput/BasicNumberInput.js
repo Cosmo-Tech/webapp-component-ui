@@ -4,7 +4,7 @@
 import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { NumberFormatCustom } from './components';
+import { NumberFormatCustom } from '../../../misc/formatters';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -17,7 +17,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { HierarchicalComboBox } from '../../../HierarchicalComboBox';
+import { HierarchicalComboBox } from '../../../../inputs';
 
 const useStyles = makeStyles((theme) => ({
   root: {

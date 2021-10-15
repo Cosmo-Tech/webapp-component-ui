@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 
-function NumberFormatCustom(props) {
+export function NumberFormatCustom(props) {
   const { inputRef, onChange, max, min, ...other } = props;
 
   const valuesRange = (inputObj) => {
@@ -36,5 +36,3 @@ NumberFormatCustom.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
 };
-
-export default NumberFormatCustom;
