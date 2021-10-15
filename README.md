@@ -19,11 +19,17 @@ Here are some useful command lines (extracted from docz documentation):
 
 This command will allow you to use `yarn link` and `ỳarn link @cosmotech/ui` commands to deal with this project locally.
 
+## Run documentation locally
+
+`yarn docz:dev` will install all dependencies needed to build the documentation and serve locally under http://localhost:3000/ by default.
+
 ## Build Documentation
 
 `yarn docz:build` will generate a static site for your site in `.docz/dist/`.
 
 You can try it out with `yarn docz:serve` or by serving the generated site with your favorite static file server (e.g. `npx serve .docz/dist`).
+Be careful if you have specified a `base` config in your **doczrc.js** it's not used in `yarn docz:serve`
+By default the `base` config is specified for automatic deployment on our Github pages.
 
 You can have `yarn docz:build` emit to a different directory by providing a path to the `dest` field in your **doczrc.js** or from the command line : `yarn docz:build --dest docs-site-directory`.
 
