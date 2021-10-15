@@ -12,11 +12,12 @@
     "clean": "npx rimraf node_modules .docz dist",
     "build": "yarn clean && yarn install --ignore-optional && rollup -c",
     "install-doc": "yarn clean && yarn install",
-    "eslint": "eslint $INIT_CWD",
+    "eslint": "eslint",
     "docz:dev": "yarn install-doc && docz dev",
     "docz:build": "yarn install-doc && docz build",
     "docz:serve": "yarn docz:build && docz serve",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "npx prettier -w"
   },
   "repository": {
     "type": "git",
