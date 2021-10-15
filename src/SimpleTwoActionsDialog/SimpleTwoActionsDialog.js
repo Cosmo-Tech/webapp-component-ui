@@ -3,22 +3,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions
-} from '@material-ui/core';
+import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 
-export const SimpleTwoActionsDialog = ({
-  id,
-  open,
-  labels,
-  handleClickOnButton1,
-  handleClickOnButton2
-}) => {
+export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1, handleClickOnButton2 }) => {
   const onClose = (event, reason) => {
     if (reason !== 'backdropClick') {
       handleClickOnButton1();
@@ -26,31 +13,16 @@ export const SimpleTwoActionsDialog = ({
   };
 
   return (
-    <Dialog open={open} aria-labelledby={labels.ariaLabelledby}
-      maxWidth={'xs'}
-      fullWidth={true}
-      onClose={onClose}
-    >
-      <DialogTitle id={id + '-dialog-title'}>
-        {labels.title}
-      </DialogTitle>
+    <Dialog open={open} aria-labelledby={labels.ariaLabelledby} maxWidth={'xs'} fullWidth={true} onClose={onClose}>
+      <DialogTitle id={id + '-dialog-title'}>{labels.title}</DialogTitle>
       <DialogContent>
-        <Typography variant='body1'>{labels.body}</Typography>
+        <Typography variant="body1">{labels.body}</Typography>
       </DialogContent>
-      <DialogActions >
-        <Button
-          data-cy={id + '-button1'}
-          id={id + 'id-button1'}
-          onClick={handleClickOnButton1}
-          color="primary">
+      <DialogActions>
+        <Button data-cy={id + '-button1'} id={id + 'id-button1'} onClick={handleClickOnButton1} color="primary">
           {labels.button1}
         </Button>
-        <Button
-          data-cy={id + '-button2'}
-          id={id + 'id-button2'}
-          onClick={handleClickOnButton2}
-          color="primary"
-        >
+        <Button data-cy={id + '-button2'} id={id + 'id-button2'} onClick={handleClickOnButton2} color="primary">
           {labels.button2}
         </Button>
       </DialogActions>
@@ -87,7 +59,7 @@ SimpleTwoActionsDialog.propTypes = {
     body: PropTypes.string.isRequired,
     button1: PropTypes.string.isRequired,
     button2: PropTypes.string.isRequired,
-    ariaLabelledby: PropTypes.string.isRequired
+    ariaLabelledby: PropTypes.string.isRequired,
   }),
   /**
    *  ## Function used when button1 is clicked
@@ -97,15 +69,14 @@ SimpleTwoActionsDialog.propTypes = {
   /**
    *  ## Function used when button2 is clicked
    */
-  handleClickOnButton2: PropTypes.func.isRequired
+  handleClickOnButton2: PropTypes.func.isRequired,
 };
 
 SimpleTwoActionsDialog.defaultProps = {
   open: false,
-  labels:
-      {
-        title: 'What A Wonderful Dialog',
-        body: `
+  labels: {
+    title: 'What A Wonderful Dialog',
+    body: `
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Vivamus quis efficitur odio, sit amet auctor nunc.
               Curabitur et ante a nulla dapibus ultricies.
@@ -114,8 +85,8 @@ SimpleTwoActionsDialog.defaultProps = {
               Sed gravida arcu in porttitor ornare.
               Nulla ac rhoncus dui.
           `,
-        button1: 'Cancel',
-        button2: 'Validate',
-        ariaLabelledby: 'simple-two-actions-dialog'
-      }
+    button1: 'Cancel',
+    button2: 'Validate',
+    ariaLabelledby: 'simple-two-actions-dialog',
+  },
 };

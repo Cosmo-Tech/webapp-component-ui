@@ -3,9 +3,10 @@ name: SimpleTwoActionsDialog
 route: /SimpleTwoActionsDialog
 menu: Dialogs
 ---
-import { Playground, Props } from 'docz'
-import { SimpleTwoActionsDialog } from './SimpleTwoActionsDialog'
-import { Button } from '@material-ui/core'
+
+import { Playground, Props } from 'docz';
+import { SimpleTwoActionsDialog } from './SimpleTwoActionsDialog';
+import { Button } from '@material-ui/core';
 
 # SimpleTwoActionsDialog
 
@@ -13,40 +14,41 @@ The aim of this component is to easily create a dialog with 2 action buttons
 
 ## Props
 
-<Props of={ SimpleTwoActionsDialog }/>
+<Props of={SimpleTwoActionsDialog} />
 
 ## Basic Usage
 
 <Playground>
-{ () => {
-	class SimpleTwoActionsDialogExample extends React.Component {
-		constructor (props) {
-			super(props)
-			this.state = { open: false }
-		}
-		handleClickOpen() {
-			this.setState({ open: true })
-		};
-		handleClose() {
-			this.setState({ open: false })
-		};
-		render () {
-			return (
-				<>
-					<Button variant="contained" onClick={() => this.handleClickOpen()}>
-						Show Dialog
-					</Button>
-					<SimpleTwoActionsDialog
-						id={'discard-changes'}
-						open={this.state.open}
-						handleClickOnButton1={() => this.handleClose()}
-						handleClickOnButton2={() => { alert('Click on Validate button')}}
-					/>
-				</>
-			);
-		}
-	}
-	return <SimpleTwoActionsDialogExample/>
-	}
-}
+  {() => {
+    class SimpleTwoActionsDialogExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { open: false };
+      }
+      handleClickOpen() {
+        this.setState({ open: true });
+      }
+      handleClose() {
+        this.setState({ open: false });
+      }
+      render() {
+        return (
+          <>
+            <Button variant="contained" onClick={() => this.handleClickOpen()}>
+              Show Dialog
+            </Button>
+            <SimpleTwoActionsDialog
+              id={'discard-changes'}
+              open={this.state.open}
+              handleClickOnButton1={() => this.handleClose()}
+              handleClickOnButton2={() => {
+                alert('Click on Validate button');
+              }}
+            />
+          </>
+        );
+      }
+    }
+    return <SimpleTwoActionsDialogExample />;
+  }}
 </Playground>

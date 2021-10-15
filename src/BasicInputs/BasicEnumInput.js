@@ -5,10 +5,10 @@ import { Grid, MenuItem, TextField, Typography, makeStyles } from '@material-ui/
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export const BasicEnumInput = (props) => {
@@ -18,10 +18,10 @@ export const BasicEnumInput = (props) => {
 
   return (
     <Grid container className={classes.root} {...containerProps}>
-      <Grid item >
+      <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
-      <Grid item >
+      <Grid item>
         <TextField
           select
           value={value}
@@ -73,7 +73,7 @@ BasicEnumInput.propTypes = {
   /**
    * Additional props that you can specify for the BasicEnumInput's label
    */
-  labelProps: PropTypes.object
+  labelProps: PropTypes.object,
 };
 
 BasicEnumInput.defaultProps = {
@@ -81,9 +81,9 @@ BasicEnumInput.defaultProps = {
     direction: 'row',
     alignItems: 'center',
     alignContent: 'flex-start',
-    spacing: 2
+    spacing: 2,
   },
   labelProps: {
-    variant: 'subtitle2'
-  }
+    variant: 'subtitle2',
+  },
 };

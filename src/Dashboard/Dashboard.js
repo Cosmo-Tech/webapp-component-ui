@@ -7,12 +7,12 @@ import { makeStyles } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import DashboardPlaceholder from './components';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   iframe: {
     display: 'block',
     height: '100%',
-    width: '100%'
-  }
+    width: '100%',
+  },
 }));
 
 export const Dashboard = (props) => {
@@ -43,44 +43,36 @@ export const Dashboard = (props) => {
 
   return (
     <>
-      { noScenario && <DashboardPlaceholder
-          label={labels.noScenario.label}
-          title={labels.noScenario.title}
-        />
-      }
-      { noRun && <DashboardPlaceholder
-          label={labels.noRun.label}
-          title={labels.noRun.title}
-        />
-      }
-      { runInProgress && <DashboardPlaceholder
+      {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
+      {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
+      {runInProgress && (
+        <DashboardPlaceholder
           label={labels.inProgress.label}
           title={labels.inProgress.title}
-          icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
+          icon={<AccessTimeIcon color="primary" fontSize="large" />}
         />
-      }
-      {
-        hasError && <DashboardPlaceholder
+      )}
+      {hasError && (
+        <DashboardPlaceholder
           label={labels.hasErrors.label}
           title={labels.hasErrors.title}
           downloadLogsFile={downloadLogsFile}
           downloadLabel={labels.downloadButton}
         />
-      }
-      { isReady && formattedUrl !== '' &&
+      )}
+      {isReady && formattedUrl !== '' && (
         <iframe
           className={classes.iframe}
           title={iframeTitle}
           frameBorder="0"
           allowFullScreen={true}
-          src={formattedUrl} {...otherProps}
+          src={formattedUrl}
+          {...otherProps}
         />
-      }
-      { isReady && formattedUrl === '' && <DashboardPlaceholder
-        label={labels.noResult.label}
-        title={labels.noResult.title}
-      />
-      }
+      )}
+      {isReady && formattedUrl === '' && (
+        <DashboardPlaceholder label={labels.noResult.label} title={labels.noResult.title} />
+      )}
     </>
   );
 };
@@ -149,26 +141,26 @@ Dashboard.propTypes = {
   labels: PropTypes.shape({
     noScenario: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     noRun: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     inProgress: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     hasErrors: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     downloadButton: PropTypes.string.isRequired,
     noResult: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
-    }).isRequired
-  })
+      label: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };
 
 Dashboard.defaultProps = {
@@ -176,24 +168,24 @@ Dashboard.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new Scenario'
+      label: 'You can create a scenario by clicking on Create new Scenario',
     },
     noRun: {
       title: '',
-      label: 'The scenario has not been run yet'
+      label: 'The scenario has not been run yet',
     },
     inProgress: {
       title: '',
-      label: 'Scenario run in progress...'
+      label: 'Scenario run in progress...',
     },
     hasErrors: {
       title: '',
-      label: 'An error occured during the scenario run'
+      label: 'An error occured during the scenario run',
     },
     downloadButton: 'Download logs',
     noResult: {
       title: '',
-      label: 'No dashboards for this scenario.'
-    }
-  }
+      label: 'No dashboards for this scenario.',
+    },
+  },
 };

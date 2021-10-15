@@ -19,19 +19,18 @@ describe('HierarchicalComboBox test suite', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should select a too long name and display a truncated version of it', () => {
     const { container, getByRole, getByTestId } = render(
-      <HierarchicalComboBox
-        label="Video Games"
-        values={videoGamesList}
-        handleChange={jest.fn()}
-      />
+      <HierarchicalComboBox label="Video Games" values={videoGamesList} handleChange={jest.fn()} />
     );
 
     for (const videoGame of videoGamesList) {
       fireEvent.click(getByRole('button'));
       fireEvent.click(getByTestId('option-' + videoGame.id));
-      const videoGameName = videoGame.name.length > maxLengthChar
-        ? (videoGame.name.substring(0, subStringLenght) + separator + videoGame.name.substring(videoGame.name.length - subStringLenght))
-        : (videoGame.name);
+      const videoGameName =
+        videoGame.name.length > maxLengthChar
+          ? videoGame.name.substring(0, subStringLenght) +
+            separator +
+            videoGame.name.substring(videoGame.name.length - subStringLenght)
+          : videoGame.name;
 
       expect(container.querySelector('input')).toHaveAttribute('value', videoGameName);
     }

@@ -5,10 +5,10 @@ import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export const BasicTextInput = (props) => {
@@ -16,17 +16,14 @@ export const BasicTextInput = (props) => {
   const { label, value, textFieldProps, changeTextField, containerProps, labelProps } = props;
 
   return (
-        <Grid container className={classes.root} {...containerProps}>
-            <Grid item >
-                <Typography {...labelProps}>{label}</Typography>
-            </Grid>
-            <Grid item >
-                <TextField {...textFieldProps}
-                  value={value}
-                  onChange={(event) => changeTextField(event.target.value)}
-                />
-            </Grid>
-        </Grid>
+    <Grid container className={classes.root} {...containerProps}>
+      <Grid item>
+        <Typography {...labelProps}>{label}</Typography>
+      </Grid>
+      <Grid item>
+        <TextField {...textFieldProps} value={value} onChange={(event) => changeTextField(event.target.value)} />
+      </Grid>
+    </Grid>
   );
 };
 
@@ -54,7 +51,7 @@ BasicTextInput.propTypes = {
   /**
    * Additional props that you can specify for the BasicTextInput's label
    */
-  labelProps: PropTypes.object
+  labelProps: PropTypes.object,
 };
 
 BasicTextInput.defaultProps = {
@@ -62,9 +59,9 @@ BasicTextInput.defaultProps = {
     direction: 'row',
     alignItems: 'center',
     alignContent: 'flex-start',
-    spacing: 2
+    spacing: 2,
   },
   labelProps: {
-    variant: 'subtitle2'
-  }
+    variant: 'subtitle2',
+  },
 };

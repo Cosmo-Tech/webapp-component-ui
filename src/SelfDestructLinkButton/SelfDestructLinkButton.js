@@ -3,27 +3,18 @@
 
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  CircularProgress
-} from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import useStyles from './style';
 
 const STATUS = {
   IDLE: 'IDLE',
   GENERATING: 'GENERATING',
-  READY: 'READY'
+  READY: 'READY',
 };
 
 export const SelfDestructLinkButton = (props) => {
   const classes = useStyles();
-  const {
-    generate,
-    height,
-    width,
-    labels,
-    timeout
-  } = props;
+  const { generate, height, width, labels, timeout } = props;
 
   const [status, setStatus] = useState(STATUS.IDLE);
   const [downloadLink, setDownloadLink] = useState(null);
@@ -39,7 +30,9 @@ export const SelfDestructLinkButton = (props) => {
   };
 
   const startTimeout = () => {
-    timeoutRef.current = setTimeout(function () { reset(); }, timeout * 1000);
+    timeoutRef.current = setTimeout(function () {
+      reset();
+    }, timeout * 1000);
   };
 
   const startLinkGeneration = async () => {
@@ -62,15 +55,13 @@ export const SelfDestructLinkButton = (props) => {
 
   return (
     <div className={classes.root} style={dimensions}>
-      { status === STATUS.IDLE &&
+      {status === STATUS.IDLE && (
         <Button variant="contained" color="primary" onClick={startLinkGeneration} style={dimensions}>
-          { labels.generateLink }
+          {labels.generateLink}
         </Button>
-      }
-      { status === STATUS.GENERATING &&
-        <CircularProgress size={30}/>
-      }
-      { status === STATUS.READY &&
+      )}
+      {status === STATUS.GENERATING && <CircularProgress size={30} />}
+      {status === STATUS.READY && (
         <Button
           variant="contained"
           color="primary"
@@ -79,9 +70,9 @@ export const SelfDestructLinkButton = (props) => {
           target="_blank"
           href={downloadLink}
         >
-          { labels.download }
+          {labels.download}
         </Button>
-      }
+      )}
     </div>
   );
 };
@@ -114,7 +105,7 @@ SelfDestructLinkButton.propTypes = {
   /**
    * Timeout before download link is unavailable
    */
-  timeout: PropTypes.number // Expressed in seconds
+  timeout: PropTypes.number, // Expressed in seconds
 };
 
 SelfDestructLinkButton.defaultProps = {
@@ -122,7 +113,7 @@ SelfDestructLinkButton.defaultProps = {
   width: '143px',
   labels: {
     generateLink: 'Generate link',
-    download: 'Download'
+    download: 'Download',
   },
-  timeout: 15 // Expressed in seconds
+  timeout: 15, // Expressed in seconds
 };

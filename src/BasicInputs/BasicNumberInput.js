@@ -6,37 +6,30 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NumberFormatCustom } from './components';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export const BasicNumberInput = (props) => {
   const classes = useStyles();
-  const {
-    label,
-    value,
-    textFieldProps,
-    inputProps,
-    changeNumberField,
-    containerProps,
-    labelProps,
-    ...otherProps
-  } = props;
+  const { label, value, textFieldProps, inputProps, changeNumberField, containerProps, labelProps, ...otherProps } =
+    props;
 
   return (
     <Grid container className={classes.root} {...containerProps} {...otherProps}>
-      <Grid item >
+      <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
-      <Grid item >
-        <TextField {...textFieldProps}
+      <Grid item>
+        <TextField
+          {...textFieldProps}
           value={value}
           onChange={(event) => changeNumberField(parseFloat(event.target.value))}
           inputProps={inputProps}
           InputProps={{
-            inputComponent: NumberFormatCustom
+            inputComponent: NumberFormatCustom,
           }}
         />
       </Grid>
@@ -72,7 +65,7 @@ BasicNumberInput.propTypes = {
   /**
    * Additional props that you can specify for the BasicNumberInput's label
    */
-  labelProps: PropTypes.object
+  labelProps: PropTypes.object,
 };
 
 BasicNumberInput.defaultProps = {
@@ -80,13 +73,13 @@ BasicNumberInput.defaultProps = {
     direction: 'row',
     alignItems: 'center',
     alignContent: 'flex-start',
-    spacing: 2
+    spacing: 2,
   },
   labelProps: {
-    variant: 'subtitle2'
+    variant: 'subtitle2',
   },
   inputProps: {
     min: -9999,
-    max: 9999
-  }
+    max: 9999,
+  },
 };

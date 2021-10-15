@@ -9,35 +9,33 @@ import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';
 
-export const ScenarioNode = ({
-  datasets,
-  scenario,
-  showDeleteIcon,
-  deleteScenario,
-  labels
-}) => {
+export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenario, labels }) => {
   const classes = useStyles();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
-  const openConfirmDialog = () => { setIsConfirmDialogOpen(true); };
-  const closeConfirmDialog = () => { setIsConfirmDialogOpen(false); };
+  const openConfirmDialog = () => {
+    setIsConfirmDialogOpen(true);
+  };
+  const closeConfirmDialog = () => {
+    setIsConfirmDialogOpen(false);
+  };
 
-  function confirmScenarioDelete () {
+  function confirmScenarioDelete() {
     closeConfirmDialog();
     deleteScenario(scenario.id);
   }
 
-  function getStatusLabel () {
+  function getStatusLabel() {
     return labels.status + ':';
   }
 
-  function getTranslatedStatus (scenarioState) {
+  function getTranslatedStatus(scenarioState) {
     if (!scenarioState) {
       return '';
     }
     return labels[scenarioState.toLowerCase()] ? labels[scenarioState.toLowerCase()] : scenarioState;
   }
 
-  function getDatasetsLabel () {
+  function getDatasetsLabel() {
     return labels.dataset + ':';
   }
 
@@ -45,51 +43,37 @@ export const ScenarioNode = ({
     <React.Fragment>
       <ConfirmDeleteDialog
         open={isConfirmDialogOpen}
-        closeDialog={ closeConfirmDialog }
-        confirmDelete={ confirmScenarioDelete }
+        closeDialog={closeConfirmDialog}
+        confirmDelete={confirmScenarioDelete}
         labels={labels.deleteDialog}
-      >
-      </ConfirmDeleteDialog>
-      <Typography
-        className={classes.scenarioHeader}
-        gutterBottom
-      >
+      ></ConfirmDeleteDialog>
+      <Typography className={classes.scenarioHeader} gutterBottom>
         <span>
           <span className={classes.scenarioHeaderItem}>{scenario.ownerName}</span>
           <span className={classes.scenarioHeaderItem}>-</span>
           <span className={classes.scenarioHeaderItem}>{new Date(scenario.creationDate).toLocaleString()}</span>
-          {
-            showDeleteIcon && (
-              <IconButton
-                data-cy="scenario-delete-button"
-                aria-label="delete scenario"
-                size="small"
-                onClick={ openConfirmDialog }
-              >
-                <DeleteForeverIcon fontSize="small"/>
-              </IconButton>
-            )
-          }
+          {showDeleteIcon && (
+            <IconButton
+              data-cy="scenario-delete-button"
+              aria-label="delete scenario"
+              size="small"
+              onClick={openConfirmDialog}
+            >
+              <DeleteForeverIcon fontSize="small" />
+            </IconButton>
+          )}
         </span>
       </Typography>
-      <Typography
-        className={classes.scenarioTitle}
-        variant="h4"
-        data-content={scenario.name}
-      >
+      <Typography className={classes.scenarioTitle} variant="h4" data-content={scenario.name}>
         {scenario.name}
       </Typography>
       <Typography>
-        { getStatusLabel() }
-        <span className={ getStatusClassName(classes, scenario.state) }>
-          { getTranslatedStatus(scenario.state) }
-        </span>
-        <br/>
-        { getDatasetsLabel() }
-        <br/>
-        <span className={classes.datasets}>
-          { DatasetUtils.getDatasetNames(datasets, scenario.datasetList) }
-        </span>
+        {getStatusLabel()}
+        <span className={getStatusClassName(classes, scenario.state)}>{getTranslatedStatus(scenario.state)}</span>
+        <br />
+        {getDatasetsLabel()}
+        <br />
+        <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
       </Typography>
     </React.Fragment>
   );
@@ -144,9 +128,9 @@ ScenarioNode.propTypes = {
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       cancel: PropTypes.string.isRequired,
-      confirm: PropTypes.string.isRequired
-    }).isRequired
-  })
+      confirm: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };
 
 ScenarioNode.defaultProps = {
@@ -156,11 +140,11 @@ ScenarioNode.defaultProps = {
     successful: 'Successful',
     failed: 'Failed',
     created: 'Created',
-    dataset: 'Datasets'
-  }
+    dataset: 'Datasets',
+  },
 };
 
-function getStatusClassName (classes, scenarioState) {
+function getStatusClassName(classes, scenarioState) {
   if (scenarioState === 'Successful') {
     return classes.statusSuccessful;
   }

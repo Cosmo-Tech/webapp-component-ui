@@ -4,8 +4,8 @@ route: /HierarchicalComboBox
 menu: Inputs
 ---
 
-import { Playground, Props } from 'docz'
-import { HierarchicalComboBox } from './HierarchicalComboBox'
+import { Playground, Props } from 'docz';
+import { HierarchicalComboBox } from './HierarchicalComboBox';
 
 # HierarchicalComboBox
 
@@ -13,35 +13,32 @@ The aim of this component is to easily display a combobox with an indented tree 
 
 ### Props
 
-<Props of={ HierarchicalComboBox }/>
+<Props of={HierarchicalComboBox} />
 
 ### Basic Usage
+
 <Playground>
-	<HierarchicalComboBox
-		handleChange={(event,node) => console.log('Select node '+ node.id)}
-		values={
-			[
-				{
-				"id": "s-00001",
-				"name": "Value 1",
-				"parentId": null,
-				"depth": 0
-				},
-				{
-				"id": "s-00002",
-				"name": "Value 2",
-				"parentId": "s-00001",
-				"depth": 1
-				},
-				{
-				"id": "s-00003",
-				"name": "Value 3",
-				"parentId": null,
-				"depth": 0
-				}
-			]
-		}
-	/>
+  <HierarchicalComboBox
+    handleChange={(event, node) => console.log('Select node ' + node.id)}
+    values={[
+      {
+        id: 's-00001',
+        name: 'Value 1',
+        parentId: null,
+        depth: 0,
+      },
+      {
+        id: 's-00002',
+        name: 'Value 2',
+        parentId: 's-00001',
+        depth: 1,
+      },
+      {
+        id: 's-00003',
+        name: 'Value 3',
+        parentId: null,
+        depth: 0,
+      },
+    ]}
+  />
 </Playground>
-
-

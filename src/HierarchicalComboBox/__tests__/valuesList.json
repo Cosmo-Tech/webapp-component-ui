@@ -4,10 +4,7 @@
     "name": "Mario",
     "description": "The famous plumber. Here we go!",
     "version": "1.0.0",
-    "tags": [
-      "Platformer",
-      "Nintendo"
-    ],
+    "tags": ["Platformer", "Nintendo"],
     "ownerId": "1",
     "userList": [
       {
@@ -26,10 +23,7 @@
     "id": "2",
     "name": "SMW ",
     "description": "A wild dinosaur appears!",
-    "tags": [
-      "SNES",
-      "platformer"
-    ],
+    "tags": ["SNES", "platformer"],
     "parentId": "1",
     "ownerId": "1",
     "userList": [
@@ -49,10 +43,7 @@
     "id": "3",
     "name": "Super Mario Maker 2",
     "description": "Now everybody can create their own levels and share them all around the world.",
-    "tags": [
-      "Level design",
-      "Pway my wevel"
-    ],
+    "tags": ["Level design", "Pway my wevel"],
     "parentId": "1",
     "ownerId": "1",
     "userList": [
@@ -73,10 +64,7 @@
     "name": "Zelda",
     "description": "I'm not a princess.",
     "version": "1.0.17",
-    "tags": [
-      "Adventure",
-      "Nintendo"
-    ],
+    "tags": ["Adventure", "Nintendo"],
     "userList": [
       {
         "id": "1",
@@ -94,10 +82,7 @@
     "id": "5",
     "name": "Zelda Breath of the Wild",
     "description": "Oh look, mushrooms.",
-    "tags": [
-      "Brewery",
-      "example"
-    ],
+    "tags": ["Brewery", "example"],
     "parentId": "2",
     "ownerId": "2",
     "userList": [

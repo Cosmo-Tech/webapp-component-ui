@@ -10,28 +10,23 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%'
+    height: '100%',
   },
   dialogContent: {
-    marginTop: '16px'
+    marginTop: '16px',
   },
   dialogActions: {
     marginRight: '4px',
-    marginBottom: '4px'
-  }
+    marginBottom: '4px',
+  },
 }));
 
-export const ConfirmDeleteDialog = ({
-  open,
-  closeDialog,
-  confirmDelete,
-  labels
-}) => {
+export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }) => {
   const classes = useStyles();
 
   return (
@@ -43,13 +38,9 @@ export const ConfirmDeleteDialog = ({
       aria-labelledby="confirm-scenario-delete"
       aria-describedby="confirm-scenario-delete-description"
     >
-      <DialogTitle id="confirm-scenario-delete">
-        {labels.title}
-      </DialogTitle>
+      <DialogTitle id="confirm-scenario-delete">{labels.title}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <DialogContentText id="confirm-scenario-delete-description">
-          {labels.description}
-        </DialogContentText>
+        <DialogContentText id="confirm-scenario-delete-description">{labels.description}</DialogContentText>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
         <Button onClick={closeDialog} color="primary" autoFocus>
@@ -71,16 +62,17 @@ ConfirmDeleteDialog.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     cancel: PropTypes.string.isRequired,
-    confirm: PropTypes.string.isRequired
-  })
+    confirm: PropTypes.string.isRequired,
+  }),
 };
 
 ConfirmDeleteDialog.defaultProps = {
   labels: {
     title: 'Confirm delete?',
-    description: 'The scenario will be deleted. If this scenario has children, ' +
+    description:
+      'The scenario will be deleted. If this scenario has children, ' +
       'then its parent will become the new parent of all these scenarios.',
     cancel: 'Cancel',
-    confirm: 'Confirm'
-  }
+    confirm: 'Confirm',
+  },
 };

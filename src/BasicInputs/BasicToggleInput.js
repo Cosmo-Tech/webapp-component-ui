@@ -5,10 +5,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Switch, Typography, makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export const BasicToggleInput = (props) => {
@@ -16,20 +16,14 @@ export const BasicToggleInput = (props) => {
   const { label, value, switchProps, changeSwitchType, containerProps, labelProps } = props;
 
   return (
-
-      <Grid container className={classes.root} {...containerProps}>
-          <Grid item >
-              <Typography {...labelProps}>{label}</Typography>
-          </Grid>
-          <Grid item >
-              <Switch
-                onChange={(event) => changeSwitchType(event.target.checked)}
-                checked = {value}
-                {...switchProps}
-              />
-          </Grid>
+    <Grid container className={classes.root} {...containerProps}>
+      <Grid item>
+        <Typography {...labelProps}>{label}</Typography>
       </Grid>
-
+      <Grid item>
+        <Switch onChange={(event) => changeSwitchType(event.target.checked)} checked={value} {...switchProps} />
+      </Grid>
+    </Grid>
   );
 };
 
@@ -57,7 +51,7 @@ BasicToggleInput.propTypes = {
   /**
    * Additional props that you can specify for the BasicToggleInput's label
    */
-  labelProps: PropTypes.object
+  labelProps: PropTypes.object,
 };
 
 BasicToggleInput.defaultProps = {
@@ -65,9 +59,9 @@ BasicToggleInput.defaultProps = {
     direction: 'row',
     alignItems: 'center',
     alignContent: 'flex-start',
-    spacing: 2
+    spacing: 2,
   },
   labelProps: {
-    variant: 'subtitle2'
-  }
+    variant: 'subtitle2',
+  },
 };
