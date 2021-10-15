@@ -16,12 +16,14 @@ export const HierarchicalComboBox = ({ values, label, disabled, handleChange, re
       options={values}
       isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
-      renderOption={(option) => {
+      renderOption={(props, option, { selected }) => {
         const marginLeft = option.depth * 20 || 0;
         return (
-          <span data-testid={'option-' + option.id} style={{ marginLeft: marginLeft }}>
-            {option.name}
-          </span>
+          <li {...props}>
+            <span data-testid={'option-' + option.id} style={{ marginLeft: marginLeft }}>
+              {option.name}
+            </span>
+          </li>
         );
       }}
       renderInput={(params) => (
