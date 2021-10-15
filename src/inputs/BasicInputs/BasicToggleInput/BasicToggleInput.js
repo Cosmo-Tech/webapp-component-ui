@@ -23,7 +23,12 @@ export const BasicToggleInput = (props) => {
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
       <Grid item>
-        <Switch onChange={(event) => changeSwitchType(event.target.checked)} checked={value} {...switchProps} />
+        <Switch
+          color="secondary"
+          onChange={(event) => changeSwitchType(event.target.checked)}
+          checked={value}
+          {...switchProps}
+        />
       </Grid>
     </Grid>
   );
