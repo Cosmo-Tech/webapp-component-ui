@@ -3,31 +3,23 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import TextField from '@mui/material/TextField';
+import DatePicker from '@mui/lab/DatePicker';
 
 export const BasicDateInput = (props) => {
   const { id, label, format, value, dateProps, changeSelectedDate } = props;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        disableToolbar
-        variant="inline"
-        margin="normal"
-        format={format}
-        label={label}
-        id={id}
-        data-cy={id + '-date-input'}
-        onChange={changeSelectedDate}
-        KeyboardButtonProps={{
-          'aria-label': 'change date',
-        }}
-        value={value}
-        {...dateProps}
-      />
-    </MuiPickersUtilsProvider>
+    <DatePicker
+      id={id}
+      data-cy={id + '-date-input'}
+      label={label}
+      value={value}
+      onChange={changeSelectedDate}
+      inputFormat={format}
+      renderInput={(params) => <TextField label="Change date" {...params} />}
+      {...dateProps}
+    />
   );
 };
 
