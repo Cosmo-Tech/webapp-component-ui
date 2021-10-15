@@ -5,7 +5,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const PublicRoute = (props) => {
+export const PublicRoute = (props) => {
   const { component: Component, authenticated, authorized, redirectTo, unauthorizedPath, ...rest } = props;
 
   return (
@@ -31,5 +31,3 @@ PublicRoute.propTypes = {
   redirectTo: PropTypes.string,
   unauthorizedPath: PropTypes.string,
 };
-
-export default PublicRoute;

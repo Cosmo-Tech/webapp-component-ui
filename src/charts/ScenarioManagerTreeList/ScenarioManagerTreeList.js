@@ -7,8 +7,8 @@ import { TextField, Typography } from '@material-ui/core';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
-import { ScenarioNode } from './components';
 import useStyles from './style';
+import { ScenarioNode } from '../../cards';
 
 export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
