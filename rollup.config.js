@@ -12,12 +12,12 @@ export default {
   output: [
     {
       file: pkg.main,
-      format: 'cjs'
+      format: 'cjs',
     },
     {
       file: pkg.module,
-      format: 'esm'
-    }
+      format: 'esm',
+    },
   ],
   external: [
     'react',
@@ -34,18 +34,18 @@ export default {
     '@material-ui/styles',
     'lodash',
     'react-i18next',
-    'react-router-dom'
+    'react-router-dom',
   ],
   plugins: [
     external(),
     postcss(),
     babel({
       exclude: 'node_modules/**',
-      babelHelpers: 'bundled'
+      babelHelpers: 'bundled',
     }),
     resolve(),
     commonjs(),
     image(),
-    visualizer()
-  ]
+    visualizer(),
+  ],
 };

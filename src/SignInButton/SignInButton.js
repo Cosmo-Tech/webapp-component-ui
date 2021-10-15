@@ -5,7 +5,7 @@ import React from 'react';
 import { makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     border: 0,
     background: theme.palette.background.signInButton,
@@ -13,20 +13,20 @@ const useStyles = makeStyles(theme => ({
     borderRadius: '0px',
     height: '41px',
     paddingRight: '12px',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   logo: {
     height: '21px',
     width: '21px',
     marginLeft: '12px',
-    marginRight: '12px'
+    marginRight: '12px',
   },
   label: {
     fontSize: '15px',
     font: 'Sogoe UI Regular',
     weight: 600,
-    color: theme.palette.text.primary
-  }
+    color: theme.palette.text.primary,
+  },
 }));
 
 export const SignInButton = (props) => {
@@ -36,19 +36,9 @@ export const SignInButton = (props) => {
 
   return (
     <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
-      <Grid
-        container
-        spacing={0}
-        direction="row"
-        alignItems="center"
-        justifyContent="flex-start"
-      >
+      <Grid container spacing={0} direction="row" alignItems="center" justifyContent="flex-start">
         <Grid item>
-          <Avatar
-            className={classes.logo}
-            variant="square"
-            src={logo}
-          />
+          <Avatar className={classes.logo} variant="square" src={logo} />
         </Grid>
         <Grid item zeroMinWidth>
           <Typography noWrap className={classes.label}>
@@ -79,10 +69,10 @@ SignInButton.propTypes = {
    * - Microsoft Authentication Library provider (defined in @cosmotech/azure package)
    * - Custom one: to do this, use the **Auth.js** file (defined in @cosmotech/core package) as pattern
    */
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };
 
 SignInButton.defaultProps = {
   logo: '../../assets/microsoft_logo.png',
-  label: 'Sign in'
+  label: 'Sign in',
 };

@@ -9,21 +9,21 @@ import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
     width: '100%',
-    position: 'relative'
+    position: 'relative',
   },
   divContainer: {
     height: '100%',
     width: '100%',
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   report: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   errorContainer: {
     height: '50px',
@@ -32,22 +32,22 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     padding: '5px 0',
     backgroundColor: theme.palette.error.dark,
-    color: theme.palette.error.contrastText
+    color: theme.palette.error.contrastText,
   },
   errorTitle: {
     fontWeight: 'bold',
-    fontSize: 'large'
+    fontSize: 'large',
   },
   errorDescription: {
     fontWeight: 'bold',
-    fontSize: 'small'
+    fontSize: 'small',
   },
   toolbar: {
-    height: '100%'
-  }
+    height: '100%',
+  },
 }));
 
-function getErrorCode (labels, reports) {
+function getErrorCode(labels, reports) {
   let errorCode = labels.errors.unknown;
   if (reports?.error?.status && reports?.error?.statusText) {
     errorCode = `${reports?.error?.status} - ${reports?.error?.statusText}`;
@@ -55,7 +55,7 @@ function getErrorCode (labels, reports) {
   return errorCode;
 }
 
-function getErrorDescription (labels, reports) {
+function getErrorDescription(labels, reports) {
   let errorDescription = labels.errors.details;
   if (reports?.error?.powerBIErrorInfo) {
     errorDescription = reports?.error?.powerBIErrorInfo;
@@ -63,7 +63,7 @@ function getErrorDescription (labels, reports) {
   return errorDescription;
 }
 
-function addDynamicParameters (pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
+function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
   if (pageName !== undefined && pageName[lang] !== undefined) {
     newConfig.pageName = pageName[lang];
   }
@@ -93,7 +93,7 @@ export const SimplePowerBIReportEmbed = ({
   downloadLogsFile,
   refreshable,
   refreshTimeout,
-  labels
+  labels,
 }) => {
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
@@ -106,14 +106,14 @@ export const SimplePowerBIReportEmbed = ({
     id: reportId,
     embedUrl: '',
     accessToken: '',
-    tokenType: 1 // 1 Embed or 0 Aad
+    tokenType: 1, // 1 Embed or 0 Aad
   });
 
-  const scenarioDTO = useMemo(
-    () => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
+  const scenarioDTO = useMemo(() => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
   const additionalFilters = useMemo(
     () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
-    [dynamicFilters, scenarioDTO]);
+    [dynamicFilters, scenarioDTO]
+  );
   const noScenario = scenario === null;
   const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
   const noRun = scenarioState === 'Created' || scenarioState === null;
@@ -127,7 +127,7 @@ export const SimplePowerBIReportEmbed = ({
       id: reportId,
       tokenType: 1,
       embedUrl: reports.data?.reportsInfo?.[reportId]?.embedUrl,
-      accessToken: reports.data?.accessToken
+      accessToken: reports.data?.accessToken,
     };
     addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
     setEmbedConfig(newConfig);
@@ -146,61 +146,47 @@ export const SimplePowerBIReportEmbed = ({
   };
 
   return (
-      <div className={classes.root}>
-        <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
-          <div className={classes.errorTitle}>
-            { errorCode }
-          </div>
-          <div className={classes.errorDescription}>
-            { errorDescription }
-          </div>
-        </div>
-        { noScenario && <DashboardPlaceholder
-            label={labels.noScenario.label}
-            title={labels.noScenario.title}
-        />
-        }
-        { noRun && <DashboardPlaceholder
-          label={labels.noRun.label}
-          title={labels.noRun.title}
-        />
-        }
-        { runInProgress && <DashboardPlaceholder
+    <div className={classes.root}>
+      <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
+        <div className={classes.errorTitle}>{errorCode}</div>
+        <div className={classes.errorDescription}>{errorDescription}</div>
+      </div>
+      {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
+      {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
+      {runInProgress && (
+        <DashboardPlaceholder
           label={labels.inProgress.label}
           title={labels.inProgress.title}
-          icon={ <AccessTimeIcon color="primary" fontSize="large"/> }
+          icon={<AccessTimeIcon color="primary" fontSize="large" />}
         />
-        }
-        {
-          hasError && <DashboardPlaceholder
+      )}
+      {hasError && (
+        <DashboardPlaceholder
           label={labels.hasErrors.label}
           title={labels.hasErrors.title}
           downloadLogsFile={downloadLogsFile}
           downloadLabel={labels.downloadButton}
-          />
-        }
-        <div className={classes.divContainer} style={!isReady ? { display: 'none' } : { }}>
-          { refreshable &&
+        />
+      )}
+      <div className={classes.divContainer} style={!isReady ? { display: 'none' } : {}}>
+        {refreshable && (
           <div className={classes.toolbar}>
             <Tooltip title={labels.refreshTooltip}>
-                <IconButton aria-label="refresh"
-                            disabled={!report || disabled}
-                            color="primary"
-                            onClick={refreshReport}>
-                  <RefreshIcon/>
-                </IconButton>
+              <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+                <RefreshIcon />
+              </IconButton>
             </Tooltip>
           </div>
-          }
-          <PowerBIEmbed
-            cssClassName={classes.report}
-            embedConfig={embedConfig}
-            getEmbeddedComponent={ (embedObject) => {
-              setReport(embedObject);
-            } }
-          />
-        </div>
+        )}
+        <PowerBIEmbed
+          cssClassName={classes.report}
+          embedConfig={embedConfig}
+          getEmbeddedComponent={(embedObject) => {
+            setReport(embedObject);
+          }}
+        />
       </div>
+    </div>
   );
 };
 
@@ -272,27 +258,27 @@ SimplePowerBIReportEmbed.propTypes = {
   labels: PropTypes.shape({
     noScenario: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     noRun: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     inProgress: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     hasErrors: PropTypes.shape({
       title: PropTypes.string,
-      label: PropTypes.string.isRequired
+      label: PropTypes.string.isRequired,
     }).isRequired,
     downloadButton: PropTypes.string.isRequired,
     refreshTooltip: PropTypes.string.isRequired,
     errors: PropTypes.shape({
       unknown: PropTypes.string.isRequired,
-      details: PropTypes.string.isRequired
-    }).isRequired
-  })
+      details: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };
 SimplePowerBIReportEmbed.defaultProps = {
   index: 0,
@@ -301,22 +287,22 @@ SimplePowerBIReportEmbed.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new scenario'
+      label: 'You can create a scenario by clicking on Create new scenario',
     },
     noRun: {
-      label: 'The scenario has not been run yet'
+      label: 'The scenario has not been run yet',
     },
     inProgress: {
-      label: 'Scenario run in progress...'
+      label: 'Scenario run in progress...',
     },
     hasErrors: {
-      label: 'An error occured during the scenario run'
+      label: 'An error occured during the scenario run',
     },
     downloadButton: 'Download logs',
     refreshTooltip: 'Refresh',
     errors: {
       unknown: 'Unknown error',
-      details: 'Something went wrong when fetching PowerBI reports info'
-    }
-  }
+      details: 'Something went wrong when fetching PowerBI reports info',
+    },
+  },
 };

@@ -7,34 +7,35 @@ import { ScenarioUtils } from '@cosmotech/core';
 import {
   Button,
   Checkbox,
-  Dialog, DialogActions,
+  Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   FormControlLabel,
   Grid,
   TextField,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { HierarchicalComboBox } from '../../../HierarchicalComboBox';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100%'
+    height: '100%',
   },
   dialogContent: {
-    marginTop: '16px'
+    marginTop: '16px',
   },
   dialogActions: {
     marginRight: '4px',
-    marginBottom: '4px'
-  }
+    marginBottom: '4px',
+  },
 }));
 
 const getCurrentScenarioRunType = (currentScenario, runTemplates) => {
   const runTemplateId = currentScenario?.data?.runTemplateId;
   runTemplates = runTemplates === undefined ? [] : runTemplates;
-  const runTemplate = runTemplates.find(runTemplate => runTemplate.id === runTemplateId);
+  const runTemplate = runTemplates.find((runTemplate) => runTemplate.id === runTemplateId);
   return runTemplate === undefined ? {} : runTemplate;
 };
 
@@ -66,14 +67,14 @@ const CreateScenarioDialog = ({
   nameValidator,
   datasetsFilter,
   dialogLabels,
-  errorLabels
+  errorLabels,
 }) => {
   const classes = useStyles();
 
   const scenarioNameInitialState = {
     value: '',
     hasError: false,
-    error: ''
+    error: '',
   };
   const [scenarioNameFieldValues, setScenarioNameFieldValues] = useState(scenarioNameInitialState);
   const [isMaster, setMaster] = useState(false);
@@ -120,11 +121,11 @@ const CreateScenarioDialog = ({
       ...scenarioNameFieldValues,
       value: newScenarioName,
       error: error,
-      hasError: hasErrors
+      hasError: hasErrors,
     });
   };
 
-  function createScenarioData () {
+  function createScenarioData() {
     const scenarioData = {
       name: scenarioNameFieldValues.value,
       ownerId: user.userId.toString(),
@@ -132,7 +133,7 @@ const CreateScenarioDialog = ({
       solutionId: solution.data.id,
       solutionName: solution.data.name,
       runTemplateId: scenarioTypeFieldValues.id,
-      runTemplateName: scenarioTypeFieldValues.name
+      runTemplateName: scenarioTypeFieldValues.name,
     };
 
     if (isMaster) {
@@ -158,11 +159,15 @@ const CreateScenarioDialog = ({
   const handleScenarioTypeChange = (newScenarioType) => setScenarioTypeFieldValues(newScenarioType);
 
   let createScenarioDisabled = true;
-  if (isDialogDataValid(scenarioNameFieldValues,
-    isMaster,
-    scenarioTypeFieldValues,
-    parentScenarioFieldValues,
-    datasetFieldValues)) {
+  if (
+    isDialogDataValid(
+      scenarioNameFieldValues,
+      isMaster,
+      scenarioTypeFieldValues,
+      parentScenarioFieldValues,
+      datasetFieldValues
+    )
+  ) {
     createScenarioDisabled = false;
   }
 
@@ -194,16 +199,14 @@ const CreateScenarioDialog = ({
       fullWidth={true}
       onClose={onClose}
     >
-      <DialogTitle id="form-dialog-title">
-        {dialogLabels.title}
-      </DialogTitle>
+      <DialogTitle id="form-dialog-title">{dialogLabels.title}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               data-cy="create-scenario-dialog-name-textfield"
               onChange={handleChangeScenarioName}
-              onBlur = {handleChangeScenarioName}
+              onBlur={handleChangeScenarioName}
               autoFocus
               id="scenarioName"
               value={scenarioNameFieldValues.value}
@@ -213,81 +216,75 @@ const CreateScenarioDialog = ({
               fullWidth
             />
           </Grid>
-          {currentScenarioSelected &&
+          {currentScenarioSelected && (
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    data-cy="create-scenario-dialog-master-checkbox"
+                    checked={isMaster}
+                    onChange={handleChangeScenarioMaster}
+                    id="isScenarioMaster"
+                    color="primary"
+                  />
+                }
+                label={dialogLabels.scenarioMaster}
+              />
+            </Grid>
+          )}
           <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  data-cy="create-scenario-dialog-master-checkbox"
-                  checked={isMaster}
-                  onChange={handleChangeScenarioMaster}
-                  id="isScenarioMaster"
-                  color="primary" />
-              }
-              label={dialogLabels.scenarioMaster}/>
-          </Grid>
-          }
-          <Grid item xs={12}>
-            { isMaster || !currentScenarioSelected
-              ? (<Autocomplete
-                  data-cy="create-scenario-dialog-dataset-select"
-                  id="dataset"
-                  disableClearable={true}
-                  options={filteredDatasets}
-                  defaultValue={datasetFieldValues}
-                  onChange={
-                      (event, newDataset) => (handleChangeDataset(newDataset))
-                  }
-                  getOptionLabel={(option) => Object.keys(option).length !== 0 ? option.name : ''}
-                  getOptionSelected={(option, value) => option.id === value.id}
-                  renderInput={
-                    (params) => (
-                      <TextField
-                        {...params}
-                        placeholder={dialogLabels.datasetPlaceholder}
-                        label={dialogLabels.dataset}
-                        variant="outlined"/>)
-                  }/>
-                )
-              : (<HierarchicalComboBox
-                  values={scenarios}
-                  defaultValue={defaultParentScenario.current}
-                  label={dialogLabels.scenarioParent}
-                  handleChange={
-                    (event, newParentScenario) => (handleChangeParentScenario(newParentScenario))
-                  }/>
-                )
-            }
+            {isMaster || !currentScenarioSelected ? (
+              <Autocomplete
+                data-cy="create-scenario-dialog-dataset-select"
+                id="dataset"
+                disableClearable={true}
+                options={filteredDatasets}
+                defaultValue={datasetFieldValues}
+                onChange={(event, newDataset) => handleChangeDataset(newDataset)}
+                getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
+                getOptionSelected={(option, value) => option.id === value.id}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    placeholder={dialogLabels.datasetPlaceholder}
+                    label={dialogLabels.dataset}
+                    variant="outlined"
+                  />
+                )}
+              />
+            ) : (
+              <HierarchicalComboBox
+                values={scenarios}
+                defaultValue={defaultParentScenario.current}
+                label={dialogLabels.scenarioParent}
+                handleChange={(event, newParentScenario) => handleChangeParentScenario(newParentScenario)}
+              />
+            )}
           </Grid>
           <Grid item xs={12}>
             <Autocomplete
               data-cy="create-scenario-dialog-type-select"
-              id='scenarioType'
+              id="scenarioType"
               disableClearable={true}
               value={scenarioTypeFieldValues}
               options={runTemplates}
-              onChange={
-                (event, newScenarioType) => (handleScenarioTypeChange(newScenarioType))
-              }
-              getOptionLabel={(option) => Object.keys(option).length !== 0 ? option.name : ''}
+              onChange={(event, newScenarioType) => handleScenarioTypeChange(newScenarioType)}
+              getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
               getOptionSelected={(option, value) => option.id === value.id}
-              renderInput={
-                (params) => (
-                  <TextField
-                    {...params}
-                    placeholder={dialogLabels.scenarioTypePlaceholder}
-                    label={dialogLabels.scenarioType}
-                    variant="outlined"/>
-                )}/>
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder={dialogLabels.scenarioTypePlaceholder}
+                  label={dialogLabels.scenarioType}
+                  variant="outlined"
+                />
+              )}
+            />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <Button
-          id="cancel"
-          onClick={handleCloseDialog}
-          color="primary"
-        >
+        <Button id="cancel" onClick={handleCloseDialog} color="primary">
           {dialogLabels.cancel}
         </Button>
         <Button
@@ -327,13 +324,13 @@ CreateScenarioDialog.propTypes = {
     datasetPlaceholder: PropTypes.string.isRequired,
     dataset: PropTypes.string.isRequired,
     cancel: PropTypes.string.isRequired,
-    create: PropTypes.string.isRequired
+    create: PropTypes.string.isRequired,
   }).isRequired,
   errorLabels: PropTypes.shape({
     emptyScenarioName: PropTypes.string.isRequired,
     existingScenarioName: PropTypes.string.isRequired,
-    forbiddenCharsInScenarioName: PropTypes.string.isRequired
-  }).isRequired
+    forbiddenCharsInScenarioName: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default CreateScenarioDialog;

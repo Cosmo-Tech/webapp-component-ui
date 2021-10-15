@@ -4,8 +4,8 @@ route: /CreateScenarioButton
 menu: Buttons
 ---
 
-import { Playground, Props } from 'docz'
-import { CreateScenarioButton } from './CreateScenarioButton'
+import { Playground, Props } from 'docz';
+import { CreateScenarioButton } from './CreateScenarioButton';
 
 # Create Scenario Button
 
@@ -14,50 +14,40 @@ This button will display a popup guiding users through scenario creation
 
 ### Props
 
-<Props of={ CreateScenarioButton }/>
+<Props of={CreateScenarioButton} />
 
 ### Basic Usage
 
 <Playground>
-	<CreateScenarioButton
-		solution={
-			{
-				name: 'Solution',
-				id: 'SOL-000001'
-			}
-		}
-		workspaceId={'workspaceId'}
-		createScenario={() => alert('Scenario creation')}
-		currentScenario={{data:null}}
-		runTemplates={
-			[
-				{
-					id: '1',
-					name: 'A wonderful run template name',
-				}
-			]
-		}
-		datasets={
-			[
-				{
-					id: 'D-000001',
-					name: 'A wonderful dataset name',
-					tags: [
-					'dataset'
-					]
-				}
-			]
-		}
-		scenarios={[]}
-		user={
-			{
-				userId: 'This is a UUID',
-				userName: 'Bob Bobinson',
-				status: 'AUTHENTICATED'
-			}
-		}
-		disabled={false}
-		buttonTooltip={'This is a tooltip'}
-		nameValidator={/^\w[\w\d\s-]*$/}
-	/>
+  <CreateScenarioButton
+    solution={{
+      name: 'Solution',
+      id: 'SOL-000001',
+    }}
+    workspaceId={'workspaceId'}
+    createScenario={() => alert('Scenario creation')}
+    currentScenario={{ data: null }}
+    runTemplates={[
+      {
+        id: '1',
+        name: 'A wonderful run template name',
+      },
+    ]}
+    datasets={[
+      {
+        id: 'D-000001',
+        name: 'A wonderful dataset name',
+        tags: ['dataset'],
+      },
+    ]}
+    scenarios={[]}
+    user={{
+      userId: 'This is a UUID',
+      userName: 'Bob Bobinson',
+      status: 'AUTHENTICATED',
+    }}
+    disabled={false}
+    buttonTooltip={'This is a tooltip'}
+    nameValidator={/^\w[\w\d\s-]*$/}
+  />
 </Playground>

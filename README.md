@@ -1,6 +1,6 @@
 # WebApp Component UI
 
-The ***Webapp UI components library*** aims to be a library of [React](https://reactjs.org/) components that can be used to customize/enhance our [Azure Sample Webapp](https://github.com/Cosmo-Tech/azure-sample-webapp).
+The **_Webapp UI components library_** aims to be a library of [React](https://reactjs.org/) components that can be used to customize/enhance our [Azure Sample Webapp](https://github.com/Cosmo-Tech/azure-sample-webapp).
 
 This project documents and shows how to use the components.
 
@@ -14,6 +14,7 @@ We use [docz](https://github.com/doczjs/docz) to build our documentation.
 Here are some useful command lines (extracted from docz documentation):
 
 ## Build project
+
 `yarn build` will package the project.
 
 This command will allow you to use `yarn link` and `ỳarn link @cosmotech/ui` commands to deal with this project locally.
@@ -31,4 +32,3 @@ You can have `yarn docz:build` emit to a different directory by providing a path
 The output of docz consists of static assets only. This allows you to deploy your generated `docz` site with any static site hosting provider you'd like.
 
 Start by building your site with `yarn docz:build`, if you haven't provided a `dest` flag to your config then you will find your generated files in `.docz/dist` to copy to the server.
-

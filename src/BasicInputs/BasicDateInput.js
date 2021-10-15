@@ -5,10 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 export const BasicDateInput = (props) => {
   const { id, label, format, value, dateProps, changeSelectedDate } = props;
@@ -25,7 +22,7 @@ export const BasicDateInput = (props) => {
         data-cy={id + '-date-input'}
         onChange={changeSelectedDate}
         KeyboardButtonProps={{
-          'aria-label': 'change date'
+          'aria-label': 'change date',
         }}
         value={value}
         {...dateProps}
@@ -58,9 +55,9 @@ BasicDateInput.propTypes = {
   /**
    * Additional props that you can specify for the BasicDateInput's input
    */
-  dateProps: PropTypes.object.isRequired
+  dateProps: PropTypes.object.isRequired,
 };
 
 BasicDateInput.defaultProps = {
-  format: 'MM/dd/yyyy'
+  format: 'MM/dd/yyyy',
 };

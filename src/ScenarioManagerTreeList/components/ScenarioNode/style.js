@@ -3,15 +3,15 @@
 
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   scenarioHeader: {
     height: '100%',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   scenarioHeaderItem: {
-    marginRight: '12px'
+    marginRight: '12px',
   },
   scenarioTitle: {
     maxWidth: '500px',
@@ -27,24 +27,24 @@ const useStyles = makeStyles(theme => ({
       bottom: '20px',
       padding: '10px',
       fontSize: '12px',
-      whiteSpace: 'break-spaces'
-    }
+      whiteSpace: 'break-spaces',
+    },
   },
   statusCreated: {
     marginLeft: '5px',
-    color: theme.palette.text.info
+    color: theme.palette.text.info,
   },
   statusSuccessful: {
     marginLeft: '5px',
-    color: theme.palette.text.success
+    color: theme.palette.text.success,
   },
   statusFailed: {
     marginLeft: '5px',
-    color: theme.palette.text.error
+    color: theme.palette.text.error,
   },
   datasets: {
-    marginLeft: '15px'
-  }
+    marginLeft: '15px',
+  },
 }));
 
 export default useStyles;

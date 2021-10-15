@@ -3,27 +3,18 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  IconButton,
-  Link,
-  Tooltip,
-  Typography,
-  makeStyles
-} from '@material-ui/core';
+import { Button, CircularProgress, Grid, IconButton, Link, Tooltip, Typography, makeStyles } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   uploadFileContainer: {
     '& > div': {
-      margin: '0'
-    }
-  }
+      margin: '0',
+    },
+  },
 }));
 
 export const UploadFile = (props) => {
@@ -58,11 +49,11 @@ export const UploadFile = (props) => {
           </Button>
         </Grid>
         <Grid item>
-          { (file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
-            file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
+          {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
+            file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) && (
             <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item>
-                { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD &&
+                {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD && (
                   <Link
                     data-cy="download-button"
                     id="download-button"
@@ -72,21 +63,15 @@ export const UploadFile = (props) => {
                   >
                     <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                       <Grid item>
-                        <GetAppIcon/>
+                        <GetAppIcon />
                       </Grid>
                       <Grid item>
-                        <Typography>
-                          {file.name}
-                        </Typography>
+                        <Typography>{file.name}</Typography>
                       </Grid>
                     </Grid>
                   </Link>
-                }
-                { file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD &&
-                  <Typography>
-                    {file.name}
-                  </Typography>
-                }
+                )}
+                {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && <Typography>{file.name}</Typography>}
               </Grid>
               <Grid item>
                 <IconButton
@@ -100,22 +85,20 @@ export const UploadFile = (props) => {
                 </IconButton>
               </Grid>
             </Grid>
-          }
+          )}
         </Grid>
         <Grid item>
-          { (file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
+          {(file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
             file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
-            file.status === UPLOAD_FILE_STATUS_KEY.DELETING) &&
-            <CircularProgress color="secondary" />
-          }
+            file.status === UPLOAD_FILE_STATUS_KEY.DELETING) && <CircularProgress color="secondary" />}
         </Grid>
-          { (isFileValid === false) &&
-            <Grid item>
-              <Tooltip title={labels.invalidFileMessage} placement="right-end">
-                <ErrorIcon color="error" />
-              </Tooltip>
-            </Grid>
-          }
+        {isFileValid === false && (
+          <Grid item>
+            <Tooltip title={labels.invalidFileMessage} placement="right-end">
+              <ErrorIcon color="error" />
+            </Tooltip>
+          </Grid>
+        )}
       </Grid>
     </div>
   );
@@ -173,18 +156,18 @@ UploadFile.propTypes = {
   labels: PropTypes.shape({
     button: PropTypes.string.isRequired,
     invalidFileMessage: PropTypes.string.isRequired,
-    label: PropTypes.string
-  })
+    label: PropTypes.string,
+  }),
 };
 
 UploadFile.defaultProps = {
-  acceptedFileTypes: '*'
+  acceptedFileTypes: '*',
 };
 
 UploadFile.defaultProps = {
   labels: {
     label: '',
     button: 'Browse',
-    invalidFileMessage: 'Your file is invalid'
-  }
+    invalidFileMessage: 'Your file is invalid',
+  },
 };

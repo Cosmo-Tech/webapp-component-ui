@@ -4,8 +4,8 @@ route: /ScenarioNode
 menu: Cards
 ---
 
-import { Playground, Props } from 'docz'
-import { ScenarioNode } from './ScenarioNode'
+import { Playground, Props } from 'docz';
+import { ScenarioNode } from './ScenarioNode';
 
 # ScenarioNode
 
@@ -13,36 +13,32 @@ The aim of this component is to easily display a short scenario's description.
 
 ### Props
 
-<Props of={ ScenarioNode }/>
+<Props of={ScenarioNode} />
 
 ### Basic Usage
 
 <Playground>
-	<ScenarioNode
-		datasets={
-			[
-			{
-				id: 'D-000001',
-				name: 'A wonderful dataset name',
-				tags: ['dataset'],
-			},
-			{
-				id: 'D-000002',
-				name: 'Second wonderful dataset name',
-				tags: ['dataset'],
-			}
-			]
-		}
-		scenario={
-			{
-				id: 's-00001',
-				name: 'Value 1',
-				parentId: null,
-				creationDate: '2021-09-22T15:53:22.622797996Z',
-				datasetList:['D-000001'],
-				ownerName: 'Bob Bobinson'
-			}
-		}
-		deleteScenario={() => alert('Scenario deletion')}
-	/>
+  <ScenarioNode
+    datasets={[
+      {
+        id: 'D-000001',
+        name: 'A wonderful dataset name',
+        tags: ['dataset'],
+      },
+      {
+        id: 'D-000002',
+        name: 'Second wonderful dataset name',
+        tags: ['dataset'],
+      },
+    ]}
+    scenario={{
+      id: 's-00001',
+      name: 'Value 1',
+      parentId: null,
+      creationDate: '2021-09-22T15:53:22.622797996Z',
+      datasetList: ['D-000001'],
+      ownerName: 'Bob Bobinson',
+    }}
+    deleteScenario={() => alert('Scenario deletion')}
+  />
 </Playground>

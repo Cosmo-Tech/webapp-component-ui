@@ -3,12 +3,13 @@ name: BasicInputs
 route: /BasicInputs
 menu: Inputs
 ---
-import { Playground, Props } from 'docz'
-import { BasicEnumInput } from './BasicEnumInput'
-import { BasicNumberInput } from './BasicNumberInput'
-import { BasicTextInput } from './BasicTextInput'
-import { BasicToggleInput } from './BasicToggleInput'
-import { BasicDateInput } from './BasicDateInput'
+
+import { Playground, Props } from 'docz';
+import { BasicEnumInput } from './BasicEnumInput';
+import { BasicNumberInput } from './BasicNumberInput';
+import { BasicTextInput } from './BasicTextInput';
+import { BasicToggleInput } from './BasicToggleInput';
+import { BasicDateInput } from './BasicDateInput';
 
 # Basic Inputs
 
@@ -18,58 +19,54 @@ This part will list all basic inputs that you can use.
 
 ### Props
 
-<Props of={ BasicEnumInput }/>
+<Props of={BasicEnumInput} />
 
 ### Basic Usage
 
 <Playground>
-{ () => {
-	class BasicEnumInputExample extends React.Component {
-		constructor (props) {
-			super(props)
-			this.state = { value: '' }
-		}
-		changeEnumValue(value) {
-			this.setState({ value: value })
-		};
-		render () {
-			return (
-				<>
-					<BasicEnumInput
-					label='Here is a label'
-					value={this.state.value}
-					changeEnumField={(value) => this.changeEnumValue(value)}
-					textFieldProps={
-						{
-							id: 'basic-text-input-id'
-						}
-					}
-					enumValues={
-						[{
-							key: 'USD',
-							value: 'A'
-						},
-						{
-							key: 'EUR',
-							value: 'Z'
-						}]
-					}
-					/>
-				</>
-			)
-		}
-	}
-	return <BasicEnumInputExample/>;
-	}
-}
+  {() => {
+    class BasicEnumInputExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: '' };
+      }
+      changeEnumValue(value) {
+        this.setState({ value: value });
+      }
+      render() {
+        return (
+          <>
+            <BasicEnumInput
+              label="Here is a label"
+              value={this.state.value}
+              changeEnumField={(value) => this.changeEnumValue(value)}
+              textFieldProps={{
+                id: 'basic-text-input-id',
+              }}
+              enumValues={[
+                {
+                  key: 'USD',
+                  value: 'A',
+                },
+                {
+                  key: 'EUR',
+                  value: 'Z',
+                },
+              ]}
+            />
+          </>
+        );
+      }
+    }
+    return <BasicEnumInputExample />;
+  }}
 </Playground>
-
 
 ## BasicNumberInput
 
 ### Props
 
-<Props of={ BasicNumberInput }/>
+<Props of={BasicNumberInput} />
 
 ### Basic Usage
 
@@ -106,12 +103,11 @@ This part will list all basic inputs that you can use.
 
 </Playground>
 
-
 ## BasicTextInput
 
 ### Props
 
-<Props of={ BasicTextInput }/>
+<Props of={BasicTextInput} />
 
 ### Basic Usage
 
@@ -148,90 +144,82 @@ This part will list all basic inputs that you can use.
 
 </Playground>
 
-
 ## BasicToggleInput
 
 ### Props
 
-<Props of={ BasicToggleInput }/>
+<Props of={BasicToggleInput} />
 
 ### Basic Usage
 
 <Playground>
-{ () => {
-	class BasicToggleInputExample extends React.Component {
-		constructor (props) {
-			super(props)
-			this.state = { value: '' }
-		}
-		changeSwitchValue(value) {
-			this.setState({ value: value })
-		};
-		render () {
-			return (
-				<>
-					<BasicToggleInput
-						label='Here is a label'
-						value={this.state.value}
-						changeSwitchType={(value) => this.changeSwitchValue(value)}
-						textFieldProps={
-							{
-								id: 'basic-switch-input-id'
-							}
-						}
-					/>
-				</>
-			)
-		}
-	}
-	return <BasicToggleInputExample/>;
-	}
-}
+  {() => {
+    class BasicToggleInputExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: '' };
+      }
+      changeSwitchValue(value) {
+        this.setState({ value: value });
+      }
+      render() {
+        return (
+          <>
+            <BasicToggleInput
+              label="Here is a label"
+              value={this.state.value}
+              changeSwitchType={(value) => this.changeSwitchValue(value)}
+              textFieldProps={{
+                id: 'basic-switch-input-id',
+              }}
+            />
+          </>
+        );
+      }
+    }
+    return <BasicToggleInputExample />;
+  }}
 </Playground>
-
 
 ## BasicDateInput
 
 ### Props
 
-<Props of={ BasicDateInput }/>
+<Props of={BasicDateInput} />
 
 ### Basic Usage
 
 <Playground>
-{ () => {
-	class BasicDateInputExample extends React.Component {
-		constructor (props) {
-			super(props)
-			this.state = { value: '09/03/2021' }
-		}
-		changeDateValue(value) {
-			this.setState({ value: value })
-		};
-		render () {
-			return (
-			<>
-				<BasicDateInput
-					value={this.state.value}
-					changeSelectedDate={(value) => this.changeDateValue(value)}
-					format={"MM/dd/yyyy"}
-					label={'Pick a date'}
-					dateProps={
-						{
-						id: 'basic-date-input-id',
-						minDate: new Date('2014-01-01'),
-						maxDate: new Date('2023-01-01'),
-						minDateMessage: 'Minimum date is not respected',
-						maxDateMessage: 'Maximum date is not respected',
-						invalidDateMessage: 'Date is invalid'
-						}
-					}
-				/>
-			</>
-			)
-		}
-	}
-	return <BasicDateInputExample/>;
-	}
-}
+  {() => {
+    class BasicDateInputExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: '09/03/2021' };
+      }
+      changeDateValue(value) {
+        this.setState({ value: value });
+      }
+      render() {
+        return (
+          <>
+            <BasicDateInput
+              value={this.state.value}
+              changeSelectedDate={(value) => this.changeDateValue(value)}
+              format={'MM/dd/yyyy'}
+              label={'Pick a date'}
+              dateProps={{
+                id: 'basic-date-input-id',
+                minDate: new Date('2014-01-01'),
+                maxDate: new Date('2023-01-01'),
+                minDateMessage: 'Minimum date is not respected',
+                maxDateMessage: 'Maximum date is not respected',
+                invalidDateMessage: 'Date is invalid',
+              }}
+            />
+          </>
+        );
+      }
+    }
+    return <BasicDateInputExample />;
+  }}
 </Playground>

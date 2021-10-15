@@ -15,7 +15,7 @@ export const CreateScenarioButton = ({
   solution,
   disabled,
   nameValidator,
-  labels
+  labels,
 }) => {
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
@@ -136,15 +136,15 @@ CreateScenarioButton.propTypes = {
   labels: PropTypes.shape({
     button: PropTypes.shape({
       title: PropTypes.string.isRequired,
-      tooltip: PropTypes.string.isRequired
+      tooltip: PropTypes.string.isRequired,
     }).isRequired,
     dialog: PropTypes.object.isRequired,
     errors: PropTypes.shape({
       emptyScenarioName: PropTypes.string.isRequired,
       existingScenarioName: PropTypes.string.isRequired,
-      forbiddenCharsInScenarioName: PropTypes.string.isRequired
-    }).isRequired
-  })
+      forbiddenCharsInScenarioName: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };
 
 CreateScenarioButton.defaultProps = {
@@ -152,7 +152,7 @@ CreateScenarioButton.defaultProps = {
   labels: {
     button: {
       title: 'Create new Scenario',
-      tooltip: 'Create new Scenario'
+      tooltip: 'Create new Scenario',
     },
     dialog: {
       title: 'Create new Scenario',
@@ -164,12 +164,12 @@ CreateScenarioButton.defaultProps = {
       scenarioTypePlaceholder: 'Scenario run type',
       scenarioType: 'Run type',
       cancel: 'Cancel',
-      create: 'Create'
+      create: 'Create',
     },
     errors: {
       emptyScenarioName: 'Scenario Name should not be empty',
       existingScenarioName: 'Scenario Name already exists',
-      forbiddenCharsInScenarioName: 'Forbidden characters in Scenario Name'
-    }
-  }
+      forbiddenCharsInScenarioName: 'Forbidden characters in Scenario Name',
+    },
+  },
 };
