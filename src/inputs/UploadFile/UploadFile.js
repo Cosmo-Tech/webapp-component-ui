@@ -5,7 +5,6 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Button, CircularProgress, Grid, IconButton, Link, Tooltip, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import ErrorIcon from '@mui/icons-material/Error';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GetAppIcon from '@mui/icons-material/GetApp';
@@ -14,19 +13,15 @@ import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 const PREFIX = 'UploadFile';
 
 const classes = {
-  uploadFileContainer: `${PREFIX}-uploadFileContainer`
+  uploadFileContainer: `${PREFIX}-uploadFileContainer`,
 };
 
-const Root = styled('pre')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('pre')(({ theme }) => ({
   [`& .${classes.uploadFileContainer}`]: {
     '& > div': {
       margin: '0',
     },
-  }
+  },
 }));
 
 export const UploadFile = (props) => {
@@ -41,7 +36,6 @@ export const UploadFile = (props) => {
     labels,
     ...otherProps
   } = props;
-
 
   return (
     <div className={classes.uploadFileContainer} {...otherProps}>

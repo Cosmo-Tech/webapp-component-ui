@@ -6,7 +6,6 @@ import { styled } from '@mui/material/styles';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
 import { IconButton, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
@@ -20,14 +19,10 @@ const classes = {
   errorContainer: `${PREFIX}-errorContainer`,
   errorTitle: `${PREFIX}-errorTitle`,
   errorDescription: `${PREFIX}-errorDescription`,
-  toolbar: `${PREFIX}-toolbar`
+  toolbar: `${PREFIX}-toolbar`,
 };
 
-const Root = styled('pre')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('pre')(({ theme }) => ({
   [`& .${classes.root}`]: {
     height: '100%',
     width: '100%',
@@ -68,7 +63,7 @@ const Root = styled('pre')((
 
   [`& .${classes.toolbar}`]: {
     height: '100%',
-  }
+  },
 }));
 
 function getErrorCode(labels, reports) {
@@ -119,7 +114,6 @@ export const SimplePowerBIReportEmbed = ({
   refreshTimeout,
   labels,
 }) => {
-
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
 
   // PowerBI Report object (received via callback)

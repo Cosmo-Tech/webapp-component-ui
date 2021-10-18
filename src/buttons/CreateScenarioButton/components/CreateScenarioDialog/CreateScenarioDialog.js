@@ -16,7 +16,6 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import Autocomplete from '@mui/material/Autocomplete';
 import { HierarchicalComboBox } from '../../../../inputs';
 
@@ -25,14 +24,10 @@ const PREFIX = 'CreateScenarioDialog';
 const classes = {
   root: `${PREFIX}-root`,
   dialogContent: `${PREFIX}-dialogContent`,
-  dialogActions: `${PREFIX}-dialogActions`
+  dialogActions: `${PREFIX}-dialogActions`,
 };
 
-const StyledDialog = styled(Dialog)((
-  {
-    theme
-  }
-) => ({
+const StyledDialog = styled(Dialog)(({ theme }) => ({
   [`& .${classes.root}`]: {
     height: '100%',
   },
@@ -44,7 +39,7 @@ const StyledDialog = styled(Dialog)((
   [`& .${classes.dialogActions}`]: {
     marginRight: '4px',
     marginBottom: '4px',
-  }
+  },
 }));
 
 const getCurrentScenarioRunType = (currentScenario, runTemplates) => {
@@ -84,8 +79,6 @@ const CreateScenarioDialog = ({
   dialogLabels,
   errorLabels,
 }) => {
-
-
   const scenarioNameInitialState = {
     value: '',
     hasError: false,

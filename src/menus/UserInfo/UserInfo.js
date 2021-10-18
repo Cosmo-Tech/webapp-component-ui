@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Box, Menu, MenuItem } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@mui/icons-material';
 
 const PREFIX = 'UserInfo';
@@ -17,14 +16,10 @@ const classes = {
   menu: `${PREFIX}-menu`,
   menuContainer: `${PREFIX}-menuContainer`,
   menuIcon: `${PREFIX}-menuIcon`,
-  docLink: `${PREFIX}-docLink`
+  docLink: `${PREFIX}-docLink`,
 };
 
-const Root = styled('pre')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('pre')(({ theme }) => ({
   [`& .${classes.menuTrigger}`]: {
     backgroundRepeat: 'no-repeat',
     minWidth: '32px',
@@ -73,11 +68,10 @@ const Root = styled('pre')((
 
   [`& .${classes.docLink}`]: {
     color: theme.palette.primary.contrastText,
-  }
+  },
 }));
 
 export const UserInfo = (props) => {
-
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [isLangMenuOpened, setLangIsMenuOpened] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);

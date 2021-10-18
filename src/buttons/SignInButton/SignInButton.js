@@ -4,7 +4,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Grid, Typography, Avatar } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 
 const PREFIX = 'SignInButton';
@@ -12,14 +11,10 @@ const PREFIX = 'SignInButton';
 const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
-  label: `${PREFIX}-label`
+  label: `${PREFIX}-label`,
 };
 
-const Root = styled('button')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('button')(({ theme }) => ({
   [`&.${classes.root}`]: {
     border: 0,
     background: theme.palette.background.signInButton,
@@ -42,12 +37,10 @@ const Root = styled('button')((
     font: 'Sogoe UI Regular',
     weight: 600,
     color: theme.palette.text.primary,
-  }
+  },
 }));
 
 export const SignInButton = (props) => {
-
-
   const { id, label, logo, onClick } = props;
 
   return (

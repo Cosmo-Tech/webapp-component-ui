@@ -3,7 +3,6 @@
 
 import { Grid, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NumberFormatCustom } from '../../../misc/formatters';
@@ -11,21 +10,16 @@ import { NumberFormatCustom } from '../../../misc/formatters';
 const PREFIX = 'BasicNumberInput';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
 };
 
-const StyledGrid = styled(Grid)((
-  {
-    theme
-  }
-) => ({
+const StyledGrid = styled(Grid)(({ theme }) => ({
   [`&.${classes.root}`]: {
     flexGrow: 1,
-  }
+  },
 }));
 
 export const BasicNumberInput = (props) => {
-
   const { label, value, textFieldProps, inputProps, changeNumberField, containerProps, labelProps, ...otherProps } =
     props;
 

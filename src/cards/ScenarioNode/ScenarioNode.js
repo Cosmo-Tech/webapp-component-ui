@@ -8,7 +8,6 @@ import { IconButton, Typography } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
-import makeStyles from '@mui/styles/makeStyles';
 
 const PREFIX = 'ScenarioNode';
 
@@ -19,14 +18,10 @@ const classes = {
   statusCreated: `${PREFIX}-statusCreated`,
   statusSuccessful: `${PREFIX}-statusSuccessful`,
   statusFailed: `${PREFIX}-statusFailed`,
-  datasets: `${PREFIX}-datasets`
+  datasets: `${PREFIX}-datasets`,
 };
 
-const Root = styled('pre')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('pre')(({ theme }) => ({
   [`& .${classes.scenarioHeader}`]: {
     height: '100%',
     display: 'flex',
@@ -73,11 +68,10 @@ const Root = styled('pre')((
 
   [`& .${classes.datasets}`]: {
     marginLeft: '15px',
-  }
+  },
 }));
 
 export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenario, labels }) => {
-
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const openConfirmDialog = () => {
     setIsConfirmDialogOpen(true);

@@ -6,21 +6,15 @@ import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Typography, Grid, Button } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 const PREFIX = 'DashboardPlaceholder';
 
 const classes = {
   gridContainer: `${PREFIX}-gridContainer`,
   iconContainer: `${PREFIX}-iconContainer`,
-  label: `${PREFIX}-label`
+  label: `${PREFIX}-label`,
 };
 
-const StyledGrid = styled(Grid)((
-  {
-    theme
-  }
-) => ({
+const StyledGrid = styled(Grid)(({ theme }) => ({
   [`&.${classes.gridContainer}`]: {
     height: '100%',
   },
@@ -31,11 +25,10 @@ const StyledGrid = styled(Grid)((
 
   [`& .${classes.label}`]: {
     size: 14,
-  }
+  },
 }));
 
 const DashboardPlaceholder = (props) => {
-
   const { title, label, icon, downloadLogsFile, downloadLabel } = props;
 
   return (

@@ -6,21 +6,15 @@ import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 const PREFIX = 'ConfirmDeleteDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
   dialogContent: `${PREFIX}-dialogContent`,
-  dialogActions: `${PREFIX}-dialogActions`
+  dialogActions: `${PREFIX}-dialogActions`,
 };
 
-const StyledDialog = styled(Dialog)((
-  {
-    theme
-  }
-) => ({
+const StyledDialog = styled(Dialog)(({ theme }) => ({
   [`&.${classes.root}`]: {
     height: '100%',
   },
@@ -32,12 +26,10 @@ const StyledDialog = styled(Dialog)((
   [`& .${classes.dialogActions}`]: {
     marginRight: '4px',
     marginBottom: '4px',
-  }
+  },
 }));
 
 export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }) => {
-
-
   return (
     <StyledDialog
       data-cy="confirm-scenario-delete-dialog"

@@ -6,26 +6,19 @@ import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Grid, Switch, Typography } from '@mui/material';
 
-import makeStyles from '@mui/styles/makeStyles';
-
 const PREFIX = 'BasicToggleInput';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
 };
 
-const StyledGrid = styled(Grid)((
-  {
-    theme
-  }
-) => ({
+const StyledGrid = styled(Grid)(({ theme }) => ({
   [`&.${classes.root}`]: {
     flexGrow: 1,
-  }
+  },
 }));
 
 export const BasicToggleInput = (props) => {
-
   const { label, value, switchProps, changeSwitchType, containerProps, labelProps } = props;
 
   return (

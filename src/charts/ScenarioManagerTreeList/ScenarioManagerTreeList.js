@@ -9,7 +9,6 @@ import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
 import { ScenarioNode } from '../../cards';
-import makeStyles from '@mui/styles/makeStyles';
 
 const PREFIX = 'ScenarioManagerTreeList';
 
@@ -19,14 +18,10 @@ const classes = {
   treeContainer: `${PREFIX}-treeContainer`,
   searchField: `${PREFIX}-searchField`,
   searchInfo: `${PREFIX}-searchInfo`,
-  scenarioCard: `${PREFIX}-scenarioCard`
+  scenarioCard: `${PREFIX}-scenarioCard`,
 };
 
-const Root = styled('pre')((
-  {
-    theme
-  }
-) => ({
+const Root = styled('pre')(({ theme }) => ({
   [`& .${classes.root}`]: {
     height: '100%',
   },
@@ -61,11 +56,10 @@ const Root = styled('pre')((
     '& .rst__rowContents': {
       backgroundColor: theme.palette.background.secondary,
     },
-  }
+  },
 }));
 
 export const ScenarioManagerTreeList = (props) => {
-
   const { datasets, scenarios, deleteScenario, moveScenario, userId, buildSearchInfo, buildDatasetInfo, labels } =
     props;
 
