@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useRef, useState } from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { ScenarioUtils } from '@cosmotech/core';
 import {
@@ -19,17 +20,31 @@ import makeStyles from '@mui/styles/makeStyles';
 import Autocomplete from '@mui/material/Autocomplete';
 import { HierarchicalComboBox } from '../../../../inputs';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'CreateScenarioDialog';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  dialogContent: `${PREFIX}-dialogContent`,
+  dialogActions: `${PREFIX}-dialogActions`
+};
+
+const StyledDialog = styled(Dialog)((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
     height: '100%',
   },
-  dialogContent: {
+
+  [`& .${classes.dialogContent}`]: {
     marginTop: '16px',
   },
-  dialogActions: {
+
+  [`& .${classes.dialogActions}`]: {
     marginRight: '4px',
     marginBottom: '4px',
-  },
+  }
 }));
 
 const getCurrentScenarioRunType = (currentScenario, runTemplates) => {
@@ -69,7 +84,7 @@ const CreateScenarioDialog = ({
   dialogLabels,
   errorLabels,
 }) => {
-  const classes = useStyles();
+
 
   const scenarioNameInitialState = {
     value: '',
@@ -191,7 +206,7 @@ const CreateScenarioDialog = ({
   };
 
   return (
-    <Dialog
+    <StyledDialog
       data-cy="create-scenario-dialog"
       open={open}
       aria-labelledby="form-dialog-title"
@@ -297,7 +312,7 @@ const CreateScenarioDialog = ({
           {dialogLabels.create}
         </Button>
       </DialogActions>
-    </Dialog>
+    </StyledDialog>
   );
 };
 

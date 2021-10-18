@@ -2,21 +2,32 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import makeStyles from '@mui/styles/makeStyles';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DashboardPlaceholder from './components';
 
-const useStyles = makeStyles((theme) => ({
-  iframe: {
+const PREFIX = 'Dashboard';
+
+const classes = {
+  iframe: `${PREFIX}-iframe`
+};
+
+const Root = styled('pre')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.iframe}`]: {
     display: 'block',
     height: '100%',
     width: '100%',
-  },
+  }
 }));
 
 export const Dashboard = (props) => {
-  const classes = useStyles();
+
   const {
     iframeTitle,
     url,

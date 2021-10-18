@@ -2,16 +2,70 @@
 // Licensed under the MIT license.
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { TextField, Typography } from '@mui/material';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
-import useStyles from './style';
 import { ScenarioNode } from '../../cards';
+import makeStyles from '@mui/styles/makeStyles';
+
+const PREFIX = 'ScenarioManagerTreeList';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  searchContainer: `${PREFIX}-searchContainer`,
+  treeContainer: `${PREFIX}-treeContainer`,
+  searchField: `${PREFIX}-searchField`,
+  searchInfo: `${PREFIX}-searchInfo`,
+  scenarioCard: `${PREFIX}-scenarioCard`
+};
+
+const Root = styled('pre')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
+    height: '100%',
+  },
+
+  [`& .${classes.searchContainer}`]: {
+    margin: '5px',
+    marginLeft: '45px',
+    marginTop: '10px',
+    height: '45px',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+
+  [`& .${classes.treeContainer}`]: {
+    height: 'calc(100% - 50px)',
+  },
+
+  [`& .${classes.searchField}`]: {
+    marginTop: '2.5px',
+    marginBottom: '2.5px',
+    height: '50px',
+  },
+
+  [`& .${classes.searchInfo}`]: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    marginLeft: '20px',
+  },
+
+  [`& .${classes.scenarioCard}`]: {
+    '& .rst__rowContents': {
+      backgroundColor: theme.palette.background.secondary,
+    },
+  }
+}));
 
 export const ScenarioManagerTreeList = (props) => {
-  const classes = useStyles();
+
   const { datasets, scenarios, deleteScenario, moveScenario, userId, buildSearchInfo, buildDatasetInfo, labels } =
     props;
 

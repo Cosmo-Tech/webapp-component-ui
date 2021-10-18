@@ -2,13 +2,30 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Box, Menu, MenuItem } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@mui/icons-material';
 
-const useStyles = makeStyles((theme) => ({
-  menuTrigger: {
+const PREFIX = 'UserInfo';
+
+const classes = {
+  menuTrigger: `${PREFIX}-menuTrigger`,
+  profilePic: `${PREFIX}-profilePic`,
+  userName: `${PREFIX}-userName`,
+  menu: `${PREFIX}-menu`,
+  menuContainer: `${PREFIX}-menuContainer`,
+  menuIcon: `${PREFIX}-menuIcon`,
+  docLink: `${PREFIX}-docLink`
+};
+
+const Root = styled('pre')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.menuTrigger}`]: {
     backgroundRepeat: 'no-repeat',
     minWidth: '32px',
     height: '32px',
@@ -25,11 +42,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'stretch',
   },
-  profilePic: {
+
+  [`& .${classes.profilePic}`]: {
     width: '32px',
     height: '32px',
   },
-  userName: {
+
+  [`& .${classes.userName}`]: {
     fontSize: '16px',
     textAlign: 'center',
     lineHeight: '32px',
@@ -37,24 +56,28 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '8px',
     color: theme.palette.text.primary,
   },
-  menu: {
+
+  [`& .${classes.menu}`]: {
     transform: 'translate3d(0,30px,0) !important',
   },
-  menuContainer: {
+
+  [`& .${classes.menuContainer}`]: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  menuIcon: {
+
+  [`& .${classes.menuIcon}`]: {
     marginLeft: '20px',
   },
-  docLink: {
+
+  [`& .${classes.docLink}`]: {
     color: theme.palette.primary.contrastText,
-  },
+  }
 }));
 
 export const UserInfo = (props) => {
-  const classes = useStyles();
+
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const [isLangMenuOpened, setLangIsMenuOpened] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);

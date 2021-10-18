@@ -2,24 +2,35 @@
 // Licensed under the MIT license.
 
 import { Grid, TextField, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NumberFormatCustom } from '../../../misc/formatters';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'BasicNumberInput';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const StyledGrid = styled(Grid)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.root}`]: {
     flexGrow: 1,
-  },
+  }
 }));
 
 export const BasicNumberInput = (props) => {
-  const classes = useStyles();
+
   const { label, value, textFieldProps, inputProps, changeNumberField, containerProps, labelProps, ...otherProps } =
     props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
+    <StyledGrid container className={classes.root} {...containerProps} {...otherProps}>
       <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
@@ -34,7 +45,7 @@ export const BasicNumberInput = (props) => {
           }}
         />
       </Grid>
-    </Grid>
+    </StyledGrid>
   );
 };
 

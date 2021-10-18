@@ -2,9 +2,28 @@
 // Licensed under the MIT license.
 
 import React, { useState, useRef } from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Button, CircularProgress } from '@mui/material';
-import useStyles from './style';
+import makeStyles from '@mui/styles/makeStyles';
+
+const PREFIX = 'SelfDestructLinkButton';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled('pre')((
+  {
+    theme
+  }
+) => ({
+  [`& .${classes.root}`]: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+}));
 
 const STATUS = {
   IDLE: 'IDLE',
@@ -13,7 +32,7 @@ const STATUS = {
 };
 
 export const SelfDestructLinkButton = (props) => {
-  const classes = useStyles();
+
   const { generate, height, width, labels, timeout } = props;
 
   const [status, setStatus] = useState(STATUS.IDLE);

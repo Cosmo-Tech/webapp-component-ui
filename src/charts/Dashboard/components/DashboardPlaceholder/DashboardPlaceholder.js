@@ -2,29 +2,44 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Typography, Grid, Button } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 
-const useStyles = makeStyles((theme) => ({
-  gridContainer: {
+const PREFIX = 'DashboardPlaceholder';
+
+const classes = {
+  gridContainer: `${PREFIX}-gridContainer`,
+  iconContainer: `${PREFIX}-iconContainer`,
+  label: `${PREFIX}-label`
+};
+
+const StyledGrid = styled(Grid)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.gridContainer}`]: {
     height: '100%',
   },
-  iconContainer: {
+
+  [`& .${classes.iconContainer}`]: {
     textAlign: 'center',
   },
-  label: {
+
+  [`& .${classes.label}`]: {
     size: 14,
-  },
+  }
 }));
 
 const DashboardPlaceholder = (props) => {
-  const classes = useStyles();
+
   const { title, label, icon, downloadLogsFile, downloadLabel } = props;
 
   return (
-    <Grid
+    <StyledGrid
       container
       spacing={2}
       direction="column"
@@ -49,7 +64,7 @@ const DashboardPlaceholder = (props) => {
           </Button>
         </Grid>
       )}
-    </Grid>
+    </StyledGrid>
   );
 };
 

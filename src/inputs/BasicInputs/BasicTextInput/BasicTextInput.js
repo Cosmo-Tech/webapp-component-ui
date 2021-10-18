@@ -2,29 +2,40 @@
 // Licensed under the MIT license.
 
 import { Grid, TextField, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'BasicTextInput';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const StyledGrid = styled(Grid)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.root}`]: {
     flexGrow: 1,
-  },
+  }
 }));
 
 export const BasicTextInput = (props) => {
-  const classes = useStyles();
+
   const { label, value, textFieldProps, changeTextField, containerProps, labelProps } = props;
 
   return (
-    <Grid container className={classes.root} {...containerProps}>
+    <StyledGrid container className={classes.root} {...containerProps}>
       <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
       <Grid item>
         <TextField {...textFieldProps} value={value} onChange={(event) => changeTextField(event.target.value)} />
       </Grid>
-    </Grid>
+    </StyledGrid>
   );
 };
 

@@ -2,29 +2,44 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 import makeStyles from '@mui/styles/makeStyles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const PREFIX = 'ConfirmDeleteDialog';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  dialogContent: `${PREFIX}-dialogContent`,
+  dialogActions: `${PREFIX}-dialogActions`
+};
+
+const StyledDialog = styled(Dialog)((
+  {
+    theme
+  }
+) => ({
+  [`&.${classes.root}`]: {
     height: '100%',
   },
-  dialogContent: {
+
+  [`& .${classes.dialogContent}`]: {
     marginTop: '16px',
   },
-  dialogActions: {
+
+  [`& .${classes.dialogActions}`]: {
     marginRight: '4px',
     marginBottom: '4px',
-  },
+  }
 }));
 
 export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }) => {
-  const classes = useStyles();
+
 
   return (
-    <Dialog
+    <StyledDialog
       data-cy="confirm-scenario-delete-dialog"
       className={classes.root}
       open={open}
@@ -44,7 +59,7 @@ export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }
           {labels.confirm}
         </Button>
       </DialogActions>
-    </Dialog>
+    </StyledDialog>
   );
 };
 
