@@ -15,5 +15,5 @@ export {
   UploadFile,
   UPLOAD_FILE_STATUS_KEY,
 } from './inputs';
-export { UserInfo } from './menus';
+export { UserInfo, HelpMenu } from './menus';
 export { PrivateRoute, PublicRoute } from './misc';
