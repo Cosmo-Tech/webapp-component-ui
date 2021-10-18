@@ -97,7 +97,7 @@ export const UserInfo = (props) => {
     props;
 
   return (
-    <React.Fragment>
+    <Root>
       <Box
         data-cy="user-profile-menu"
         aria-controls="user-profile-button"
@@ -164,7 +164,7 @@ export const UserInfo = (props) => {
           }
         </Menu>
       )}
-    </React.Fragment>
+    </Root>
   );
 };
 

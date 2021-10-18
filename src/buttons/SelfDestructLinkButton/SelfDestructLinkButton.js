@@ -67,7 +67,7 @@ export const SelfDestructLinkButton = (props) => {
   const dimensions = { height: height, width: width };
 
   return (
-    <div className={classes.root} style={dimensions}>
+    <Root className={classes.root} style={dimensions}>
       {status === STATUS.IDLE && (
         <Button variant="contained" color="primary" onClick={startLinkGeneration} style={dimensions}>
           {labels.generateLink}
@@ -86,7 +86,7 @@ export const SelfDestructLinkButton = (props) => {
           {labels.download}
         </Button>
       )}
-    </div>
+    </Root>
   );
 };
 

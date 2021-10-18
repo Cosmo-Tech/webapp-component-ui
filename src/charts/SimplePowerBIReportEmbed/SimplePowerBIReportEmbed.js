@@ -164,7 +164,7 @@ export const SimplePowerBIReportEmbed = ({
   };
 
   return (
-    <div className={classes.root}>
+    <Root className={classes.root}>
       <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
         <div className={classes.errorTitle}>{errorCode}</div>
         <div className={classes.errorDescription}>{errorDescription}</div>
@@ -210,7 +210,7 @@ export const SimplePowerBIReportEmbed = ({
           }}
         />
       </div>
-    </div>
+    </Root>
   );
 };
 

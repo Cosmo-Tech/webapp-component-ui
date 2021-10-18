@@ -101,7 +101,7 @@ export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenari
   }
 
   return (
-    <React.Fragment>
+    <Root>
       <ConfirmDeleteDialog
         open={isConfirmDialogOpen}
         closeDialog={closeConfirmDialog}
@@ -136,7 +136,7 @@ export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenari
         <br />
         <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
       </Typography>
-    </React.Fragment>
+    </Root>
   );
 };
 

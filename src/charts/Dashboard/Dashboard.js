@@ -47,7 +47,7 @@ export const Dashboard = (props) => {
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
 
   return (
-    <>
+    <Root>
       {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
       {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
       {runInProgress && (
@@ -78,7 +78,7 @@ export const Dashboard = (props) => {
       {isReady && formattedUrl === '' && (
         <DashboardPlaceholder label={labels.noResult.label} title={labels.noResult.title} />
       )}
-    </>
+    </Root>
   );
 };
 

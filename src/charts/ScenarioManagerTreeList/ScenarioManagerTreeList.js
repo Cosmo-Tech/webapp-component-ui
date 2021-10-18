@@ -134,7 +134,7 @@ export const ScenarioManagerTreeList = (props) => {
   }
 
   return (
-    <div className={classes.root}>
+    <Root className={classes.root}>
       <div className={classes.searchContainer}>
         <TextField
           data-cy="scenario-manager-search-field"
@@ -167,7 +167,7 @@ export const ScenarioManagerTreeList = (props) => {
           rowHeight={150}
         />
       </div>
-    </div>
+    </Root>
   );
 };
 

@@ -38,7 +38,7 @@ export const UploadFile = (props) => {
   } = props;
 
   return (
-    <div className={classes.uploadFileContainer} {...otherProps}>
+    <Root className={classes.uploadFileContainer} {...otherProps}>
       <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
         <Typography>{labels.label}</Typography>
         <Grid item>
@@ -107,7 +107,7 @@ export const UploadFile = (props) => {
           </Grid>
         )}
       </Grid>
-    </div>
+    </Root>
   );
 };
 
