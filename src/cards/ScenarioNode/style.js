@@ -32,15 +32,18 @@ const useStyles = makeStyles((theme) => ({
   },
   statusCreated: {
     marginLeft: '5px',
-    color: theme.palette.text.info,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
   },
   statusSuccessful: {
     marginLeft: '5px',
-    color: theme.palette.text.success,
+    backgroundColor: theme.palette.success.main,
+    color: theme.palette.success.contrastText,
   },
   statusFailed: {
     marginLeft: '5px',
-    color: theme.palette.text.error,
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
   },
   datasets: {
     marginLeft: '15px',
