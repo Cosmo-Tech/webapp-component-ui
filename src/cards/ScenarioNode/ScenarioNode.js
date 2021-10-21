@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, Typography } from '@material-ui/core';
+import { IconButton, Typography, Chip } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
@@ -69,7 +69,11 @@ export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenari
       </Typography>
       <Typography>
         {getStatusLabel()}
-        <span className={getStatusClassName(classes, scenario.state)}>{getTranslatedStatus(scenario.state)}</span>
+        <Chip
+          size="small"
+          label={getTranslatedStatus(scenario.state)}
+          className={getStatusClassName(classes, scenario.state)}
+        />
         <br />
         {getDatasetsLabel()}
         <br />
