@@ -67,14 +67,15 @@ export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenari
       <Typography className={classes.scenarioTitle} variant="h4" data-content={scenario.name}>
         {scenario.name}
       </Typography>
-      <Typography>
-        {getStatusLabel()}
+      <div className={classes.statusRow}>
+        <Typography>{getStatusLabel()}</Typography>
         <Chip
           size="small"
           label={getTranslatedStatus(scenario.state)}
           className={getStatusClassName(classes, scenario.state)}
         />
-        <br />
+      </div>
+      <Typography>
         {getDatasetsLabel()}
         <br />
         <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
