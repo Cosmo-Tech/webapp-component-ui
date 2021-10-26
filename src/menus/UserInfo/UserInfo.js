@@ -53,6 +53,7 @@ export const UserInfo = (props) => {
         <Menu
           className={classes.menu}
           data-cy="main-menu"
+          id="main-menu"
           keepMounted
           anchorEl={anchorEl}
           open={isMenuOpen}
@@ -71,7 +72,7 @@ export const UserInfo = (props) => {
         {languages && (
           <Menu
             className={classes.menu}
-            id="simple-menu"
+            id="languages-menu"
             keepMounted
             anchorEl={langAnchorEl}
             getContentAnchorEl={null}
