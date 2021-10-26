@@ -4,6 +4,10 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  statusRow: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
   scenarioHeader: {
     height: '100%',
     display: 'flex',
