@@ -78,17 +78,22 @@ const CreateScenarioDialog = ({
   };
   const [scenarioNameFieldValues, setScenarioNameFieldValues] = useState(scenarioNameInitialState);
   const [isMaster, setMaster] = useState(false);
-  const [datasetFieldValues, setDatasetFieldValues] = useState({});
+
+  let filteredDatasets = datasets;
+  if (datasetsFilter) {
+    filteredDatasets = datasets.filter(datasetsFilter);
+  }
+
+  const [datasetFieldValues, setDatasetFieldValues] = useState(
+    filteredDatasets.length > 0 ? filteredDatasets[0] : dialogLabels.datasetPlaceholder
+  );
+
   const [parentScenarioFieldValues, setParentScenarioFieldValues] = useState({});
   const [scenarioTypeFieldValues, setScenarioTypeFieldValues] = useState({});
   const currentScenarioSelected = currentScenario.data !== null;
   const defaultParentScenario = useRef({});
   const defaultScenarioType = useRef({});
 
-  let filteredDatasets = datasets;
-  if (datasetsFilter) {
-    filteredDatasets = datasets.filter(datasetsFilter);
-  }
   useEffect(() => {
     if (currentScenarioSelected) {
       defaultParentScenario.current = currentScenario.data;
@@ -239,9 +244,9 @@ const CreateScenarioDialog = ({
                 id="dataset"
                 disableClearable={true}
                 options={filteredDatasets}
-                defaultValue={datasetFieldValues}
+                value={datasetFieldValues}
                 onChange={(event, newDataset) => handleChangeDataset(newDataset)}
-                getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
+                getOptionLabel={(option) => (option.name ? option.name : '')}
                 getOptionSelected={(option, value) => option.id === value.id}
                 renderInput={(params) => (
                   <TextField
