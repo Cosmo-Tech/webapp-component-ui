@@ -274,7 +274,7 @@ const CreateScenarioDialog = ({
               value={scenarioTypeFieldValues}
               options={runTemplates}
               onChange={(event, newScenarioType) => handleScenarioTypeChange(newScenarioType)}
-              getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
+              getOptionLabel={(option) => (option.name ? option.name : '')}
               getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
