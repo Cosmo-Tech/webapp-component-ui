@@ -13,16 +13,17 @@ const useStyles = makeStyles((theme) => ({
 
 export const BasicEnumInput = (props) => {
   const classes = useStyles();
-  const { label, value, textFieldProps, enumValues, changeEnumField } = props;
-  const { containerProps, labelProps } = props;
+  const { label, value, textFieldProps, enumValues, changeEnumField, containerProps, labelProps, ...otherProps } =
+    props;
 
   return (
-    <Grid container className={classes.root} {...containerProps}>
+    <Grid container className={classes.root} {...containerProps} {...otherProps}>
       <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>
       <Grid item>
         <TextField
+          data-cy="text_field"
           select
           value={value}
           {...textFieldProps}

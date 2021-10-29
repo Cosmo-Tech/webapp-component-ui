@@ -66,12 +66,14 @@ export const UploadFile = (props) => {
                         <GetAppIcon />
                       </Grid>
                       <Grid item>
-                        <Typography>{file.name}</Typography>
+                        <Typography data-cy="file-name">{file.name}</Typography>
                       </Grid>
                     </Grid>
                   </Link>
                 )}
-                {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && <Typography>{file.name}</Typography>}
+                {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && (
+                  <Typography data-cy="file-name">{file.name}</Typography>
+                )}
               </Grid>
               <Grid item>
                 <IconButton
