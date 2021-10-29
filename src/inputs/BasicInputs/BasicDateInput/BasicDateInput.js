@@ -8,7 +8,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 export const BasicDateInput = (props) => {
-  const { id, label, format, value, dateProps, changeSelectedDate } = props;
+  const { id, label, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -19,13 +19,13 @@ export const BasicDateInput = (props) => {
         format={format}
         label={label}
         id={id}
-        data-cy={id + '-date-input'}
         onChange={changeSelectedDate}
         KeyboardButtonProps={{
           'aria-label': 'change date',
         }}
         value={value}
         {...dateProps}
+        {...otherProps}
       />
     </MuiPickersUtilsProvider>
   );
