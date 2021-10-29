@@ -15,7 +15,7 @@ export const HierarchicalComboBox = ({ values, label, disabled, handleChange, re
       disabled={disabled}
       options={values}
       getOptionSelected={(option, value) => option.id === value.id}
-      getOptionLabel={(option) => (Object.keys(option).length !== 0 ? option.name : '')}
+      getOptionLabel={(option) => (option ? option.name : '')}
       renderOption={(option) => {
         const marginLeft = option.depth * 20 || 0;
         return (
