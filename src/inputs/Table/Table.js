@@ -1,0 +1,193 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
+
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import { DateUtils } from '@cosmotech/core';
+import { DEFAULT_COLUMNS_PROPERTIES, COLUMN_TYPES } from './ColumnTypes.js';
+import { TABLE_DATA_STATUS } from './TableDataStatus';
+
+const useStyles = makeStyles((theme) => ({
+  toolBar: {
+    height: '40px',
+    display: 'flex',
+    flexDirection: 'row',
+    flexFlow: 'flex-start',
+    alignItems: 'stretch',
+    marginTop: '10px',
+    marginBottom: '6px;',
+  },
+  errorsContainer: {
+    backgroundColor: theme.palette.black,
+    color: theme.palette.text.error,
+    fontSize: '15px',
+    weight: 600,
+    marginTop: '10px',
+    padding: '4px',
+    whiteSpace: 'pre-line',
+  },
+}));
+
+const _addDragHandleToFirstColumn = (col, index) => {
+  if (index === 0) {
+    col.rowDrag = true;
+  }
+};
+
+const _formatMinMaxDatesInColumns = (col, dateFormat) => {
+  if (col.type && col.type.indexOf('date') !== -1) {
+    if (col.minValue) {
+      col.minValue = DateUtils.format(new Date(col.minValue), dateFormat) || col.minValue;
+    }
+    if (col.maxValue) {
+      col.maxValue = DateUtils.format(new Date(col.maxValue), dateFormat) || col.maxValue;
+    }
+  }
+};
+
+const _moveKeyToCellEditorParams = (col, key) => {
+  if (Object.keys(col).indexOf(key) !== -1) {
+    col.cellEditorParams = {
+      ...col.cellEditorParams,
+      [key]: JSON.parse(JSON.stringify(col[key])),
+    };
+    delete col[key];
+  }
+};
+
+const _moveExtraPropertiesToCellEditorParams = (col) => {
+  const keys = ['enumValues', 'minValue', 'maxValue'];
+  keys.forEach((key) => _moveKeyToCellEditorParams(col, key));
+};
+
+const _formatColumnsData = (columns, dateFormat) =>
+  columns.map((col, index) => {
+    _formatMinMaxDatesInColumns(col, dateFormat);
+    _moveExtraPropertiesToCellEditorParams(col);
+    _addDragHandleToFirstColumn(col, index);
+    return col;
+  });
+
+export const Table = (props) => {
+  const {
+    dateFormat,
+    editMode,
+    dataStatus,
+    errors,
+    height,
+    width,
+    columns,
+    rows,
+    labels,
+    extraToolbarActions,
+    ...otherProps
+  } = props;
+  const dimensions = { height: height, width: width };
+  const classes = useStyles();
+
+  const context = {
+    dateFormat: dateFormat,
+    editMode: editMode,
+  };
+
+  const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
+  const hasErrors = errors && errors.length > 0;
+  const isLoading = [TABLE_DATA_STATUS.LOADING, TABLE_DATA_STATUS.LOADING].includes(dataStatus);
+  const isReady = dataStatus === TABLE_DATA_STATUS.READY;
+
+  return (
+    <div id="table-container" {...otherProps}>
+      <Typography data-cy="label">{labels.label}</Typography>
+      <div className={classes.toolBar}>
+        {extraToolbarActions}
+        {isLoading && (
+          <div>
+            {labels.loading}
+            <CircularProgress />
+          </div>
+        )}
+      </div>
+      {hasErrors && <div className={classes.errorsContainer}>{errors.join('\n')}</div>}
+      <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham-dark">
+        {isReady && (
+          <AgGridReact
+            // multiSortKey={'ctrl'}
+            // pagination={true}
+            // paginationPageSize={10}
+            // onGridReady={onGridReady}
+            // tooltipShowDelay={0}
+            undoRedoCellEditing={true}
+            rowDragManaged={true}
+            suppressDragLeaveHidesColumns={true}
+            allowDragFromColumnsToolPanel={true}
+            columnDefs={formattedColumns}
+            defaultColDef={DEFAULT_COLUMNS_PROPERTIES}
+            columnTypes={COLUMN_TYPES}
+            rowData={rows}
+            context={context}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+Table.propTypes = {
+  /**
+   *  Custom date format for columns of type "date". Default value: 'dd/MM/yyyy
+   */
+  dateFormat: PropTypes.string,
+  /**
+   *  Define whether or not the table can be edited
+   */
+  editMode: PropTypes.bool.isRequired,
+  /**
+   *  Define the current status of the table data (c.f. TableDataStatus.js)
+   */
+  dataStatus: PropTypes.string,
+  /**
+   *  List of errors to display instead of the table
+   */
+  errors: PropTypes.array,
+  /**
+   * Table height
+   */
+  height: PropTypes.string,
+  /**
+   * Table width
+   */
+  width: PropTypes.string,
+  columns: PropTypes.array.isRequired,
+  rows: PropTypes.array.isRequired,
+  /**
+   * Component's labels:
+   * Structure:
+   * <pre>
+     {
+      label: 'string'
+    }
+   </pre>
+   */
+  labels: PropTypes.shape({
+    label: PropTypes.string,
+    loading: PropTypes.string,
+  }),
+  /**
+   *  List of extra React elements to add in the Table toolbar
+   */
+  extraToolbarActions: PropTypes.arrayOf(PropTypes.node),
+};
+
+Table.defaultProps = {
+  dateFormat: 'dd/MM/yyyy',
+  dataStatus: TABLE_DATA_STATUS.EMPTY,
+  height: '200px',
+  width: '100%',
+  labels: {
+    loading: 'Loading...',
+  },
+};
