@@ -1,0 +1,35 @@
+---
+name: Table
+route: /Table
+menu: Inputs
+---
+
+import { Playground, Props } from 'docz';
+import { Table } from './Table';
+
+# Upload File
+
+The aim of this component is to display a dataset CSV file in a table
+and lets users edit its content.
+
+## Props
+
+<Props of={Table} />
+
+## Basic Usage
+
+<Playground>
+  <Table
+    # handleTable={() => console.log('File uploaded')}
+    # handleDeleteFile={() => console.log('File deleted')}
+    # handleDownloadFile={() => console.log('File downloaded')}
+    # editMode={true}
+    # file={{
+    #   parameterId: 'parameter1',
+    #   initialName: '',
+    #   name: '',
+    #   file: null,
+    #   status: UPLOAD_FILE_STATUS_KEY.EMPTY
+    # }}
+  />
+</Playground>
