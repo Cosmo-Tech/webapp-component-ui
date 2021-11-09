@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
-import { IconButton, Tooltip, makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
@@ -94,10 +94,12 @@ export const SimplePowerBIReportEmbed = ({
   refreshable,
   refreshTimeout,
   labels,
+  useAAD,
 }) => {
   const classes = useStyles();
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
-
+  // 1 Embed or 0 Aad
+  const tokenType = useAAD ? 0 : 1;
   // PowerBI Report object (received via callback)
   const [report, setReport] = useState();
   const [disabled, setDisabled] = useState(false);
@@ -106,7 +108,7 @@ export const SimplePowerBIReportEmbed = ({
     id: reportId,
     embedUrl: '',
     accessToken: '',
-    tokenType: 1, // 1 Embed or 0 Aad
+    tokenType: tokenType,
   });
 
   const scenarioDTO = useMemo(() => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
@@ -125,7 +127,7 @@ export const SimplePowerBIReportEmbed = ({
     const newConfig = {
       type: 'report',
       id: reportId,
-      tokenType: 1,
+      tokenType: tokenType,
       embedUrl: reports.data?.reportsInfo?.[reportId]?.embedUrl,
       accessToken: reports.data?.accessToken,
     };
@@ -227,6 +229,12 @@ SimplePowerBIReportEmbed.propTypes = {
    */
   refreshTimeout: PropTypes.number,
   /**
+   *  Defines the tokenType used for reports
+   *  - true: access token used is flagged as an AAD token
+   *  - false: access token used is flagged as an Embed token
+   */
+  useAAD: PropTypes.bool,
+  /**
    * Structure:
    * <pre>
    * {
@@ -284,6 +292,7 @@ SimplePowerBIReportEmbed.defaultProps = {
   index: 0,
   refreshable: true,
   refreshTimeout: 15000,
+  useAAD: false,
   labels: {
     noScenario: {
       title: 'No scenario yet',
