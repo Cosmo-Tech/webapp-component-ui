@@ -9,10 +9,18 @@ import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';
 
-export const ScenarioNode = ({ datasets, scenario, showDeleteIcon, deleteScenario, labels }) => {
+export const ScenarioNode = ({
+  datasets,
+  scenario,
+  showDeleteIcon,
+  deleteScenario,
+  labels,
+  buildScenarioNameToDelete,
+}) => {
   const classes = useStyles();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const openConfirmDialog = () => {
+    labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
     setIsConfirmDialogOpen(true);
   };
   const closeConfirmDialog = () => {
@@ -136,6 +144,10 @@ ScenarioNode.propTypes = {
       confirm: PropTypes.string.isRequired,
     }).isRequired,
   }),
+  /**
+   * Function to store the scenario's name selected for delete, used in confirmation dialog
+   */
+  buildScenarioNameToDelete: PropTypes.func.isRequired,
 };
 
 ScenarioNode.defaultProps = {
