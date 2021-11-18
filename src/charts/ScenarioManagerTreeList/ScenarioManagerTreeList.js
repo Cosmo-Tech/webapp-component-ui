@@ -12,8 +12,17 @@ import { ScenarioNode } from '../../cards';
 
 export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
-  const { datasets, scenarios, deleteScenario, moveScenario, userId, buildSearchInfo, buildDatasetInfo, labels } =
-    props;
+  const {
+    datasets,
+    scenarios,
+    deleteScenario,
+    moveScenario,
+    userId,
+    buildSearchInfo,
+    buildDatasetInfo,
+    labels,
+    buildScenarioNameToDelete,
+  } = props;
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
   const expandedNodes = useRef([]);
@@ -45,6 +54,7 @@ export const ScenarioManagerTreeList = (props) => {
             showDeleteIcon={showDeleteIcon}
             deleteScenario={deleteScenario}
             labels={labels}
+            buildScenarioNameToDelete={buildScenarioNameToDelete}
           />
         ),
       };
@@ -166,6 +176,10 @@ ScenarioManagerTreeList.propTypes = {
    * </pre>
    */
   labels: PropTypes.object,
+  /**
+   * Function to store the scenario's name selected for delete, used in confirmation dialog
+   */
+  buildScenarioNameToDelete: PropTypes.func.isRequired,
 };
 
 ScenarioManagerTreeList.defaultProps = {
