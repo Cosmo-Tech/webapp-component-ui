@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Typography } from '@material-ui/core';
 import '@nosferatu500/react-sortable-tree/style.css';
@@ -22,6 +22,7 @@ export const ScenarioManagerTreeList = (props) => {
     buildDatasetInfo,
     labels,
     buildScenarioNameToDelete,
+    showDeleteIcon,
   } = props;
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
@@ -40,7 +41,7 @@ export const ScenarioManagerTreeList = (props) => {
 
   function formatScenariosToRSTList(treeScenarios) {
     const rstScenarios = treeScenarios.map((scenario) => {
-      const showDeleteIcon = scenario.ownerId === userId;
+      const displayDeleteIcon = scenario.ownerId === userId && showDeleteIcon;
       labels.dataset = buildDatasetInfo(scenario.datasetList);
       return {
         expanded: expandedNodes.current[scenario.id] || false,
@@ -51,7 +52,7 @@ export const ScenarioManagerTreeList = (props) => {
           <ScenarioNode
             datasets={datasets}
             scenario={scenario}
-            showDeleteIcon={showDeleteIcon}
+            showDeleteIcon={displayDeleteIcon}
             deleteScenario={deleteScenario}
             labels={labels}
             buildScenarioNameToDelete={buildScenarioNameToDelete}
@@ -163,6 +164,12 @@ ScenarioManagerTreeList.propTypes = {
    */
   buildDatasetInfo: PropTypes.func.isRequired,
   /**
+   *  Define ScenarioNode's delete buttons state (no matter who created scenario):
+   *  - true : the button is shown
+   *  - false : the button is hidden
+   */
+  showDeleteIcon: PropTypes.bool,
+  /**
    * Structure
    * <pre>
    {
@@ -183,6 +190,7 @@ ScenarioManagerTreeList.propTypes = {
 };
 
 ScenarioManagerTreeList.defaultProps = {
+  showDeleteIcon: true,
   labels: {
     status: 'Run status',
     successful: 'Successful',
