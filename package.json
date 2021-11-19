@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/Cosmo-Tech/webapp-component-ui#readme",
   "optionalDependencies": {
-    "@cosmotech/core": "^1.4.0",
+    "@cosmotech/core": "^1.4.2",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
@@ -66,8 +66,8 @@
     "rollup-plugin-visualizer": "^5.5.0"
   },
   "peerDependencies": {
-    "@cosmotech/azure": "^1.1.0",
-    "@cosmotech/core": "^1.4.0",
+    "@cosmotech/azure": "^1.1.2",
+    "@cosmotech/core": "^1.4.2",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",

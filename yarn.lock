@@ -1100,10 +1100,10 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@cosmotech/core@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.4.0.tgz#381e474382d8924d53b8ca9a4614608645913d33"
-  integrity sha512-MLI8G/6/1UtQ4S+/j7tZhcN0sVR6Xqc72ePOog/ORAzOW5wQ89txBW1kgL7hu5uUKFpLjBjLZ0RYPyl0+hag8Q==
+"@cosmotech/core@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.4.2.tgz#38b853837f7f4957fddf835a024aff4df86dd7a0"
+  integrity sha512-V3LVkd6jNxPaips0PD6puacA5pEtjbcHjYFTUDn5Wa0FnyftBK4+OCMzyHnRDhXECgoj/NftDwuFA7DvvErLmw==
   dependencies:
     eslint-config-prettier "^8.3.0"
     eslint-plugin-prettier "^4.0.0"
