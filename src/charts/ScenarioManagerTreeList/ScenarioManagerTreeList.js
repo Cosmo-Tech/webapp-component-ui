@@ -164,7 +164,7 @@ ScenarioManagerTreeList.propTypes = {
    */
   buildDatasetInfo: PropTypes.func.isRequired,
   /**
-   *  Define ScenarioNode's delete buttons state (no matter who created scenario):
+   *  Define ScenarioNode's delete buttons visibility (no matter who created scenario):
    *  - true : the button is shown
    *  - false : the button is hidden
    */
