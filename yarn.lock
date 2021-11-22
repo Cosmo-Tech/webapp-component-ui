@@ -1101,9 +1101,9 @@
     to-fast-properties "^2.0.0"
 
 "@cosmotech/core@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.4.2.tgz#38b853837f7f4957fddf835a024aff4df86dd7a0"
-  integrity sha512-V3LVkd6jNxPaips0PD6puacA5pEtjbcHjYFTUDn5Wa0FnyftBK4+OCMzyHnRDhXECgoj/NftDwuFA7DvvErLmw==
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.4.3.tgz#5b017a1e3ab507a3fdb76c9ff89dda88ca8adca3"
+  integrity sha512-JHp3XFYkOvwtJk9obl+kJG/Wrtn0bIIWexYGC3/aJitgc45ddEb2RHFIaxg0vX9OxsSyev7k++2nO3Y7oDScAA==
   dependencies:
     eslint-config-prettier "^8.3.0"
     eslint-plugin-prettier "^4.0.0"
