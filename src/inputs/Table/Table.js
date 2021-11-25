@@ -116,7 +116,7 @@ export const Table = (props) => {
           </div>
         )}
       </div>
-      {hasErrors && <div className={classes.errorsContainer}>{errors.join('\n')}</div>}
+      {hasErrors && <div className={classes.errorsContainer}>{errors.map((error) => error.summary).join('\n')}</div>}
       <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham-dark">
         {isReady && (
           <AgGridReact
