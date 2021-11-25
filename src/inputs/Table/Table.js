@@ -8,7 +8,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import { DateUtils } from '@cosmotech/core';
-import { DEFAULT_COLUMNS_PROPERTIES, COLUMN_TYPES } from './ColumnTypes.js';
+import { COLUMN_TYPES, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +31,15 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'pre-line',
   },
 }));
+
+const LOADING_STATUS_MAPPING = {
+  [TABLE_DATA_STATUS.EMPTY]: false,
+  [TABLE_DATA_STATUS.UPLOADING]: true,
+  [TABLE_DATA_STATUS.DOWNLOADING]: true,
+  [TABLE_DATA_STATUS.PARSING]: true,
+  [TABLE_DATA_STATUS.READY]: false,
+  [TABLE_DATA_STATUS.ERROR]: false,
+};
 
 const _addDragHandleToFirstColumn = (col, index) => {
   if (index === 0) {
@@ -84,6 +93,7 @@ export const Table = (props) => {
     rows,
     labels,
     extraToolbarActions,
+    onCellChange,
     ...otherProps
   } = props;
   const dimensions = { height: height, width: width };
@@ -94,9 +104,10 @@ export const Table = (props) => {
     editMode: editMode,
   };
 
+  const defaultColDef = getDefaultColumnsProperties(onCellChange);
   const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
   const hasErrors = errors && errors.length > 0;
-  const isLoading = [TABLE_DATA_STATUS.LOADING, TABLE_DATA_STATUS.LOADING].includes(dataStatus);
+  const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const isReady = dataStatus === TABLE_DATA_STATUS.READY;
 
   return (
@@ -125,7 +136,7 @@ export const Table = (props) => {
             suppressDragLeaveHidesColumns={true}
             allowDragFromColumnsToolPanel={true}
             columnDefs={formattedColumns}
-            defaultColDef={DEFAULT_COLUMNS_PROPERTIES}
+            defaultColDef={defaultColDef}
             columnTypes={COLUMN_TYPES}
             rowData={rows}
             context={context}
@@ -180,6 +191,12 @@ Table.propTypes = {
    *  List of extra React elements to add in the Table toolbar
    */
   extraToolbarActions: PropTypes.arrayOf(PropTypes.node),
+  /**
+   *  Callback function that will be called when a cell is edited
+   *  Function parameters:
+   *    event: object containing the ag grid veent data
+   */
+  onCellChange: PropTypes.func,
 };
 
 Table.defaultProps = {
@@ -190,4 +207,5 @@ Table.defaultProps = {
   labels: {
     loading: 'Loading...',
   },
+  onCellChange: () => {},
 };

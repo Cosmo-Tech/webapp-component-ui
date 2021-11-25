@@ -105,12 +105,17 @@ const _dateComparator = (valueA, valueB, nodeA, nodeB, isInverted) => {
   return isInverted ^ (new Date(valueA) > new Date(valueB));
 };
 
-export const DEFAULT_COLUMNS_PROPERTIES = {
-  editable: (params) => params.context.editMode,
-  resizable: true,
-  sortable: true,
-  filter: 'agTextColumnFilter',
-  valueSetter: _editModeSetter,
+export const getDefaultColumnsProperties = (onCellChange) => {
+  return {
+    editable: (params) => params.context.editMode,
+    resizable: true,
+    sortable: true,
+    filter: 'agTextColumnFilter',
+    valueSetter: _editModeSetter,
+    onCellValueChanged: (event) => {
+      onCellChange(event);
+    },
+  };
 };
 
 export const COLUMN_TYPES = {
