@@ -42,12 +42,6 @@ const LOADING_STATUS_MAPPING = {
   [TABLE_DATA_STATUS.ERROR]: false,
 };
 
-const _addDragHandleToFirstColumn = (col, index) => {
-  if (index === 0) {
-    col.rowDrag = true;
-  }
-};
-
 const _formatMinMaxDatesInColumns = (col, dateFormat) => {
   if (col.type && col.type.indexOf('date') !== -1) {
     if (col.minValue) {
@@ -78,7 +72,6 @@ const _formatColumnsData = (columns, dateFormat) =>
   columns.map((col, index) => {
     _formatMinMaxDatesInColumns(col, dateFormat);
     _moveExtraPropertiesToCellEditorParams(col);
-    _addDragHandleToFirstColumn(col, index);
     return col;
   });
 
@@ -151,7 +144,7 @@ export const Table = (props) => {
 
 Table.propTypes = {
   /**
-   *  Custom date format for columns of type "date". Default value: 'dd/MM/yyyy
+   *  Custom date format for columns of type "date". Default value: 'dd/MM/yyyy'
    */
   dateFormat: PropTypes.string,
   /**
