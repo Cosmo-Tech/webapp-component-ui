@@ -18,4 +18,4 @@ export {
   TABLE_DATA_STATUS,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
-export { PrivateRoute, PublicRoute, LoadingLine } from './misc';
+export { ErrorsPanel, PrivateRoute, PublicRoute, LoadingLine } from './misc';
