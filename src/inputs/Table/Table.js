@@ -10,6 +10,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
+import { ErrorsPanel } from '../../misc/ErrorsPanel/ErrorsPanel.js';
 
 const useStyles = makeStyles((theme) => ({
   toolBar: {
@@ -87,6 +88,7 @@ export const Table = (props) => {
     labels,
     extraToolbarActions,
     onCellChange,
+    onClearErrors,
     ...otherProps
   } = props;
   const dimensions = { height: height, width: width };
@@ -116,7 +118,7 @@ export const Table = (props) => {
           </div>
         )}
       </div>
-      {hasErrors && <div className={classes.errorsContainer}>{errors.map((error) => error.summary).join('\n')}</div>}
+      {hasErrors && <ErrorsPanel errors={errors} onClear={onClearErrors} />}
       <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham-dark">
         {isReady && (
           <AgGridReact
@@ -178,6 +180,7 @@ Table.propTypes = {
    </pre>
    */
   labels: PropTypes.shape({
+    clearErrors: PropTypes.string,
     label: PropTypes.string,
     loading: PropTypes.string,
   }),
@@ -191,6 +194,10 @@ Table.propTypes = {
    *    event: object containing the ag grid veent data
    */
   onCellChange: PropTypes.func,
+  /**
+   *  Callback function that will be called when users click on the "Clear" button in the errors panel
+   */
+  onClearErrors: PropTypes.func.isRequired,
 };
 
 Table.defaultProps = {
@@ -199,6 +206,7 @@ Table.defaultProps = {
   height: '200px',
   width: '100%',
   labels: {
+    clearErrors: 'Clear',
     loading: 'Loading...',
   },
   onCellChange: () => {},
