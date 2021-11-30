@@ -16,9 +16,9 @@ const _boolSetter = (params) => {
   let newValue = params.newValue.toLowerCase();
   if (!params.context.editMode) {
     newValue = params.oldValue;
-  } else if (['0', 'false'].indexOf(newValue) !== -1) {
+  } else if (['0', 'false', 'no'].indexOf(newValue) !== -1) {
     newValue = 'false';
-  } else if (['1', 'true'].indexOf(newValue) !== -1) {
+  } else if (['1', 'true', 'yes'].indexOf(newValue) !== -1) {
     newValue = 'true';
   } else {
     newValue = params.oldValue;
