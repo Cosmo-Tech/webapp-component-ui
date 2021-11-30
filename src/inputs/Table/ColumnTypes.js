@@ -101,6 +101,20 @@ const _enumSetter = (params) => {
   return true;
 };
 
+const _intFilterValueGetter = (params) => {
+  return parseInt(params.data?.[params.column.colId]);
+};
+
+const _numberFilterValueGetter = (params) => {
+  return parseFloat(params.data?.[params.column.colId]);
+};
+
+const _dateFilterValueGetter = (params) => {
+  const dateFormat = params.context.dateFormat;
+  const strValue = params.data?.[params.column.colId];
+  return DateUtils.parse(strValue, dateFormat);
+};
+
 export const getDefaultColumnsProperties = (onCellChange) => {
   return {
     editable: (params) => params.context.editMode,
@@ -134,6 +148,7 @@ export const getColumnTypes = (dateFormat) => {
       comparator: _dateComparator,
       filter: 'agDateColumnFilter',
       valueSetter: _dateSetter,
+      filterValueGetter: _dateFilterValueGetter,
     },
     enum: {
       valueSetter: _enumSetter,
@@ -142,11 +157,13 @@ export const getColumnTypes = (dateFormat) => {
       comparator: _numberComparator,
       filter: 'agNumberColumnFilter',
       valueSetter: _intSetter,
+      filterValueGetter: _intFilterValueGetter,
     },
     number: {
       comparator: _numberComparator,
       filter: 'agNumberColumnFilter',
       valueSetter: _numberSetter,
+      filterValueGetter: _numberFilterValueGetter,
     },
   };
 };
