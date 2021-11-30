@@ -1,14 +1,22 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  errorsPanelCard: {},
+  errorsContainer: {
+    marginTop: '10px',
+    marginBottom: '32px',
+  },
+  errorsHeader: {
+    padding: '10px',
+  },
   errorTitle: {
     '& .MuiAccordionSummary-content': {
-      justifyContent: 'space-between',
+      alignItems: 'center',
     },
   },
   errorSummary: {
     color: theme.palette.text.error,
+    display: 'flex',
+    alignContent: 'center',
   },
   errorLoc: {
     color: theme.palette.text.warning,
@@ -18,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'pre-line',
   },
   errorContextContainer: {},
+  cancelIcon: {
+    marginRight: '16px',
+  },
 }));
 
 export default useStyles;

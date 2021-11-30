@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Accordion,
+  AccordionActions,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
   Divider,
+  Paper,
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from './style';
 
 export const ErrorsPanel = (props) => {
@@ -19,8 +20,10 @@ export const ErrorsPanel = (props) => {
   const { errors, labels, onClear } = props;
 
   return (
-    <Card className={classes.errorsPanelCard}>
-      <CardContent>
+    <Paper className={classes.errorsContainer}>
+      <Typography className={classes.errorsHeader}>
+        File load failed. {errors.length} error(s) occurred:
+      </Typography>
         {errors.map((error, index) => (
           <Accordion key={'error' + index}>
             <AccordionSummary
@@ -29,8 +32,21 @@ export const ErrorsPanel = (props) => {
               aria-controls="errors-panel-content"
               id="errors-panel-header"
             >
-              <Typography className={classes.errorSummary}>{error.summary}</Typography>
-              <Typography className={classes.errorLoc}>{error.loc}</Typography>
+              <Box justifyContent="flex-start">
+                <Typography className={classes.errorSummary}>
+                  <CancelIcon className={classes.cancelIcon} />
+                </Typography>
+              </Box>
+              <Box flexGrow={1}>
+                <Typography className={classes.errorSummary}>
+                  {error.summary}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography className={classes.errorLoc}>
+                  {error.loc}
+                </Typography>
+              </Box>
             </AccordionSummary>
             <AccordionDetails className={classes.errorContextContainer}>
               <Typography className={classes.errorContext} variant="caption">
@@ -40,13 +56,14 @@ export const ErrorsPanel = (props) => {
             <Divider />
           </Accordion>
         ))}
-      </CardContent>
-      <CardActions>
-        <Button size="small" color="primary" onClick={onClear}>
-          {labels.clear}
-        </Button>
-      </CardActions>
-    </Card>
+        <Accordion>
+          <AccordionActions>
+            <Button size="small" color="primary" variant="contained" onClick={onClear}>
+              {labels.clear}
+            </Button>
+          </AccordionActions>
+      </Accordion>
+    </Paper>
   );
 };
 
