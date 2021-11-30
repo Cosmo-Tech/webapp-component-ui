@@ -138,7 +138,7 @@ ScenarioNode.propTypes = {
     created: PropTypes.string.isRequired,
     dataset: PropTypes.string.isRequired,
     deleteDialog: PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      title: PropTypes.string,
       description: PropTypes.string.isRequired,
       cancel: PropTypes.string.isRequired,
       confirm: PropTypes.string.isRequired,

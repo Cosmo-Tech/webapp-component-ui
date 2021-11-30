@@ -59,12 +59,11 @@ ConfirmDeleteDialog.propTypes = {
   closeDialog: PropTypes.func.isRequired,
   confirmDelete: PropTypes.func.isRequired,
   labels: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     description: PropTypes.string.isRequired,
     cancel: PropTypes.string.isRequired,
     confirm: PropTypes.string.isRequired,
   }),
-  scenarioName: PropTypes.string.isRequired,
 };
 
 ConfirmDeleteDialog.defaultProps = {
