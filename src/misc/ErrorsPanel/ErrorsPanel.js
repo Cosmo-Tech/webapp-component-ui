@@ -17,11 +17,18 @@ import useStyles from './style';
 
 export const ErrorsPanel = (props) => {
   const classes = useStyles();
-  const { errors, labels, onClear } = props;
+  const { errors, labels, onClear, buildErrorsCountLabel } = props;
+
+  let errorsCountLabel = labels.errorsCountLabel;
+  if (buildErrorsCountLabel) {
+    errorsCountLabel = buildErrorsCountLabel(errors.length);
+  }
 
   return (
     <Paper className={classes.errorsContainer}>
-      <Typography className={classes.errorsHeader}>File load failed. {errors.length} error(s) occurred:</Typography>
+      <Typography className={classes.errorsHeader}>
+        {labels.mainError} {errorsCountLabel}
+      </Typography>
       {errors.map((error, index) => (
         <Accordion key={'error' + index}>
           <AccordionSummary
@@ -79,23 +86,32 @@ ErrorsPanel.propTypes = {
    {
       clear: 'string',
       mainError: 'string',
+      errorsCountLabel: 'string',
     }
    *   </pre>
    */
   labels: PropTypes.shape({
-    clear: PropTypes.string.isRequired,
+    clear: PropTypes.string,
     mainError: PropTypes.string,
+    errorsCountLabel: PropTypes.string,
   }),
   /**
-   *  Function that will be called when users clicks on the "Clear" button
+   *  Function that will be called when users click on the "Clear" button
    *  Function parameters:
    *    event: object containing the ag grid veent data
    */
   onClear: PropTypes.func,
+  /**
+   *  Function to generate the errors panel title
+   *  Function parameters:
+   *    errorsCount: number of errors in the errors panel
+   */
+  buildErrorsCountLabel: PropTypes.func,
 };
 
 ErrorsPanel.defaultProps = {
   labels: {
     clear: 'Clear',
+    errorsCountLabel: 'Errors:',
   },
 };

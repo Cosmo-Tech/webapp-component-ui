@@ -89,6 +89,7 @@ export const Table = (props) => {
     extraToolbarActions,
     onCellChange,
     onClearErrors,
+    buildErrorsPanelTitle,
     ...otherProps
   } = props;
   const dimensions = { height: height, width: width };
@@ -105,6 +106,10 @@ export const Table = (props) => {
   const hasErrors = errors && errors.length > 0;
   const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const isReady = dataStatus === TABLE_DATA_STATUS.READY;
+  const errorPanelLabels = {
+    clear: labels.clearErrors,
+    mainError: labels.errorsPanelMainError,
+  };
 
   return (
     <div id="table-container" {...otherProps}>
@@ -118,7 +123,14 @@ export const Table = (props) => {
           </div>
         )}
       </div>
-      {hasErrors && <ErrorsPanel errors={errors} onClear={onClearErrors} />}
+      {hasErrors && (
+        <ErrorsPanel
+          labels={errorPanelLabels}
+          errors={errors}
+          onClear={onClearErrors}
+          buildErrorsCountLabel={buildErrorsPanelTitle}
+        />
+      )}
       <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham-dark">
         {isReady && (
           <AgGridReact
@@ -178,6 +190,7 @@ Table.propTypes = {
     clearErrors: PropTypes.string,
     label: PropTypes.string,
     loading: PropTypes.string,
+    errorsPanelMainError: PropTypes.string,
   }),
   /**
    *  List of extra React elements to add in the Table toolbar
@@ -193,6 +206,12 @@ Table.propTypes = {
    *  Callback function that will be called when users click on the "Clear" button in the errors panel
    */
   onClearErrors: PropTypes.func.isRequired,
+  /**
+   *  Function to generate the errors panel title
+   *  Function parameters:
+   *    errorsCount: number of errors in the errors panel
+   */
+  buildErrorsPanelTitle: PropTypes.func,
 };
 
 Table.defaultProps = {
