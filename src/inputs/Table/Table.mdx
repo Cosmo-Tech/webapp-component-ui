@@ -20,16 +20,24 @@ and lets users edit its content.
 
 <Playground>
   <Table
-    # handleTable={() => console.log('File uploaded')}
-    # handleDeleteFile={() => console.log('File deleted')}
-    # handleDownloadFile={() => console.log('File downloaded')}
-    # editMode={true}
-    # file={{
-    #   parameterId: 'parameter1',
-    #   initialName: '',
-    #   name: '',
-    #   file: null,
-    #   status: UPLOAD_FILE_STATUS_KEY.EMPTY
-    # }}
+    editMode={true}
+    dataStatus="READY"
+    errors={[{ summary: 'Wrong type', loc: 'Line 3', context: 'Can\'t convert "foo" to int' }]}
+    columns={[
+      { field: 'a', type: ['string'] },
+      { field: 'b', type: ['int'] },
+      { field: 'c', type: ['bool'] }
+    ]}
+    rows={[
+      { a: 'foo', b: '12', c: 'false' },
+      { a: 'bar', b: '53', c: 'true' }
+    ]}
+    onCellChange={() => {
+      console.log('cells changed');
+    }}
+    onClearErrors={() => {
+      console.log('clear errors');
+    }}
+    buildErrorsPanelTitle={(errorsCount) => `${errorsCount} errors found during import:`}
   />
 </Playground>

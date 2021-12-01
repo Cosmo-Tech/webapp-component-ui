@@ -17,11 +17,14 @@ The aim of this component is to display an interactive view of a list of errors
 
 ## Basic Usage
 
-const errors = [
-{summary: 'Error 1 summary', loc: 'someFile.js : line 1', context:'Error 1 context'},
-{summary: 'Error 2 summary', loc: 'someFile.js : line 2', context:'Error 2 context'},
-];
-
 <Playground>
-  <ErrorsPanel errors={errors} onClear={() => {}} />
+  <ErrorsPanel
+    errors={[
+      { summary: 'Error 1 summary', loc: 'someFile.js : line 1', context: 'Error 1 context' },
+      { summary: 'Error 2 summary', loc: 'someFile.js : line 2', context: 'Error 2 context' }
+    ]}
+    onClear={() => {
+      console.log('clear errors');
+    }}
+  />
 </Playground>
