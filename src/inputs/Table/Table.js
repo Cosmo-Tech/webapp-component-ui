@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
@@ -131,7 +131,7 @@ export const Table = (props) => {
           buildErrorsCountLabel={buildErrorsPanelTitle}
         />
       )}
-      <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham-dark">
+      <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham">
         {isReady && (
           <AgGridReact
             undoRedoCellEditing={true}
