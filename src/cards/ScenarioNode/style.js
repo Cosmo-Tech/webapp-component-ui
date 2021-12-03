@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   statusCreated: {
     marginLeft: '5px',
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.secondary.contrastText,
+    backgroundColor: theme.palette.info.main,
+    color: theme.palette.info.contrastText,
   },
   statusSuccessful: {
     marginLeft: '5px',
