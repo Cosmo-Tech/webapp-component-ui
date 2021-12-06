@@ -2,42 +2,24 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Navigate } from 'react-router-dom';
 
 export const PrivateRoute = (props) => {
-  const { render, authenticated, authorized, noAuthRedirect, noPermRedirect, ...rest } = props;
-
-  let route = <Route {...rest} render={render} />;
+  const { children, authenticated, authorized, noAuthenticationRedirect, noAuthorizationRedirect } = props;
 
   if (!authenticated) {
-    route = (
-      <Route
-        {...rest}
-        render={(routeProps) => (
-          <Redirect
-            to={{
-              pathname: props.noAuthRedirect,
-              state: { from: routeProps.location },
-            }}
-          />
-        )}
-      />
-    );
-  } else if (!authorized && noPermRedirect !== undefined) {
-    route = (
-      <Route
-        {...rest}
-        render={(routeProps) => (
-          <Redirect
-            to={{
-              pathname: props.noPermRedirect,
-              state: { from: routeProps.location },
-            }}
-          />
-        )}
-      />
-    );
+    return <Navigate to={noAuthenticationRedirect} />;
+  } else if (!authorized && noAuthorizationRedirect !== undefined) {
+    return <Navigate to={noAuthorizationRedirect} />;
   }
+  return children;
+};
 
-  return route;
+PrivateRoute.propTypes = {
+  children: PropTypes.any,
+  authenticated: PropTypes.bool,
+  authorized: PropTypes.bool,
+  noAuthenticationRedirect: PropTypes.string,
+  noAuthorizationRedirect: PropTypes.string,
 };
