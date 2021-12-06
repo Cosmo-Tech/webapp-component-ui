@@ -25,12 +25,12 @@ export const ErrorsPanel = (props) => {
   }
 
   return (
-    <Paper className={classes.errorsContainer}>
-      <Typography className={classes.errorsHeader}>
+    <Paper className={classes.errorsContainer} data-cy="errors-panel">
+      <Typography className={classes.errorsHeader} data-cy="errors-header">
         {labels.mainError} {errorsCountLabel}
       </Typography>
       {errors.map((error, index) => (
-        <Accordion key={'error' + index}>
+        <Accordion key={'error' + index} data-cy={'error-accordion-' + index}>
           <AccordionSummary
             className={classes.errorTitle}
             expandIcon={<ExpandMoreIcon />}
@@ -43,10 +43,14 @@ export const ErrorsPanel = (props) => {
               </Typography>
             </Box>
             <Box flexGrow={1}>
-              <Typography className={classes.errorSummary}>{error.summary}</Typography>
+              <Typography className={classes.errorSummary} data-cy={'error-summary'}>
+                {error.summary}
+              </Typography>
             </Box>
             <Box>
-              <Typography className={classes.errorLoc}>{error.loc}</Typography>
+              <Typography className={classes.errorLoc} data-cy={'error-loc'}>
+                {error.loc}
+              </Typography>
             </Box>
           </AccordionSummary>
           <AccordionDetails className={classes.errorContextContainer}>
