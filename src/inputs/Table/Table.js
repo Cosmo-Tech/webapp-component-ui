@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
@@ -90,6 +91,7 @@ export const Table = (props) => {
     onCellChange,
     onClearErrors,
     buildErrorsPanelTitle,
+    agTheme,
     ...otherProps
   } = props;
   const dimensions = { height: height, width: width };
@@ -131,7 +133,7 @@ export const Table = (props) => {
           buildErrorsCountLabel={buildErrorsPanelTitle}
         />
       )}
-      <div data-cy="grid" id="grid-container" style={dimensions} className="ag-theme-balham">
+      <div data-cy="grid" id="grid-container" style={dimensions} className={agTheme}>
         {isReady && (
           <AgGridReact
             undoRedoCellEditing={true}
@@ -178,6 +180,10 @@ Table.propTypes = {
   columns: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   /**
+   * AgGrid theme
+   */
+  agTheme: PropTypes.string,
+  /**
    * Component's labels:
    * Structure:
    * <pre>
@@ -219,6 +225,7 @@ Table.defaultProps = {
   dataStatus: TABLE_DATA_STATUS.EMPTY,
   height: '200px',
   width: '100%',
+  agTheme: 'ag-theme-balham',
   labels: {
     clearErrors: 'Clear',
     loading: 'Loading...',
