@@ -89,6 +89,7 @@ export const SimplePowerBIReportEmbed = ({
   reports,
   reportConfiguration,
   scenario,
+  alwaysShowReports,
   lang,
   downloadLogsFile,
   refreshable,
@@ -154,15 +155,15 @@ export const SimplePowerBIReportEmbed = ({
         <div className={classes.errorDescription}>{errorDescription}</div>
       </div>
       {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
-      {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
-      {runInProgress && (
+      {noRun && !alwaysShowReports && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
+      {runInProgress && !alwaysShowReports && (
         <DashboardPlaceholder
           label={labels.inProgress.label}
           title={labels.inProgress.title}
           icon={<AccessTimeIcon color="primary" fontSize="large" />}
         />
       )}
-      {hasError && (
+      {hasError && !alwaysShowReports && (
         <DashboardPlaceholder
           label={labels.hasErrors.label}
           title={labels.hasErrors.title}
@@ -170,7 +171,7 @@ export const SimplePowerBIReportEmbed = ({
           downloadLabel={labels.downloadButton}
         />
       )}
-      <div className={classes.divContainer} style={!isReady ? { display: 'none' } : {}}>
+      <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
         {refreshable && (
           <div className={classes.toolbar}>
             <Tooltip title={labels.refreshTooltip}>
@@ -209,6 +210,10 @@ SimplePowerBIReportEmbed.propTypes = {
    * Current scenario
    */
   scenario: PropTypes.object,
+  /**
+   * If set to true, PowerBI reports will always be displayed, despite the scenario state
+   */
+  alwaysShowReports: PropTypes.bool,
   /**
    * Current language
    */
@@ -290,6 +295,7 @@ SimplePowerBIReportEmbed.propTypes = {
 };
 SimplePowerBIReportEmbed.defaultProps = {
   index: 0,
+  alwaysShowReports: false,
   refreshable: true,
   refreshTimeout: 15000,
   useAAD: false,
