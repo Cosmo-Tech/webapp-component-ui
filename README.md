@@ -15,13 +15,13 @@ Here are some useful command lines (extracted from docz documentation):
 
 ## Build project
 
-`yarn build` will package the project.
+`yarn install-default && yarn build` will package the project.
 
 This command will allow you to use `yarn link` and `ỳarn link @cosmotech/ui` commands to deal with this project locally.
 
 ## Run documentation locally
 
-`yarn docz:dev` will install all dependencies needed to build the documentation and serve locally under http://localhost:3000/ by default.
+`yarn docz:install && yarn docz:dev` will install all dependencies needed to build the documentation and serve locally under http://localhost:3000/ by default.
 
 ## Build Documentation
 
@@ -38,3 +38,7 @@ You can have `yarn docz:build` emit to a different directory by providing a path
 The output of docz consists of static assets only. This allows you to deploy your generated `docz` site with any static site hosting provider you'd like.
 
 Start by building your site with `yarn docz:build`, if you haven't provided a `dest` flag to your config then you will find your generated files in `.docz/dist` to copy to the server.
+
+## Clean docz dependencies
+
+To remove docz dependencies, run `yarn docz:clean`

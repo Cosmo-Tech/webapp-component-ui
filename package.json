@@ -9,13 +9,14 @@
     "dist/*"
   ],
   "scripts": {
-    "clean": "npx rimraf node_modules .docz dist",
-    "build": "yarn clean && yarn install --ignore-optional && rollup -c",
-    "install-doc": "yarn clean && yarn install",
+    "install-default": "yarn install --ignore-optional",
+    "build": "rollup -c",
     "eslint": "eslint",
-    "docz:dev": "yarn install-doc && docz dev",
-    "docz:build": "yarn install-doc && docz build",
+    "docz:dev": "docz dev",
+    "docz:install": "yarn clean && yarn install",
+    "docz:build": "docz:install && docz build",
     "docz:serve": "yarn docz:build && docz serve",
+    "docz:clean": "npx rimraf node_modules .docz dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "npx prettier -w"
   },
