@@ -13,7 +13,7 @@
     "build": "rollup -c",
     "eslint": "eslint",
     "docz:dev": "docz dev",
-    "docz:install": "yarn clean && yarn install",
+    "docz:install": "yarn docz:clean && yarn install",
     "docz:build": "docz:install && docz build",
     "docz:serve": "yarn docz:build && docz serve",
     "docz:clean": "npx rimraf node_modules .docz dist",
