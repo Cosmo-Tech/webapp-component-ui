@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
 import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
-import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
+import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon, Print as PrintIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
 
@@ -44,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  toolbarItem: {
+    paddingLeft: '0px',
+    paddingRight: '12px',
   },
 }));
 
@@ -146,6 +152,11 @@ export const SimplePowerBIReportEmbed = ({
     setTimeout(() => {
       setDisabled(false);
     }, refreshTimeout);
+
+  const printReport = async () => {
+    // report.print();
+    const data = await report.getFilters();
+    console.log(data);
   };
 
   return (
@@ -174,9 +185,14 @@ export const SimplePowerBIReportEmbed = ({
       <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
         {refreshable && (
           <div className={classes.toolbar}>
-            <Tooltip title={labels.refreshTooltip}>
+            <Tooltip title={labels.refreshTooltip} className={classes.toolbarItem}>
               <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
                 <RefreshIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={labels.printTooltip} className={classes.toolbarItem}>
+              <IconButton aria-label="print" disabled={!report || disabled} color="primary" onClick={printReport}>
+                <PrintIcon />
               </IconButton>
             </Tooltip>
           </div>
@@ -315,6 +331,7 @@ SimplePowerBIReportEmbed.defaultProps = {
     },
     downloadButton: 'Download logs',
     refreshTooltip: 'Refresh',
+    printTooltip: 'Print',
     errors: {
       unknown: 'Unknown error',
       details: 'Something went wrong when fetching PowerBI reports info',
