@@ -3,7 +3,7 @@
 
 export { CreateScenarioButton, SelfDestructLinkButton, SignInButton } from './buttons';
 export { ScenarioNode } from './cards';
-export { Dashboard, ScenarioManagerTreeList, SimplePowerBIReportEmbed } from './charts';
+export { CytoViz, Dashboard, ScenarioManagerTreeList, SimplePowerBIReportEmbed } from './charts';
 export { SimpleTwoActionsDialog } from './dialogs';
 export {
   HierarchicalComboBox,
