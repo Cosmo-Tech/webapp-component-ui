@@ -3,14 +3,32 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton, Typography, Chip } from '@material-ui/core';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  CircularProgress,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from '@material-ui/core';
+import {
+  DeleteForever as DeleteForeverIcon,
+  CheckCircle as CheckCircleIcon,
+  Cancel as CancelIcon,
+  ExpandMore as ExpandMoreIcon,
+  Help as HelpIcon,
+} from '@material-ui/icons';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';
 
 export const ScenarioNode = ({
   datasets,
+  isExpanded,
+  setIsExpanded,
   scenario,
   showDeleteIcon,
   deleteScenario,
@@ -19,7 +37,8 @@ export const ScenarioNode = ({
 }) => {
   const classes = useStyles();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
-  const openConfirmDialog = () => {
+  const openConfirmDialog = (event) => {
+    event.stopPropagation(); // Prevent opening the Accordion when clicking the "delete" button
     labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
     setIsConfirmDialogOpen(true);
   };
@@ -32,63 +51,172 @@ export const ScenarioNode = ({
     deleteScenario(scenario.id);
   }
 
-  function getStatusLabel() {
-    return labels.status + ':';
-  }
-
-  function getTranslatedStatus(scenarioState) {
-    if (!scenarioState) {
-      return '';
-    }
-    return labels[scenarioState.toLowerCase()] ? labels[scenarioState.toLowerCase()] : scenarioState;
-  }
+  const handleAccordionExpand = (event, newIsExpanded) => {
+    setIsExpanded(newIsExpanded);
+  };
 
   function getDatasetsLabel() {
     return labels.dataset + ':';
   }
 
+  const getTranslatedStatus = () => {
+    if (!scenario.state) {
+      return '';
+    }
+    return labels[scenario.state.toLowerCase()] ? labels[scenario.state.toLowerCase()] : scenario.state;
+  };
+
+  const getStatusIconClassName = () => {
+    if (scenario.state === 'Created') {
+      return null;
+    }
+    if (scenario.state === 'Running') {
+      return classes.statusRunningIcon;
+    }
+    if (scenario.state === 'Successful') {
+      return classes.statusSuccessfulIcon;
+    }
+    if (scenario.state === 'Failed') {
+      return classes.statusFailedIcon;
+    }
+    return classes.statusUnknownIcon;
+  };
+
+  const getStatusClassName = () => {
+    if (scenario.state === 'Created') {
+      return classes.statusCreated;
+    }
+    if (scenario.state === 'Running') {
+      return classes.statusRunning;
+    }
+    if (scenario.state === 'Successful') {
+      return classes.statusSuccessful;
+    }
+    if (scenario.state === 'Failed') {
+      return classes.statusFailed;
+    }
+    return classes.statusUnknown;
+  };
+
+  const getStatusIcon = (showLabel) => {
+    const statusClassName = getStatusClassName(classes, scenario.state);
+    const iconClassName = getStatusIconClassName(classes, scenario.state);
+    const status = getTranslatedStatus(labels, scenario.state);
+    let icon = null;
+    if (scenario.state === 'Successful') {
+      icon = <CheckCircleIcon className={iconClassName} aria-label={status} />;
+    } else if (scenario.state === 'Failed') {
+      icon = <CancelIcon className={iconClassName} aria-label={status} />;
+    } else if (scenario.state === 'Running') {
+      icon = <CircularProgress size={25} className={iconClassName} aria-label={status} />;
+    } else if (scenario.state !== 'Created') {
+      icon = <HelpIcon className={iconClassName} aria-label={status} />;
+    }
+    return (
+      <>
+        {showLabel ? <Typography className={statusClassName}>{status}</Typography> : null}
+        {scenario.state === 'Created' ? null : (
+          <Tooltip key="scenario-status-tooltip" title={status}>
+            {icon}
+          </Tooltip>
+        )}
+      </>
+    );
+  };
+
+  const getScenarioName = () => {
+    return (
+      <Tooltip key="scenario-name-tooltip" title={scenario.name}>
+        <Typography key="scenario-name" className={classes.scenarioTitle} variant="h4">
+          {scenario.name}
+        </Typography>
+      </Tooltip>
+    );
+  };
+
+  const getDetailedStatus = () => {
+    return (
+      <div className={classes.scenarioDetailsStatusContainer}>
+        <Typography className={classes.cardLabel}>{labels.status}</Typography>
+        {getStatusIcon(true)}
+      </div>
+    );
+  };
+
+  const getScenarioNameAndStatus = () => {
+    return (
+      <>
+        {getScenarioName()}
+        {getStatusIcon(false)}
+      </>
+    );
+  };
+
+  const getScenarioCreationData = () => {
+    return [
+      <span key="scenario-name" className={classes.scenarioHeaderItem}>
+        {scenario.ownerName}
+      </span>,
+      <span key="scenario-creation-date" className={classes.scenarioHeaderItem}>
+        {new Date(scenario.creationDate).toLocaleString()}
+      </span>,
+    ];
+  };
+
+  const getScenarioHeader = () => {
+    return (
+      <Box className={classes.scenarioHeader} flexGrow={1}>
+        {isExpanded ? getScenarioCreationData() : getScenarioNameAndStatus()}
+      </Box>
+    );
+  };
+
+  const getAccordionSummary = () => {
+    return (
+      <AccordionSummary className={classes.accordionSummary} expandIcon={<ExpandMoreIcon />}>
+        {getScenarioHeader()}
+        {showDeleteIcon && (
+          <IconButton
+            className={classes.scenarioDeleteButton}
+            data-cy="scenario-delete-button"
+            aria-label="delete scenario"
+            size="small"
+            onClick={openConfirmDialog}
+          >
+            <DeleteForeverIcon fontSize="small" />
+          </IconButton>
+        )}
+      </AccordionSummary>
+    );
+  };
+
+  const getAccordionDetails = () => {
+    return (
+      <AccordionDetails className={classes.scenarioDetailsContainer}>
+        {getScenarioName()}
+        {getDetailedStatus()}
+        <Typography className={classes.cardLabel}>{getDatasetsLabel()}</Typography>
+        <Typography>
+          <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
+        </Typography>
+      </AccordionDetails>
+    );
+  };
+
+  const rootClass = isExpanded ? classes.rootExpandedScenarioContainer : classes.rootShrunkScenarioContainer;
   return (
-    <React.Fragment>
+    <Paper key={scenario.id} className={rootClass} elevation={3}>
       <ConfirmDeleteDialog
         open={isConfirmDialogOpen}
         closeDialog={closeConfirmDialog}
         confirmDelete={confirmScenarioDelete}
         labels={labels.deleteDialog}
       ></ConfirmDeleteDialog>
-      <Typography className={classes.scenarioHeader} gutterBottom>
-        <span>
-          <span className={classes.scenarioHeaderItem}>{scenario.ownerName}</span>
-          <span className={classes.scenarioHeaderItem}>-</span>
-          <span className={classes.scenarioHeaderItem}>{new Date(scenario.creationDate).toLocaleString()}</span>
-          {showDeleteIcon && (
-            <IconButton
-              data-cy="scenario-delete-button"
-              aria-label="delete scenario"
-              size="small"
-              onClick={openConfirmDialog}
-            >
-              <DeleteForeverIcon fontSize="small" />
-            </IconButton>
-          )}
-        </span>
-      </Typography>
-      <Typography className={classes.scenarioTitle} variant="h4" data-content={scenario.name}>
-        {scenario.name}
-      </Typography>
-      <div className={classes.statusRow}>
-        <Typography>{getStatusLabel()}</Typography>
-        <Chip
-          size="small"
-          label={getTranslatedStatus(scenario.state)}
-          className={getStatusClassName(classes, scenario.state)}
-        />
-      </div>
-      <Typography>
-        {getDatasetsLabel()}
-        <br />
-        <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
-      </Typography>
-    </React.Fragment>
+      <Accordion data-cy={'scenario-accordion-' + scenario.id} expanded={isExpanded} onChange={handleAccordionExpand}>
+        {getAccordionSummary()}
+        {isExpanded ? getAccordionDetails() : null}
+      </Accordion>
+    </Paper>
   );
 };
 
@@ -97,6 +225,14 @@ ScenarioNode.propTypes = {
    * Datasets list
    */
   datasets: PropTypes.array.isRequired,
+  /**
+   * True if the accordion showing the scenario details is open, false otherwise.
+   */
+  isExpanded: PropTypes.bool.isRequired,
+  /**
+   * Function to change the value of isExpanded.
+   */
+  setIsExpanded: PropTypes.func.isRequired,
   /**
    * Scenario to display
    */
@@ -121,6 +257,7 @@ ScenarioNode.propTypes = {
         successful: 'string',
         failed: 'string',
         created: 'string'
+        running: 'string',
         dataset: 'string',
         deleteDialog : {
           title: 'string',
@@ -136,6 +273,7 @@ ScenarioNode.propTypes = {
     successful: PropTypes.string.isRequired,
     failed: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired,
+    running: PropTypes.string.isRequired,
     dataset: PropTypes.string.isRequired,
     deleteDialog: PropTypes.shape({
       title: PropTypes.string,
@@ -153,20 +291,11 @@ ScenarioNode.propTypes = {
 ScenarioNode.defaultProps = {
   showDeleteIcon: false,
   labels: {
-    status: 'Run status',
+    status: 'Run status:',
     successful: 'Successful',
+    running: 'Running',
     failed: 'Failed',
     created: 'Created',
     dataset: 'Datasets',
   },
 };
-
-function getStatusClassName(classes, scenarioState) {
-  if (scenarioState === 'Successful') {
-    return classes.statusSuccessful;
-  }
-  if (scenarioState === 'Failed') {
-    return classes.statusFailed;
-  }
-  return classes.statusCreated;
-}
