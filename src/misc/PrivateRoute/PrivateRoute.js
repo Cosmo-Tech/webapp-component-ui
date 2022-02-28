@@ -44,7 +44,7 @@ export const PrivateRoute = (props) => {
 };
 
 PrivateRoute.propTypes = {
-  render: PropTypes.node,
+  render: PropTypes.func,
   authenticated: PropTypes.bool,
   authorized: PropTypes.bool,
   noAuthRedirect: PropTypes.string,
