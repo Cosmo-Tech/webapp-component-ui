@@ -3,16 +3,17 @@
 
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export const PrivateRoute = (props) => {
-  const { render, authenticated, authorized, noAuthRedirect, noPermRedirect, ...rest } = props;
+  const { render, authenticated, authorized, noAuthRedirect, noPermRedirect, ...other } = props;
 
-  let route = <Route {...rest} render={render} />;
+  let route = <Route {...other} render={render} />;
 
   if (!authenticated) {
     route = (
       <Route
-        {...rest}
+        {...other}
         render={(routeProps) => (
           <Redirect
             to={{
@@ -26,7 +27,7 @@ export const PrivateRoute = (props) => {
   } else if (!authorized && noPermRedirect !== undefined) {
     route = (
       <Route
-        {...rest}
+        {...other}
         render={(routeProps) => (
           <Redirect
             to={{
@@ -40,4 +41,12 @@ export const PrivateRoute = (props) => {
   }
 
   return route;
+};
+
+PrivateRoute.propTypes = {
+  render: PropTypes.node,
+  authenticated: PropTypes.bool,
+  authorized: PropTypes.bool,
+  noAuthRedirect: PropTypes.string,
+  noPermRedirect: PropTypes.string,
 };
