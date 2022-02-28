@@ -48,14 +48,14 @@ export const HelpMenu = (props) => {
         </Box>
         <Menu className={classes.menu} keepMounted anchorEl={anchorEl} open={isMenuOpen} onClose={handleClick}>
           {documentationUrl && (
-            <MenuItem data-cy="download-documentation" className={classes.link} onClick={handleClick}>
+            <MenuItem data-cy="documentation-link" className={classes.link} onClick={handleClick}>
               <a href={documentationUrl} className={classes.link} target="_blank" rel="noreferrer">
                 {labels.documentation}
               </a>
             </MenuItem>
           )}
           {supportUrl && (
-            <MenuItem data-cy="support" className={classes.link} onClick={handleClick}>
+            <MenuItem data-cy="support-link" className={classes.link} onClick={handleClick}>
               <a href={supportUrl} className={classes.link} target="_blank" rel="noreferrer">
                 {labels.support}
               </a>
