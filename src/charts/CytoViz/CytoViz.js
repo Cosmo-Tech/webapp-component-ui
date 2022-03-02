@@ -27,6 +27,13 @@ export const CytoViz = (props) => {
   const { cytoscapeStylesheet, defaultSettings, elements, extraLayouts, labels, loading, getNodeDetails, bubblesets } =
     props;
 
+  let getNodeDetailsCallback = getNodeDetails;
+  if (!getNodeDetailsCallback) {
+    // eslint-disable-next-line react/display-name
+    getNodeDetailsCallback = (node) => <NodeData data={node.data()} labels={labels.nodeData} />;
+    getNodeDetailsCallback.displayName = 'NodeData';
+  }
+
   // Layout
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [currentDrawerTab, setCurrentDrawerTab] = React.useState(0);
@@ -76,7 +83,7 @@ export const CytoViz = (props) => {
     // Init node selection behavior
     cytoscapeRef.on('select', 'node', function (e) {
       const selectedNode = e.target;
-      setCurrentNodeDetails(getNodeDetails(selectedNode));
+      setCurrentNodeDetails(getNodeDetailsCallback(selectedNode));
     });
     cytoscapeRef.on('unselect', 'node', function (e) {
       setCurrentNodeDetails(null);
@@ -86,7 +93,7 @@ export const CytoViz = (props) => {
       const selectedNode = e.target;
       setCurrentDrawerTab(0);
       setIsDrawerOpen(true);
-      setCurrentNodeDetails(getNodeDetails(selectedNode));
+      setCurrentNodeDetails(getNodeDetailsCallback(selectedNode));
     });
 
     // Init bubblesets
@@ -287,14 +294,36 @@ CytoViz.propTypes = {
        spacingFactor: 'string',
        zoomLimits: 'string',
      }
+     nodeData: {
+       dictKey: 'string',
+       dictValue: 'string',
+     }
    }
    * </pre>
    */
   labels: PropTypes.object,
   /**
-   * Array of cytoscape elements to display
+   * Boolean defining whether or not the data are loading.
+   While loading is true, a spinner is displayed instead of the cytoscape component.
    */
   loading: PropTypes.bool,
+};
+
+const DEFAULT_LABELS = {
+  elementDetails: 'Details',
+  loading: 'Loading...',
+  noSelectedNode: 'Select a node to view its data',
+  settings: {
+    compactMode: 'Compact layout',
+    layout: 'Layout',
+    title: 'Settings',
+    spacingFactor: 'Spacing factor',
+    zoomLimits: 'Min & max zoom',
+  },
+  nodeData: {
+    dictKey: 'Key',
+    dictValue: 'Value',
+  },
 };
 
 CytoViz.defaultProps = {
@@ -307,19 +336,7 @@ CytoViz.defaultProps = {
     spacingFactor: 1,
   },
   extraLayouts: {},
-  getNodeDetails: (node) => <NodeData data={node.data()} />,
   groups: {},
-  labels: {
-    elementDetails: 'Details',
-    loading: 'Loading...',
-    noSelectedNode: 'Select a node to view its data',
-    settings: {
-      compactMode: 'Compact layout',
-      layout: 'Layout',
-      title: 'Settings',
-      spacingFactor: 'Spacing factor',
-      zoomLimits: 'Min & max zoom',
-    },
-  },
+  labels: DEFAULT_LABELS,
   loading: false,
 };
