@@ -47,32 +47,36 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
   }
 };
 
-const NodeData = (props) => {
+const ElementData = (props) => {
   const classes = useStyles();
   const { data, labels } = props;
   if (!data) {
-    return 'No data to display for this node.';
+    return labels.noData;
   }
 
-  return (
-    <div className={classes.nodeDetailsContainer}>
-      {Object.keys(data).map((key) => _generateAttributeDetails(classes, labels, key, data[key]))}
-    </div>
-  );
+  let filteredElementAttributes = Object.keys(data)
+    .map((key) => _generateAttributeDetails(classes, labels, key, data[key]))
+    .filter((el) => el !== null);
+  if (filteredElementAttributes.length === 0) {
+    filteredElementAttributes = labels.noData;
+  }
+
+  return <div className={classes.elementDetailsContainer}>{filteredElementAttributes}</div>;
 };
 
-NodeData.propTypes = {
+ElementData.propTypes = {
   data: PropTypes.object,
   labels: PropTypes.object,
 };
 
-NodeData.defaultProps = {
+ElementData.defaultProps = {
   data: PropTypes.object,
   labels: {
+    attributes: {},
     dictKey: 'Key',
     dictValue: 'Value',
-    attributes: {},
+    noData: 'No data to display for this element.',
   },
 };
 
-export default NodeData;
+export default ElementData;
