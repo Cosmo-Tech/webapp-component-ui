@@ -5,8 +5,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useStyles from './style';
 
-const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
-  const attributesToIgnore = ['label', 'Label', 'parent'];
+const _generateAttributeDetails = (classes, labels, attributeName, attributeValue) => {
+  const attributeLabel = labels?.attributes?.[attributeName] || attributeName;
+  const attributesToIgnore = ['label', 'Label', 'parent', 'source', 'target'];
   if (attributesToIgnore.indexOf(attributeName) !== -1) {
     return null;
   }
@@ -14,13 +15,13 @@ const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
     // List represented as an object
     return (
       <div key={attributeName} className={classes.attributeColumnContainer}>
-        <div className={classes.attributeLabel}>{attributeName}:</div>
+        <div className={classes.attributeLabel}>{attributeLabel}:</div>
         <div className={classes.tableContainer}>
           <table className={classes.table}>
             <thead>
               <tr>
-                <th className={classes.th}>Iteration</th>
-                <th className={classes.th}>Value</th>
+                <th className={classes.th}>{labels.dictKey}</th>
+                <th className={classes.th}>{labels.dictValue}</th>
               </tr>
             </thead>
             <tbody>
@@ -39,29 +40,43 @@ const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
     // List represented as an object
     return (
       <div key={attributeName} className={classes.attributeRowContainer}>
-        <span className={classes.attributeLabel}>{attributeName}:</span>
+        <span className={classes.attributeLabel}>{attributeLabel}:</span>
         <span className={classes.attributeValue}>{JSON.stringify(attributeValue)}</span>
       </div>
     );
   }
 };
 
-const NodeData = (props) => {
+const ElementData = (props) => {
   const classes = useStyles();
-  const { data } = props;
+  const { data, labels } = props;
   if (!data) {
-    return 'No data to display for this node.';
+    return labels.noData;
   }
 
-  return (
-    <div className={classes.nodeDetailsContainer}>
-      {Object.keys(data).map((key) => _generateAttributeDetails(classes, key, data[key]))}
-    </div>
-  );
+  let filteredElementAttributes = Object.keys(data)
+    .map((key) => _generateAttributeDetails(classes, labels, key, data[key]))
+    .filter((el) => el !== null);
+  if (filteredElementAttributes.length === 0) {
+    filteredElementAttributes = labels.noData;
+  }
+
+  return <div className={classes.elementDetailsContainer}>{filteredElementAttributes}</div>;
 };
 
-NodeData.propTypes = {
+ElementData.propTypes = {
   data: PropTypes.object,
+  labels: PropTypes.object,
 };
 
-export default NodeData;
+ElementData.defaultProps = {
+  data: PropTypes.object,
+  labels: {
+    attributes: {},
+    dictKey: 'Key',
+    dictValue: 'Value',
+    noData: 'No data to display for this element.',
+  },
+};
+
+export default ElementData;

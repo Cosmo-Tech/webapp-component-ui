@@ -4,7 +4,7 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  nodeDetailsContainer: {
+  elementDetailsContainer: {
     display: 'flex',
     flexDirection: 'column',
   },

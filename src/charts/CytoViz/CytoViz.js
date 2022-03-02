@@ -15,7 +15,7 @@ import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
 import useStyles from './style';
-import { NodeData, TabPanel } from './components';
+import { ElementData, TabPanel } from './components';
 
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
@@ -24,13 +24,28 @@ const DEFAULT_LAYOUTS = ['dagre'];
 
 export const CytoViz = (props) => {
   const classes = useStyles();
-  const { cytoscapeStylesheet, defaultSettings, elements, extraLayouts, labels, loading, getNodeDetails, bubblesets } =
-    props;
+  const {
+    cytoscapeStylesheet,
+    defaultSettings,
+    elements,
+    extraLayouts,
+    labels,
+    loading,
+    getElementDetails,
+    bubblesets,
+  } = props;
+
+  let getElementDetailsCallback = getElementDetails;
+  if (!getElementDetailsCallback) {
+    // eslint-disable-next-line react/display-name
+    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels.elementData} />;
+    getElementDetailsCallback.displayName = 'ElementData';
+  }
 
   // Layout
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [currentDrawerTab, setCurrentDrawerTab] = React.useState(0);
-  const [currentNodeDetails, setCurrentNodeDetails] = React.useState(null);
+  const [currentElementDetails, setCurrentElementDetails] = React.useState(null);
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
@@ -71,30 +86,29 @@ export const CytoViz = (props) => {
 
   const initCytoscape = (cytoscapeRef) => {
     cytoscapeRef.removeAllListeners();
-    // Prevent multiple selection
-    cytoscapeRef.on('select', 'node, edge', (e) => cytoscapeRef.elements().not(e.target).unselect());
-    // Init node selection behavior
-    cytoscapeRef.on('select', 'node', function (e) {
-      const selectedNode = e.target;
-      setCurrentNodeDetails(getNodeDetails(selectedNode));
+    // Prevent multiple selection & init elements selection behavior
+    cytoscapeRef.on('select', 'node, edge', function (e) {
+      cytoscapeRef.elements().not(e.target).unselect();
+      const selectedElement = e.target;
+      setCurrentElementDetails(getElementDetailsCallback(selectedElement));
     });
-    cytoscapeRef.on('unselect', 'node', function (e) {
-      setCurrentNodeDetails(null);
+    cytoscapeRef.on('unselect', 'node, edge', function (e) {
+      setCurrentElementDetails(null);
     });
     // Add handling of double click events
-    cytoscapeRef.on('dbltap', 'node', function (e) {
-      const selectedNode = e.target;
+    cytoscapeRef.on('dbltap', 'node, edge', function (e) {
+      const selectedElement = e.target;
       setCurrentDrawerTab(0);
       setIsDrawerOpen(true);
-      setCurrentNodeDetails(getNodeDetails(selectedNode));
+      setCurrentElementDetails(getElementDetailsCallback(selectedElement));
     });
 
     // Init bubblesets
     const bb = cytoscapeRef.bubbleSets();
     for (const groupName in bubblesets) {
-      const groupNodes = cytoscapeRef.nodes(`.${groupName}`);
+      const nodesGroup = cytoscapeRef.nodes(`.${groupName}`);
       const groupColor = bubblesets[groupName];
-      bb.addPath(groupNodes, undefined, null, {
+      bb.addPath(nodesGroup, undefined, null, {
         virtualEdges: true,
         style: {
           fill: groupColor,
@@ -166,7 +180,7 @@ export const CytoViz = (props) => {
             </div>
             <div className={classes.drawerContent}>
               <TabPanel value={currentDrawerTab} index={0}>
-                {currentNodeDetails || labels.noSelectedNode}
+                {currentElementDetails || labels.noSelectedElement}
               </TabPanel>
               <TabPanel value={currentDrawerTab} index={1}>
                 <div className={classes.settingsContainer}>
@@ -265,9 +279,9 @@ CytoViz.propTypes = {
    */
   extraLayouts: PropTypes.object,
   /**
-   * Function to generate a string or component elements details from the data of the currently selected node.
+   * Function to generate a string or React component from the data of the currently selected element (node or edge).
    */
-  getNodeDetails: PropTypes.func,
+  getElementDetails: PropTypes.func,
   /**
    * Map of bubblesets to display in cytoscape graph. Keys of this object are the group names (each group can be
    represented by a compound node in cytoscape elements to get a better layout), and values are the color of the group.
@@ -279,7 +293,7 @@ CytoViz.propTypes = {
    {
      elementDetails: 'string',
      loading: 'string',
-     noSelectedNode: 'string',
+     noSelectedElement: 'string',
      settings: {
        compactMode: 'string',
        layout: 'string',
@@ -287,14 +301,36 @@ CytoViz.propTypes = {
        spacingFactor: 'string',
        zoomLimits: 'string',
      }
+     elementData: {
+       dictKey: 'string',
+       dictValue: 'string',
+     }
    }
    * </pre>
    */
   labels: PropTypes.object,
   /**
-   * Array of cytoscape elements to display
+   * Boolean defining whether or not the data are loading.
+   While loading is true, a spinner is displayed instead of the cytoscape component.
    */
   loading: PropTypes.bool,
+};
+
+const DEFAULT_LABELS = {
+  elementDetails: 'Details',
+  loading: 'Loading...',
+  noSelectedElement: 'Select a node or edge to show its data',
+  settings: {
+    compactMode: 'Compact layout',
+    layout: 'Layout',
+    title: 'Settings',
+    spacingFactor: 'Spacing factor',
+    zoomLimits: 'Min & max zoom',
+  },
+  elementData: {
+    dictKey: 'Key',
+    dictValue: 'Value',
+  },
 };
 
 CytoViz.defaultProps = {
@@ -307,19 +343,7 @@ CytoViz.defaultProps = {
     spacingFactor: 1,
   },
   extraLayouts: {},
-  getNodeDetails: (node) => <NodeData data={node.data()} />,
   groups: {},
-  labels: {
-    elementDetails: 'Details',
-    loading: 'Loading...',
-    noSelectedNode: 'Select a node to view its data',
-    settings: {
-      compactMode: 'Compact layout',
-      layout: 'Layout',
-      title: 'Settings',
-      spacingFactor: 'Spacing factor',
-      zoomLimits: 'Min & max zoom',
-    },
-  },
+  labels: DEFAULT_LABELS,
   loading: false,
 };
