@@ -5,8 +5,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useStyles from './style';
 
-const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
-  const attributesToIgnore = ['label', 'Label', 'parent'];
+const _generateAttributeDetails = (classes, labels, attributeName, attributeValue) => {
+  const attributeLabel = labels?.attributes?.[attributeName] || attributeName;
+  const attributesToIgnore = ['label', 'Label', 'parent', 'source', 'target'];
   if (attributesToIgnore.indexOf(attributeName) !== -1) {
     return null;
   }
@@ -14,13 +15,13 @@ const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
     // List represented as an object
     return (
       <div key={attributeName} className={classes.attributeColumnContainer}>
-        <div className={classes.attributeLabel}>{attributeName}:</div>
+        <div className={classes.attributeLabel}>{attributeLabel}:</div>
         <div className={classes.tableContainer}>
           <table className={classes.table}>
             <thead>
               <tr>
-                <th className={classes.th}>Iteration</th>
-                <th className={classes.th}>Value</th>
+                <th className={classes.th}>{labels.dictKey}</th>
+                <th className={classes.th}>{labels.dictValue}</th>
               </tr>
             </thead>
             <tbody>
@@ -39,7 +40,7 @@ const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
     // List represented as an object
     return (
       <div key={attributeName} className={classes.attributeRowContainer}>
-        <span className={classes.attributeLabel}>{attributeName}:</span>
+        <span className={classes.attributeLabel}>{attributeLabel}:</span>
         <span className={classes.attributeValue}>{JSON.stringify(attributeValue)}</span>
       </div>
     );
@@ -48,20 +49,30 @@ const _generateAttributeDetails = (classes, attributeName, attributeValue) => {
 
 const NodeData = (props) => {
   const classes = useStyles();
-  const { data } = props;
+  const { data, labels } = props;
   if (!data) {
     return 'No data to display for this node.';
   }
 
   return (
     <div className={classes.nodeDetailsContainer}>
-      {Object.keys(data).map((key) => _generateAttributeDetails(classes, key, data[key]))}
+      {Object.keys(data).map((key) => _generateAttributeDetails(classes, labels, key, data[key]))}
     </div>
   );
 };
 
 NodeData.propTypes = {
   data: PropTypes.object,
+  labels: PropTypes.object,
+};
+
+NodeData.defaultProps = {
+  data: PropTypes.object,
+  labels: {
+    dictKey: 'Key',
+    dictValue: 'Value',
+    attributes: {},
+  },
 };
 
 export default NodeData;
