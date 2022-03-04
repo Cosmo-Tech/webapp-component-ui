@@ -5,14 +5,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
+import { makeStyles } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
+const useStyles = makeStyles((theme) => ({
+  datePicker: {
+    maxWidth: '200px',
+  },
+}));
+
 export const BasicDateInput = (props) => {
+  const classes = useStyles();
   const { id, label, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
+        className={classes.datePicker}
         disableToolbar
         variant="inline"
         margin="normal"
