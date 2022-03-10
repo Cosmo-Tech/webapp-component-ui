@@ -81,7 +81,11 @@ export const CytoViz = (props) => {
   };
 
   useEffect(() => {
-    Object.values(extraLayouts).forEach((layout) => cytoscape.use(layout));
+    Object.values(extraLayouts).forEach((layout) => {
+      if (layout) {
+        cytoscape.use(layout);
+      }
+    });
   }, [extraLayouts]);
 
   const initCytoscape = (cytoscapeRef) => {
@@ -275,7 +279,8 @@ CytoViz.propTypes = {
   elements: PropTypes.array.isRequired,
   /**
    * Object of extra layouts to register in cytoscape. The keys of this object must be the layout names, and the values
-   must be the extension object to provide to cytoscape.use(...)
+   must be the extension object to provide to cytoscape.use(...). If you want to add a default cytoscape layout
+   (e.g. breadthfirst, circle, concentric, ...), use null instead of an extension object.
    */
   extraLayouts: PropTypes.object,
   /**
