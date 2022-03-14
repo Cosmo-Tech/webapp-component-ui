@@ -5,7 +5,7 @@ menu: Menus
 ---
 
 import { Playground, Props } from 'docz';
-import { UserInfo } from './UserInfo';
+import { UserInfo } from '@cosmotech/ui';
 import profilePic from '../../../assets/profile_placeholder.png';
 
 # User Information
@@ -22,9 +22,9 @@ The aim of this component is to easily display user information
   <UserInfo
     languages={{
       en: 'English',
-      fr: 'Français',
+      fr: 'Français'
     }}
-    changeLanguage={(lang) => alert('Language has changed for ' + lang)}
+    changeLanguage={lang => alert('Language has changed for ' + lang)}
     language={'en'}
     profilePlaceholder={profilePic}
     userName={'Bob Bobinson'}

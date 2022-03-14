@@ -5,7 +5,7 @@ menu: Menus
 ---
 
 import { Playground, Props } from 'docz';
-import { ErrorsPanel } from './ErrorsPanel';
+import { ErrorsPanel } from '@cosmotech/ui';
 
 # Help Menu
 
@@ -21,7 +21,7 @@ The aim of this component is to display an interactive view of a list of errors
   <ErrorsPanel
     errors={[
       { summary: 'Error 1 summary', loc: 'someFile.js : line 1', context: 'Error 1 context' },
-      { summary: 'Error 2 summary', loc: 'someFile.js : line 2', context: 'Error 2 context' }
+      { summary: 'Error 2 summary', loc: 'someFile.js : line 2', context: 'Error 2 context' },
     ]}
     onClear={() => {
       console.log('clear errors');
