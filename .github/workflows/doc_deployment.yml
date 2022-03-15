@@ -11,13 +11,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install and Build Documentation 🔧
-        working-directory: ./doc
         run: |
+          cd doc
           yarn docz:build --dest public/
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
-        working-directory: ./doc
         with:
           branch: gh-pages
-          folder: public
+          folder: doc/public
