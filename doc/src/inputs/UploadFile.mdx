@@ -5,8 +5,8 @@ menu: Inputs
 ---
 
 import { Playground, Props } from 'docz';
-import { UploadFile } from './UploadFile';
-import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
+import { UploadFile } from '@cosmotech/ui';
+import { UPLOAD_FILE_STATUS_KEY } from '../../../src/inputs/UploadFile/StatusConstants.js';
 
 # Upload File
 
@@ -29,7 +29,7 @@ The aim of this component is to easily display a upload file component
       initialName: '',
       name: '',
       file: null,
-      status: UPLOAD_FILE_STATUS_KEY.EMPTY,
+      status: UPLOAD_FILE_STATUS_KEY.EMPTY
     }}
   />
 </Playground>

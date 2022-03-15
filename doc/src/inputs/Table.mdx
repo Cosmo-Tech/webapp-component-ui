@@ -5,7 +5,7 @@ menu: Inputs
 ---
 
 import { Playground, Props } from 'docz';
-import { Table } from './Table';
+import { Table } from '@cosmotech/ui';
 
 # Table
 
@@ -26,11 +26,11 @@ and lets users edit its content.
     columns={[
       { field: 'a', type: ['string'] },
       { field: 'b', type: ['int'] },
-      { field: 'c', type: ['bool'] }
+      { field: 'c', type: ['bool'] },
     ]}
     rows={[
       { a: 'foo', b: '12', c: 'false' },
-      { a: 'bar', b: '53', c: 'true' }
+      { a: 'bar', b: '53', c: 'true' },
     ]}
     onCellChange={() => {
       console.log('cells changed');
