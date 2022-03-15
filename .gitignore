@@ -23,3 +23,5 @@ package-lock.json
 
 # Mac DS files
 .DS_Store
+
+doc/public
