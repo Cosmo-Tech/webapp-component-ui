@@ -2,7 +2,7 @@ name: Build and Deploy documentation
 on:
   push:
     branches:
-      - main
+      - THU/test_doc_gen
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -13,10 +13,10 @@ jobs:
       - name: Install and Build Documentation 🔧
         run: |
           cd doc
-          yarn docz:build --dest public/
+          yarn docz:build --dest ../public/
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
-          folder: doc/public
+          folder: public
