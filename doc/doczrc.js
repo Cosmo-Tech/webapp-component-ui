@@ -1,4 +1,4 @@
 export default {
-  base: '/webapp-component-ui/doc',
+  base: '/webapp-component-ui',
   description: 'Webapp UI components library documentation',
 };
