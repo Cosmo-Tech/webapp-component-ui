@@ -4,7 +4,7 @@
 export { CreateScenarioButton, SelfDestructLinkButton, SignInButton } from './buttons';
 export { ScenarioNode } from './cards';
 export { CytoViz, Dashboard, ScenarioManagerTreeList, SimplePowerBIReportEmbed } from './charts';
-export { SimpleTwoActionsDialog } from './dialogs';
+export { SimpleTwoActionsDialog, DontAskAgainDialog } from './dialogs';
 export {
   HierarchicalComboBox,
   BasicDateInput,
