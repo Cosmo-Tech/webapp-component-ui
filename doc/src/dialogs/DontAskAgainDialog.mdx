@@ -1,0 +1,57 @@
+---
+name: DontAskAgainDialog
+route: /DontAskAgainDialog
+menu: Dialogs
+---
+
+import { Playground, Props } from 'docz';
+import { DontAskAgainDialog } from '@cosmotech/ui';
+import { Button } from '@material-ui/core';
+
+# DontAskAgainDialog
+
+The aim of this component is to easily create a dialog with 2 action buttons and 'dont ask again' checkbox
+
+## Props
+
+<Props of={DontAskAgainDialog} />
+
+## Basic Usage
+
+<Playground>
+  {() => {
+    class DontAskAgainDialogExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { open: false };
+      }
+      open() {
+        this.setState({ open: true });
+      }
+      close() {
+        this.setState({ open: false });
+      }
+      render() {
+        return (
+          <>
+            <Button variant="contained" onClick={() => this.open()}>
+              Ask confirmation to process
+            </Button>
+            <DontAskAgainDialog
+              open={this.state.open}
+              onClose={this.close()}
+              onConfirm={(dontAskAgain) => {
+                if (dontAskAgain) {
+                  alert('Will not appear next time');
+                } else {
+                  alert('Will still show next time');
+                }
+              }}
+            />
+          </>
+        );
+      }
+    }
+    return <DontAskAgainDialogExample />;
+  }}
+</Playground>
