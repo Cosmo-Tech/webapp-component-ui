@@ -13,7 +13,7 @@ export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1,
   };
 
   return (
-    <Dialog open={open} aria-labelledby={labels.ariaLabelledby} maxWidth={'xs'} fullWidth={true} onClose={onClose}>
+    <Dialog open={open} aria-labelledby={id + '-dialog-title'} maxWidth={'xs'} fullWidth={true} onClose={onClose}>
       <DialogTitle id={id + '-dialog-title'}>{labels.title}</DialogTitle>
       <DialogContent>
         <Typography variant="body1">{labels.body}</Typography>
@@ -50,7 +50,6 @@ SimpleTwoActionsDialog.propTypes = {
    *  body:'This is a body',
    *  button1: 'Action1',
    *  button2: 'Action2',
-   *  ariaLabelledby: 'Wonderful dialog
    *}
    *</pre>
    */
@@ -59,7 +58,6 @@ SimpleTwoActionsDialog.propTypes = {
     body: PropTypes.string.isRequired,
     button1: PropTypes.string.isRequired,
     button2: PropTypes.string.isRequired,
-    ariaLabelledby: PropTypes.string.isRequired,
   }),
   /**
    *  ## Function used when button1 is clicked
@@ -87,6 +85,5 @@ SimpleTwoActionsDialog.defaultProps = {
           `,
     button1: 'Cancel',
     button2: 'Validate',
-    ariaLabelledby: 'simple-two-actions-dialog',
   },
 };
