@@ -1,3 +1,14 @@
+## **2.0.0** <sub><sup>2022-03-17</sup></sub>
+
+### Features
+
+- improve scenario manager UI ([770afac](https://github.com/Cosmo-Tech/webapp-component-ui/commit/770afac))
+- add expand/collapse feature for ScenarioNode components ([770afac](https://github.com/Cosmo-Tech/webapp-component-ui/commit/770afac))
+
+### BREAKING CHANGES
+
+- ScenarioNode has new required props **isExpanded**, **setIsExpanded** and **labels\.running** ([770afac](https://github.com/Cosmo-Tech/webapp-component-ui/commit/770afac))
+
 ## **1.5.1** <sub><sup>2022-03-17</sup></sub>
 
 ### Bug Fixes
