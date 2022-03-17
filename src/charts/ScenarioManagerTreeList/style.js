@@ -3,35 +3,103 @@
 
 import { makeStyles } from '@material-ui/core';
 
+const WEBAPP_HEADER_HEIGHT = 48;
+const SEARCH_FIELD_HEIGHT = 50;
+const SEARCH_FIELD_MARGIN = 32;
+const TREES_CONTAINER_OFFSET = WEBAPP_HEADER_HEIGHT + SEARCH_FIELD_HEIGHT + 2 * SEARCH_FIELD_MARGIN;
+
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.background.card,
     height: '100%',
+    width: '100%',
+    position: 'fixed',
+    '& .rst__tree': {
+      height: '100%',
+    },
+    '& .rst__lineBlock': {
+      '&::before': {
+        backgroundColor: theme.palette.primary.contrastText,
+      },
+      '&::after': {
+        backgroundColor: theme.palette.primary.contrastText,
+      },
+    },
+    '& .rst__node': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+    '& .rst__nodeContent': {
+      flexGrow: '1',
+      position: 'sticky',
+    },
+  },
+  rootScenarioHiddenLineBlock: {
+    '& .rst__lineBlock': {
+      width: '0px !important',
+      marginLeft: '43px', // Need 43px to align left side with scenarios that have children
+    },
   },
   searchContainer: {
-    margin: '5px',
-    marginLeft: '45px',
-    marginTop: '10px',
-    height: '45px',
+    height: `${SEARCH_FIELD_HEIGHT}px`,
+    margin: `${SEARCH_FIELD_MARGIN}px`,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  treesContainer: {
+    height: `calc(100% - ${TREES_CONTAINER_OFFSET}px)`, // Offset by header height + search bar height
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   treeContainer: {
-    height: 'calc(100% - 50px)',
+    backgroundColor: theme.palette.background.secondary,
+    margin: '12px',
+    padding: '16px',
+    width: '65%',
   },
   searchField: {
     marginTop: '2.5px',
     marginBottom: '2.5px',
+    maxWidth: '600px',
+    flexBasis: '50%',
     height: '50px',
   },
-  searchInfo: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    marginLeft: '20px',
+  toolbar: {
+    marginLeft: '16px',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  toolbarPrimaryAction: {
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
+    minWidth: '40px',
+    padding: '11px',
+    margin: '8px',
+    '& .MuiButton-startIcon': {
+      marginLeft: '0px',
+      marginRight: '0px',
+    },
+  },
+  verticalDivider: {
+    width: '2px',
+    marginLeft: '5px',
+    marginRight: '5px',
+    backgroundColor: theme.palette.primary.contrastText,
   },
   scenarioCard: {
     '& .rst__rowContents': {
       backgroundColor: theme.palette.background.secondary,
+      border: 'none',
+      boxShadow: 'none',
+      padding: '0px',
+    },
+    '& .rst__rowLabel': {
+      width: '100%',
     },
   },
 }));

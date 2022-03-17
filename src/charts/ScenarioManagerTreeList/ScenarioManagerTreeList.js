@@ -1,14 +1,25 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import { Button, Paper, TextField, Tooltip } from '@material-ui/core';
+import { UnfoldMore as UnfoldMoreIcon, UnfoldLess as UnfoldLessIcon } from '@material-ui/icons';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
 import useStyles from './style';
 import { ScenarioNode } from '../../cards';
+import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../cards/ScenarioNode/constants';
+
+const initNodesDict = (scenarios) => {
+  const nodesDict = {};
+  scenarios.forEach((scenario) => {
+    nodesDict[scenario.id] = false;
+  });
+  return nodesDict;
+};
 
 export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
@@ -24,32 +35,58 @@ export const ScenarioManagerTreeList = (props) => {
     buildScenarioNameToDelete,
     showDeleteIcon,
   } = props;
+  if (buildSearchInfo) {
+    console.warn(
+      '"buildSearchInfo" prop is deprecated in ScenarioManagerTreeList. Please consider removing this prop.'
+    );
+  }
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
-  const expandedNodes = useRef([]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const rstScenarios = useMemo(() => formatScenariosToRSTList(scenarios), [datasets, scenarios, labels]);
-
   const [searchText, setSearchText] = useState('');
-  const [treeData, setTreeData] = useState(rstScenarios);
+  const [nodesExpandedChildren, setNodesExpandedChildren] = useState(initNodesDict(scenarios));
+  const [nodesExpandedDetails, setNodesExpandedDetails] = useState(initNodesDict(scenarios));
 
-  // On scenarios list update, re-apply current filter on the new list of scenarios
-  useEffect(() => {
-    filterScenarios(searchText);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scenarios, searchText, labels]);
+  const collapseAll = () => {
+    const newValue = {};
+    for (const nodeId in nodesExpandedChildren) {
+      newValue[nodeId] = false;
+    }
+    setNodesExpandedChildren(newValue);
+  };
+  const expandAll = () => {
+    const newValue = {};
+    for (const nodeId in nodesExpandedChildren) {
+      newValue[nodeId] = true;
+    }
+    setNodesExpandedChildren(newValue);
+  };
 
-  function formatScenariosToRSTList(treeScenarios) {
+  const changeNodesExpandedChildren = ({ node, expanded }) => {
+    setNodesExpandedChildren({
+      ...nodesExpandedChildren,
+      [node.id]: expanded,
+    });
+  };
+  const changeNodesExpandedDetails = (scenarioId, newIsExpanded) => {
+    setNodesExpandedDetails({
+      ...nodesExpandedDetails,
+      [scenarioId]: newIsExpanded,
+    });
+  };
+
+  const formatScenariosToRSTList = (treeScenarios) => {
     const rstScenarios = treeScenarios.map((scenario) => {
       const displayDeleteIcon = scenario.ownerId === userId && showDeleteIcon;
       labels.dataset = buildDatasetInfo(scenario.datasetList);
       return {
-        expanded: expandedNodes.current[scenario.id] || false,
+        expanded: nodesExpandedChildren[scenario.id],
         parentId: scenario.parentId,
         id: scenario.id,
         name: scenario.name,
         title: (
           <ScenarioNode
+            isExpanded={nodesExpandedDetails[scenario.id]}
+            setIsExpanded={(newIsExpanded) => changeNodesExpandedDetails(scenario.id, newIsExpanded)}
             datasets={datasets}
             scenario={scenario}
             showDeleteIcon={displayDeleteIcon}
@@ -61,9 +98,23 @@ export const ScenarioManagerTreeList = (props) => {
       };
     });
     return ScenarioUtils.getScenarioTree(rstScenarios, (scenA, scenB) => scenA.name.localeCompare(scenB.name));
-  }
+  };
 
-  function filterScenarios(searchStr) {
+  const rstScenarios = useMemo(
+    () => formatScenariosToRSTList(scenarios),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [datasets, scenarios, labels, nodesExpandedDetails, nodesExpandedChildren]
+  );
+
+  const [treeData, setTreeData] = useState(rstScenarios);
+
+  // On scenarios list update, re-apply current filter on the new list of scenarios
+  useEffect(() => {
+    filterScenarios(searchText);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenarios, searchText, labels, nodesExpandedDetails, nodesExpandedChildren]);
+
+  const filterScenarios = (searchStr) => {
     // Reset scenario list if search field is empty
     if (!searchStr || searchStr.length === 0) {
       setTreeData(rstScenarios);
@@ -78,23 +129,26 @@ export const ScenarioManagerTreeList = (props) => {
     }
     // Format list and set as tree data
     setTreeData(formatScenariosToRSTList(filtered));
-  }
+  };
 
-  function buildSearchInfoLabel() {
-    return buildSearchInfo(ScenarioUtils.countScenariosInTree(treeData));
-  }
-
-  function onSearchTextChange(event) {
+  const onSearchTextChange = (event) => {
     setSearchText(event.target.value);
     filterScenarios(event.target.value);
-  }
+  };
 
-  // Function to generate the buttons in the scenario tree
-  function generateNodeProps({ node, path }) {
+  const generateNodeProps = ({ node, path }) => {
     return {
       className: classes.scenarioCard,
     };
-  }
+  };
+
+  const changeTreeDataAtIndex = (newDataIndex, newTreeData) => {
+    setTreeData(
+      treeData.map((treeElement, elementIndex) =>
+        newDataIndex === elementIndex ? newTreeData[0] : treeData[elementIndex]
+      )
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -102,33 +156,66 @@ export const ScenarioManagerTreeList = (props) => {
         <TextField
           data-cy="scenario-manager-search-field"
           id="standard-search"
+          variant="outlined"
           label={labels.searchField}
           type="search"
           className={classes.searchField}
           value={searchText}
           onChange={onSearchTextChange}
         />
-        <Typography className={classes.searchInfo}>
-          <em>{buildSearchInfoLabel()}</em>
-        </Typography>
+        <div className={classes.toolbar}>
+          <Tooltip title={labels?.toolbar?.expandAll || 'Expand all'}>
+            <Button
+              variant="contained"
+              color="primary"
+              // size="small"
+              className={classes.toolbarPrimaryAction}
+              startIcon={<UnfoldMoreIcon />}
+              onClick={expandAll}
+            />
+          </Tooltip>
+          <Tooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
+            <Button
+              variant="contained"
+              color="primary"
+              // size="small"
+              className={classes.toolbarPrimaryAction}
+              startIcon={<UnfoldLessIcon />}
+              onClick={collapseAll}
+            />
+          </Tooltip>
+        </div>
       </div>
-      <div className={classes.treeContainer} onDragEnter={ignoreEvent} onDragOver={ignoreEvent} onDrop={ignoreEvent}>
-        <SortableTree
-          treeData={treeData}
-          generateNodeProps={generateNodeProps}
-          onChange={(treeData) => {
-            setTreeData(treeData);
-          }}
-          getNodeKey={({ node }) => node.id}
-          onMoveNode={(moveData) => {
-            moveScenario(moveData);
-          }}
-          onVisibilityToggle={({ node, expanded }) => {
-            expandedNodes.current[node.id] = expanded;
-          }}
-          canDrag={false}
-          rowHeight={150}
-        />
+      <div className={classes.treesContainer}>
+        {treeData.map((rootScenario, rootScenarioIndex) => {
+          return (
+            <Paper
+              key={rootScenario.id}
+              className={clsx(classes.treeContainer, {
+                [classes.rootScenarioHiddenLineBlock]: rootScenario.children.length === 0,
+              })}
+              onDragEnter={ignoreEvent}
+              onDragOver={ignoreEvent}
+              onDrop={ignoreEvent}
+            >
+              <SortableTree
+                treeData={[rootScenario]}
+                generateNodeProps={generateNodeProps}
+                onChange={(newData) => changeTreeDataAtIndex(rootScenarioIndex, newData)}
+                getNodeKey={({ node }) => node.id}
+                onMoveNode={(moveData) => {
+                  moveScenario(moveData);
+                }}
+                onVisibilityToggle={changeNodesExpandedChildren}
+                canDrag={false}
+                isVirtualized={false} // Required to prevent bug when rowHeight is a function
+                rowHeight={({ treeIndex, node, path }) => {
+                  return 12 + (nodesExpandedDetails[node.id] ? EXPANDED_NODE_HEIGHT : SHRUNK_NODE_HEIGHT);
+                }}
+              />
+            </Paper>
+          );
+        })}
       </div>
     </div>
   );
@@ -156,9 +243,9 @@ ScenarioManagerTreeList.propTypes = {
    */
   userId: PropTypes.string.isRequired,
   /**
-   * Function building scenario search label
+   * DEPRECATED: Function building scenario search label
    */
-  buildSearchInfo: PropTypes.func.isRequired,
+  buildSearchInfo: PropTypes.func,
   /**
    * Function building scenario dataset label
    */
@@ -175,10 +262,15 @@ ScenarioManagerTreeList.propTypes = {
    {
     status: 'string',
     successful: 'string',
+    running: 'string',
     failed: 'string',
     created: 'string',
     dataset: 'string',
-    searchField: 'string'
+    searchField: 'string',
+    toolbar : {
+      expandAll: 'string',
+      collapseAll: 'string',
+    }
   }
    * </pre>
    */
@@ -194,15 +286,20 @@ ScenarioManagerTreeList.defaultProps = {
   labels: {
     status: 'Run status',
     successful: 'Successful',
+    running: 'Running',
     failed: 'Failed',
     created: 'Created',
     dataset: 'Dataset',
-    searchField: 'Search',
+    searchField: 'Filter',
+    toolbar: {
+      expandAll: 'Expand all',
+      collapseAll: 'Collapse all',
+    },
   },
 };
 
 // Function to ignore drag & drop events in the parent div, to prevent
 // some behaviors such as text drag & drop opening a new tab in the browser
-function ignoreEvent(event) {
+const ignoreEvent = (event) => {
   event.preventDefault();
-}
+};
