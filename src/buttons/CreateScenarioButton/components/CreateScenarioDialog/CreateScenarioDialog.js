@@ -62,6 +62,7 @@ const CreateScenarioDialog = ({
   runTemplates,
   user,
   createScenario,
+  setAccordionSummaryExpanded,
   workspaceId,
   solution,
   nameValidator,
@@ -152,6 +153,7 @@ const CreateScenarioDialog = ({
   const handleCreateScenario = () => {
     const scenarioData = createScenarioData();
     createScenario(workspaceId, scenarioData);
+    setAccordionSummaryExpanded(true);
     handleCloseDialog();
   };
 
@@ -315,6 +317,7 @@ CreateScenarioDialog.propTypes = {
   runTemplates: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
   createScenario: PropTypes.func.isRequired,
+  setAccordionSummaryExpanded: PropTypes.func.isRequired,
   workspaceId: PropTypes.string.isRequired,
   solution: PropTypes.object.isRequired,
   nameValidator: PropTypes.instanceOf(RegExp),

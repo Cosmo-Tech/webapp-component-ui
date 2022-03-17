@@ -11,6 +11,7 @@ export const CreateScenarioButton = ({
   runTemplates,
   user,
   createScenario,
+  setAccordionSummaryExpanded,
   workspaceId,
   solution,
   disabled,
@@ -48,6 +49,7 @@ export const CreateScenarioButton = ({
         solution={solution}
         open={open}
         currentScenario={currentScenario}
+        setAccordionSummaryExpanded={setAccordionSummaryExpanded}
         datasets={datasets}
         closeDialog={closeDialog}
         runTemplates={runTemplates}
@@ -87,6 +89,10 @@ CreateScenarioButton.propTypes = {
    * Function that create a scenario
    */
   createScenario: PropTypes.func.isRequired,
+  /**
+   * Function that set the scenario parameters accordion state
+   */
+  setAccordionSummaryExpanded: PropTypes.string.isRequired,
   /**
    * Current workspace id
    */
