@@ -5,7 +5,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Button, Paper, TextField, Tooltip } from '@material-ui/core';
-import { UnfoldMore as UnfoldMoreIcon, UnfoldLess as UnfoldLessIcon } from '@material-ui/icons';
+import {
+  UnfoldMore as UnfoldMoreIcon,
+  UnfoldLess as UnfoldLessIcon,
+  AccountTree as AccountTreeIcon,
+} from '@material-ui/icons';
 import '@nosferatu500/react-sortable-tree/style.css';
 import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
@@ -13,10 +17,10 @@ import useStyles from './style';
 import { ScenarioNode } from '../../cards';
 import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../cards/ScenarioNode/constants';
 
-const initNodesDict = (scenarios) => {
+const initNodesDict = (scenarios, defaultExpanded) => {
   const nodesDict = {};
   scenarios.forEach((scenario) => {
-    nodesDict[scenario.id] = false;
+    nodesDict[scenario.id] = defaultExpanded;
   });
   return nodesDict;
 };
@@ -43,22 +47,20 @@ export const ScenarioManagerTreeList = (props) => {
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
   const [searchText, setSearchText] = useState('');
-  const [nodesExpandedChildren, setNodesExpandedChildren] = useState(initNodesDict(scenarios));
-  const [nodesExpandedDetails, setNodesExpandedDetails] = useState(initNodesDict(scenarios));
+  const [nodesExpandedChildren, setNodesExpandedChildren] = useState(initNodesDict(scenarios, true));
+  const [nodesExpandedDetails, setNodesExpandedDetails] = useState(initNodesDict(scenarios, false));
 
   const collapseAll = () => {
-    const newValue = {};
-    for (const nodeId in nodesExpandedChildren) {
-      newValue[nodeId] = false;
-    }
-    setNodesExpandedChildren(newValue);
+    setNodesExpandedChildren(initNodesDict(scenarios, false));
+    setNodesExpandedDetails(initNodesDict(scenarios, false));
+  };
+  const expandTree = () => {
+    setNodesExpandedChildren(initNodesDict(scenarios, true));
+    setNodesExpandedDetails(initNodesDict(scenarios, false));
   };
   const expandAll = () => {
-    const newValue = {};
-    for (const nodeId in nodesExpandedChildren) {
-      newValue[nodeId] = true;
-    }
-    setNodesExpandedChildren(newValue);
+    setNodesExpandedChildren(initNodesDict(scenarios, true));
+    setNodesExpandedDetails(initNodesDict(scenarios, true));
   };
 
   const changeNodesExpandedChildren = ({ node, expanded }) => {
@@ -164,24 +166,31 @@ export const ScenarioManagerTreeList = (props) => {
           onChange={onSearchTextChange}
         />
         <div className={classes.toolbar}>
+          <Tooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.toolbarPrimaryAction}
+              startIcon={<UnfoldLessIcon />}
+              onClick={collapseAll}
+            />
+          </Tooltip>
           <Tooltip title={labels?.toolbar?.expandAll || 'Expand all'}>
             <Button
               variant="contained"
               color="primary"
-              // size="small"
               className={classes.toolbarPrimaryAction}
               startIcon={<UnfoldMoreIcon />}
               onClick={expandAll}
             />
           </Tooltip>
-          <Tooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
+          <Tooltip title={labels?.toolbar?.expandTree || 'Expand tree'}>
             <Button
               variant="contained"
               color="primary"
-              // size="small"
               className={classes.toolbarPrimaryAction}
-              startIcon={<UnfoldLessIcon />}
-              onClick={collapseAll}
+              startIcon={<AccountTreeIcon />}
+              onClick={expandTree}
             />
           </Tooltip>
         </div>

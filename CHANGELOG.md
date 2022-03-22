@@ -1,3 +1,10 @@
+## **2.0.1** <sub><sup>2022-03-22 (439810d...fb75f85)</sup></sub>
+
+### Bug Fixes
+*  make all nodes in scenario manager expanded by default ([a3c41c4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a3c41c4))
+*  upgrade collapse/expand behavior scenario tree ([fb75f85](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb75f85))
+
+
 ## **2.0.0** <sub><sup>2022-03-17</sup></sub>
 
 ### Features
