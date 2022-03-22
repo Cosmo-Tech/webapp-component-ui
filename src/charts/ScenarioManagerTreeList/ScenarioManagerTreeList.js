@@ -13,10 +13,10 @@ import useStyles from './style';
 import { ScenarioNode } from '../../cards';
 import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../cards/ScenarioNode/constants';
 
-const initNodesDict = (scenarios) => {
+const initNodesDict = (scenarios, defaultExpanded) => {
   const nodesDict = {};
   scenarios.forEach((scenario) => {
-    nodesDict[scenario.id] = false;
+    nodesDict[scenario.id] = defaultExpanded;
   });
   return nodesDict;
 };
@@ -43,8 +43,8 @@ export const ScenarioManagerTreeList = (props) => {
 
   // Memoize the full scenarios tree in a ReactSortableTree-compatible format
   const [searchText, setSearchText] = useState('');
-  const [nodesExpandedChildren, setNodesExpandedChildren] = useState(initNodesDict(scenarios));
-  const [nodesExpandedDetails, setNodesExpandedDetails] = useState(initNodesDict(scenarios));
+  const [nodesExpandedChildren, setNodesExpandedChildren] = useState(initNodesDict(scenarios, true));
+  const [nodesExpandedDetails, setNodesExpandedDetails] = useState(initNodesDict(scenarios, false));
 
   const collapseAll = () => {
     const newValue = {};
