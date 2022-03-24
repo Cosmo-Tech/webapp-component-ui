@@ -30,6 +30,7 @@ export const ScenarioManagerTreeList = (props) => {
   const {
     datasets,
     scenarios,
+    findScenarioById,
     deleteScenario,
     moveScenario,
     userId,
@@ -92,6 +93,7 @@ export const ScenarioManagerTreeList = (props) => {
             datasets={datasets}
             scenario={scenario}
             showDeleteIcon={displayDeleteIcon}
+            findScenarioById={findScenarioById}
             deleteScenario={deleteScenario}
             labels={labels}
             buildScenarioNameToDelete={buildScenarioNameToDelete}
@@ -239,6 +241,10 @@ ScenarioManagerTreeList.propTypes = {
    * Scenarios list
    */
   scenarios: PropTypes.array.isRequired,
+  /**
+   * Function bound to redirect to scenario view with matching current scenario
+   */
+  findScenarioById: PropTypes.func.isRequired,
   /**
    * Function bound to handle a scenario deletion
    */

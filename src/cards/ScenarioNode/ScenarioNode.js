@@ -20,6 +20,7 @@ import {
   Cancel as CancelIcon,
   ExpandMore as ExpandMoreIcon,
   Help as HelpIcon,
+  OpenInNew as OpenInNewIcon,
 } from '@material-ui/icons';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
@@ -31,6 +32,7 @@ export const ScenarioNode = ({
   setIsExpanded,
   scenario,
   showDeleteIcon,
+  findScenarioById,
   deleteScenario,
   labels,
   buildScenarioNameToDelete,
@@ -176,6 +178,11 @@ export const ScenarioNode = ({
     );
   };
 
+  const redirectToScenarioView = (event) => {
+    event.stopPropagation();
+    findScenarioById(scenario.id);
+  };
+
   const getAccordionSummary = () => {
     return (
       <AccordionSummary className={classes.accordionSummary} expandIcon={<ExpandMoreIcon />}>
@@ -188,9 +195,22 @@ export const ScenarioNode = ({
             size="small"
             onClick={openConfirmDialog}
           >
-            <DeleteForeverIcon fontSize="small" />
+            <Tooltip key="scenario-status-tooltip" title={labels.delete}>
+              <DeleteForeverIcon fontSize="small" />
+            </Tooltip>
           </IconButton>
         )}
+        <IconButton
+          className={classes.scenarioDeleteButton}
+          data-cy="scenario-view-redirect"
+          aria-label="redirect to scenario view"
+          size="small"
+          onClick={redirectToScenarioView}
+        >
+          <Tooltip key="scenario-status-tooltip" title={labels.redirect}>
+            <OpenInNewIcon fontSize="small" color="primary" />
+          </Tooltip>
+        </IconButton>
       </AccordionSummary>
     );
   };
@@ -249,7 +269,11 @@ ScenarioNode.propTypes = {
    */
   showDeleteIcon: PropTypes.bool.isRequired,
   /**
-   *  Function bound on delete button
+   * Function bound to redirect to scenario view with matching current scenario
+   */
+  findScenarioById: PropTypes.func.isRequired,
+  /**
+   * Function bound on delete button
    */
   deleteScenario: PropTypes.func.isRequired,
   /**
@@ -262,6 +286,8 @@ ScenarioNode.propTypes = {
         successful: 'string',
         failed: 'string',
         created: 'string'
+        delete: 'string'
+        redirect: 'string' 
         running: 'string',
         dataset: 'string',
         deleteDialog : {
@@ -278,6 +304,8 @@ ScenarioNode.propTypes = {
     successful: PropTypes.string.isRequired,
     failed: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired,
+    delete: PropTypes.string.isRequired,
+    redirect: PropTypes.string.isRequired,
     running: PropTypes.string.isRequired,
     dataset: PropTypes.string.isRequired,
     deleteDialog: PropTypes.shape({
@@ -301,6 +329,8 @@ ScenarioNode.defaultProps = {
     running: 'Running',
     failed: 'Failed',
     created: 'Created',
+    delete: 'Delete this scenario',
+    redirection: 'Redirect to scenario view',
     dataset: 'Datasets',
   },
 };
