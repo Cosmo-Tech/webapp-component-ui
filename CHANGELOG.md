@@ -1,20 +1,15 @@
 ## **2.1.0** <sub><sup>2022-03-28 (439810d...1fc09a0)</sup></sub>
 
 ### Features
-*  add redirection to scenario view button in scenario node ([1fc09a0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1fc09a0))
 
-
-### Bug Fixes
-*  make all nodes in scenario manager expanded by default ([a3c41c4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a3c41c4))
-*  upgrade collapse/expand behavior scenario tree ([8812ebe](https://github.com/Cosmo-Tech/webapp-component-ui/commit/8812ebe))
-
+- add redirection to scenario view button in scenario node ([1fc09a0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1fc09a0))
 
 ## **2.0.1** <sub><sup>2022-03-22 (439810d...fb75f85)</sup></sub>
 
 ### Bug Fixes
-*  make all nodes in scenario manager expanded by default ([a3c41c4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a3c41c4))
-*  upgrade collapse/expand behavior scenario tree ([fb75f85](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb75f85))
 
+- make all nodes in scenario manager expanded by default ([a3c41c4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a3c41c4))
+- upgrade collapse/expand behavior scenario tree ([fb75f85](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb75f85))
 
 ## **2.0.0** <sub><sup>2022-03-17</sup></sub>
 
