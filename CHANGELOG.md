@@ -1,3 +1,9 @@
+## **2.1.1** <sub><sup>2022-03-29 (07ddd92...06dd2a2)</sup></sub>
+
+### Bug Fixes
+
+- rename redirection props function and make it non\-required ([06dd2a2](https://github.com/Cosmo-Tech/webapp-component-ui/commit/06dd2a2))
+
 ## **2.1.0** <sub><sup>2022-03-28 (439810d...1fc09a0)</sup></sub>
 
 ### Features
