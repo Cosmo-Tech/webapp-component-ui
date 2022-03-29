@@ -32,7 +32,7 @@ export const ScenarioNode = ({
   setIsExpanded,
   scenario,
   showDeleteIcon,
-  findScenarioById,
+  onScenarioRedirect,
   deleteScenario,
   labels,
   buildScenarioNameToDelete,
@@ -180,7 +180,7 @@ export const ScenarioNode = ({
 
   const redirectToScenarioView = (event) => {
     event.stopPropagation();
-    findScenarioById(scenario.id);
+    onScenarioRedirect(scenario.id);
   };
 
   const getAccordionSummary = () => {
@@ -271,7 +271,7 @@ ScenarioNode.propTypes = {
   /**
    * Function bound to redirect to scenario view with matching current scenario
    */
-  findScenarioById: PropTypes.func.isRequired,
+  onScenarioRedirect: PropTypes.func,
   /**
    * Function bound on delete button
    */
@@ -322,6 +322,7 @@ ScenarioNode.propTypes = {
 };
 
 ScenarioNode.defaultProps = {
+  onScenarioRedirect: null,
   showDeleteIcon: false,
   labels: {
     status: 'Run status:',
@@ -330,7 +331,7 @@ ScenarioNode.defaultProps = {
     failed: 'Failed',
     created: 'Created',
     delete: 'Delete this scenario',
-    redirection: 'Redirect to scenario view',
+    redirect: 'Redirect to scenario view',
     dataset: 'Datasets',
   },
 };

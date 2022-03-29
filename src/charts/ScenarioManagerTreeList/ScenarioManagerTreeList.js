@@ -30,7 +30,7 @@ export const ScenarioManagerTreeList = (props) => {
   const {
     datasets,
     scenarios,
-    findScenarioById,
+    onScenarioRedirect,
     deleteScenario,
     moveScenario,
     userId,
@@ -93,7 +93,7 @@ export const ScenarioManagerTreeList = (props) => {
             datasets={datasets}
             scenario={scenario}
             showDeleteIcon={displayDeleteIcon}
-            findScenarioById={findScenarioById}
+            onScenarioRedirect={onScenarioRedirect}
             deleteScenario={deleteScenario}
             labels={labels}
             buildScenarioNameToDelete={buildScenarioNameToDelete}
@@ -244,7 +244,7 @@ ScenarioManagerTreeList.propTypes = {
   /**
    * Function bound to redirect to scenario view with matching current scenario
    */
-  findScenarioById: PropTypes.func.isRequired,
+  onScenarioRedirect: PropTypes.func,
   /**
    * Function bound to handle a scenario deletion
    */
@@ -297,6 +297,7 @@ ScenarioManagerTreeList.propTypes = {
 };
 
 ScenarioManagerTreeList.defaultProps = {
+  onScenarioRedirect: null,
   showDeleteIcon: true,
   labels: {
     status: 'Run status',
@@ -304,6 +305,8 @@ ScenarioManagerTreeList.defaultProps = {
     running: 'Running',
     failed: 'Failed',
     created: 'Created',
+    delete: 'Delete this scenario',
+    redirect: 'Redirect to scenario view',
     dataset: 'Dataset',
     searchField: 'Filter',
     toolbar: {
