@@ -9,6 +9,9 @@ import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-
 import DashboardPlaceholder from '../Dashboard/components';
 import { PowerBIUtils } from '@cosmotech/azure';
 
+// TODO: find how to adapt iframe ratio based on parent's width instead of using the viewport width with a hard-coded
+// offset
+const IFRAME_VIEWPORT_WIDTH_OFFSET = 84;
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   report: {
-    height: '100%',
+    height: ({ iframeRatio }) => `calc((100vw - ${IFRAME_VIEWPORT_WIDTH_OFFSET}px) / ${iframeRatio})`,
     width: '100%',
   },
   errorContainer: {
@@ -96,8 +99,9 @@ export const SimplePowerBIReportEmbed = ({
   refreshTimeout,
   labels,
   useAAD,
+  iframeRatio,
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ iframeRatio });
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
   // 1 Embed or 0 Aad
   const tokenType = useAAD ? 0 : 1;
@@ -240,6 +244,10 @@ SimplePowerBIReportEmbed.propTypes = {
    */
   useAAD: PropTypes.bool,
   /**
+   *  Display ratio (width/height) of the PowerBI iframe, expressed as a number.
+   */
+  iframeRatio: PropTypes.number,
+  /**
    * Structure:
    * <pre>
    * {
@@ -299,6 +307,7 @@ SimplePowerBIReportEmbed.defaultProps = {
   refreshable: true,
   refreshTimeout: 15000,
   useAAD: false,
+  iframeRatio: 1580 / 350,
   labels: {
     noScenario: {
       title: 'No scenario yet',
