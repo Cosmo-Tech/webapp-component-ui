@@ -1,3 +1,9 @@
+## **2.2.0** <sub><sup>2022-03-31 (0238ae0...de2f065)</sup></sub>
+
+### Features
+
+- add new optional prop **iframeRatio** to set a fixed display ratio to the PowerBI iframe ([de2f065](https://github.com/Cosmo-Tech/webapp-component-ui/commit/de2f065))
+
 ## **2.1.1** <sub><sup>2022-03-29 (07ddd92...06dd2a2)</sup></sub>
 
 ### Bug Fixes
