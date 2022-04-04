@@ -160,7 +160,9 @@ export const SimplePowerBIReportEmbed = ({
         <div className={classes.errorDescription}>{errorDescription}</div>
       </div>
       {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
-      {noRun && !alwaysShowReports && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
+      {!noScenario && noRun && !alwaysShowReports && (
+        <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />
+      )}
       {runInProgress && !alwaysShowReports && (
         <DashboardPlaceholder
           label={labels.inProgress.label}
