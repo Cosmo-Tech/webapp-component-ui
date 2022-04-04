@@ -25,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   report: {
-    height: ({ iframeRatio }) => `calc((100vw - ${IFRAME_VIEWPORT_WIDTH_OFFSET}px) / ${iframeRatio})`,
+    height: ({ iframeRatio }) =>
+      iframeRatio ? `calc((100vw - ${IFRAME_VIEWPORT_WIDTH_OFFSET}px) / ${iframeRatio})` : '100%',
     width: '100%',
   },
   errorContainer: {
@@ -307,7 +308,6 @@ SimplePowerBIReportEmbed.defaultProps = {
   refreshable: true,
   refreshTimeout: 15000,
   useAAD: false,
-  iframeRatio: 1580 / 350,
   labels: {
     noScenario: {
       title: 'No scenario yet',

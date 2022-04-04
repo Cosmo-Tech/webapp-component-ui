@@ -1,3 +1,9 @@
+## **2.2.2** <sub><sup>2022-04-04 (c62e32a...c62e32a)</sup></sub>
+
+### Bug Fixes
+
+- restore default behavior of SimplePowerBIReportEmbed component on missing prop iframeRatio
+
 ## **2.2.1** <sub><sup>2022-04-04 (3dd9546...20c2b81)</sup></sub>
 
 - update dependencies
