@@ -1,3 +1,9 @@
+## **2.2.3** <sub><sup>2022-04-04</sup></sub>
+
+### Bug Fixes
+
+- remove unexpected extra placeholder when no scenarios exist
+
 ## **2.2.2** <sub><sup>2022-04-04 (c62e32a...c62e32a)</sup></sub>
 
 ### Bug Fixes
