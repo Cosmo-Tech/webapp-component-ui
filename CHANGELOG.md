@@ -1,3 +1,7 @@
+## **2.2.1** <sub><sup>2022-04-04 (3dd9546...20c2b81)</sup></sub>
+
+- update dependencies
+
 ## **2.2.0** <sub><sup>2022-03-31 (0238ae0...de2f065)</sup></sub>
 
 ### Features
