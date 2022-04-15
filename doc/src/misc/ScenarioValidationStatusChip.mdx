@@ -1,0 +1,41 @@
+---
+name: ScenarioValidationStatusChip
+route: /ScenarioValidationStatusChip
+menu: Misc
+---
+
+import { Playground, Props } from 'docz';
+import { ScenarioValidationStatusChip } from '@cosmotech/ui';
+
+# ScenarioValidationStatusChip
+
+This component is a chip that can be used to display the current scenario validation status.
+
+## Props
+
+<Props of={ScenarioValidationStatusChip} />
+
+## Basic Usage
+
+When the validation status is 'Validated' or 'Rejected', the chip is displayed.
+When the validation status is 'Draft' or 'Unknown', the chip is not displayed.
+When the validation status is 'Loading', a spinner is displayed instead of the chip.
+
+<Playground>
+  <ScenarioValidationStatusChip status="Unknown" />
+  <ScenarioValidationStatusChip status="Draft" />
+  <ScenarioValidationStatusChip status="Loading" />
+  <ScenarioValidationStatusChip status="Validated" />
+  <ScenarioValidationStatusChip status="Rejected" />
+</Playground>
+
+## Delete button
+
+If the prop onDelete is provided, a delete button is displayed when the status is rejected or validated. This button
+calls the prop function onDelete when it is clicked on.
+
+<Playground>
+  <ScenarioValidationStatusChip status="Draft" onDelete={() => console.log('delete')} />
+  <ScenarioValidationStatusChip status="Validated" onDelete={() => console.log('delete')} />
+  <ScenarioValidationStatusChip status="Rejected" onDelete={() => console.log('delete')} />
+</Playground>
