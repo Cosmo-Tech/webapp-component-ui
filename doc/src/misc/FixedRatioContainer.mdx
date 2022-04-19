@@ -1,0 +1,22 @@
+---
+name: FixedRatioContainer
+route: /FixedRatioContainer
+menu: Misc
+---
+
+import { Playground, Props } from 'docz';
+import { FixedRatioContainer } from '@cosmotech/ui';
+
+# Fixed ratio container
+
+This component can be used to try to maintain a fixed aspect ratio for a given div or React component.
+
+## Props
+
+<Props of={FixedRatioContainer} />
+
+## Basic Usage
+
+<Playground>
+  <FixedRatioContainer ratio={16 / 9} style={{ background: '#08f9de', width: '400px' }} />
+</Playground>

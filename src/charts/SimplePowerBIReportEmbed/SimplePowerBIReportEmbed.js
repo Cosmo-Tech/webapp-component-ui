@@ -7,11 +7,9 @@ import * as PropTypes from 'prop-types';
 import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
+import FixedRatioContainer from '../../misc/FixedRatioContainer';
 import { PowerBIUtils } from '@cosmotech/azure';
 
-// TODO: find how to adapt iframe ratio based on parent's width instead of using the viewport width with a hard-coded
-// offset
-const IFRAME_VIEWPORT_WIDTH_OFFSET = 84;
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
@@ -25,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   report: {
-    height: ({ iframeRatio }) =>
-      iframeRatio ? `calc((100vw - ${IFRAME_VIEWPORT_WIDTH_OFFSET}px) / ${iframeRatio})` : '100%',
+    height: '100%',
     width: '100%',
   },
   errorContainer: {
@@ -49,6 +46,13 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     height: '100%',
   },
+  iframeContainerWithRatio: {
+    height: '100%',
+  },
+  iframeContainerWithoutRatio: ({ hasNavContentPane }) => ({
+    height: hasNavContentPane ? 'calc(100% - 35px)' : '100%',
+    width: '100%',
+  }),
 }));
 
 function getErrorCode(labels, reports) {
@@ -102,8 +106,11 @@ export const SimplePowerBIReportEmbed = ({
   useAAD,
   iframeRatio,
 }) => {
-  const classes = useStyles({ iframeRatio });
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
+  const hasNavContentPane = settings?.navContentPaneEnabled;
+  const iframeHeightOffset = hasNavContentPane ? '35px' : '0px';
+  const classes = useStyles({ hasNavContentPane });
+
   // 1 Embed or 0 Aad
   const tokenType = useAAD ? 0 : 1;
   // PowerBI Report object (received via callback)
@@ -153,6 +160,32 @@ export const SimplePowerBIReportEmbed = ({
     }, refreshTimeout);
   };
 
+  const iframe = (
+    <PowerBIEmbed
+      cssClassName={classes.report}
+      embedConfig={embedConfig}
+      getEmbeddedComponent={(embedObject) => {
+        setReport(embedObject);
+      }}
+    />
+  );
+
+  let iframeContainer;
+  if (iframeRatio != null && iframeRatio > 0) {
+    iframeContainer = (
+      <FixedRatioContainer
+        className={classes.iframeContainerWithRatio}
+        width="100%"
+        ratio={iframeRatio}
+        heightOffset={iframeHeightOffset}
+      >
+        {iframe}
+      </FixedRatioContainer>
+    );
+  } else {
+    iframeContainer = <div className={classes.iframeContainerWithoutRatio}>{iframe}</div>;
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
@@ -188,18 +221,11 @@ export const SimplePowerBIReportEmbed = ({
             </Tooltip>
           </div>
         )}
-        <PowerBIEmbed
-          cssClassName={classes.report}
-          embedConfig={embedConfig}
-          getEmbeddedComponent={(embedObject) => {
-            setReport(embedObject);
-          }}
-        />
+        {iframeContainer}
       </div>
     </div>
   );
 };
-
 SimplePowerBIReportEmbed.propTypes = {
   /**
    * Index of reportConfiguration
