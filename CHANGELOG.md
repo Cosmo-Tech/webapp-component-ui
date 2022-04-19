@@ -1,3 +1,13 @@
+## **2.3.0** <sub><sup>2022-04-19 (fec764c...6054be7)</sup></sub>
+
+### Features
+
+- add new component FixedRatioContainer ([d15990c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d15990c))
+
+### Bug Fixes
+
+- improve dynamic height of dashboards ([f537d84](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f537d84))
+
 ## **2.2.3** <sub><sup>2022-04-04</sup></sub>
 
 ### Bug Fixes
