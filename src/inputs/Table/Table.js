@@ -65,7 +65,7 @@ const _moveKeyToCellEditorParams = (col, key) => {
 };
 
 const _moveExtraPropertiesToCellEditorParams = (col) => {
-  const keys = ['enumValues', 'minValue', 'maxValue'];
+  const keys = ['enumValues', 'minValue', 'maxValue', 'acceptsEmptyFields'];
   keys.forEach((key) => _moveKeyToCellEditorParams(col, key));
 };
 
@@ -101,7 +101,6 @@ export const Table = (props) => {
     dateFormat: dateFormat,
     editMode: editMode,
   };
-
   const defaultColDef = getDefaultColumnsProperties(onCellChange);
   const columnTypes = getColumnTypes(dateFormat);
   const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);

@@ -20,6 +20,8 @@ const _boolSetter = (params) => {
     newValue = 'false';
   } else if (['1', 'true', 'yes'].indexOf(newValue) !== -1) {
     newValue = 'true';
+  } else if (params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0) {
+    newValue = '';
   } else {
     newValue = params.oldValue;
   }
@@ -30,58 +32,72 @@ const _boolSetter = (params) => {
 const _dateSetter = (params) => {
   const dateFormat = params.context.dateFormat;
   let newValue = params.newValue;
-  if (!params.context.editMode || !DateUtils.isValid(newValue, dateFormat)) {
-    newValue = params.oldValue;
+  if (params.context.editMode && params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0) {
+    newValue = '';
+    params.data[params.colDef.field] = newValue;
   } else {
-    const minValue = params.column.userProvidedColDef?.cellEditorParams?.minValue;
-    const maxValue = params.column.userProvidedColDef?.cellEditorParams?.maxValue;
-    if (minValue !== undefined) {
-      newValue = DateUtils.strMax(newValue, minValue, dateFormat) || params.oldValue;
+    if (!params.context.editMode || !DateUtils.isValid(newValue, dateFormat)) {
+      newValue = params.oldValue;
+    } else {
+      const minValue = params.column.userProvidedColDef?.cellEditorParams?.minValue;
+      const maxValue = params.column.userProvidedColDef?.cellEditorParams?.maxValue;
+      if (minValue !== undefined) {
+        newValue = DateUtils.strMax(newValue, minValue, dateFormat) || params.oldValue;
+      }
+      if (maxValue !== undefined) {
+        newValue = DateUtils.strMin(newValue, maxValue, dateFormat) || params.oldValue;
+      }
     }
-    if (maxValue !== undefined) {
-      newValue = DateUtils.strMin(newValue, maxValue, dateFormat) || params.oldValue;
-    }
+    // Force date format before setting it
+    params.data[params.colDef.field] = DateUtils.format(DateUtils.parse(newValue, dateFormat), dateFormat);
   }
-  // Force date format before setting it
-  params.data[params.colDef.field] = DateUtils.format(DateUtils.parse(newValue, dateFormat), dateFormat);
   return true;
 };
 
 const _intSetter = (params) => {
-  let newValue = parseInt(params.newValue);
-
-  if (!params.context.editMode || !Number.isSafeInteger(newValue)) {
-    newValue = params.oldValue;
+  let newValue = params.newValue;
+  if (params.context.editMode && params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0) {
+    newValue = '';
   } else {
-    // Min & max values are currently limited by the default cellEditor behavior
-    const DEFAULT_MIN_INT = -1e21 + 1;
-    const DEFAULT_MAX_INT = 1e21 - 1;
-    const configMinValue = params.column.userProvidedColDef?.cellEditorParams?.minValue;
-    const configMaxValue = params.column.userProvidedColDef?.cellEditorParams?.maxValue;
-    const minValue = configMinValue !== undefined ? configMinValue : DEFAULT_MIN_INT;
-    const maxValue = configMaxValue !== undefined ? configMaxValue : DEFAULT_MAX_INT;
-    newValue = Math.max(newValue, minValue);
-    newValue = Math.min(newValue, maxValue);
-    newValue = newValue.toString();
+    newValue = parseInt(params.newValue);
+    if (!params.context.editMode || !Number.isSafeInteger(newValue)) {
+      newValue = params.oldValue;
+    } else {
+      // Min & max values are currently limited by the default cellEditor behavior
+      const DEFAULT_MIN_INT = -1e21 + 1;
+      const DEFAULT_MAX_INT = 1e21 - 1;
+      const configMinValue = params.column.userProvidedColDef?.cellEditorParams?.minValue;
+      const configMaxValue = params.column.userProvidedColDef?.cellEditorParams?.maxValue;
+      const minValue = configMinValue !== undefined ? configMinValue : DEFAULT_MIN_INT;
+      const maxValue = configMaxValue !== undefined ? configMaxValue : DEFAULT_MAX_INT;
+      newValue = Math.max(newValue, minValue);
+      newValue = Math.min(newValue, maxValue);
+      newValue = newValue.toString();
+    }
   }
   params.data[params.colDef.field] = newValue;
   return true;
 };
 
 const _numberSetter = (params) => {
-  let newValue = parseFloat(params.newValue);
-  if (!params.context.editMode || isNaN(newValue)) {
-    newValue = params.oldValue;
+  let newValue = params.newValue;
+  if (params.context.editMode && params.colDef.cellEditorParams.acceptsEmptyFields && newValue.length === 0) {
+    newValue = '';
   } else {
-    const minValue = params.column.userProvidedColDef?.cellEditorParams?.minValue;
-    const maxValue = params.column.userProvidedColDef?.cellEditorParams?.maxValue;
-    if (minValue !== undefined) {
-      newValue = Math.max(newValue, minValue);
+    newValue = parseFloat(params.newValue);
+    if (!params.context.editMode || isNaN(newValue)) {
+      newValue = params.oldValue;
+    } else {
+      const minValue = params.column.userProvidedColDef?.cellEditorParams?.minValue;
+      const maxValue = params.column.userProvidedColDef?.cellEditorParams?.maxValue;
+      if (minValue !== undefined) {
+        newValue = Math.max(newValue, minValue);
+      }
+      if (maxValue !== undefined) {
+        newValue = Math.min(newValue, maxValue);
+      }
+      newValue = newValue.toString();
     }
-    if (maxValue !== undefined) {
-      newValue = Math.min(newValue, maxValue);
-    }
-    newValue = newValue.toString();
   }
   params.data[params.colDef.field] = newValue;
   return true;
@@ -92,9 +108,10 @@ const _enumSetter = (params) => {
   if (enumValues.length === 0) {
     console.warn(`Missing enum values for table column "${params.column.colId}"`);
   }
-
   let newValue = params.newValue;
-  if (!params.context.editMode || enumValues.indexOf(newValue) === -1) {
+  if (params.context.editMode && params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0) {
+    newValue = '';
+  } else if (!params.context.editMode || enumValues.indexOf(newValue) === -1) {
     newValue = params.oldValue;
   }
   params.data[params.colDef.field] = newValue;
