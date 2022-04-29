@@ -3,13 +3,37 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Tooltip } from '@material-ui/core';
+import { makeStyles, TextField, Tooltip } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { ScenarioValidationStatusChip } from '../../misc';
 
-export const HierarchicalComboBox = ({ values, label, disabled, handleChange, renderInputToolType, ...props }) => {
+const useStyles = makeStyles((theme) => ({
+  validationStatusChip: {
+    height: '24px',
+    marginLeft: '10px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+}));
+
+export const HierarchicalComboBox = ({
+  values,
+  label,
+  labels,
+  disabled,
+  handleChange,
+  renderInputToolType,
+  ...props
+}) => {
+  const classes = useStyles();
+  // 'label' prop is deprecated but is still used as main source of data if provided, otherwise we fallback to the new
+  // prop labels.label
+  const mainLabel = label || labels.label;
   return (
     <Autocomplete
       {...props}
+      data-cy="scenario-selector"
       onChange={(event, node) => handleChange(event, node)}
       disableClearable
       disabled={disabled}
@@ -21,12 +45,23 @@ export const HierarchicalComboBox = ({ values, label, disabled, handleChange, re
         return (
           <span data-testid={'option-' + option.id} style={{ marginLeft: marginLeft }}>
             {option.name}
+            <ScenarioValidationStatusChip
+              className={classes.validationStatusChip}
+              status={option.validationStatus || 'Unknown'}
+              labels={labels.validationStatus}
+            />
           </span>
         );
       }}
       renderInput={(params) => (
         <Tooltip arrow title={renderInputToolType}>
-          <TextField {...params} data-cy="scenario-select-input" placeholder={label} label={label} variant="outlined" />
+          <TextField
+            {...params}
+            data-cy="scenario-select-input"
+            placeholder={mainLabel}
+            label={mainLabel}
+            variant="outlined"
+          />
         </Tooltip>
       )}
     />
@@ -35,9 +70,30 @@ export const HierarchicalComboBox = ({ values, label, disabled, handleChange, re
 
 HierarchicalComboBox.propTypes = {
   /**
-   * HierarchicalComboBox's label
+   * DEPRECATED HierarchicalComboBox's label. This prop is deprecated, use labels.label instead.
    */
   label: PropTypes.string,
+  /**
+   * Component's labels:
+   * Structure:
+   * <pre>
+     {
+       label: 'string',
+       validationStatus:
+       {
+         rejected: 'string',
+         validated: 'string',
+       }
+     }
+   * </pre>
+   */
+  labels: PropTypes.shape({
+    label: PropTypes.string,
+    validationStatus: PropTypes.shape({
+      rejected: PropTypes.string,
+      validated: PropTypes.string,
+    }),
+  }),
   /**
    * Function bound on onChange event
    */
@@ -62,4 +118,11 @@ HierarchicalComboBox.propTypes = {
 HierarchicalComboBox.defaultProps = {
   disabled: false,
   renderInputToolType: '',
+  labels: {
+    label: 'Scenario',
+    validationStatus: {
+      rejected: 'Rejected',
+      validated: 'Validated',
+    },
+  },
 };

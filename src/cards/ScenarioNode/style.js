@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   scenarioHeaderItem: {
     marginRight: '24px',
@@ -73,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'stretch',
+  },
+  scenarioDetailsNameLine: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   scenarioDetailsStatusContainer: {
     display: 'flex',
@@ -129,6 +135,17 @@ const useStyles = makeStyles((theme) => ({
   },
   datasets: {
     marginLeft: '15px',
+  },
+  clickableValidationStatusChip: {
+    marginLeft: '10px',
+    height: '24px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  nonClickableValidationStatusChip: {
+    marginLeft: '10px',
+    height: '24px',
   },
 }));
 

@@ -24,6 +24,7 @@ import {
 } from '@material-ui/icons';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
+import { ScenarioValidationStatusChip } from '../../misc';
 import useStyles from './style';
 
 export const ScenarioNode = ({
@@ -131,6 +132,17 @@ export const ScenarioNode = ({
     );
   };
 
+  const getValidationStatus = (clickable = true) => {
+    const className = clickable ? classes.clickableValidationStatusChip : classes.nonClickableValidationStatusChip;
+    return (
+      <ScenarioValidationStatusChip
+        className={className}
+        status={scenario.validationStatus || 'Unknown'}
+        labels={labels.validationStatus}
+      />
+    );
+  };
+
   const getScenarioName = () => {
     return (
       <Tooltip key="scenario-name-tooltip" title={scenario.name}>
@@ -150,11 +162,11 @@ export const ScenarioNode = ({
     );
   };
 
-  const getScenarioNameAndStatus = () => {
+  const getScenarioNameAndValidationStatus = (isValidationChipClickable = true) => {
     return (
       <>
         {getScenarioName()}
-        {getStatusIcon(false)}
+        {getValidationStatus(isValidationChipClickable)}
       </>
     );
   };
@@ -173,7 +185,7 @@ export const ScenarioNode = ({
   const getScenarioHeader = () => {
     return (
       <Box className={classes.scenarioHeader} flexGrow={1}>
-        {isExpanded ? getScenarioCreationData() : getScenarioNameAndStatus()}
+        {isExpanded ? getScenarioCreationData() : getScenarioNameAndValidationStatus(true)}
       </Box>
     );
   };
@@ -185,7 +197,10 @@ export const ScenarioNode = ({
 
   const getAccordionSummary = () => {
     return (
-      <AccordionSummary className={classes.accordionSummary} expandIcon={<ExpandMoreIcon />}>
+      <AccordionSummary
+        className={classes.accordionSummary}
+        expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}
+      >
         {getScenarioHeader()}
         {showDeleteIcon && (
           <IconButton
@@ -218,7 +233,7 @@ export const ScenarioNode = ({
   const getAccordionDetails = () => {
     return (
       <AccordionDetails className={classes.scenarioDetailsContainer}>
-        {getScenarioName()}
+        <div className={classes.scenarioDetailsNameLine}>{getScenarioNameAndValidationStatus(false)}</div>
         {getDetailedStatus()}
         <Typography className={classes.cardLabel}>{getDatasetsLabel()}</Typography>
         <Typography>
@@ -285,16 +300,20 @@ ScenarioNode.propTypes = {
         status: 'string',
         successful: 'string',
         failed: 'string',
-        created: 'string'
-        delete: 'string'
-        redirect: 'string' 
+        created: 'string',
+        delete: 'string',
+        redirect: 'string',
         running: 'string',
         dataset: 'string',
         deleteDialog : {
           title: 'string',
           description: 'string',
           cancel: 'string',
-          confirm: 'string'
+          confirm: 'string',
+        }
+        validationStatus : {
+          rejected: 'string',
+          validated: 'string',
         }
    *   }
    * </pre>
@@ -313,6 +332,10 @@ ScenarioNode.propTypes = {
       description: PropTypes.string.isRequired,
       cancel: PropTypes.string.isRequired,
       confirm: PropTypes.string.isRequired,
+    }).isRequired,
+    validationStatus: PropTypes.shape({
+      rejected: PropTypes.string.isRequired,
+      validated: PropTypes.string.isRequired,
     }).isRequired,
   }),
   /**
@@ -333,5 +356,9 @@ ScenarioNode.defaultProps = {
     delete: 'Delete this scenario',
     redirect: 'Redirect to scenario view',
     dataset: 'Datasets',
+    validationStatus: {
+      rejected: 'Rejected',
+      validated: 'Validated',
+    },
   },
 };

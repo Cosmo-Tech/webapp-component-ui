@@ -25,6 +25,18 @@ const initNodesDict = (scenarios, defaultExpanded) => {
   return nodesDict;
 };
 
+const filterMatchesName = (scenario, searchStr) => scenario.name.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1;
+const filterMatchesValidationStatus = (labels, scenario, searchStr) => {
+  if (!scenario.validationStatus) return false;
+  const validationStatusLabel = labels.validationStatus?.[scenario.validationStatus.toLowerCase()]?.toLowerCase();
+  return validationStatusLabel && validationStatusLabel.indexOf(searchStr.toLowerCase()) !== -1;
+};
+const filterMatchesRunStatus = (labels, scenario, searchStr) => {
+  if (!scenario.state) return false;
+  const runStatusLabel = labels?.[scenario.state.toLowerCase()]?.toLowerCase();
+  return runStatusLabel && runStatusLabel.indexOf(searchStr.toLowerCase()) !== -1;
+};
+
 export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
   const {
@@ -125,12 +137,12 @@ export const ScenarioManagerTreeList = (props) => {
       return;
     }
     // Otherwise, filter scenarios based on their name
-    const filtered = [];
-    for (const scenario of scenarios) {
-      if (scenario.name.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
-        filtered.push(scenario);
-      }
-    }
+    const filtered = scenarios.filter(
+      (scenario) =>
+        filterMatchesName(scenario, searchStr) ||
+        filterMatchesValidationStatus(labels, scenario, searchStr) ||
+        filterMatchesRunStatus(labels, scenario, searchStr)
+    );
     // Format list and set as tree data
     setTreeData(formatScenariosToRSTList(filtered));
   };
@@ -311,7 +323,12 @@ ScenarioManagerTreeList.defaultProps = {
     searchField: 'Filter',
     toolbar: {
       expandAll: 'Expand all',
+      expandTree: 'Expand tree',
       collapseAll: 'Collapse all',
+    },
+    validationStatus: {
+      rejected: 'Rejected',
+      validated: 'Validated',
     },
   },
 };
