@@ -1,10 +1,14 @@
+## **2.4.1** <sub><sup>2022-04-29</sup></sub>
+
+- update dependencies
+
 ## **2.4.0** <sub><sup>2022-04-29 (0a4c118...a39ddc3)</sup></sub>
 
 ### Features
-*  add new component ScenarioValidationStatusChip ([cdfaabd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cdfaabd))
-*  add scenario validation chips in scenario manager ([67d876a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/67d876a))
-*  add scenario validation chips in HierarchicalComboBox ([a39ddc3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a39ddc3))
 
+- add new component ScenarioValidationStatusChip ([cdfaabd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cdfaabd))
+- add scenario validation chips in scenario manager ([67d876a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/67d876a))
+- add scenario validation chips in HierarchicalComboBox ([a39ddc3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a39ddc3))
 
 ## **2.3.0** <sub><sup>2022-04-19 (fec764c...6054be7)</sup></sub>
 
