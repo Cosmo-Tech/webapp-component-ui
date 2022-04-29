@@ -20,6 +20,12 @@
 
 - improve dynamic height of dashboards ([f537d84](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f537d84))
 
+## **2.2.4** <sub><sup>2022-04-29 (250ce19...55a3a39)</sup></sub>
+
+### Bug Fixes
+
+- fix scenario manager crash when scenarios have the 'Unknown' run status ([250ce19](https://github.com/Cosmo-Tech/webapp-component-ui/commit/250ce19))
+
 ## **2.2.3** <sub><sup>2022-04-04</sup></sub>
 
 ### Bug Fixes

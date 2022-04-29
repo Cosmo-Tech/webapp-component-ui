@@ -117,7 +117,9 @@ export const ScenarioNode = ({
         icon = <CircularProgress size={25} className={iconClassName} aria-label={status} />;
         break;
       case 'Created':
-        icon = <HelpIcon className={iconClassName} aria-label={status} />;
+      case 'Unknown':
+      default:
+        icon = <HelpIcon className={classes.statusUnknownIcon} aria-label={status} />;
         break;
     }
     return (
