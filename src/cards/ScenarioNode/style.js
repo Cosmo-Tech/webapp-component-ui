@@ -127,6 +127,11 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.contrastText,
     backgroundColor: theme.palette.background.card,
   },
+  statusUnknownIcon: {
+    marginLeft: '10px',
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.background.card,
+  },
   datasets: {
     marginLeft: '15px',
   },
