@@ -1,3 +1,18 @@
+## **2.3.0** <sub><sup>2022-05-06 (fec764c...a39a3c9)</sup></sub>
+
+### Features
+*  add new component FixedRatioContainer ([d15990c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d15990c))
+*  add new component ScenarioValidationStatusChip ([cdfaabd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cdfaabd))
+*  add scenario validation chips in scenario manager ([67d876a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/67d876a))
+*  add scenario validation chips in HierarchicalComboBox ([a39ddc3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a39ddc3))
+*  support empty fields in table component ([b25384a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b25384a))
+
+
+### Bug Fixes
+*  improve dynamic height of dashboards ([f537d84](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f537d84))
+*  fix scenario manager crash when scenarios have the 'Unknown' run status ([250ce19](https://github.com/Cosmo-Tech/webapp-component-ui/commit/250ce19))
+
+
 ## **2.4.2** <sub><sup>2022-04-29 (250ce19...c8fcd87)</sup></sub>
 
 ### Bug Fixes
