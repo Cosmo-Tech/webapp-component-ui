@@ -1,4 +1,4 @@
-## **2.3.0** <sub><sup>2022-05-06 (fec764c...a39a3c9)</sup></sub>
+## **2.5.1** <sub><sup>2022-05-06 (fec764c...a39a3c9)</sup></sub>
 
 ### Features
 *  add new component FixedRatioContainer ([d15990c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d15990c))
