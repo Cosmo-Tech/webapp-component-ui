@@ -231,6 +231,7 @@ export const ScenarioManagerTreeList = (props) => {
                 }}
                 onVisibilityToggle={changeNodesExpandedChildren}
                 canDrag={false}
+                canDrop={() => false}
                 isVirtualized={false} // Required to prevent bug when rowHeight is a function
                 rowHeight={({ treeIndex, node, path }) => {
                   return 12 + (nodesExpandedDetails[node.id] ? EXPANDED_NODE_HEIGHT : SHRUNK_NODE_HEIGHT);
