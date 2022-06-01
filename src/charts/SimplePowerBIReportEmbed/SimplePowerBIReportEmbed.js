@@ -207,6 +207,7 @@ export const SimplePowerBIReportEmbed = ({
         <DashboardPlaceholder
           label={labels.hasErrors.label}
           title={labels.hasErrors.title}
+          scenario={scenario}
           downloadLogsFile={downloadLogsFile}
           downloadLabel={labels.downloadButton}
         />

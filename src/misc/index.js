@@ -7,3 +7,4 @@ export { PublicRoute } from './PublicRoute';
 export { PrivateRoute } from './PrivateRoute';
 export { ScenarioValidationStatusChip } from './ScenarioValidationStatusChip';
 export { LoadingLine } from './LoadingLine';
+export { ErrorBanner } from './ErrorBanner';

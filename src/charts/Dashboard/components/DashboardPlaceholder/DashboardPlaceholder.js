@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardPlaceholder = (props) => {
   const classes = useStyles();
-  const { title, label, icon, downloadLogsFile, downloadLabel } = props;
+  const { title, label, icon, downloadLogsFile, downloadLabel, scenario } = props;
 
   return (
     <Grid
@@ -40,7 +40,7 @@ const DashboardPlaceholder = (props) => {
           {label}
         </Typography>
       </Grid>
-      {downloadLogsFile && (
+      {downloadLogsFile && scenario.lastRun && (
         <Grid item>
           <Button variant="contained" color="primary" onClick={downloadLogsFile}>
             {downloadLabel}
@@ -57,6 +57,7 @@ DashboardPlaceholder.propTypes = {
   icon: PropTypes.object,
   downloadLogsFile: PropTypes.func,
   downloadLabel: PropTypes.string,
+  scenario: PropTypes.object,
 };
 
 DashboardPlaceholder.defaultProps = {

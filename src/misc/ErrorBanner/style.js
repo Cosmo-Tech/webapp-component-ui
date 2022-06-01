@@ -1,0 +1,30 @@
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  errorContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
+    backgroundColor: theme.palette.error.main,
+  },
+  errorTitle: {
+    fontWeight: 'bold',
+    color: theme.palette.white,
+  },
+  errorText: {
+    color: theme.palette.white,
+  },
+  errorButton: {
+    marginLeft: '5px',
+    marginRight: '5px',
+  },
+}));
+
+export default useStyles;
