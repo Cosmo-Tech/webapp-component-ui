@@ -5,25 +5,24 @@ import useStyles from './style';
 
 export const ErrorBanner = (props) => {
   const classes = useStyles();
-  const { error, clearErrors } = props;
-  const [buttonText, setButtonText] = useState('Copy');
+  const { error, clearErrors, labels } = props;
+  const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {
-    navigator.clipboard.writeText(message).then(() => setButtonText('Copied'));
+    navigator.clipboard.writeText(message).then(() => setCopyButtonText(labels.toggledButtonText));
   };
+  const errorMessageMaxLength = 200;
   return (
     <Slide direction="down" in={error != null} unmountOnExit>
       <Paper square elevation={0} className={classes.errorContainer} data-cy="error-banner">
         <div>
           <Typography className={classes.errorTitle}>{error.status + ' ' + error.title}</Typography>
           <Typography className={classes.errorText}>
-            {error.detail.length < 200
-              ? error.detail
-              : 'Error message is too long to display, please copy it to clipboard to read it'}
+            {error.detail.length < errorMessageMaxLength ? error.detail : labels.tooLongErrorMessage}
           </Typography>
           <Typography className={classes.errorText}>{error.comment}</Typography>
         </div>
         <div className={classes.errorText}>
-          {error.detail.length > 199 && (
+          {error.detail.length >= errorMessageMaxLength && (
             <Button
               className={classes.errorButton}
               size="small"
@@ -31,7 +30,7 @@ export const ErrorBanner = (props) => {
               variant="outlined"
               onClick={() => copyToClipboard(error.detail)}
             >
-              {buttonText}
+              {copyButtonText}
             </Button>
           )}
           <Button
@@ -42,7 +41,7 @@ export const ErrorBanner = (props) => {
             data-cy="dismiss-error-button"
             onClick={clearErrors}
           >
-            Dismiss
+            {labels.dismissButtonText}
           </Button>
         </div>
       </Paper>
@@ -51,6 +50,20 @@ export const ErrorBanner = (props) => {
 };
 
 ErrorBanner.propTypes = {
-  error: PropTypes.object,
-  clearErrors: PropTypes.func,
+  error: PropTypes.object.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  labels: PropTypes.shape({
+    tooLongErrorMessage: PropTypes.string,
+    dismissButtonText: PropTypes.string.isRequired,
+    secondButtonText: PropTypes.string.isRequired,
+    toggledButtonText: PropTypes.string,
+  }),
+};
+ErrorBanner.defaultProps = {
+  labels: {
+    tooLongErrorMessage:
+      // eslint-disable-next-line max-len
+      'Detailed error message is too long to be displayed. To read it, please use the COPY button and paste it in your favorite text editor.',
+    toggledButtonText: 'Copied',
+  },
 };

@@ -6,8 +6,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
     paddingTop: '10px',
     paddingBottom: '10px',
     paddingLeft: '20px',
