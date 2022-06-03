@@ -298,6 +298,7 @@ const CreateScenarioDialog = ({
           disabled={createScenarioDisabled}
           onClick={handleCreateScenario}
           color="primary"
+          variant="contained"
         >
           {dialogLabels.create}
         </Button>
