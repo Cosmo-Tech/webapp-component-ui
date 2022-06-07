@@ -1,3 +1,14 @@
+## **2.6.0** <sub><sup>2022-06-07 (ec50102...5bb6781)</sup></sub>
+
+### Features
+*  create an error display banner ([93d162f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/93d162f))
+
+
+### Bug Fixes
+*  fix possible drag & drop error in ScenarioManagerTreeList ([0e9a018](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0e9a018))
+*  set scenario creation button variant to 'contained' in dialog ([7e7d078](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7e7d078))
+
+
 ## **2.5.1** <sub><sup>2022-05-06 (fec764c...a39a3c9)</sup></sub>
 
 ### Features
