@@ -32,6 +32,16 @@ const useStyles = makeStyles((theme) => ({
     padding: '4px',
     whiteSpace: 'pre-line',
   },
+  loadingLabel: {
+    marginLeft: '15px',
+    marginRight: '15px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
+  loadingSpinner: {
+    marginTop: 'auto',
+    marginBottom: 'auto',
+  },
 }));
 
 const LOADING_STATUS_MAPPING = {
@@ -118,10 +128,10 @@ export const Table = (props) => {
       <div className={classes.toolBar}>
         {extraToolbarActions}
         {isLoading && (
-          <div>
-            {labels.loading}
-            <CircularProgress />
-          </div>
+          <>
+            <div className={classes.loadingLabel}>{labels.loading}</div>
+            <CircularProgress className={classes.loadingSpinner} size={18} />
+          </>
         )}
       </div>
       {hasErrors && (
