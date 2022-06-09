@@ -15,4 +15,4 @@ PERFORMANCE OF THIS SOFTWARE.
 
 /*! @azure/msal-browser v2.23.0 2022-04-04 */
 
-/*! @azure/msal-common v6.2.0 2022-04-04 */
+/*! @azure/msal-common v6.3.0 2022-05-02 */
