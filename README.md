@@ -7,7 +7,7 @@ You can use this project as a components library to build a front-end for your o
 Feel free to contribute to this library.
 The more components we have, the easier your webapp customization will be.
 
-Documentation for the components is available in the [doc](https://github.com/Cosmo-Tech/webapp-component-ui/doc) folder.
+Documentation for the components is available in the [doc](https://github.com/Cosmo-Tech/webapp-component-ui/tree/main/doc) folder.
 
 ## Build project
 
