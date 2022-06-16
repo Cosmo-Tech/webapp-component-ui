@@ -33,16 +33,18 @@ export const ErrorBanner = (props) => {
               {copyButtonText}
             </Button>
           )}
-          <Button
-            className={classes.errorButton}
-            size="small"
-            color="inherit"
-            variant="outlined"
-            data-cy="dismiss-error-button"
-            onClick={clearErrors}
-          >
-            {labels.dismissButtonText}
-          </Button>
+          {clearErrors && (
+            <Button
+              className={classes.errorButton}
+              size="small"
+              color="inherit"
+              variant="outlined"
+              data-cy="dismiss-error-button"
+              onClick={clearErrors}
+            >
+              {labels.dismissButtonText}
+            </Button>
+          )}
         </div>
       </Paper>
     </Slide>
@@ -51,19 +53,20 @@ export const ErrorBanner = (props) => {
 
 ErrorBanner.propTypes = {
   error: PropTypes.object.isRequired,
-  clearErrors: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func,
   labels: PropTypes.shape({
     tooLongErrorMessage: PropTypes.string,
-    dismissButtonText: PropTypes.string.isRequired,
+    dismissButtonText: PropTypes.string,
     secondButtonText: PropTypes.string.isRequired,
     toggledButtonText: PropTypes.string,
   }),
 };
 ErrorBanner.defaultProps = {
   labels: {
+    dismissButtonText: 'Dismiss',
     tooLongErrorMessage:
-      // eslint-disable-next-line max-len
-      'Detailed error message is too long to be displayed. To read it, please use the COPY button and paste it in your favorite text editor.',
+      'Detailed error message is too long to be displayed. To read it, please use the COPY button and paste it in ' +
+      'your favorite text editor.',
     toggledButtonText: 'Copied',
   },
 };
