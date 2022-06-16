@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, CircularProgress, Drawer, IconButton, MenuItem, Select, Slider, Tabs, Tab } from '@material-ui/core';
 import {
@@ -16,6 +16,7 @@ import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
 import useStyles from './style';
 import { ElementData, TabPanel } from './components';
+import { ErrorBanner } from '../../misc';
 
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
@@ -25,27 +26,31 @@ const DEFAULT_LAYOUTS = ['dagre'];
 export const CytoViz = (props) => {
   const classes = useStyles();
   const {
+    bubblesets,
     cytoscapeStylesheet,
     defaultSettings,
     elements,
+    error,
     extraLayouts,
+    getElementDetails,
     labels,
     loading,
-    getElementDetails,
-    bubblesets,
+    placeholderMessage,
   } = props;
+
+  const labels_ = { ...DEFAULT_LABELS, ...labels };
 
   let getElementDetailsCallback = getElementDetails;
   if (!getElementDetailsCallback) {
     // eslint-disable-next-line react/display-name
-    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels.elementData} />;
+    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels_.elementData} />;
     getElementDetailsCallback.displayName = 'ElementData';
   }
 
   // Layout
-  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [currentDrawerTab, setCurrentDrawerTab] = React.useState(0);
-  const [currentElementDetails, setCurrentElementDetails] = React.useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [currentDrawerTab, setCurrentDrawerTab] = useState(0);
+  const [currentElementDetails, setCurrentElementDetails] = useState(null);
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
@@ -57,10 +62,10 @@ export const CytoViz = (props) => {
   };
 
   // Settings
-  const [currentLayout, setCurrentLayout] = React.useState(defaultSettings.layout);
-  const [useCompactMode, setUseCompactMode] = React.useState(defaultSettings.useCompactMode);
-  const [spacingFactor, setSpacingFactor] = React.useState(defaultSettings.spacingFactor);
-  const [zoomPrecision, setZoomPrecision] = React.useState([
+  const [currentLayout, setCurrentLayout] = useState(defaultSettings.layout);
+  const [useCompactMode, setUseCompactMode] = useState(defaultSettings.useCompactMode);
+  const [spacingFactor, setSpacingFactor] = useState(defaultSettings.spacingFactor);
+  const [zoomPrecision, setZoomPrecision] = useState([
     Math.log10(defaultSettings.minZoom),
     Math.log10(defaultSettings.maxZoom),
   ]);
@@ -124,138 +129,143 @@ export const CytoViz = (props) => {
     }
   };
 
-  const loadingPlaceholder = (
+  const errorBanner = error && <ErrorBanner error={error} labels={labels_.errorBanner} />;
+  const loadingPlaceholder = loading && !error && !placeholderMessage && (
     <div className={classes.loadingContainer}>
-      <span className={classes.loadingText}>{labels.loading}</span>
+      <span className={classes.loadingText}>{labels_.loading}</span>
       <CircularProgress size={18} />
     </div>
+  );
+  const placeholder = placeholderMessage && (
+    <div className={classes.placeholder}>
+      <span className={classes.placeholderText}>{placeholderMessage}</span>
+    </div>
+  );
+  const cytoscapeScene = !loading && !placeholderMessage && (
+    <>
+      <CytoscapeComponent
+        cy={initCytoscape}
+        stylesheet={cytoscapeStylesheet}
+        className={classes.cytoscapeContainer}
+        elements={elements}
+        layout={{
+          name: currentLayout,
+          nodeDimensionsIncludeLabels: !useCompactMode,
+          spacingFactor: spacingFactor,
+        }}
+        minZoom={10 ** zoomPrecision[0]}
+        maxZoom={10 ** zoomPrecision[1]}
+      />
+      <div className={classes.openDrawerButton}>
+        <IconButton onClick={openDrawer}>
+          <ChevronRightIcon />
+        </IconButton>
+      </div>
+      <Drawer
+        className={classes.drawer}
+        variant="temporary"
+        anchor="left"
+        open={isDrawerOpen}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+        BackdropProps={{ style: { position: 'absolute' } }}
+        ModalProps={{
+          container: document.getElementById('cytoviz-root'),
+          style: { position: 'absolute' },
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <Tabs
+            value={currentDrawerTab}
+            onChange={changeDrawerTab}
+            variant="fullWidth"
+            indicatorColor="primary"
+            textColor="primary"
+            aria-label="Cytoscape visualization side drawer"
+          >
+            <Tab icon={<AccountTreeIcon />} label={labels_.elementDetails} />
+            <Tab icon={<SettingsIcon />} label={labels_.settings.title} />
+          </Tabs>
+          <IconButton onClick={closeDrawer}>
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <div className={classes.drawerContent}>
+          <TabPanel value={currentDrawerTab} index={0}>
+            {currentElementDetails || labels_.noSelectedElement}
+          </TabPanel>
+          <TabPanel value={currentDrawerTab} index={1}>
+            <div className={classes.settingsContainer}>
+              <div className={classes.settingLine}>
+                <div className={classes.settingLabel}>{labels_.settings.layout}</div>
+                <div className={classes.settingInputContainer}>
+                  <Select value={currentLayout} onChange={changeCurrentLayout} inputProps={{ 'aria-label': 'Layout' }}>
+                    {DEFAULT_LAYOUTS.concat(Object.keys(extraLayouts)).map((layoutName) => (
+                      <MenuItem key={layoutName} value={layoutName}>
+                        {layoutName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className={classes.settingLine}>
+                <div className={classes.settingLabel} onClick={toggleUseCompactMode}>
+                  {labels.settings.compactMode}
+                </div>
+                <div className={classes.settingInputContainer}>
+                  <Checkbox
+                    checked={useCompactMode}
+                    onChange={changeUseCompactMode}
+                    name="useCompactMode"
+                    color="primary"
+                  />
+                </div>
+              </div>
+              <div className={classes.settingLine}>
+                <div className={classes.settingLabel}>{labels_.settings.spacingFactor}</div>
+                <div className={classes.settingInputContainer}>
+                  <Slider
+                    className={classes.settingsSlider}
+                    color="primary"
+                    value={spacingFactor}
+                    min={0.1}
+                    step={0.1}
+                    max={10}
+                    onChange={changeSpacingFactor}
+                    valueLabelDisplay="auto"
+                  />
+                </div>
+              </div>
+              <div className={classes.settingLine}>
+                <div className={classes.settingLabel}>{labels_.settings.zoomLimits}</div>
+                <div className={classes.settingInputContainer}>
+                  <Slider
+                    className={classes.settingsSlider}
+                    color="primary"
+                    value={zoomPrecision}
+                    min={-3}
+                    step={1}
+                    max={2}
+                    onChange={changeZoomPrecision}
+                    valueLabelFormat={(value) => 10 ** value}
+                    valueLabelDisplay="auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </TabPanel>
+        </div>
+      </Drawer>
+    </>
   );
 
   return (
     <div className={classes.root} id="cytoviz-root">
-      {loading && loadingPlaceholder}
-      {!loading && (
-        <>
-          <CytoscapeComponent
-            cy={initCytoscape}
-            stylesheet={cytoscapeStylesheet}
-            className={classes.cytoscapeContainer}
-            elements={elements}
-            layout={{
-              name: currentLayout,
-              nodeDimensionsIncludeLabels: !useCompactMode,
-              spacingFactor: spacingFactor,
-            }}
-            minZoom={10 ** zoomPrecision[0]}
-            maxZoom={10 ** zoomPrecision[1]}
-          />
-          <div className={classes.openDrawerButton}>
-            <IconButton onClick={openDrawer}>
-              <ChevronRightIcon />
-            </IconButton>
-          </div>
-          <Drawer
-            className={classes.drawer}
-            variant="temporary"
-            anchor="left"
-            open={isDrawerOpen}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            BackdropProps={{ style: { position: 'absolute' } }}
-            ModalProps={{
-              container: document.getElementById('cytoviz-root'),
-              style: { position: 'absolute' },
-            }}
-          >
-            <div className={classes.drawerHeader}>
-              <Tabs
-                value={currentDrawerTab}
-                onChange={changeDrawerTab}
-                variant="fullWidth"
-                indicatorColor="primary"
-                textColor="primary"
-                aria-label="Cytoscape visualization side drawer"
-              >
-                <Tab icon={<AccountTreeIcon />} label={labels.elementDetails} />
-                <Tab icon={<SettingsIcon />} label={labels.settings.title} />
-              </Tabs>
-              <IconButton onClick={closeDrawer}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </div>
-            <div className={classes.drawerContent}>
-              <TabPanel value={currentDrawerTab} index={0}>
-                {currentElementDetails || labels.noSelectedElement}
-              </TabPanel>
-              <TabPanel value={currentDrawerTab} index={1}>
-                <div className={classes.settingsContainer}>
-                  <div className={classes.settingLine}>
-                    <div className={classes.settingLabel}>{labels.settings.layout}</div>
-                    <div className={classes.settingInputContainer}>
-                      <Select
-                        value={currentLayout}
-                        onChange={changeCurrentLayout}
-                        inputProps={{ 'aria-label': 'Layout' }}
-                      >
-                        {DEFAULT_LAYOUTS.concat(Object.keys(extraLayouts)).map((layoutName) => (
-                          <MenuItem key={layoutName} value={layoutName}>
-                            {layoutName}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </div>
-                  </div>
-                  <div className={classes.settingLine}>
-                    <div className={classes.settingLabel} onClick={toggleUseCompactMode}>
-                      {labels.settings.compactMode}
-                    </div>
-                    <div className={classes.settingInputContainer}>
-                      <Checkbox
-                        checked={useCompactMode}
-                        onChange={changeUseCompactMode}
-                        name="useCompactMode"
-                        color="primary"
-                      />
-                    </div>
-                  </div>
-                  <div className={classes.settingLine}>
-                    <div className={classes.settingLabel}>{labels.settings.spacingFactor}</div>
-                    <div className={classes.settingInputContainer}>
-                      <Slider
-                        className={classes.settingsSlider}
-                        color="primary"
-                        value={spacingFactor}
-                        min={0.1}
-                        step={0.1}
-                        max={10}
-                        onChange={changeSpacingFactor}
-                        valueLabelDisplay="auto"
-                      />
-                    </div>
-                  </div>
-                  <div className={classes.settingLine}>
-                    <div className={classes.settingLabel}>{labels.settings.zoomLimits}</div>
-                    <div className={classes.settingInputContainer}>
-                      <Slider
-                        className={classes.settingsSlider}
-                        color="primary"
-                        value={zoomPrecision}
-                        min={-3}
-                        step={1}
-                        max={2}
-                        onChange={changeZoomPrecision}
-                        valueLabelFormat={(value) => 10 ** value}
-                        valueLabelDisplay="auto"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </TabPanel>
-            </div>
-          </Drawer>
-        </>
-      )}
+      {errorBanner}
+      {placeholder}
+      {loadingPlaceholder}
+      {cytoscapeScene}
     </div>
   );
 };
@@ -299,6 +309,13 @@ CytoViz.propTypes = {
    * <pre>
    {
      elementDetails: 'string',
+     placeholder: 'string',
+     errorBanner: {
+       tooLongErrorMessage: 'string',
+       dismissButtonText: 'string',
+       secondButtonText: 'string',
+       toggledButtonText: 'string',
+     },
      loading: 'string',
      noSelectedElement: 'string',
      settings: {
@@ -307,7 +324,7 @@ CytoViz.propTypes = {
        title: 'string',
        spacingFactor: 'string',
        zoomLimits: 'string',
-     }
+     },
      elementData: {
        dictKey: 'string',
        dictValue: 'string',
@@ -321,6 +338,16 @@ CytoViz.propTypes = {
    While loading is true, a spinner is displayed instead of the cytoscape component.
    */
   loading: PropTypes.bool,
+  /**
+   * Error object describing an error. When this object is not null nor undefined, it is displayed in a banner inside
+   the component.
+   */
+  error: PropTypes.object,
+  /**
+  * Optional placeholder string. When this prop is "truthy", this placeholder message is displayed instead
+  of the cytoscape scene.
+  */
+  placeholderMessage: PropTypes.string,
 };
 
 const DEFAULT_LABELS = {
@@ -353,4 +380,5 @@ CytoViz.defaultProps = {
   groups: {},
   labels: DEFAULT_LABELS,
   loading: false,
+  placeholderMessage: null,
 };
