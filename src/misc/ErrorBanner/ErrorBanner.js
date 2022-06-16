@@ -11,11 +11,12 @@ export const ErrorBanner = (props) => {
     navigator.clipboard.writeText(message).then(() => setCopyButtonText(labels.toggledButtonText));
   };
   const errorMessageMaxLength = 200;
+  const errorStatusText = error.status ? error.status + ' ' : '';
   return (
     <Slide direction="down" in={error != null} unmountOnExit>
       <Paper square elevation={0} className={classes.errorContainer} data-cy="error-banner">
         <div>
-          <Typography className={classes.errorTitle}>{error.status + ' ' + error.title}</Typography>
+          <Typography className={classes.errorTitle}>{errorStatusText + error.title}</Typography>
           <Typography className={classes.errorText}>
             {error.detail.length < errorMessageMaxLength ? error.detail : labels.tooLongErrorMessage}
           </Typography>
@@ -52,7 +53,12 @@ export const ErrorBanner = (props) => {
 };
 
 ErrorBanner.propTypes = {
-  error: PropTypes.object.isRequired,
+  error: PropTypes.shape({
+    comment: PropTypes.string,
+    detail: PropTypes.string,
+    status: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    title: PropTypes.string.isRequired,
+  }).isRequired,
   clearErrors: PropTypes.func,
   labels: PropTypes.shape({
     tooLongErrorMessage: PropTypes.string,
