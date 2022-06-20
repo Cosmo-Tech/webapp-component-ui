@@ -102,9 +102,11 @@ export const CytoViz = (props) => {
     // Add handling of double click events
     cytoscapeRef.on('dbltap', 'node, edge', function (e) {
       const selectedElement = e.target;
-      setCurrentDrawerTab(0);
-      setIsDrawerOpen(true);
-      setCurrentElementDetails(getElementDetailsCallback(selectedElement));
+      if (selectedElement.selectable()) {
+        setCurrentDrawerTab(0);
+        setIsDrawerOpen(true);
+        setCurrentElementDetails(getElementDetailsCallback(selectedElement));
+      }
     });
 
     // Init bubblesets
