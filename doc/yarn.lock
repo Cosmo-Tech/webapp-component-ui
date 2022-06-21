@@ -1150,16 +1150,17 @@
     validator "^13.7.0"
     xlsx "^0.18.3"
 
-"@cosmotech/ui@^1.4.3":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@cosmotech/ui/-/ui-1.5.1.tgz#375608dbc218783841ae151861ad6bab2bd4b5cb"
-  integrity sha512-UAQtS9oIlZvHV9h0MERucd75+U/8nhZC2xyvK7qTKngiN7RVZRlduDGJDf+M7ErB0d5N9ZYnpbr1PgK6AwkJvA==
+"@cosmotech/ui@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@cosmotech/ui/-/ui-2.6.0.tgz#4f03ce8b5f681be8e81e9f4298843d0793f7b4b6"
+  integrity sha512-Ytn9arespXRMIrWmggN01nQQxtFrfmEKcnRcIfg4/6Yb2TKqxu0pFEf/eMY79TBjD40lxiRTP8xe2FsJqKHnWw==
   dependencies:
     "@date-io/date-fns" "^1.3.13"
     "@material-ui/pickers" "^3.3.10"
     "@nosferatu500/react-sortable-tree" "^3.0.5"
     ag-grid-community "^26.1.0"
     ag-grid-react "^26.1.0"
+    clsx "^1.1.1"
     cytoscape "^3.20.0"
     cytoscape-bubblesets "^3.1.0"
     cytoscape-dagre "^2.4.0"
@@ -4118,7 +4119,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
 
-clsx@^1.0.2, clsx@^1.0.4:
+clsx@^1.0.2, clsx@^1.0.4, clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
