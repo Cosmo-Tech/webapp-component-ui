@@ -18,4 +18,12 @@ export {
   TABLE_DATA_STATUS,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
-export { ErrorsPanel, PrivateRoute, PublicRoute, ScenarioValidationStatusChip, LoadingLine, ErrorBanner } from './misc';
+export {
+  ErrorsPanel,
+  FixedRatioContainer,
+  PrivateRoute,
+  PublicRoute,
+  ScenarioValidationStatusChip,
+  LoadingLine,
+  ErrorBanner,
+} from './misc';
