@@ -17,15 +17,24 @@ This component is a chip that can be used to display the current scenario valida
 
 ## Basic Usage
 
-When the validation status is 'Validated' or 'Rejected', the chip is displayed.
-When the validation status is 'Draft' or 'Unknown', the chip is not displayed.
-When the validation status is 'Loading', a spinner is displayed instead of the chip.
+When the validation status is 'Validated' or 'Rejected', the chip is displayed.<br />
+When the validation status is 'Draft' or 'Unknown', the chip is not displayed.<br />
+When the validation status is 'Loading', a spinner is displayed instead of the chip.<br />
 
 <Playground>
+  Unknown:
   <ScenarioValidationStatusChip status="Unknown" />
+  <br />
+  Draft:
   <ScenarioValidationStatusChip status="Draft" />
+  <br />
+  Loading:
   <ScenarioValidationStatusChip status="Loading" />
+  <br />
+  Validated:
   <ScenarioValidationStatusChip status="Validated" />
+  <br />
+  Rejected:
   <ScenarioValidationStatusChip status="Rejected" />
 </Playground>
 
@@ -35,7 +44,12 @@ If the prop onDelete is provided, a delete button is displayed when the status i
 calls the prop function onDelete when it is clicked on.
 
 <Playground>
+  Draft:
   <ScenarioValidationStatusChip status="Draft" onDelete={() => console.log('delete')} />
+  <br />
+  Validated:
   <ScenarioValidationStatusChip status="Validated" onDelete={() => console.log('delete')} />
+  <br />
+  Rejected:
   <ScenarioValidationStatusChip status="Rejected" onDelete={() => console.log('delete')} />
 </Playground>
