@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FixedRatioContainer = (props) => {
+export const FixedRatioContainer = (props) => {
   const { children, className, heightOffset, ratio, width } = props;
   const paddingTop = `calc(${(1 / ratio) * 100}% + ${heightOffset})`;
   const classes = useStyles({ paddingTop, width });
@@ -54,5 +54,3 @@ FixedRatioContainer.defaultProps = {
   ratio: 1,
   width: '100%',
 };
-
-export default FixedRatioContainer;

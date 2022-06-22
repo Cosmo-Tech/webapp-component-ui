@@ -7,7 +7,7 @@ import * as PropTypes from 'prop-types';
 import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
-import FixedRatioContainer from '../../misc/FixedRatioContainer';
+import { FixedRatioContainer } from '../../misc/FixedRatioContainer';
 import { PowerBIUtils } from '@cosmotech/azure';
 
 const useStyles = makeStyles((theme) => ({
