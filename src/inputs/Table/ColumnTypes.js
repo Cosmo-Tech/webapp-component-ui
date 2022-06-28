@@ -157,6 +157,7 @@ export const getColumnTypes = (dateFormat) => {
     nonEditable: { editable: false },
     nonResizable: { resizable: false },
     nonSortable: { sortable: false },
+    string: {}, // No specific behavior here, but required to prevent ag-grid warning
     bool: {
       valueSetter: _boolSetter,
     },
