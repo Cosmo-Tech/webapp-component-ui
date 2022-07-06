@@ -25,6 +25,7 @@ import {
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import { ScenarioValidationStatusChip } from '../../misc';
+import { EditableLabel } from '../../inputs/EditableLabel';
 import useStyles from './style';
 
 export const ScenarioNode = ({
@@ -35,6 +36,8 @@ export const ScenarioNode = ({
   showDeleteIcon,
   onScenarioRedirect,
   deleteScenario,
+  checkScenarioNameValue,
+  onScenarioRename,
   labels,
   buildScenarioNameToDelete,
 }) => {
@@ -148,9 +151,16 @@ export const ScenarioNode = ({
   const getScenarioName = () => {
     return (
       <Tooltip key="scenario-name-tooltip" title={scenario.name}>
-        <Typography key="scenario-name" className={classes.scenarioTitle} variant="h4">
-          {scenario.name}
-        </Typography>
+        <div>
+          <EditableLabel
+            value={scenario.name}
+            checkValue={checkScenarioNameValue}
+            onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+            labels={labels.scenarioRename}
+            typographyProps={{ variant: 'h4' }}
+            textFieldProps={{ variant: 'outlined' }}
+          />
+        </div>
       </Tooltip>
     );
   };
@@ -294,6 +304,14 @@ ScenarioNode.propTypes = {
    */
   deleteScenario: PropTypes.func.isRequired,
   /**
+   * Function to handle scenario renaming
+   */
+  onScenarioRename: PropTypes.func.isRequired,
+  /**
+   * Function to check potential errors in scenario new name
+   */
+  checkScenarioNameValue: PropTypes.func,
+  /**
    *  Labels.
    *
    *  Structure:
@@ -305,6 +323,13 @@ ScenarioNode.propTypes = {
         created: 'string',
         delete: 'string',
         redirect: 'string',
+        scenarioRename: {
+          title: 'string'
+          errors: {
+            emptyScenarioName: 'string'
+            forbiddenCharsInScenarioName: 'string'
+          },
+        },
         running: 'string',
         dataset: 'string',
         deleteDialog : {
@@ -327,6 +352,13 @@ ScenarioNode.propTypes = {
     created: PropTypes.string.isRequired,
     delete: PropTypes.string.isRequired,
     redirect: PropTypes.string.isRequired,
+    scenarioRename: PropTypes.shape({
+      title: PropTypes.string,
+      errors: PropTypes.shape({
+        emptyScenarioName: PropTypes.string,
+        forbiddenCharsInScenarioName: PropTypes.string,
+      }),
+    }),
     running: PropTypes.string.isRequired,
     dataset: PropTypes.string.isRequired,
     deleteDialog: PropTypes.shape({
@@ -357,10 +389,20 @@ ScenarioNode.defaultProps = {
     created: 'Created',
     delete: 'Delete this scenario',
     redirect: 'Redirect to scenario view',
+    scenarioRename: {
+      title: 'Scenario name',
+      errors: {
+        emptyScenarioName: 'Scenario name cannot be empty',
+        forbiddenCharsInScenarioName:
+          'Scenario name has to start with a letter, and can only contain ' +
+          'letters, digits, spaces, underscores, hyphens and dots.',
+      },
+    },
     dataset: 'Datasets',
     validationStatus: {
       rejected: 'Rejected',
       validated: 'Validated',
     },
   },
+  checkScenarioNameValue: () => null,
 };
