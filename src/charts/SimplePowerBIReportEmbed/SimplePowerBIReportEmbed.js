@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   errorContainer: {
+    'z-index': '1', // Need z-index > 0, otherwise the error banner is hidden behind the powerbi loading screen
     height: '50px',
     width: '100%',
     position: 'absolute',
