@@ -49,6 +49,19 @@ const useStyles = makeStyles((theme) => ({
     transform: 'translate(-50%, -50%)',
     padding: '10px',
   },
+  placeholder: {
+    height: '35px',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    padding: '10px',
+  },
+  placeholderText: {
+    color: theme.palette.primary.main,
+    fontSize: '15px',
+    padding: '15px',
+  },
   cytoscapeContainer: {
     width: '100%',
     height: '100%',
