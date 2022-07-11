@@ -14,23 +14,9 @@ import {
   FormControlLabel,
   Grid,
   TextField,
-  makeStyles,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { HierarchicalComboBox } from '../../../../inputs';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%',
-  },
-  dialogContent: {
-    marginTop: '16px',
-  },
-  dialogActions: {
-    marginRight: '4px',
-    marginBottom: '4px',
-  },
-}));
 
 const getCurrentScenarioRunType = (currentScenario, runTemplates) => {
   const runTemplateId = currentScenario?.data?.runTemplateId;
@@ -69,8 +55,6 @@ const CreateScenarioDialog = ({
   dialogLabels,
   errorLabels,
 }) => {
-  const classes = useStyles();
-
   const scenarioNameInitialState = {
     value: '',
     hasError: false,
@@ -205,7 +189,7 @@ const CreateScenarioDialog = ({
       onClose={onClose}
     >
       <DialogTitle id="form-dialog-title">{dialogLabels.title}</DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -288,7 +272,7 @@ const CreateScenarioDialog = ({
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions className={classes.dialogActions}>
+      <DialogActions>
         <Button id="cancel" onClick={handleCloseDialog} color="primary">
           {dialogLabels.cancel}
         </Button>

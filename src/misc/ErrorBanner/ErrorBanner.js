@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import useStyles from './style';
 
 export const ErrorBanner = (props) => {
-  const classes = useStyles();
   const { error, clearErrors, labels } = props;
   const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {

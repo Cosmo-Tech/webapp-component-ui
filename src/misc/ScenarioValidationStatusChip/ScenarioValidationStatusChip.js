@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ScenarioValidationStatusChip = (props) => {
-  const classes = useStyles();
   const { labels, status, onDelete, className } = props;
   const lowerCaseStatus = status?.toLowerCase() || 'unknown';
+  const classes = useStyles();
 
   const getLabel = () => {
     if (lowerCaseStatus in labels) {

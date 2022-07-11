@@ -15,13 +15,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const BasicDateInput = (props) => {
-  const classes = useStyles();
   const { id, label, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDatePicker
-        className={classes.datePicker}
         disableToolbar
         variant="inline"
         margin="normal"

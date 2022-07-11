@@ -3,16 +3,21 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Menu, MenuItem, ClickAwayListener } from '@material-ui/core';
-import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@material-ui/icons';
-import useStyles from './style';
+import { Box, Menu, MenuItem, ClickAwayListener, IconButton, Tooltip, makeStyles } from '@material-ui/core';
+import {
+  ArrowRight as ArrowRightIcon,
+  AccountCircle as AccountCircleIcon,
+  Check as CheckIcon,
+} from '@material-ui/icons';
+
+const useStyles = makeStyles((theme) => ({}));
 
 export const UserInfo = (props) => {
-  const classes = useStyles();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setLanguangeMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [langAnchorEl, setLangAnchorEl] = useState(null);
+  const classes = useStyles();
 
   const handleClose = () => {
     setMenuOpen(false);
@@ -46,23 +51,38 @@ export const UserInfo = (props) => {
           onClick={handleClick}
           className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
         >
-          <img className={classes.profilePic} src={profilePlaceholder} />
-          <span className={classes.userName}>{userName}</span>
+          {profilePlaceholder ? (
+            <img src={profilePlaceholder} />
+          ) : (
+            <Tooltip key="user-name-tooltip" title={userName}>
+              <IconButton aria-label="account" color="inherit">
+                <AccountCircleIcon />
+              </IconButton>
+            </Tooltip>
+          )}
         </Box>
 
         <Menu
-          className={classes.menu}
           data-cy="main-menu"
           id="main-menu"
           keepMounted
           anchorEl={anchorEl}
           open={isMenuOpen}
           onClose={handleClick}
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
         >
           {languages && (
-            <MenuItem data-cy="change-language" onClick={handleLanguageMenuClick} className={classes.menuContainer}>
+            <MenuItem data-cy="change-language" onClick={handleLanguageMenuClick}>
               {labels.language}
-              <ArrowRightIcon className={classes.menuIcon} />
+              <ArrowRightIcon />
             </MenuItem>
           )}
           <MenuItem data-cy="logout" onClick={onLogout}>
@@ -71,7 +91,6 @@ export const UserInfo = (props) => {
         </Menu>
         {languages && (
           <Menu
-            className={classes.menu}
             id="languages-menu"
             keepMounted
             anchorEl={langAnchorEl}
@@ -84,16 +103,11 @@ export const UserInfo = (props) => {
             {
               // Language menu items
               Object.entries(languages).map(([langKey, langLabel]) => (
-                <MenuItem
-                  data-cy={'set-lang-' + langKey}
-                  key={langKey}
-                  onClick={() => setLanguage(langKey)}
-                  className={classes.menuContainer}
-                >
+                <MenuItem data-cy={'set-lang-' + langKey} key={langKey} onClick={() => setLanguage(langKey)}>
                   {langLabel}
                   {
                     // Add a check mark for the currently selected language
-                    langKey === language && <CheckIcon className={classes.menuIcon} />
+                    langKey === language && <CheckIcon />
                   }
                 </MenuItem>
               ))
@@ -147,7 +161,6 @@ UserInfo.propTypes = {
 };
 
 UserInfo.defaultProps = {
-  profilePictureUrl: '../../assets/profile_placeholder.png',
   labels: {
     language: 'Change language',
     logOut: 'Log out',

@@ -5,15 +5,17 @@ import React from 'react';
 import { makeStyles, Grid, Typography, Avatar } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
+// See https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-add-branding-in-azure-ad-apps
+// for further information on how to to style a 'Sign in with Microsoft' button
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: 0,
-    background: theme.palette.background.signInButton,
+    backgroundColor: theme.palette.type === 'dark' ? '#2F2F2F' : '#FFFFFF',
     boxShadow: 'none',
     borderRadius: '0px',
     height: '41px',
     paddingRight: '12px',
     cursor: 'pointer',
+    border: theme.palette.type === 'dark' ? '1px #8C8C8C' : 'none',
   },
   logo: {
     height: '21px',
@@ -25,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
     font: 'Sogoe UI Regular',
     weight: 600,
-    color: theme.palette.text.primary,
+    color: theme.palette.type === 'dark' ? '#FFFFFF' : '#5E5E5E',
   },
 }));
 

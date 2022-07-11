@@ -34,8 +34,8 @@ export const FixedRatioContainer = (props) => {
         [className]: className.length !== 0,
       })}
     >
-      <div className={classes.relativePosContainer}>
-        <div className={classes.absolutePosContainer}>{children}</div>
+      <div>
+        <div>{children}</div>
       </div>
     </div>
   );

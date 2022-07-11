@@ -12,12 +12,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const BasicEnumInput = (props) => {
-  const classes = useStyles();
   const { label, value, textFieldProps, enumValues, changeEnumField, containerProps, labelProps, ...otherProps } =
     props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
+    <Grid container {...containerProps} {...otherProps}>
       <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>

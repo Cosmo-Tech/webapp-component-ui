@@ -3,19 +3,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, Grid, IconButton, Link, Tooltip, Typography, makeStyles } from '@material-ui/core';
+import { Button, CircularProgress, Grid, IconButton, Link, Tooltip, Typography } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
-
-const useStyles = makeStyles((theme) => ({
-  uploadFileContainer: {
-    '& > div': {
-      margin: '0',
-    },
-  },
-}));
 
 export const UploadFile = (props) => {
   const {
@@ -29,11 +21,10 @@ export const UploadFile = (props) => {
     labels,
     ...otherProps
   } = props;
-  const classes = useStyles();
 
   return (
-    <div className={classes.uploadFileContainer} {...otherProps}>
-      <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
+    <div {...otherProps}>
+      <Grid container direction="row" justifyContent="flex-start" alignItems="center">
         <Typography>{labels.label}</Typography>
         <Grid item>
           <Button
@@ -51,7 +42,7 @@ export const UploadFile = (props) => {
         <Grid item>
           {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
             file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) && (
-            <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
+            <Grid container direction="row" justifyContent="flex-start" alignItems="center">
               <Grid item>
                 {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD && (
                   <Link
@@ -61,7 +52,7 @@ export const UploadFile = (props) => {
                     onClick={handleDownloadFile}
                     download
                   >
-                    <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
+                    <Grid container rowSpacing={2} direction="row" justifyContent="flex-start" alignItems="center">
                       <Grid item>
                         <GetAppIcon />
                       </Grid>

@@ -27,22 +27,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }) => {
-  const classes = useStyles();
-
   return (
     <Dialog
       data-cy="confirm-scenario-delete-dialog"
-      className={classes.root}
       open={open}
       onClose={closeDialog}
       aria-labelledby="confirm-scenario-delete"
       aria-describedby="confirm-scenario-delete-description"
     >
       <DialogTitle id="confirm-scenario-delete">{labels.title}</DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent>
         <DialogContentText id="confirm-scenario-delete-description">{labels.description}</DialogContentText>
       </DialogContent>
-      <DialogActions className={classes.dialogActions}>
+      <DialogActions>
         <Button onClick={closeDialog} color="primary" autoFocus>
           {labels.cancel}
         </Button>

@@ -18,25 +18,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashboardPlaceholder = (props) => {
-  const classes = useStyles();
   const { title, label, icon, downloadLogsFile, downloadLabel } = props;
 
   return (
-    <Grid
-      container
-      spacing={2}
-      direction="column"
-      justifyContent="center"
-      wrap="nowrap"
-      alignItems="center"
-      className={classes.gridContainer}
-    >
+    <Grid container spacing={2} direction="column" justifyContent="center" wrap="nowrap" alignItems="center">
       <Grid>
         <Typography variant="h2">{title}</Typography>
       </Grid>
       <Grid item>
-        {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
-        <Typography data-cy="dashboard-placeholder" color="textSecondary" className={classes.label}>
+        {icon !== undefined && <div>{icon}</div>}
+        <Typography data-cy="dashboard-placeholder" color="textSecondary">
           {label}
         </Typography>
       </Grid>

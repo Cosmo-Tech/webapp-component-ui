@@ -13,6 +13,7 @@ import {
   Paper,
   Tooltip,
   Typography,
+  makeStyles,
 } from '@material-ui/core';
 import {
   DeleteForever as DeleteForeverIcon,
@@ -25,7 +26,67 @@ import {
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import { ScenarioValidationStatusChip } from '../../misc';
-import useStyles from './style';
+// import useStyles from './style';
+
+const useStyles = makeStyles((theme) => ({
+  statusUnknown: {
+    marginLeft: '5px',
+    color: theme.palette.info.main,
+    backgroundColor: theme.palette.background.card,
+    fontWeight: 'bold',
+  },
+  statusCreated: {
+    marginLeft: '5px',
+    fontWeight: 'bold',
+  },
+  statusRunning: {
+    marginLeft: '5px',
+    fontWeight: 'bold',
+  },
+  statusSuccessful: {
+    marginLeft: '5px',
+    color: theme.palette.success.main,
+    backgroundColor: theme.palette.background.card,
+    fontWeight: 'bold',
+  },
+  statusFailed: {
+    marginLeft: '5px',
+    color: theme.palette.error.main,
+    backgroundColor: theme.palette.background.card,
+    fontWeight: 'bold',
+  },
+  statusSuccessfulIcon: {
+    marginLeft: '10px',
+    color: theme.palette.success.main,
+    backgroundColor: theme.palette.background.card,
+  },
+  statusFailedIcon: {
+    marginLeft: '10px',
+    color: theme.palette.error.main,
+    backgroundColor: theme.palette.background.card,
+  },
+  statusRunningIcon: {
+    marginLeft: '15px',
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.background.card,
+  },
+  statusUnknownIcon: {
+    marginLeft: '10px',
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.background.card,
+  },
+  clickableValidationStatusChip: {
+    marginLeft: '10px',
+    height: '24px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  nonClickableValidationStatusChip: {
+    marginLeft: '10px',
+    height: '24px',
+  },
+}));
 
 export const ScenarioNode = ({
   datasets,
@@ -39,6 +100,7 @@ export const ScenarioNode = ({
   buildScenarioNameToDelete,
 }) => {
   const classes = useStyles();
+
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const openConfirmDialog = (event) => {
     event.stopPropagation(); // Prevent opening the Accordion when clicking the "delete" button
@@ -119,7 +181,7 @@ export const ScenarioNode = ({
       case 'Created':
       case 'Unknown':
       default:
-        icon = <HelpIcon className={classes.statusUnknownIcon} aria-label={status} />;
+        icon = <HelpIcon aria-label={status} />;
         break;
     }
     return (
@@ -148,7 +210,7 @@ export const ScenarioNode = ({
   const getScenarioName = () => {
     return (
       <Tooltip key="scenario-name-tooltip" title={scenario.name}>
-        <Typography key="scenario-name" className={classes.scenarioTitle} variant="h4">
+        <Typography key="scenario-name" variant="h4">
           {scenario.name}
         </Typography>
       </Tooltip>
@@ -157,8 +219,8 @@ export const ScenarioNode = ({
 
   const getDetailedStatus = () => {
     return (
-      <div className={classes.scenarioDetailsStatusContainer}>
-        <Typography className={classes.cardLabel}>{labels.status}</Typography>
+      <div>
+        <Typography>{labels.status}</Typography>
         {getStatusIcon(true)}
       </div>
     );
@@ -175,21 +237,13 @@ export const ScenarioNode = ({
 
   const getScenarioCreationData = () => {
     return [
-      <span key="scenario-name" className={classes.scenarioHeaderItem}>
-        {scenario.ownerName}
-      </span>,
-      <span key="scenario-creation-date" className={classes.scenarioHeaderItem}>
-        {new Date(scenario.creationDate).toLocaleString()}
-      </span>,
+      <span key="scenario-name">{scenario.ownerName}</span>,
+      <span key="scenario-creation-date">{new Date(scenario.creationDate).toLocaleString()}</span>,
     ];
   };
 
   const getScenarioHeader = () => {
-    return (
-      <Box className={classes.scenarioHeader} flexGrow={1}>
-        {isExpanded ? getScenarioCreationData() : getScenarioNameAndValidationStatus(true)}
-      </Box>
-    );
+    return <Box flexGrow={1}>{isExpanded ? getScenarioCreationData() : getScenarioNameAndValidationStatus(true)}</Box>;
   };
 
   const redirectToScenarioView = (event) => {
@@ -199,14 +253,10 @@ export const ScenarioNode = ({
 
   const getAccordionSummary = () => {
     return (
-      <AccordionSummary
-        className={classes.accordionSummary}
-        expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}
-      >
+      <AccordionSummary expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}>
         {getScenarioHeader()}
         {showDeleteIcon && (
           <IconButton
-            className={classes.scenarioDeleteButton}
             data-cy="scenario-delete-button"
             aria-label="delete scenario"
             size="small"
@@ -218,7 +268,6 @@ export const ScenarioNode = ({
           </IconButton>
         )}
         <IconButton
-          className={classes.scenarioDeleteButton}
           data-cy="scenario-view-redirect"
           aria-label="redirect to scenario view"
           size="small"
@@ -234,12 +283,12 @@ export const ScenarioNode = ({
 
   const getAccordionDetails = () => {
     return (
-      <AccordionDetails className={classes.scenarioDetailsContainer}>
-        <div className={classes.scenarioDetailsNameLine}>{getScenarioNameAndValidationStatus(false)}</div>
+      <AccordionDetails>
+        <div>{getScenarioNameAndValidationStatus(false)}</div>
         {getDetailedStatus()}
-        <Typography className={classes.cardLabel}>{getDatasetsLabel()}</Typography>
+        <Typography>{getDatasetsLabel()}</Typography>
         <Typography>
-          <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
+          <span>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
         </Typography>
       </AccordionDetails>
     );

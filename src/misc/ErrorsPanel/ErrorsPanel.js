@@ -16,7 +16,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import useStyles from './style';
 
 export const ErrorsPanel = (props) => {
-  const classes = useStyles();
   const { errors, labels, onClear, buildErrorsCountLabel } = props;
 
   let errorsCountLabel = labels.errorsCountLabel;
@@ -25,38 +24,31 @@ export const ErrorsPanel = (props) => {
   }
 
   return (
-    <Paper className={classes.errorsContainer} data-cy="errors-panel">
-      <Typography className={classes.errorsHeader} data-cy="errors-header">
+    <Paper data-cy="errors-panel">
+      <Typography data-cy="errors-header">
         {labels.mainError} {errorsCountLabel}
       </Typography>
       {errors.map((error, index) => (
         <Accordion key={'error' + index} data-cy={'error-accordion-' + index}>
           <AccordionSummary
-            className={classes.errorTitle}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="errors-panel-content"
             id="errors-panel-header"
           >
             <Box justifyContent="flex-start">
-              <Typography className={classes.errorSummary}>
-                <CancelIcon className={classes.cancelIcon} />
+              <Typography>
+                <CancelIcon />
               </Typography>
             </Box>
             <Box flexGrow={1}>
-              <Typography className={classes.errorSummary} data-cy={'error-summary'}>
-                {error.summary}
-              </Typography>
+              <Typography data-cy={'error-summary'}>{error.summary}</Typography>
             </Box>
             <Box>
-              <Typography className={classes.errorLoc} data-cy={'error-loc'}>
-                {error.loc}
-              </Typography>
+              <Typography data-cy={'error-loc'}>{error.loc}</Typography>
             </Box>
           </AccordionSummary>
-          <AccordionDetails className={classes.errorContextContainer}>
-            <Typography className={classes.errorContext} variant="caption">
-              {error.context}
-            </Typography>
+          <AccordionDetails>
+            <Typography variant="caption">{error.context}</Typography>
           </AccordionDetails>
           <Divider />
         </Accordion>

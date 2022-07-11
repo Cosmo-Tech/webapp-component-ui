@@ -12,11 +12,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const BasicToggleInput = (props) => {
-  const classes = useStyles();
   const { label, value, switchProps, changeSwitchType, containerProps, labelProps, ...otherProps } = props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
+    <Grid container {...containerProps} {...otherProps}>
       <Grid item>
         <Typography {...labelProps}>{label}</Typography>
       </Grid>

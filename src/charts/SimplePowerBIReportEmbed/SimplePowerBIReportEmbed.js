@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     textAlign: 'center',
     padding: '5px 0',
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
   },
   errorTitle: {
@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     height: hasNavContentPane ? 'calc(100% - 35px)' : '100%',
     width: '100%',
   }),
+  refreshButton: {
+    color: theme.palette.error.contrastText,
+  },
 }));
 
 function getErrorCode(labels, reports) {
@@ -216,8 +219,8 @@ export const SimplePowerBIReportEmbed = ({
         {refreshable && (
           <div className={classes.toolbar}>
             <Tooltip title={labels.refreshTooltip}>
-              <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
-                <RefreshIcon />
+              <IconButton aria-label="refresh" disabled={!report || disabled} onClick={refreshReport}>
+                <RefreshIcon className={classes.refreshButton} />
               </IconButton>
             </Tooltip>
           </div>
@@ -340,7 +343,7 @@ SimplePowerBIReportEmbed.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new scenario',
+      label: 'You can create a scenario by clicking on CREATE',
     },
     noRun: {
       label: 'The scenario has not been run yet',

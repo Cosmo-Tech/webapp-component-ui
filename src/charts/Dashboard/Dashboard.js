@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Dashboard = (props) => {
-  const classes = useStyles();
   const {
     iframeTitle,
     url,
@@ -61,14 +60,7 @@ export const Dashboard = (props) => {
         />
       )}
       {isReady && formattedUrl !== '' && (
-        <iframe
-          className={classes.iframe}
-          title={iframeTitle}
-          frameBorder="0"
-          allowFullScreen={true}
-          src={formattedUrl}
-          {...otherProps}
-        />
+        <iframe title={iframeTitle} frameBorder="0" allowFullScreen={true} src={formattedUrl} {...otherProps} />
       )}
       {isReady && formattedUrl === '' && (
         <DashboardPlaceholder label={labels.noResult.label} title={labels.noResult.title} />
@@ -168,7 +160,7 @@ Dashboard.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new Scenario',
+      label: 'You can create a scenario by clicking on CREATE',
     },
     noRun: {
       title: '',

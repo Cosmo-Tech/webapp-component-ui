@@ -9,16 +9,25 @@ import {
   MenuItem,
   ClickAwayListener,
   Dialog,
-  DialogTitle,
   DialogActions,
   DialogContent,
   Button,
+  IconButton,
+  Link,
+  makeStyles,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import useStyles from './style';
+
+const useStyles = makeStyles((theme) => ({
+  menuLink: {
+    color: 'white',
+    textDecoration: 'none',
+  },
+}));
 
 export const HelpMenu = (props) => {
   const classes = useStyles();
+
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showAboutDialog, setShowAboutDialog] = useState(false);
@@ -38,27 +47,38 @@ export const HelpMenu = (props) => {
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <div>
-        <Box
-          data-cy="help-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
-        >
-          <HelpOutlineIcon className={classes.menuIcon} />
+        <Box data-cy="help-menu" aria-haspopup="true" onClick={handleClick}>
+          <IconButton aria-label="help" color="inherit">
+            <HelpOutlineIcon />
+          </IconButton>
         </Box>
-        <Menu className={classes.menu} keepMounted anchorEl={anchorEl} open={isMenuOpen} onClose={handleClick}>
+        <Menu
+          keepMounted
+          anchorEl={anchorEl}
+          open={isMenuOpen}
+          onClose={handleClick}
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
           {documentationUrl && (
-            <MenuItem data-cy="documentation-link" className={classes.link} onClick={handleClick}>
-              <a href={documentationUrl} className={classes.link} target="_blank" rel="noreferrer">
+            <MenuItem data-cy="documentation-link" onClick={handleClick}>
+              <Link href={documentationUrl} target="_blank" rel="noreferrer" color="inherit" underline="none">
                 {labels.documentation}
-              </a>
+              </Link>
             </MenuItem>
           )}
           {supportUrl && (
-            <MenuItem data-cy="support-link" className={classes.link} onClick={handleClick}>
-              <a href={supportUrl} className={classes.link} target="_blank" rel="noreferrer">
+            <MenuItem data-cy="support-link" onClick={handleClick}>
+              <Link href={supportUrl} target="_blank" rel="noreferrer" color="inherit" underline="none">
                 {labels.support}
-              </a>
+              </Link>
             </MenuItem>
           )}
           {about && (
@@ -69,20 +89,7 @@ export const HelpMenu = (props) => {
         </Menu>
         {about && (
           <Dialog data-cy="about-dialog" open={showAboutDialog} onClose={handleClose}>
-            <DialogTitle>{labels.aboutTitle}</DialogTitle>
-            <DialogContent>{about}</DialogContent>
-            <DialogActions>
-              <Button
-                data-cy="about-dialog-close-button"
-                autoFocus
-                color="primary"
-                onClick={() => {
-                  handleClose();
-                }}
-              >
-                {labels.close}
-              </Button>
-            </DialogActions>
+            {about}
           </Dialog>
         )}
       </div>

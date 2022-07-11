@@ -26,7 +26,6 @@ export const HierarchicalComboBox = ({
   renderInputToolType,
   ...props
 }) => {
-  const classes = useStyles();
   // 'label' prop is deprecated but is still used as main source of data if provided, otherwise we fallback to the new
   // prop labels.label
   const mainLabel = label || labels.label;
@@ -46,7 +45,6 @@ export const HierarchicalComboBox = ({
           <span data-testid={'option-' + option.id} style={{ marginLeft: marginLeft }}>
             {option.name}
             <ScenarioValidationStatusChip
-              className={classes.validationStatusChip}
               status={option.validationStatus || 'Unknown'}
               labels={labels.validationStatus}
             />
