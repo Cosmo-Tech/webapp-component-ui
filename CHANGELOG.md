@@ -1,28 +1,44 @@
+## **2.7.0** <sub><sup>2022-07-11 (ec50102...0caeba6)</sup></sub>
+
+### Features
+
+- make dismiss errors button optional in ErrorBanner component ([3491d22](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3491d22))
+- add error banner & placeholder in CytoViz component ([3fb6038](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3fb6038))
+
+### Bug Fixes
+
+- fix loading spinner position in Table input component ([9bf486d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9bf486d))
+- prevent selection of elements declared as not selectable in CytoViz component ([d9c3d69](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d9c3d69))
+- fix export of FixedRatioContainer component ([fa42860](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fa42860))
+- fix console warning when using string type in table column ([09c2846](https://github.com/Cosmo-Tech/webapp-component-ui/commit/09c2846))
+- fix error banner hidden behind powerbi loading screen ([0f6e6f9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0f6e6f9))
+- prevent showing 'null' status in ErrorBanner ([a316535](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a316535))
+
 ## **2.6.0** <sub><sup>2022-06-07 (ec50102...5bb6781)</sup></sub>
 
 ### Features
-*  create an error display banner ([93d162f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/93d162f))
 
+- create an error display banner ([93d162f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/93d162f))
 
 ### Bug Fixes
-*  fix possible drag & drop error in ScenarioManagerTreeList ([0e9a018](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0e9a018))
-*  set scenario creation button variant to 'contained' in dialog ([7e7d078](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7e7d078))
 
+- fix possible drag & drop error in ScenarioManagerTreeList ([0e9a018](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0e9a018))
+- set scenario creation button variant to 'contained' in dialog ([7e7d078](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7e7d078))
 
 ## **2.5.1** <sub><sup>2022-05-06 (fec764c...a39a3c9)</sup></sub>
 
 ### Features
-*  add new component FixedRatioContainer ([d15990c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d15990c))
-*  add new component ScenarioValidationStatusChip ([cdfaabd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cdfaabd))
-*  add scenario validation chips in scenario manager ([67d876a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/67d876a))
-*  add scenario validation chips in HierarchicalComboBox ([a39ddc3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a39ddc3))
-*  support empty fields in table component ([b25384a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b25384a))
 
+- add new component FixedRatioContainer ([d15990c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d15990c))
+- add new component ScenarioValidationStatusChip ([cdfaabd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cdfaabd))
+- add scenario validation chips in scenario manager ([67d876a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/67d876a))
+- add scenario validation chips in HierarchicalComboBox ([a39ddc3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a39ddc3))
+- support empty fields in table component ([b25384a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b25384a))
 
 ### Bug Fixes
-*  improve dynamic height of dashboards ([f537d84](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f537d84))
-*  fix scenario manager crash when scenarios have the 'Unknown' run status ([250ce19](https://github.com/Cosmo-Tech/webapp-component-ui/commit/250ce19))
 
+- improve dynamic height of dashboards ([f537d84](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f537d84))
+- fix scenario manager crash when scenarios have the 'Unknown' run status ([250ce19](https://github.com/Cosmo-Tech/webapp-component-ui/commit/250ce19))
 
 ## **2.4.2** <sub><sup>2022-04-29 (250ce19...c8fcd87)</sup></sub>
 
