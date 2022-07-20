@@ -14,7 +14,6 @@ export const CreateScenarioButton = ({
   workspaceId,
   solution,
   disabled,
-  nameValidator,
   labels,
 }) => {
   const [open, setOpen] = useState(false);
@@ -53,7 +52,6 @@ export const CreateScenarioButton = ({
         runTemplates={runTemplates}
         scenarios={scenarios}
         user={user}
-        nameValidator={nameValidator}
         datasetsFilter={datasetsFilter}
         dialogLabels={labels.dialog}
         errorLabels={labels.errors}
@@ -101,10 +99,6 @@ CreateScenarioButton.propTypes = {
    *  - false : the button is enabled
    */
   disabled: PropTypes.bool.isRequired,
-  /**
-   * RegExp used to validate scenario name
-   */
-  nameValidator: PropTypes.instanceOf(RegExp),
   /**
    * Structure:
    * <pre>
