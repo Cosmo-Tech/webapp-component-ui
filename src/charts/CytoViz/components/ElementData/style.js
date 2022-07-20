@@ -28,15 +28,15 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     margin: '5px',
-    border: `1px solid ${theme.palette.primary.contrastText}`,
+    border: `1px solid ${theme.palette.text.primary}`,
     borderCollapse: 'collapse',
   },
   th: {
-    border: `1px solid ${theme.palette.primary.contrastText}`,
+    border: `1px solid ${theme.palette.text.primary}`,
     padding: '5px',
   },
   td: {
-    border: `1px solid ${theme.palette.primary.contrastText}`,
+    border: `1px solid ${theme.palette.text.primary}`,
     padding: '5px',
   },
 }));

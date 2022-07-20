@@ -10,7 +10,6 @@ const TREES_CONTAINER_OFFSET = WEBAPP_HEADER_HEIGHT + SEARCH_FIELD_HEIGHT + 2 * 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.card,
     height: '100%',
     width: '100%',
     position: 'fixed',
@@ -19,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
     },
     '& .rst__lineBlock': {
       '&::before': {
-        backgroundColor: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.text.primary,
       },
       '&::after': {
-        backgroundColor: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.text.primary,
       },
     },
     '& .rst__node': {
@@ -57,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   treeContainer: {
-    backgroundColor: theme.palette.background.secondary,
+    backgroundColor: theme.palette.background.paper,
     margin: '12px',
     padding: '16px',
     width: '65%',
@@ -75,8 +74,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   toolbarPrimaryAction: {
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.primary.main,
     minWidth: '40px',
     padding: '11px',
     margin: '8px',
@@ -85,15 +82,9 @@ const useStyles = makeStyles((theme) => ({
       marginRight: '0px',
     },
   },
-  verticalDivider: {
-    width: '2px',
-    marginLeft: '5px',
-    marginRight: '5px',
-    backgroundColor: theme.palette.primary.contrastText,
-  },
   scenarioCard: {
     '& .rst__rowContents': {
-      backgroundColor: theme.palette.background.secondary,
+      backgroundColor: theme.palette.background.paper,
       border: 'none',
       boxShadow: 'none',
       padding: '0px',

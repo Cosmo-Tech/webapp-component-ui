@@ -157,7 +157,7 @@ export const ScenarioNode = ({
             checkValue={checkScenarioNameValue}
             onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
             labels={labels.scenarioRename}
-            typographyProps={{ variant: 'h4' }}
+            typographyProps={{ variant: 'h6' }}
           />
         </div>
       </Tooltip>

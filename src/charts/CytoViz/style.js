@@ -66,7 +66,6 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     position: 'relative',
-    backgroundColor: theme.palette.background.secondary,
   },
   settingsContainer: {
     display: 'flex',
@@ -92,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsSlider: {
     '& .MuiSlider-valueLabel': {
-      backgroundColor: theme.palette.background.primary,
       color: theme.palette.primary.main,
     },
   },

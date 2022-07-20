@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
   },
   errorTitle: {
     fontWeight: 'bold',
-    color: theme.palette.white,
+    color: theme.palette.error.contrastText,
   },
   errorText: {
-    color: theme.palette.white,
+    color: theme.palette.error.contrastText,
   },
   errorButton: {
     marginLeft: '5px',

@@ -46,11 +46,6 @@ const useStyles = makeStyles((theme) => ({
     height: '20px',
     color: theme.palette.primary.main,
   },
-  circularLoading: {
-    marginLeft: '15px',
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.background.card,
-  },
 }));
 
 export const EditableLabel = (props) => {
@@ -105,7 +100,7 @@ export const EditableLabel = (props) => {
         </div>
       );
     } else {
-      return <CircularProgress size={25} className={classes.circularLoading} />;
+      return <CircularProgress size={25} color="primary" />;
     }
   };
 

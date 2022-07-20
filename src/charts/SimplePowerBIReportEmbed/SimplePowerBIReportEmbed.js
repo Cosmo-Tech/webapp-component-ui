@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     textAlign: 'center',
     padding: '5px 0',
-    backgroundColor: theme.palette.error.dark,
+    backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
   },
   errorTitle: {

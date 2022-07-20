@@ -3,8 +3,13 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Menu, MenuItem, ClickAwayListener } from '@material-ui/core';
-import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@material-ui/icons';
+import { Box, Menu, MenuItem, ClickAwayListener, IconButton, Tooltip } from '@material-ui/core';
+import {
+  ArrowRight as ArrowRightIcon,
+  AccountCircle as AccountCircleIcon,
+  Check as CheckIcon,
+} from '@material-ui/icons';
+
 import useStyles from './style';
 
 export const UserInfo = (props) => {
@@ -46,8 +51,15 @@ export const UserInfo = (props) => {
           onClick={handleClick}
           className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
         >
-          <img className={classes.profilePic} src={profilePlaceholder} />
-          <span className={classes.userName}>{userName}</span>
+          <Tooltip key="user-name-tooltip" title={userName}>
+            {profilePlaceholder ? (
+              <img src={profilePlaceholder} />
+            ) : (
+              <IconButton aria-label="account" color="inherit">
+                <AccountCircleIcon />
+              </IconButton>
+            )}
+          </Tooltip>
         </Box>
 
         <Menu
