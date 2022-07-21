@@ -107,7 +107,7 @@ export const SimplePowerBIReportEmbed = ({
   useAAD,
   iframeRatio,
 }) => {
-  const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index];
+  const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
   const hasNavContentPane = settings?.navContentPaneEnabled;
   const iframeHeightOffset = hasNavContentPane ? '35px' : '0px';
   const classes = useStyles({ hasNavContentPane });
@@ -130,12 +130,14 @@ export const SimplePowerBIReportEmbed = ({
     () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
     [dynamicFilters, scenarioDTO]
   );
+  const noDashboardConfigured = reportConfiguration[index] === undefined;
   const noScenario = scenario === null;
   const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
   const noRun = scenarioState === 'Created' || scenarioState === null;
   const runInProgress = scenarioState === 'Running';
   const hasError = scenarioState === 'Failed';
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
+  const hasUnknownStatus = scenarioState === 'Unknown';
 
   useEffect(() => {
     const newConfig = {
@@ -193,6 +195,7 @@ export const SimplePowerBIReportEmbed = ({
         <div className={classes.errorTitle}>{errorCode}</div>
         <div className={classes.errorDescription}>{errorDescription}</div>
       </div>
+      {noDashboardConfigured && <DashboardPlaceholder label={labels.noDashboard.label} />}
       {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
       {!noScenario && noRun && !alwaysShowReports && (
         <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />
@@ -212,6 +215,7 @@ export const SimplePowerBIReportEmbed = ({
           downloadLabel={labels.downloadButton}
         />
       )}
+      {hasUnknownStatus && <DashboardPlaceholder label={labels.hasUnknownStatus.label} />}
       <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
         {refreshable && (
           <div className={classes.toolbar}>
@@ -311,6 +315,10 @@ SimplePowerBIReportEmbed.propTypes = {
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
     }).isRequired,
+    noDashboard: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string,
+    }),
     noRun: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
@@ -323,6 +331,10 @@ SimplePowerBIReportEmbed.propTypes = {
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
     }).isRequired,
+    hasUnknownStatus: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string,
+    }),
     downloadButton: PropTypes.string.isRequired,
     refreshTooltip: PropTypes.string.isRequired,
     errors: PropTypes.shape({
@@ -342,6 +354,9 @@ SimplePowerBIReportEmbed.defaultProps = {
       title: 'No scenario yet',
       label: 'You can create a scenario by clicking on Create new scenario',
     },
+    noDashboard: {
+      label: "There isn't any dashboard configured for this run template",
+    },
     noRun: {
       label: 'The scenario has not been run yet',
     },
@@ -350,6 +365,9 @@ SimplePowerBIReportEmbed.defaultProps = {
     },
     hasErrors: {
       label: 'An error occured during the scenario run',
+    },
+    hasUnknownStatus: {
+      label: 'This scenario has an unknown state, if the problem persists, please, contact your administrator',
     },
     downloadButton: 'Download logs',
     refreshTooltip: 'Refresh',
