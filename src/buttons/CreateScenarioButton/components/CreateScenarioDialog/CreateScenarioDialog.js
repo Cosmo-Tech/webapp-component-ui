@@ -64,7 +64,6 @@ const CreateScenarioDialog = ({
   createScenario,
   workspaceId,
   solution,
-  nameValidator,
   datasetsFilter,
   dialogLabels,
   errorLabels,
@@ -108,25 +107,23 @@ const CreateScenarioDialog = ({
 
   const handleChangeScenarioName = (event) => {
     const newScenarioName = event.target.value;
-    let error = '';
-    let hasErrors = false;
-    if (newScenarioName.length === 0) {
-      error = errorLabels.emptyScenarioName;
-      hasErrors = true;
-    } else {
-      if (newScenarioName.match(nameValidator) === null) {
-        error = errorLabels.forbiddenCharsInScenarioName;
-        hasErrors = true;
-      } else if (ScenarioUtils.scenarioExistsInList(newScenarioName, scenarios)) {
-        error = errorLabels.existingScenarioName;
-        hasErrors = true;
+    let label = '';
+    const errorKey = ScenarioUtils.scenarioNameIsValid(newScenarioName, scenarios);
+    if (errorKey) {
+      const errorLabel = errorLabels[errorKey];
+      if (errorLabel) {
+        label = errorLabel;
+      } else {
+        console.warn('Scenario error label key is broken !');
+        label = 'Scenario name is invalid';
       }
     }
+
     setScenarioNameFieldValues({
       ...scenarioNameFieldValues,
       value: newScenarioName,
-      error: error,
-      hasError: hasErrors,
+      error: label,
+      hasError: errorKey != null,
     });
   };
 
@@ -318,7 +315,6 @@ CreateScenarioDialog.propTypes = {
   createScenario: PropTypes.func.isRequired,
   workspaceId: PropTypes.string.isRequired,
   solution: PropTypes.object.isRequired,
-  nameValidator: PropTypes.instanceOf(RegExp),
   datasetsFilter: PropTypes.func,
   dialogLabels: PropTypes.shape({
     title: PropTypes.string.isRequired,

@@ -44,6 +44,8 @@ export const ScenarioManagerTreeList = (props) => {
     scenarios,
     onScenarioRedirect,
     deleteScenario,
+    onScenarioRename,
+    checkScenarioNameValue,
     moveScenario,
     userId,
     buildSearchInfo,
@@ -107,6 +109,8 @@ export const ScenarioManagerTreeList = (props) => {
             showDeleteIcon={displayDeleteIcon}
             onScenarioRedirect={onScenarioRedirect}
             deleteScenario={deleteScenario}
+            checkScenarioNameValue={checkScenarioNameValue}
+            onScenarioRename={onScenarioRename}
             labels={labels}
             buildScenarioNameToDelete={buildScenarioNameToDelete}
           />
@@ -263,6 +267,14 @@ ScenarioManagerTreeList.propTypes = {
    */
   deleteScenario: PropTypes.func.isRequired,
   /**
+   * Function to handle scenario renaming
+   */
+  onScenarioRename: PropTypes.func.isRequired,
+  /**
+   * Function to check potential errors in scenario new name
+   */
+  checkScenarioNameValue: PropTypes.func,
+  /**
    * Function bound to handle a scenario movement (moving a scenario = changing its parent)
    */
   moveScenario: PropTypes.func.isRequired,
@@ -293,10 +305,20 @@ ScenarioManagerTreeList.propTypes = {
     running: 'string',
     failed: 'string',
     created: 'string',
+    delete: 'string',
+    redirect: 'string',
+    scenarioRename: {
+      title: 'string'
+      errors: {
+        emptyScenarioName: 'string'
+        forbiddenCharsInScenarioName: 'string'
+      },
+    },
     dataset: 'string',
     searchField: 'string',
     toolbar : {
       expandAll: 'string',
+      expantTree: 'string'
       collapseAll: 'string',
     }
   }
@@ -320,6 +342,15 @@ ScenarioManagerTreeList.defaultProps = {
     created: 'Created',
     delete: 'Delete this scenario',
     redirect: 'Redirect to scenario view',
+    scenarioRename: {
+      title: 'Scenario name',
+      errors: {
+        emptyScenarioName: 'Scenario name cannot be empty',
+        forbiddenCharsInScenarioName:
+          'Scenario name has to start with a letter, and can only contain ' +
+          'letters, digits, spaces, underscores, hyphens and dots.',
+      },
+    },
     dataset: 'Dataset',
     searchField: 'Filter',
     toolbar: {
@@ -332,6 +363,7 @@ ScenarioManagerTreeList.defaultProps = {
       validated: 'Validated',
     },
   },
+  checkScenarioNameValue: () => null,
 };
 
 // Function to ignore drag & drop events in the parent div, to prevent

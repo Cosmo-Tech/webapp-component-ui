@@ -1,3 +1,27 @@
+## **3.0.0** <sub><sup>2022-07-22 (b7ca23f...32e76f6)</sup></sub>
+
+### Features
+
+- implement EditableLable component ([cd23349](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cd23349))
+
+### Bug Fixes
+
+- fix app crash when no dashboard for a run template and add unknownScenario placeholder ([248621f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/248621f))
+
+### BREAKING CHANGES
+
+- ScenarioNode and ScenarioManagerTreeList have new required prop 'onScenarioName' ([cd23349](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cd23349))
+
+## **3.0.0** <sub><sup>2022-07-22 (4ccba12...e47bbc2)</sup></sub>
+
+### Features
+
+- implement EditableLable component ([4ccba12](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4ccba12))
+
+### BREAKING CHANGES
+
+- ScenarioNode and ScenarioManagerTreeList have new required prop 'onScenarioName' ([4ccba12](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4ccba12))
+
 ## **2.7.0** <sub><sup>2022-07-11 (ec50102...0caeba6)</sup></sub>
 
 ### Features
