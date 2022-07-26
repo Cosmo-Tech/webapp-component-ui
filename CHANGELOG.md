@@ -1,3 +1,9 @@
+## **3.0.1** <sub><sup>2022-07-26 (0bba147...0bba147)</sup></sub>
+
+### Bug Fixes
+
+- fix multiple placeholders shown in PowerBI report ([0bba147](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0bba147))
+
 ## **3.0.0** <sub><sup>2022-07-22 (b7ca23f...32e76f6)</sup></sub>
 
 ### Features
