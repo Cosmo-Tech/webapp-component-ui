@@ -130,14 +130,39 @@ export const SimplePowerBIReportEmbed = ({
     () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
     [dynamicFilters, scenarioDTO]
   );
-  const noDashboardConfigured = reportConfiguration[index] === undefined;
   const noScenario = scenario === null;
   const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
   const noRun = scenarioState === 'Created' || scenarioState === null;
   const runInProgress = scenarioState === 'Running';
   const hasError = scenarioState === 'Failed';
-  const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
   const hasUnknownStatus = scenarioState === 'Unknown';
+  const noDashboardConfigured = reportConfiguration[index] === undefined;
+
+  const getPlaceholder = () => {
+    if (alwaysShowReports) return null;
+    if (noScenario) return <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />;
+    if (noRun) return <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />;
+    if (runInProgress)
+      return (
+        <DashboardPlaceholder
+          label={labels.inProgress.label}
+          title={labels.inProgress.title}
+          icon={<AccessTimeIcon color="primary" fontSize="large" />}
+        />
+      );
+    if (hasError)
+      return (
+        <DashboardPlaceholder
+          label={labels.hasErrors.label}
+          title={labels.hasErrors.title}
+          downloadLogsFile={downloadLogsFile}
+          downloadLabel={labels.downloadButton}
+        />
+      );
+    if (hasUnknownStatus) return <DashboardPlaceholder label={labels.hasUnknownStatus.label} />;
+    if (noDashboardConfigured) return <DashboardPlaceholder label={labels.noDashboard.label} />;
+    return null;
+  };
 
   useEffect(() => {
     const newConfig = {
@@ -189,33 +214,16 @@ export const SimplePowerBIReportEmbed = ({
     iframeContainer = <div className={classes.iframeContainerWithoutRatio}>{iframe}</div>;
   }
 
+  const placeholder = getPlaceholder();
+  const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
+
   return (
     <div className={classes.root}>
       <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
         <div className={classes.errorTitle}>{errorCode}</div>
         <div className={classes.errorDescription}>{errorDescription}</div>
       </div>
-      {noDashboardConfigured && <DashboardPlaceholder label={labels.noDashboard.label} />}
-      {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
-      {!noScenario && noRun && !alwaysShowReports && (
-        <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />
-      )}
-      {runInProgress && !alwaysShowReports && (
-        <DashboardPlaceholder
-          label={labels.inProgress.label}
-          title={labels.inProgress.title}
-          icon={<AccessTimeIcon color="primary" fontSize="large" />}
-        />
-      )}
-      {hasError && !alwaysShowReports && (
-        <DashboardPlaceholder
-          label={labels.hasErrors.label}
-          title={labels.hasErrors.title}
-          downloadLogsFile={downloadLogsFile}
-          downloadLabel={labels.downloadButton}
-        />
-      )}
-      {hasUnknownStatus && <DashboardPlaceholder label={labels.hasUnknownStatus.label} />}
+      {placeholder}
       <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
         {refreshable && (
           <div className={classes.toolbar}>
