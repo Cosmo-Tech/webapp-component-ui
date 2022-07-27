@@ -158,7 +158,6 @@ export const ScenarioNode = ({
             onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
             labels={labels.scenarioRename}
             typographyProps={{ variant: 'h4' }}
-            textFieldProps={{ variant: 'outlined' }}
           />
         </div>
       </Tooltip>

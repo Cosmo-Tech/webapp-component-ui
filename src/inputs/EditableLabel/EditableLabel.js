@@ -3,7 +3,14 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, makeStyles, Typography, CircularProgress } from '@material-ui/core';
+import {
+  FormControl,
+  OutlinedInput,
+  FormHelperText,
+  makeStyles,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,18 +29,15 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  textField: {
+  outlinedInput: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     '& .MuiOutlinedInput-input': {
-      borderWidth: '2px',
-      outline: 'none',
-      padding: '8px',
-    },
-    '& .MuiOutlinedInput-root': {
       minWidth: '300px',
+      marginLeft: '4px',
+      padding: '4px',
     },
   },
   editIcon: {
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EditableLabel = (props) => {
-  const { value, onNewValue, checkValue, labels, typographyProps, textFieldProps } = props;
+  const { value, onNewValue, checkValue, labels, typographyProps } = props;
 
   const classes = useStyles();
 
@@ -108,33 +112,34 @@ export const EditableLabel = (props) => {
   return (
     <div data-cy="editable-label">
       {isEditing ? (
-        <TextField
-          className={classes.textField}
-          autoFocus
-          defaultValue={value}
-          error={error != null}
-          helperText={error}
-          placeholder={labels.title}
-          onChange={checkNewValueOnChange}
-          onBlur={(event) => {
-            stopEdition(event);
-          }}
-          onClick={(event) => event.stopPropagation()}
-          onKeyPress={(event) => {
-            if (event.key === 'Enter') {
+        <FormControl>
+          <OutlinedInput
+            className={classes.outlinedInput}
+            autoFocus
+            defaultValue={value}
+            error={error != null}
+            placeholder={labels.title}
+            onChange={checkNewValueOnChange}
+            onBlur={(event) => {
               stopEdition(event);
-            }
-          }}
-          onKeyDown={(event) => {
-            if (event.key === 'Escape') {
-              setEditing(false);
-            }
-          }}
-          onFocus={(event) => {
-            event.stopPropagation();
-          }}
-          {...textFieldProps}
-        />
+            }}
+            onClick={(event) => event.stopPropagation()}
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                stopEdition(event);
+              }
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                setEditing(false);
+              }
+            }}
+            onFocus={(event) => {
+              event.stopPropagation();
+            }}
+          />
+          <FormHelperText error>{error}</FormHelperText>
+        </FormControl>
       ) : (
         getLabelDisplay()
       )}
@@ -182,10 +187,6 @@ EditableLabel.propTypes = {
    * Props to forwrad to the Typography component
    */
   typographyProps: PropTypes.object,
-  /**
-   * Props to forwrad to the TextField component
-   */
-  textFieldProps: PropTypes.object,
 };
 
 EditableLabel.defaultValue = {
