@@ -4,12 +4,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Menu, MenuItem, ClickAwayListener, IconButton, Tooltip } from '@material-ui/core';
-import {
-  ArrowRight as ArrowRightIcon,
-  AccountCircle as AccountCircleIcon,
-  Check as CheckIcon,
-} from '@material-ui/icons';
-
+import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@material-ui/icons';
+import { DefaultAvatar } from '../../misc';
 import useStyles from './style';
 
 export const UserInfo = (props) => {
@@ -44,19 +40,13 @@ export const UserInfo = (props) => {
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <div>
-        <Box
-          data-cy="user-profile-menu"
-          aria-controls="user-profile-button"
-          aria-haspopup="true"
-          onClick={handleClick}
-          className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
-        >
+        <Box data-cy="user-profile-menu" aria-controls="user-profile-button" aria-haspopup="true" onClick={handleClick}>
           <Tooltip key="user-name-tooltip" title={userName}>
             {profilePlaceholder ? (
               <img src={profilePlaceholder} />
             ) : (
-              <IconButton aria-label="account" color="inherit">
-                <AccountCircleIcon />
+              <IconButton aria-label="account">
+                <DefaultAvatar userName={userName} />
               </IconButton>
             )}
           </Tooltip>

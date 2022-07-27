@@ -6,3 +6,4 @@ export { FixedRatioContainer } from './FixedRatioContainer';
 export { ScenarioValidationStatusChip } from './ScenarioValidationStatusChip';
 export { LoadingLine } from './LoadingLine';
 export { ErrorBanner } from './ErrorBanner';
+export { DefaultAvatar } from './DefaultAvatar';
