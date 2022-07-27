@@ -159,7 +159,6 @@ UserInfo.propTypes = {
 };
 
 UserInfo.defaultProps = {
-  profilePictureUrl: '../../assets/profile_placeholder.png',
   labels: {
     language: 'Change language',
     logOut: 'Log out',
