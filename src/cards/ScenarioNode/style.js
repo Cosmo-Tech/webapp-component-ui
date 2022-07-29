@@ -6,23 +6,21 @@ import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from './constants';
 
 const useStyles = makeStyles((theme) => ({
   rootShrunkScenarioContainer: {
-    borderColor: theme.palette.primary.contrastText,
+    borderColor: theme.palette.text.primary,
     borderWidth: '1px',
     borderStyle: 'solid',
     width: '100%',
     '& .MuiAccordion-root': {
       height: `${SHRUNK_NODE_HEIGHT}px`,
-      backgroundColor: theme.palette.background.card,
     },
   },
   rootExpandedScenarioContainer: {
-    borderColor: theme.palette.primary.contrastText,
+    borderColor: theme.palette.text.primary,
     borderWidth: '1px',
     borderStyle: 'solid',
     width: '100%',
     '& .MuiAccordion-root': {
       height: `${EXPANDED_NODE_HEIGHT}px`,
-      backgroundColor: theme.palette.background.card,
     },
     '& .MuiCollapse-root': {
       height: `calc(100% - ${SHRUNK_NODE_HEIGHT}px) !important`,
@@ -94,8 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
   statusUnknown: {
     marginLeft: '5px',
-    color: theme.palette.info.main,
-    backgroundColor: theme.palette.background.card,
+    color: theme.palette.warning.main,
     fontWeight: 'bold',
   },
   statusCreated: {
@@ -109,34 +106,28 @@ const useStyles = makeStyles((theme) => ({
   statusSuccessful: {
     marginLeft: '5px',
     color: theme.palette.success.main,
-    backgroundColor: theme.palette.background.card,
     fontWeight: 'bold',
   },
   statusFailed: {
     marginLeft: '5px',
     color: theme.palette.error.main,
-    backgroundColor: theme.palette.background.card,
     fontWeight: 'bold',
   },
   statusSuccessfulIcon: {
     marginLeft: '10px',
     color: theme.palette.success.main,
-    backgroundColor: theme.palette.background.card,
   },
   statusFailedIcon: {
     marginLeft: '10px',
     color: theme.palette.error.main,
-    backgroundColor: theme.palette.background.card,
   },
   statusRunningIcon: {
     marginLeft: '15px',
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.background.card,
+    color: theme.palette.text.primary,
   },
   statusUnknownIcon: {
     marginLeft: '10px',
-    color: theme.palette.primary.contrastText,
-    backgroundColor: theme.palette.background.card,
+    color: theme.palette.warning.main,
   },
   datasets: {
     marginLeft: '15px',

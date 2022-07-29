@@ -32,7 +32,7 @@ const DashboardPlaceholder = (props) => {
       className={classes.gridContainer}
     >
       <Grid>
-        <Typography variant="h2">{title}</Typography>
+        <Typography variant="h4">{title}</Typography>
       </Grid>
       <Grid item>
         {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}

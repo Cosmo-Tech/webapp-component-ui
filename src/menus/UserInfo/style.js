@@ -4,7 +4,6 @@ const useStyles = makeStyles((theme) => ({
   menuTrigger: {
     backgroundRepeat: 'no-repeat',
     minWidth: '32px',
-    height: '32px',
     backgroundSize: '32px',
     borderRadius: '50%',
     flexShrink: 0,

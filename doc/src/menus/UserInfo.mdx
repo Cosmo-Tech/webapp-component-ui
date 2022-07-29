@@ -6,7 +6,6 @@ menu: Menus
 
 import { Playground, Props } from 'docz';
 import { UserInfo } from '@cosmotech/ui';
-import profilePic from '../../../assets/profile_placeholder.png';
 
 # User Information
 
@@ -26,7 +25,6 @@ The aim of this component is to easily display user information
     }}
     changeLanguage={lang => alert('Language has changed for ' + lang)}
     language={'en'}
-    profilePlaceholder={profilePic}
     userName={'Bob Bobinson'}
     onLogout={() => alert('Use log out function from your auth provider')}
   />

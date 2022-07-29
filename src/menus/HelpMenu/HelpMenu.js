@@ -13,6 +13,7 @@ import {
   DialogActions,
   DialogContent,
   Button,
+  IconButton,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import useStyles from './style';
@@ -44,7 +45,9 @@ export const HelpMenu = (props) => {
           onClick={handleClick}
           className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
         >
-          <HelpOutlineIcon className={classes.menuIcon} />
+          <IconButton aria-label="help" color="inherit">
+            <HelpOutlineIcon />
+          </IconButton>
         </Box>
         <Menu className={classes.menu} keepMounted anchorEl={anchorEl} open={isMenuOpen} onClose={handleClick}>
           {documentationUrl && (

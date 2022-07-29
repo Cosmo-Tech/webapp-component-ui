@@ -14,15 +14,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   errorSummary: {
-    color: theme.palette.text.error,
+    color: theme.palette.error.contrastText,
     display: 'flex',
     alignContent: 'center',
   },
   errorLoc: {
-    color: theme.palette.text.warning,
+    color: theme.palette.warning.contrastText,
   },
   errorContext: {
-    color: theme.palette.text.error,
+    color: theme.palette.error.contrastText,
     whiteSpace: 'pre-line',
   },
   errorContextContainer: {},

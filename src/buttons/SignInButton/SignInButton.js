@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles((theme) => ({
   root: {
     border: 0,
-    background: theme.palette.background.signInButton,
+    background: theme.palette.microsoft.main,
     boxShadow: 'none',
     borderRadius: '0px',
     height: '41px',
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '15px',
     font: 'Sogoe UI Regular',
     weight: 600,
-    color: theme.palette.text.primary,
+    color: theme.palette.microsoft.contrastText,
   },
 }));
 
