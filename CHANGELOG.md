@@ -1,3 +1,9 @@
+## **3.0.2** <sub><sup>2022-08-01 (af96745...af96745)</sup></sub>
+
+### Bug Fixes
+
+- set rename error message below the text field ([af96745](https://github.com/Cosmo-Tech/webapp-component-ui/commit/af96745))
+
 ## **3.0.1** <sub><sup>2022-07-26 (0bba147...0bba147)</sup></sub>
 
 ### Bug Fixes
