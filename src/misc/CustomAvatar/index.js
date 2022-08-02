@@ -1,0 +1,1 @@
+export { CustomAvatar } from './CustomAvatar';
