@@ -1,3 +1,16 @@
+## **4.0.0** <sub><sup>2022-08-02 (af96745...23b1a34)</sup></sub>
+
+### Bug Fixes
+
+- move error label of EditableLabel component below the text field ([af96745](https://github.com/Cosmo-Tech/webapp-component-ui/commit/af96745))
+- remove default placeholder picture ([a87ef01](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a87ef01))
+
+### BREAKING CHANGES
+
+- remove PrivateRoute and PublicRoute components ([805c6f4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/805c6f4))
+- update palette according to MaterialUI specifications ([266c972](https://github.com/Cosmo-Tech/webapp-component-ui/commit/266c972))
+- remove username in AppBar, next to user's avatar, and use a tooltip instead ([266c972](https://github.com/Cosmo-Tech/webapp-component-ui/commit/266c972))
+
 ## **3.0.2** <sub><sup>2022-08-01 (af96745...af96745)</sup></sub>
 
 ### Bug Fixes
@@ -23,16 +36,6 @@
 ### BREAKING CHANGES
 
 - ScenarioNode and ScenarioManagerTreeList have new required prop 'onScenarioName' ([cd23349](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cd23349))
-
-## **3.0.0** <sub><sup>2022-07-22 (4ccba12...e47bbc2)</sup></sub>
-
-### Features
-
-- implement EditableLable component ([4ccba12](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4ccba12))
-
-### BREAKING CHANGES
-
-- ScenarioNode and ScenarioManagerTreeList have new required prop 'onScenarioName' ([4ccba12](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4ccba12))
 
 ## **2.7.0** <sub><sup>2022-07-11 (ec50102...0caeba6)</sup></sub>
 
