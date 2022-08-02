@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   treesContainer: {
     height: `calc(100% - ${TREES_CONTAINER_OFFSET}px)`, // Offset by header height + search bar height

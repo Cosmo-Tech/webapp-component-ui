@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Button, Paper, TextField, Tooltip } from '@material-ui/core';
+import { IconButton, Paper, TextField, Tooltip } from '@material-ui/core';
 import {
   UnfoldMore as UnfoldMoreIcon,
   UnfoldLess as UnfoldLessIcon,
@@ -182,34 +182,23 @@ export const ScenarioManagerTreeList = (props) => {
           className={classes.searchField}
           value={searchText}
           onChange={onSearchTextChange}
+          color="primary"
         />
         <div className={classes.toolbar}>
           <Tooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.toolbarPrimaryAction}
-              startIcon={<UnfoldLessIcon />}
-              onClick={collapseAll}
-            />
+            <IconButton className={classes.toolbarPrimaryAction} onClick={collapseAll}>
+              <UnfoldLessIcon color="primary" />
+            </IconButton>
           </Tooltip>
           <Tooltip title={labels?.toolbar?.expandAll || 'Expand all'}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.toolbarPrimaryAction}
-              startIcon={<UnfoldMoreIcon />}
-              onClick={expandAll}
-            />
+            <IconButton className={classes.toolbarPrimaryAction} onClick={expandAll}>
+              <UnfoldMoreIcon color="primary" />
+            </IconButton>
           </Tooltip>
           <Tooltip title={labels?.toolbar?.expandTree || 'Expand tree'}>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.toolbarPrimaryAction}
-              startIcon={<AccountTreeIcon />}
-              onClick={expandTree}
-            />
+            <IconButton className={classes.toolbarPrimaryAction} onClick={expandTree}>
+              <AccountTreeIcon color="primary" />
+            </IconButton>
           </Tooltip>
         </div>
       </div>
