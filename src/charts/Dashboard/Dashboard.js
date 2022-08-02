@@ -168,7 +168,7 @@ Dashboard.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new Scenario',
+      label: 'You can create a scenario by clicking on the CREATE button in Scenario View',
     },
     noRun: {
       title: '',

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Tooltip } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import CreateScenarioDialog from './components';
 
 export const CreateScenarioButton = ({
@@ -31,7 +30,6 @@ export const CreateScenarioButton = ({
           <Button
             data-cy="create-scenario-button"
             size="medium"
-            startIcon={<AddIcon />}
             variant="contained"
             onClick={openDialog}
             color="primary"
@@ -145,7 +143,7 @@ CreateScenarioButton.defaultProps = {
   disabled: false,
   labels: {
     button: {
-      title: 'Create new Scenario',
+      title: 'Create',
       tooltip: 'Create new Scenario',
     },
     dialog: {
