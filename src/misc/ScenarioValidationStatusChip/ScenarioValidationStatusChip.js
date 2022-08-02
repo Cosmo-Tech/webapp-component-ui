@@ -4,24 +4,25 @@ import clsx from 'clsx';
 import { Chip, CircularProgress, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  /// USE ERROR AND SUCCESS IN CHIP COLOR WHEN UPDATE TO MUI 5.X IS DONE
   validated: {
     backgroundColor: theme.palette.success.main,
-    color: 'white',
+    color: theme.palette.success.contrastText,
     '&:focus': {
       backgroundColor: theme.palette.success.main,
     },
     '& .MuiChip-deleteIcon': {
-      color: 'white',
+      color: theme.palette.success.contrastText,
     },
   },
   rejected: {
     backgroundColor: theme.palette.error.main,
-    color: 'white',
+    color: theme.palette.error.contrastText,
     '&:focus': {
       backgroundColor: theme.palette.error.main,
     },
     '& .MuiChip-deleteIcon': {
-      color: 'white',
+      color: theme.palette.error.contrastText,
     },
   },
 }));
@@ -72,6 +73,7 @@ export const ScenarioValidationStatusChip = (props) => {
       data-cy="scenario-validation-status"
       label={getLabel()}
       onDelete={onDelete}
+      /// USE color="error | success" WHEN UPDATE TO MUI 5.X IS DONE
       className={clsx(getClassName(), className)}
     />
   ) : null;
