@@ -369,7 +369,7 @@ SimplePowerBIReportEmbed.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new scenario',
+      label: 'You can create a scenario by clicking on the CREATE button',
     },
     noDashboard: {
       label: "There isn't any dashboard configured for this run template",
