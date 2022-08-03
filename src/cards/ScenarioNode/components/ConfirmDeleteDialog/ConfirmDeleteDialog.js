@@ -46,6 +46,7 @@ export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }
         <Button onClick={closeDialog} color="primary" autoFocus>
           {labels.cancel}
         </Button>
+        {/* TODO Use color="error" when MUI v5.x is used */}
         <Button onClick={confirmDelete} color="primary">
           {labels.confirm}
         </Button>

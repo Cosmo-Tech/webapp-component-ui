@@ -40,7 +40,8 @@ export const UploadFile = (props) => {
             data-cy="browse-button"
             id="browse-button"
             disabled={!editMode}
-            variant="contained"
+            variant="outlined"
+            color="primary"
             component="label"
             onChange={handleUploadFile}
           >

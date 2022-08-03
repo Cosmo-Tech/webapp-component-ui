@@ -26,25 +26,12 @@ export const ErrorBanner = (props) => {
         </div>
         <div className={classes.errorText}>
           {error.detail.length >= errorMessageMaxLength && (
-            <Button
-              className={classes.errorButton}
-              size="small"
-              color="inherit"
-              variant="outlined"
-              onClick={() => copyToClipboard(error.detail)}
-            >
+            <Button className={classes.errorButton} size="small" onClick={() => copyToClipboard(error.detail)}>
               {copyButtonText}
             </Button>
           )}
           {clearErrors && (
-            <Button
-              className={classes.errorButton}
-              size="small"
-              color="inherit"
-              variant="outlined"
-              data-cy="dismiss-error-button"
-              onClick={clearErrors}
-            >
+            <Button className={classes.errorButton} size="small" data-cy="dismiss-error-button" onClick={clearErrors}>
               {labels.dismissButtonText}
             </Button>
           )}

@@ -296,8 +296,8 @@ const CreateScenarioDialog = ({
           data-cy="create-scenario-dialog-submit-button"
           disabled={createScenarioDisabled}
           onClick={handleCreateScenario}
-          color="primary"
           variant="contained"
+          color="primary"
         >
           {dialogLabels.create}
         </Button>
