@@ -1,3 +1,9 @@
+## **2.7.1** <sub><sup>2022-08-04 (95e5ddd...95e5ddd)</sup></sub>
+
+### Bug Fixes
+
+- force re-render of table cells when rows data prop changes ([95e5ddd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/95e5ddd))
+
 ## **2.7.0** <sub><sup>2022-07-11 (ec50102...0caeba6)</sup></sub>
 
 ### Features
