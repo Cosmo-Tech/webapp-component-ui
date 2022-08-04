@@ -45,7 +45,7 @@ DefaultAvatar.propTypes = {
   /**
    * Icon size in pixels
    */
-  size: PropTypes.int,
+  size: PropTypes.number,
 };
 
 DefaultAvatar.defaultProps = {
