@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
 import { AgGridReact } from 'ag-grid-react';
@@ -104,6 +104,8 @@ export const Table = (props) => {
     agTheme,
     ...otherProps
   } = props;
+
+  const gridRef = useRef();
   const dimensions = { height: height, width: width };
   const classes = useStyles();
 
@@ -121,6 +123,12 @@ export const Table = (props) => {
     clear: labels.clearErrors,
     mainError: labels.errorsPanelMainError,
   };
+
+  useEffect(() => {
+    // If gridRef is initialized and rows have been changed programmatically (i.e. not through the ag-grid UI), then we
+    // have to force the refresh of the table cells for the changes to be re-rendered
+    gridRef?.current?.api?.refreshCells();
+  }, [rows]);
 
   return (
     <div id="table-container" {...otherProps}>
@@ -145,6 +153,7 @@ export const Table = (props) => {
       <div data-cy="grid" id="grid-container" style={dimensions} className={agTheme}>
         {isReady && (
           <AgGridReact
+            ref={gridRef}
             undoRedoCellEditing={true}
             rowDragManaged={true}
             suppressDragLeaveHidesColumns={true}
