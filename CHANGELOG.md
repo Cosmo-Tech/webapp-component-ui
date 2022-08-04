@@ -11,6 +11,12 @@
 - update palette according to MaterialUI specifications ([266c972](https://github.com/Cosmo-Tech/webapp-component-ui/commit/266c972))
 - remove username in AppBar, next to user's avatar, and use a tooltip instead ([266c972](https://github.com/Cosmo-Tech/webapp-component-ui/commit/266c972))
 
+## **3.0.3** <sub><sup>2022-08-04 (075b7df...075b7df)</sup></sub>
+
+### Bug Fixes
+
+- force re-render of table cells when rows data prop changes ([075b7df](https://github.com/Cosmo-Tech/webapp-component-ui/commit/075b7df))
+
 ## **3.0.2** <sub><sup>2022-08-01 (af96745...af96745)</sup></sub>
 
 ### Bug Fixes
@@ -36,6 +42,12 @@
 ### BREAKING CHANGES
 
 - ScenarioNode and ScenarioManagerTreeList have new required prop 'onScenarioName' ([cd23349](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cd23349))
+
+## **2.7.1** <sub><sup>2022-08-04 (95e5ddd...95e5ddd)</sup></sub>
+
+### Bug Fixes
+
+- force re-render of table cells when rows data prop changes ([95e5ddd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/95e5ddd))
 
 ## **2.7.0** <sub><sup>2022-07-11 (ec50102...0caeba6)</sup></sub>
 
