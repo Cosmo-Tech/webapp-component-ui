@@ -127,7 +127,11 @@ export const ScenarioNode = ({
     }
     return (
       <>
-        {showLabel ? <Typography className={statusClassName}>{status}</Typography> : null}
+        {showLabel ? (
+          <Typography data-cy={'scenario-status-' + scenario.state.toLowerCase()} className={statusClassName}>
+            {status}
+          </Typography>
+        ) : null}
         {scenario.state === 'Created' ? null : (
           <Tooltip key="scenario-status-tooltip" title={status}>
             {icon}
@@ -184,10 +188,10 @@ export const ScenarioNode = ({
 
   const getScenarioCreationData = () => {
     return [
-      <span key="scenario-name" className={classes.scenarioHeaderItem}>
+      <span data-cy="scenario-owner-name" key="scenario-owner-name" className={classes.scenarioHeaderItem}>
         {scenario.ownerName}
       </span>,
-      <span key="scenario-creation-date" className={classes.scenarioHeaderItem}>
+      <span data-cy="scenario-creation-date" key="scenario-creation-date" className={classes.scenarioHeaderItem}>
         {new Date(scenario.creationDate).toLocaleString()}
       </span>,
     ];
@@ -248,7 +252,9 @@ export const ScenarioNode = ({
         {getDetailedStatus()}
         <Typography className={classes.cardLabel}>{getDatasetsLabel()}</Typography>
         <Typography>
-          <span className={classes.datasets}>{DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}</span>
+          <span data-cy="scenario-datasets" className={classes.datasets}>
+            {DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}
+          </span>
         </Typography>
       </AccordionDetails>
     );
