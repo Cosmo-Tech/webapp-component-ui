@@ -131,19 +131,21 @@ export const CytoViz = (props) => {
 
   const errorBanner = error && <ErrorBanner error={error} labels={labels_.errorBanner} />;
   const loadingPlaceholder = loading && !error && !placeholderMessage && (
-    <div className={classes.loadingContainer}>
+    <div data-cy="cytoviz-loading-container" className={classes.loadingContainer}>
       <span className={classes.loadingText}>{labels_.loading}</span>
       <CircularProgress size={18} />
     </div>
   );
   const placeholder = placeholderMessage && (
-    <div className={classes.placeholder}>
+    <div data-cy="cytoviz-placeholder" className={classes.placeholder}>
       <span className={classes.placeholderText}>{placeholderMessage}</span>
     </div>
   );
+
   const cytoscapeScene = !loading && !placeholderMessage && (
     <>
       <CytoscapeComponent
+        id="cytoviz-cytoscape-scene" // Component does not forward data-cy prop, use id instead
         cy={initCytoscape}
         stylesheet={cytoscapeStylesheet}
         className={classes.cytoscapeContainer}
@@ -156,12 +158,13 @@ export const CytoViz = (props) => {
         minZoom={10 ** zoomPrecision[0]}
         maxZoom={10 ** zoomPrecision[1]}
       />
-      <div className={classes.openDrawerButton}>
+      <div data-cy="cytoviz-open-drawer-button" className={classes.openDrawerButton}>
         <IconButton onClick={openDrawer}>
           <ChevronRightIcon />
         </IconButton>
       </div>
       <Drawer
+        data-cy="cytoviz-drawer"
         className={classes.drawer}
         variant="temporary"
         anchor="left"
@@ -184,25 +187,38 @@ export const CytoViz = (props) => {
             textColor="primary"
             aria-label="Cytoscape visualization side drawer"
           >
-            <Tab icon={<AccountTreeIcon />} label={labels_.elementDetails} />
-            <Tab icon={<SettingsIcon />} label={labels_.settings.title} />
+            <Tab
+              data-cy="cytoviz-drawer-details-tab-button"
+              icon={<AccountTreeIcon />}
+              label={labels_.elementDetails}
+            />
+            <Tab data-cy="cytoviz-drawer-settings-tab-button" icon={<SettingsIcon />} label={labels_.settings.title} />
           </Tabs>
-          <IconButton onClick={closeDrawer}>
+          <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <div className={classes.drawerContent}>
-          <TabPanel value={currentDrawerTab} index={0}>
+          <TabPanel data-cy="cytoviz-drawer-details-tab-content" value={currentDrawerTab} index={0}>
             {currentElementDetails || labels_.noSelectedElement}
           </TabPanel>
-          <TabPanel value={currentDrawerTab} index={1}>
+          <TabPanel data-cy="cytoviz-drawer-settings-tab-content" value={currentDrawerTab} index={1}>
             <div className={classes.settingsContainer}>
               <div className={classes.settingLine}>
                 <div className={classes.settingLabel}>{labels_.settings.layout}</div>
                 <div className={classes.settingInputContainer}>
-                  <Select value={currentLayout} onChange={changeCurrentLayout} inputProps={{ 'aria-label': 'Layout' }}>
+                  <Select
+                    data-cy="cytoviz-layout-selector"
+                    value={currentLayout}
+                    onChange={changeCurrentLayout}
+                    inputProps={{ 'aria-label': 'Layout' }}
+                  >
                     {DEFAULT_LAYOUTS.concat(Object.keys(extraLayouts)).map((layoutName) => (
-                      <MenuItem key={layoutName} value={layoutName}>
+                      <MenuItem
+                        data-cy={`cytoviz-layout-item-${layoutName.toLowerCase()}`}
+                        key={layoutName}
+                        value={layoutName}
+                      >
                         {layoutName}
                       </MenuItem>
                     ))}
@@ -215,6 +231,7 @@ export const CytoViz = (props) => {
                 </div>
                 <div className={classes.settingInputContainer}>
                   <Checkbox
+                    data-cy="cytoviz-compact-mode-checkbox"
                     checked={useCompactMode}
                     onChange={changeUseCompactMode}
                     name="useCompactMode"
@@ -226,6 +243,7 @@ export const CytoViz = (props) => {
                 <div className={classes.settingLabel}>{labels_.settings.spacingFactor}</div>
                 <div className={classes.settingInputContainer}>
                   <Slider
+                    data-cy="cytoviz-spacing-factor-slider"
                     className={classes.settingsSlider}
                     color="primary"
                     value={spacingFactor}
@@ -241,6 +259,7 @@ export const CytoViz = (props) => {
                 <div className={classes.settingLabel}>{labels_.settings.zoomLimits}</div>
                 <div className={classes.settingInputContainer}>
                   <Slider
+                    data-cy="cytoviz-zoom-limits-slider"
                     className={classes.settingsSlider}
                     color="primary"
                     value={zoomPrecision}
@@ -261,7 +280,7 @@ export const CytoViz = (props) => {
   );
 
   return (
-    <div className={classes.root} id="cytoviz-root">
+    <div data-cy="cytoviz-container" className={classes.root} id="cytoviz-root">
       {errorBanner}
       {placeholder}
       {loadingPlaceholder}
