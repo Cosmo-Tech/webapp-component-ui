@@ -228,9 +228,12 @@ export const SimplePowerBIReportEmbed = ({
         {refreshable && (
           <div className={classes.toolbar}>
             <Tooltip title={labels.refreshTooltip}>
-              <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
-                <RefreshIcon />
-              </IconButton>
+              {/* span is required to prevent MUI warning when the child Button in Tooltip is disabled */}
+              <span>
+                <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+                  <RefreshIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           </div>
         )}
