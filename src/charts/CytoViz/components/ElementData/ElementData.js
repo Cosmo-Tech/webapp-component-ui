@@ -14,9 +14,15 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
   if (typeof attributeValue === 'object' && 0 in attributeValue) {
     // List represented as an object
     return (
-      <div key={attributeName} className={classes.attributeColumnContainer}>
-        <div className={classes.attributeLabel}>{attributeLabel}:</div>
-        <div className={classes.tableContainer}>
+      <div
+        data-cy={`cytoviz-element-attribute-${attributeName.toLowerCase()}`}
+        key={attributeName}
+        className={classes.attributeColumnContainer}
+      >
+        <div data-cy="cytoviz-element-attribute-name" className={classes.attributeLabel}>
+          {attributeLabel}:
+        </div>
+        <div data-cy="cytoviz-element-attribute-value" className={classes.tableContainer}>
           <table className={classes.table}>
             <thead>
               <tr>
@@ -37,11 +43,19 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
       </div>
     );
   } else {
-    // List represented as an object
+    // Non-list attribute, serialize to JSON
     return (
-      <div key={attributeName} className={classes.attributeRowContainer}>
-        <span className={classes.attributeLabel}>{attributeLabel}:</span>
-        <span className={classes.attributeValue}>{JSON.stringify(attributeValue)}</span>
+      <div
+        data-cy={`cytoviz-element-attribute-${attributeName.toLowerCase()}`}
+        key={attributeName}
+        className={classes.attributeRowContainer}
+      >
+        <span data-cy="cytoviz-element-attribute-name" className={classes.attributeLabel}>
+          {attributeLabel}:
+        </span>
+        <span data-cy="cytoviz-element-attribute-value" className={classes.attributeValue}>
+          {JSON.stringify(attributeValue)}
+        </span>
       </div>
     );
   }

@@ -188,15 +188,21 @@ export const SimplePowerBIReportEmbed = ({
     }, refreshTimeout);
   };
 
-  const iframe = (
-    <PowerBIEmbed
-      cssClassName={classes.report}
-      embedConfig={embedConfig}
-      getEmbeddedComponent={(embedObject) => {
-        setReport(embedObject);
-      }}
-    />
-  );
+  let iframe = null;
+  try {
+    iframe = (
+      <PowerBIEmbed
+        cssClassName={classes.report}
+        embedConfig={embedConfig}
+        getEmbeddedComponent={(embedObject) => {
+          setReport(embedObject);
+        }}
+      />
+    );
+  } catch (error) {
+    console.log('Error when intializing the PowerBIEmbed component.');
+    console.error(error);
+  }
 
   let iframeContainer;
   if (iframeRatio != null && iframeRatio > 0) {
@@ -228,9 +234,12 @@ export const SimplePowerBIReportEmbed = ({
         {refreshable && (
           <div className={classes.toolbar}>
             <Tooltip title={labels.refreshTooltip}>
-              <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
-                <RefreshIcon />
-              </IconButton>
+              {/* span is required to prevent MUI warning when the child Button in Tooltip is disabled */}
+              <span>
+                <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+                  <RefreshIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           </div>
         )}
