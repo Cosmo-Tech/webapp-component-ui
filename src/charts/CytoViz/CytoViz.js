@@ -42,8 +42,16 @@ export const CytoViz = (props) => {
 
   let getElementDetailsCallback = getElementDetails;
   if (!getElementDetailsCallback) {
+    const underScoreFilter = /^[_]/; // first symbol is a  _
+    // removes all fields from the nodes&edges data that start with an underscore
     // eslint-disable-next-line react/display-name
-    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels_.elementData} />;
+    getElementDetailsCallback = (element) => {
+      const filteredData = Object.fromEntries(
+        // inspired by: https://masteringjs.io/tutorials/fundamentals/filter-key
+        Object.entries(element.data()).filter(([key]) => !key.match(underScoreFilter))
+      );
+      return <ElementData data={filteredData} labels={labels_.elementData} />;
+    };
     getElementDetailsCallback.displayName = 'ElementData';
   }
 
@@ -101,7 +109,36 @@ export const CytoViz = (props) => {
       const selectedElement = e.target;
       setCurrentElementDetails(getElementDetailsCallback(selectedElement));
     });
+    cytoscapeRef.on('click', 'node', function (e) {
+      cytoscapeRef
+        .elements()
+        .not(e.target)
+        .forEach((elem) => {
+          elem.unselect();
+          if (elem.isEdge()) {
+            elem.data('_asInEdgeHighlighted', false);
+            elem.data('_asOutEdgeHighlighted', false);
+          }
+        });
+
+      const selectedElement = e.target;
+      selectedElement.select();
+      selectedElement.outgoers('edge').forEach((ele) => ele.data('_asOutEdgeHighlighted', true));
+      selectedElement.incomers('edge').forEach((ele) => ele.data('_asInEdgeHighlighted', true));
+
+      setCurrentElementDetails(getElementDetailsCallback(selectedElement));
+    });
     cytoscapeRef.on('unselect', 'node, edge', function (e) {
+      cytoscapeRef
+        .elements()
+        .not(e.target)
+        .forEach((elem) => {
+          elem.unselect();
+          if (elem.isEdge()) {
+            elem.data('_asInEdgeHighlighted', false);
+            elem.data('_asOutEdgeHighlighted', false);
+          }
+        });
       setCurrentElementDetails(null);
     });
     // Add handling of double click events
@@ -128,7 +165,26 @@ export const CytoViz = (props) => {
       });
     }
   };
-
+  /**
+   * appends meta data needed for the visualisatation to the data field of the edges
+   * @param {*} elements in the Cityscape format
+   * @returns the elements object with fields: {_asInEdgeHighlighted: false, _asOutEdgeHighlight: false}
+   */
+  const appendMissingDataValues = (elements) => {
+    elements.forEach((element) => {
+      if (element.group === 'edges') {
+        if (!Object.prototype.hasOwnProperty.call(element.data, '_asInEdgeHighlighted')) {
+          Object.assign(element.data, { ...element.data, _asInEdgeHighlighted: false });
+        }
+        if (!Object.prototype.hasOwnProperty.call(element.data, '_asOutEdgeHighlighted')) {
+          Object.assign(element.data, { ...element.data, _asOutEdgeHighlight: false });
+        }
+      }
+    });
+    console.log('elements after appending missing values');
+    console.log(elements);
+    return elements;
+  };
   const errorBanner = error && <ErrorBanner error={error} labels={labels_.errorBanner} />;
   const loadingPlaceholder = loading && !error && !placeholderMessage && (
     <div data-cy="cytoviz-loading-container" className={classes.loadingContainer}>
@@ -149,7 +205,7 @@ export const CytoViz = (props) => {
         cy={initCytoscape}
         stylesheet={cytoscapeStylesheet}
         className={classes.cytoscapeContainer}
-        elements={elements}
+        elements={appendMissingDataValues(elements)}
         layout={{
           name: currentLayout,
           nodeDimensionsIncludeLabels: !useCompactMode,
