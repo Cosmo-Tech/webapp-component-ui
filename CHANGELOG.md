@@ -1,3 +1,11 @@
+## **3.0.4** <sub><sup>2022-08-09 (7ae37ec...be91ebd)</sup></sub>
+
+### Bug Fixes
+
+- add missing data-cy selectors in several components
+- fix possible material-ui warning caused by disabled Button in Tooltip ([ec73c3a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ec73c3a))
+- attempt to prevent uncaught exception error on page switch ([be91ebd](https://github.com/Cosmo-Tech/webapp-component-ui/commit/be91ebd))
+
 ## **3.0.3** <sub><sup>2022-08-04 (075b7df...075b7df)</sup></sub>
 
 ### Bug Fixes
