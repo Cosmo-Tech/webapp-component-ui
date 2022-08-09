@@ -97,11 +97,15 @@ export const CytoViz = (props) => {
     cytoscapeRef.removeAllListeners();
     // Prevent multiple selection & init elements selection behavior
     cytoscapeRef.on('select', 'node, edge', function (e) {
-      cytoscapeRef.elements().not(e.target).unselect();
+      cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
       const selectedElement = e.target;
+      selectedElement.select();
+      selectedElement.outgoers('edge').data('asOutEdgeHighlighted', true);
+      selectedElement.incomers('edge').data('asInEdgeHighlighted', true);
       setCurrentElementDetails(getElementDetailsCallback(selectedElement));
     });
     cytoscapeRef.on('unselect', 'node, edge', function (e) {
+      cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
       setCurrentElementDetails(null);
     });
     // Add handling of double click events

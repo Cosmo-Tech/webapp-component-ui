@@ -7,7 +7,15 @@ import useStyles from './style';
 
 const _generateAttributeDetails = (classes, labels, attributeName, attributeValue) => {
   const attributeLabel = labels?.attributes?.[attributeName] || attributeName;
-  const attributesToIgnore = ['label', 'Label', 'parent', 'source', 'target'];
+  const attributesToIgnore = [
+    'label',
+    'Label',
+    'parent',
+    'source',
+    'target',
+    'asOutEdgeHighlighted',
+    'asInEdgeHighlighted',
+  ];
   if (attributesToIgnore.indexOf(attributeName) !== -1) {
     return null;
   }
