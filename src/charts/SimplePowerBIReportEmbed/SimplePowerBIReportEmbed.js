@@ -188,15 +188,21 @@ export const SimplePowerBIReportEmbed = ({
     }, refreshTimeout);
   };
 
-  const iframe = (
-    <PowerBIEmbed
-      cssClassName={classes.report}
-      embedConfig={embedConfig}
-      getEmbeddedComponent={(embedObject) => {
-        setReport(embedObject);
-      }}
-    />
-  );
+  let iframe = null;
+  try {
+    iframe = (
+      <PowerBIEmbed
+        cssClassName={classes.report}
+        embedConfig={embedConfig}
+        getEmbeddedComponent={(embedObject) => {
+          setReport(embedObject);
+        }}
+      />
+    );
+  } catch (error) {
+    console.log('Error when intializing the PowerBIEmbed component.');
+    console.error(error);
+  }
 
   let iframeContainer;
   if (iframeRatio != null && iframeRatio > 0) {
