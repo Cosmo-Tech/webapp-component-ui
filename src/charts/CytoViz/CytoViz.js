@@ -1,9 +1,20 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, CircularProgress, Drawer, IconButton, MenuItem, Select, Slider, Tabs, Tab } from '@material-ui/core';
+import {
+  Checkbox,
+  CircularProgress,
+  Drawer,
+  IconButton,
+  MenuItem,
+  Select,
+  Slider,
+  Tabs,
+  Tab,
+  Switch,
+} from '@material-ui/core';
 import {
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -14,15 +25,48 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
+import expandCollapse from 'cytoscape-expand-collapse';
 import useStyles from './style';
 import { ElementData, TabPanel } from './components';
 import { ErrorBanner } from '../../misc';
 
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
+if (typeof cytoscape('core', 'expandCollapse') === 'undefined') {
+  cytoscape.use(expandCollapse);
+}
 
 const DEFAULT_LAYOUTS = ['dagre'];
-
+const getCompoundApiOptions = (currentLayout, useCompactMode, spacingFactor) => ({
+  layoutBy: {
+    name: currentLayout,
+    nodeDimensionsIncludeLabels: !useCompactMode,
+    spacingFactor: spacingFactor,
+  }, // to rearrange after expand/collapse. It's just layout options or whole layout function. Choose your side!
+  // recommended usage: use cose-bilkent layout with randomize: false to preserve mental map upon expand/collapse
+  fisheye: false, // whether to perform fisheye view after expand/collapse you can specify a function too
+  animate: true, // whether to animate on drawing changes you can specify a function too
+  animationDuration: 1000, // when animate is true, the duration in milliseconds of the animation
+  ready: function () {}, // callback when expand/collapse initialized
+  undoable: true, // and if undoRedoExtension exists,
+  cueEnabled: false, // Whether cues are enabled
+  expandCollapseCuePosition: 'top-left', // default cue position is top left you can specify a function per node too
+  expandCollapseCueSize: 12, // size of expand-collapse cue
+  expandCollapseCueLineSize: 8, // size of lines used for drawing plus-minus icons
+  expandCueImage: undefined, // image of expand icon if undefined draw regular expand cue
+  collapseCueImage: undefined, // image of collapse icon if undefined draw regular collapse cue
+  expandCollapseCueSensitivity: 1, // sensitivity of expand-collapse cues
+  // edgeTypeInfo: 'edgeType',
+  // the name of the field that has the edge type, retrieved from edge.data(), can be a function,
+  // if reading the field returns undefined the collapsed edge type will be "unknown"
+  groupEdgesOfSameTypeOnCollapse: false, // if true, the edges to be collapsed will be grouped according to their types
+  // the created collapsed edges will have same type as their group.
+  // if false the collapased edge will have "unknown" type.
+  allowNestedEdgeCollapse: false,
+  // when you want to collapse a compound edge (edge which contains other edges) and normal edge,
+  // should it collapse without expanding the compound first
+  zIndex: 0, // z-index value of the canvas in which cue ımages are drawn
+});
 export const CytoViz = (props) => {
   const classes = useStyles();
   const {
@@ -69,6 +113,8 @@ export const CytoViz = (props) => {
     Math.log10(defaultSettings.minZoom),
     Math.log10(defaultSettings.maxZoom),
   ]);
+  const [allCompoundsAreCollapsed, setAllCompoundsAreCollapsed] = useState(defaultSettings.collapseAllCompounds);
+
   const changeCurrentLayout = (event) => {
     setCurrentLayout(event.target.value);
   };
@@ -84,6 +130,23 @@ export const CytoViz = (props) => {
   const changeZoomPrecision = (event, newValue) => {
     setZoomPrecision(newValue);
   };
+  const toggleAllNodesCollapsed = (event) => {
+    if (compoundsApiRef.current && cytoRef.current) {
+      if (!allCompoundsAreCollapsed) {
+        compoundsApiRef.current.collapseAll(getCompoundApiOptions(currentLayout, useCompactMode, spacingFactor));
+        compoundsApiRef.current.collapseAllEdges();
+        setAllCompoundsAreCollapsed(true);
+      } else {
+        compoundsApiRef.current.expandAllEdges();
+        compoundsApiRef.current.expandAll(getCompoundApiOptions(currentLayout, useCompactMode, spacingFactor));
+        setAllCompoundsAreCollapsed(false);
+      }
+    }
+  };
+
+  // Cyto
+  const compoundsApiRef = useRef(null);
+  const cytoRef = useRef(null);
 
   useEffect(() => {
     Object.values(extraLayouts).forEach((layout) => {
@@ -94,22 +157,35 @@ export const CytoViz = (props) => {
   }, [extraLayouts]);
 
   const initCytoscape = (cytoscapeRef) => {
-    cytoscapeRef.removeAllListeners();
+    if (cytoRef.current != null && cytoRef.current === cytoscapeRef) {
+      return;
+    }
+    cytoRef.current = cytoscapeRef;
+    cytoRef.current.removeAllListeners();
+    cytoRef.current.elements().removeAllListeners();
     // Prevent multiple selection & init elements selection behavior
-    cytoscapeRef.on('select', 'node, edge', function (e) {
-      cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
+    compoundsApiRef.current = cytoRef.current.expandCollapse(
+      getCompoundApiOptions(currentLayout, useCompactMode, spacingFactor)
+    );
+    if (allCompoundsAreCollapsed) {
+      compoundsApiRef.current.collapseAll(getCompoundApiOptions(currentLayout, useCompactMode, spacingFactor));
+      compoundsApiRef.current.collapseAllEdges();
+    }
+
+    cytoRef.current.on('select', 'node, edge', function (e) {
+      cytoRef.current.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
       const selectedElement = e.target;
       selectedElement.select();
       selectedElement.outgoers('edge').data('asOutEdgeHighlighted', true);
       selectedElement.incomers('edge').data('asInEdgeHighlighted', true);
       setCurrentElementDetails(getElementDetailsCallback(selectedElement));
     });
-    cytoscapeRef.on('unselect', 'node, edge', function (e) {
-      cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
+    cytoRef.current.on('unselect', 'node, edge', function (e) {
+      cytoRef.current.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
       setCurrentElementDetails(null);
     });
     // Add handling of double click events
-    cytoscapeRef.on('dbltap', 'node, edge', function (e) {
+    cytoRef.current.on('dbltap', 'node, edge', function (e) {
       const selectedElement = e.target;
       if (selectedElement.selectable()) {
         setCurrentDrawerTab(0);
@@ -117,11 +193,23 @@ export const CytoViz = (props) => {
         setCurrentElementDetails(getElementDetailsCallback(selectedElement));
       }
     });
-
+    cytoRef.current.on('cxttap', 'node.cy-expand-collapse-collapsed-node', function (e) {
+      const selectedElement = e.target;
+      // needs to be done this way because of know bugs when combining node and edge expand collapse methods:
+      // https://github.com/iVis-at-Bilkent/cytoscape.js-expand-collapse/issues/100
+      selectedElement
+        .neighborhood('node')
+        .forEach((neighbor) => compoundsApiRef.current.expandEdgesBetweenNodes([selectedElement, neighbor]));
+      compoundsApiRef.current.expand(
+        selectedElement,
+        getCompoundApiOptions(currentLayout, useCompactMode, spacingFactor)
+      );
+      setAllCompoundsAreCollapsed(false);
+    });
     // Init bubblesets
-    const bb = cytoscapeRef.bubbleSets();
+    const bb = cytoRef.current.bubbleSets();
     for (const groupName in bubblesets) {
-      const nodesGroup = cytoscapeRef.nodes(`.${groupName}`);
+      const nodesGroup = cytoRef.current.nodes(`.${groupName}`);
       const groupColor = bubblesets[groupName];
       bb.addPath(nodesGroup, undefined, null, {
         virtualEdges: true,
@@ -132,7 +220,6 @@ export const CytoViz = (props) => {
       });
     }
   };
-
   const errorBanner = error && <ErrorBanner error={error} labels={labels_.errorBanner} />;
   const loadingPlaceholder = loading && !error && !placeholderMessage && (
     <div data-cy="cytoviz-loading-container" className={classes.loadingContainer}>
@@ -150,7 +237,7 @@ export const CytoViz = (props) => {
     <>
       <CytoscapeComponent
         id="cytoviz-cytoscape-scene" // Component does not forward data-cy prop, use id instead
-        cy={initCytoscape}
+        cy={(cy) => initCytoscape(cy)}
         stylesheet={cytoscapeStylesheet}
         className={classes.cytoscapeContainer}
         elements={elements}
@@ -230,8 +317,14 @@ export const CytoViz = (props) => {
                 </div>
               </div>
               <div className={classes.settingLine}>
+                <div className={classes.settingLabel}>{labels_.settings.collapse}</div>
+                <div className={classes.settingInputContainer}>
+                  <Switch color="primary" checked={allCompoundsAreCollapsed} onChange={toggleAllNodesCollapsed} />
+                </div>
+              </div>
+              <div className={classes.settingLine}>
                 <div className={classes.settingLabel} onClick={toggleUseCompactMode}>
-                  {labels.settings.compactMode}
+                  {labels_.settings.compactMode}
                 </div>
                 <div className={classes.settingInputContainer}>
                   <Checkbox
@@ -307,6 +400,7 @@ CytoViz.propTypes = {
     maxZoom: PropTypes.number,
     useCompactMode: PropTypes.bool,
     spacingFactor: PropTypes.number,
+    collapseAllCompounds: PropTypes.bool,
   }),
   /**
    * Array of cytoscape elements to display
@@ -383,6 +477,7 @@ const DEFAULT_LABELS = {
     title: 'Settings',
     spacingFactor: 'Spacing factor',
     zoomLimits: 'Min & max zoom',
+    collapse: 'Compound nodes collapsed (Right click to open)',
   },
   elementData: {
     dictKey: 'Key',
@@ -398,6 +493,7 @@ CytoViz.defaultProps = {
     maxZoom: 1,
     useCompactMode: true,
     spacingFactor: 1,
+    collapseAllCompounds: false,
   },
   extraLayouts: {},
   groups: {},
