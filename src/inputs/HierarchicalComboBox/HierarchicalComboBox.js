@@ -34,6 +34,7 @@ export const HierarchicalComboBox = ({
     <Autocomplete
       {...props}
       data-cy="scenario-selector"
+      ListboxProps={{ 'data-cy': 'scenario-selector-options' }}
       onChange={(event, node) => handleChange(event, node)}
       disableClearable
       disabled={disabled}
