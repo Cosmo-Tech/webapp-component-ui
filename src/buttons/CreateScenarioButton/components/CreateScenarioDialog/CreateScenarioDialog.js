@@ -238,6 +238,7 @@ const CreateScenarioDialog = ({
             {isMaster || !currentScenarioSelected ? (
               <Autocomplete
                 data-cy="create-scenario-dialog-dataset-select"
+                ListboxProps={{ 'data-cy': 'create-scenario-dialog-dataset-select-options' }}
                 id="dataset"
                 disableClearable={true}
                 options={filteredDatasets}
@@ -266,6 +267,7 @@ const CreateScenarioDialog = ({
           <Grid item xs={12}>
             <Autocomplete
               data-cy="create-scenario-dialog-type-select"
+              ListboxProps={{ 'data-cy': 'create-scenario-dialog-type-select-options' }}
               id="scenarioType"
               disableClearable={true}
               value={scenarioTypeFieldValues}
