@@ -7,7 +7,22 @@ import useStyles from './style';
 
 const _generateAttributeDetails = (classes, labels, attributeName, attributeValue) => {
   const attributeLabel = labels?.attributes?.[attributeName] || attributeName;
-  const attributesToIgnore = ['label', 'Label', 'parent', 'source', 'target'];
+  const attributesToIgnore = [
+    'label',
+    'Label',
+    'parent',
+    'source',
+    'target',
+    'collapse', // attributes from expand-collapse extension
+    'collapsedChildren', // attributes from expand-collapse extension
+    'position-before-collapse', // attributes from expand-collapse extension
+    'size-before-collapse', // attributes from expand-collapse extension
+    'x-before-fisheye',
+    'y-before-fisheye',
+    'width-before-fisheye',
+    'height-before-fisheye',
+    'infoLabel',
+  ];
   if (attributesToIgnore.indexOf(attributeName) !== -1) {
     return null;
   }
