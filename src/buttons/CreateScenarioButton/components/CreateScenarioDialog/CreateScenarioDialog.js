@@ -288,7 +288,7 @@ const CreateScenarioDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <Button id="cancel" onClick={handleCloseDialog} color="primary">
+        <Button id="cancel" onClick={handleCloseDialog} color="primary" data-cy="create-scenario-dialog-cancel-button">
           {dialogLabels.cancel}
         </Button>
         <Button
