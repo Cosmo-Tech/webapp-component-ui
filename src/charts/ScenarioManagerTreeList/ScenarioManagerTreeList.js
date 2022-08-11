@@ -213,7 +213,7 @@ export const ScenarioManagerTreeList = (props) => {
           </Tooltip>
         </div>
       </div>
-      <div className={classes.treesContainer}>
+      <div data-cy="scenario-manager-view" className={classes.treesContainer}>
         {treeData.map((rootScenario, rootScenarioIndex) => {
           return (
             <Paper
