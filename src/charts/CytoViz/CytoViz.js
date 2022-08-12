@@ -37,7 +37,7 @@ import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
 import useStyles from './style';
-import { ElementData, TabPanel } from './components';
+import { ElementData, TabPanel, StatsHUD } from './components';
 import { ErrorBanner } from '../../misc';
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
@@ -84,12 +84,13 @@ export const CytoViz = (props) => {
   const expandAccordionPanel = (panel) => (event, newExpanded) => setExpandedPanel(newExpanded ? panel : false);
 
   // Settings
-  const [currentLayout, setCurrentLayout] = useState(defaultSettings.layout);
-  const [useCompactMode, setUseCompactMode] = useState(defaultSettings.useCompactMode);
-  const [spacingFactor, setSpacingFactor] = useState(defaultSettings.spacingFactor);
+  const [currentLayout, setCurrentLayout] = useState(defaultSettings.layout ?? DEFAULT_LAYOUTS[0]);
+  const [useCompactMode, setUseCompactMode] = useState(defaultSettings.useCompactMode ?? true);
+  const [showStats, setShowStats] = useState(defaultSettings.showStats ?? false);
+  const [spacingFactor, setSpacingFactor] = useState(defaultSettings.spacingFactor ?? 1);
   const [zoomPrecision, setZoomPrecision] = useState([
-    Math.log10(defaultSettings.minZoom),
-    Math.log10(defaultSettings.maxZoom),
+    Math.log10(defaultSettings.minZoom ?? 0.1),
+    Math.log10(defaultSettings.maxZoom ?? 1),
   ]);
   const changeCurrentLayout = (event) => setCurrentLayout(event.target.value);
   const toggleUseCompactMode = (event) => setUseCompactMode(!useCompactMode);
@@ -101,6 +102,7 @@ export const CytoViz = (props) => {
 
   // Cytoscape graph & scene
   const cytoRef = useRef(null);
+  const [cytoAsState, setCytoAsState] = useState(null);
   const [graphNodes, setGraphNodes] = useState([]);
   const [selectedNodes, setSelectedNodes] = useState([]);
   const [selectedNodesFieldHasError, setSelectedNodesFieldHasError] = useState(false);
@@ -243,6 +245,7 @@ export const CytoViz = (props) => {
     cytoRef.current = cytoscapeRef;
     setGraphNodes(cytoscapeRef.nodes().toArray());
     setEdgeClassOptions(getEdgesClasses(cytoscapeRef));
+    setCytoAsState(cytoscapeRef);
     cytoscapeRef.removeAllListeners();
     cytoscapeRef.elements().removeAllListeners();
 
@@ -582,6 +585,14 @@ export const CytoViz = (props) => {
                 </div>
               </div>
               <div className={classes.settingLine}>
+                <div className={classes.settingLabel} onClick={toggleShowStats}>
+                  {labels_.settings.showStats ?? 'Cytoscape statistics'}
+                </div>
+                <div className={classes.settingInputContainer}>
+                  <Switch checked={showStats} onChange={changeShowStats} name="showStats" color="primary" />
+                </div>
+              </div>
+              <div className={classes.settingLine}>
                 <div className={classes.settingLabel}>{labels_.settings.spacingFactor}</div>
                 <div className={classes.settingInputContainer}>
                   <Slider
@@ -641,6 +652,7 @@ export const CytoViz = (props) => {
           {labels_.accordion.exploreGraph.launch}
         </MenuItem>
       </Menu>
+      {cytoAsState && showStats && <StatsHUD cytoAsState={cytoAsState} />}
     </>
   );
 
@@ -667,6 +679,7 @@ CytoViz.propTypes = {
     minZoom: PropTypes.number,
     maxZoom: PropTypes.number,
     useCompactMode: PropTypes.bool,
+    showStats: PropTypes.bool,
     spacingFactor: PropTypes.number,
   }),
   /**
@@ -710,6 +723,7 @@ CytoViz.propTypes = {
        zoomLimits: 'string',
        open: 'string',
        close: 'string',
+       showStats: 'string',
      },
      elementData: {
        dictKey: 'string',
@@ -748,6 +762,7 @@ const DEFAULT_LABELS = {
     zoomLimits: 'Min & max zoom',
     open: 'Open settings',
     close: 'Close settings',
+    showStats: 'Cytoscape statistics',
   },
   elementData: {
     dictKey: 'Key',
@@ -783,6 +798,7 @@ CytoViz.defaultProps = {
     minZoom: 0.1,
     maxZoom: 1,
     useCompactMode: true,
+    showStats: false,
     spacingFactor: 1,
   },
   extraLayouts: {},
