@@ -1,3 +1,9 @@
+## **4.0.1** <sub><sup>2022-08-12 (af96745...23b1a34)</sup></sub>
+
+### Bug Fixes
+
+- fix published package
+
 ## **4.0.0** <sub><sup>2022-08-12 (af96745...23b1a34)</sup></sub>
 
 ### BREAKING CHANGES
