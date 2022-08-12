@@ -1,15 +1,24 @@
-## **4.0.0** <sub><sup>2022-08-02 (af96745...23b1a34)</sup></sub>
-
-### Bug Fixes
-
-- move error label of EditableLabel component below the text field ([af96745](https://github.com/Cosmo-Tech/webapp-component-ui/commit/af96745))
-- remove default placeholder picture ([a87ef01](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a87ef01))
+## **4.0.0** <sub><sup>2022-08-12 (af96745...23b1a34)</sup></sub>
 
 ### BREAKING CHANGES
 
 - remove PrivateRoute and PublicRoute components ([805c6f4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/805c6f4))
 - update palette according to MaterialUI specifications ([266c972](https://github.com/Cosmo-Tech/webapp-component-ui/commit/266c972))
 - remove username in AppBar, next to user's avatar, and use a tooltip instead ([266c972](https://github.com/Cosmo-Tech/webapp-component-ui/commit/266c972))
+
+### Features
+
+- add DefaultAvatar component generating a deterministic avatar based on user name ([5ad2630](https://github.com/Cosmo-Tech/webapp-component-ui/commit/5ad2630))
+- add missing data-cy props in several components
+
+### Bug Fixes
+
+- move error label of EditableLabel component below the text field ([af96745](https://github.com/Cosmo-Tech/webapp-component-ui/commit/af96745))
+- fix possible material\-ui warning caused by disabled Button in Tooltip ([ec73c3a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ec73c3a))
+
+### Dependencies
+
+- bump ag\-grid\-react & ag\-grid\-community to major version 28\.1\.0 ([9cc563d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9cc563d))
 
 ## **3.0.4** <sub><sup>2022-08-09 (7ae37ec...be91ebd)</sup></sub>
 
