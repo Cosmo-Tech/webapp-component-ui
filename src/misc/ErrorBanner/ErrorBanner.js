@@ -17,10 +17,12 @@ export const ErrorBanner = (props) => {
       <Paper square elevation={0} className={classes.errorContainer} data-cy="error-banner">
         <div>
           <Typography className={classes.errorTitle}>{errorStatusText + error.title}</Typography>
-          <Typography className={classes.errorText}>
+          <Typography className={classes.errorText} data-cy="error-detail">
             {error.detail.length < errorMessageMaxLength ? error.detail : labels.tooLongErrorMessage}
           </Typography>
-          <Typography className={classes.errorText}>{error.comment}</Typography>
+          <Typography className={classes.errorText} data-cy="error-comment">
+            {error.comment}
+          </Typography>
         </div>
         <div className={classes.errorText}>
           {error.detail.length >= errorMessageMaxLength && (
