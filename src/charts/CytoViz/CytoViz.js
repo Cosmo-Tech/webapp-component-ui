@@ -3,7 +3,19 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, CircularProgress, Drawer, IconButton, MenuItem, Select, Slider, Tabs, Tab } from '@material-ui/core';
+import {
+  Checkbox,
+  CircularProgress,
+  Drawer,
+  Fade,
+  IconButton,
+  MenuItem,
+  Select,
+  Slider,
+  Tab,
+  Tabs,
+  Tooltip,
+} from '@material-ui/core';
 import {
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -163,9 +175,11 @@ export const CytoViz = (props) => {
         maxZoom={10 ** zoomPrecision[1]}
       />
       <div data-cy="cytoviz-open-drawer-button" className={classes.openDrawerButton}>
-        <IconButton onClick={openDrawer}>
-          <ChevronRightIcon />
-        </IconButton>
+        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels_.settings.open}>
+          <IconButton onClick={openDrawer}>
+            <ChevronRightIcon />
+          </IconButton>
+        </Tooltip>
       </div>
       <Drawer
         data-cy="cytoviz-drawer"
@@ -198,9 +212,11 @@ export const CytoViz = (props) => {
             />
             <Tab data-cy="cytoviz-drawer-settings-tab-button" icon={<SettingsIcon />} label={labels_.settings.title} />
           </Tabs>
-          <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels_.settings.close}>
+            <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Tooltip>
         </div>
         <div className={classes.drawerContent}>
           <TabPanel data-cy="cytoviz-drawer-details-tab-content" value={currentDrawerTab} index={0}>
@@ -347,6 +363,8 @@ CytoViz.propTypes = {
        title: 'string',
        spacingFactor: 'string',
        zoomLimits: 'string',
+       open: 'string',
+       close: 'string',
      },
      elementData: {
        dictKey: 'string',
@@ -383,6 +401,8 @@ const DEFAULT_LABELS = {
     title: 'Settings',
     spacingFactor: 'Spacing factor',
     zoomLimits: 'Min & max zoom',
+    open: 'Open settings',
+    close: 'Close settings',
   },
   elementData: {
     dictKey: 'Key',

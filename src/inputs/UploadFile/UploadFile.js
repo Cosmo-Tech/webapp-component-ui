@@ -3,7 +3,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, Grid, IconButton, Link, Tooltip, Typography, makeStyles } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  Fade,
+  Grid,
+  IconButton,
+  Link,
+  Tooltip,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -77,15 +87,17 @@ export const UploadFile = (props) => {
                 )}
               </Grid>
               <Grid item>
-                <IconButton
-                  data-cy="delete-button"
-                  id="delete-button"
-                  disabled={!editMode}
-                  aria-label="delete"
-                  onClick={handleDeleteFile}
-                >
-                  <DeleteForeverIcon />
-                </IconButton>
+                <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.delete}>
+                  <IconButton
+                    data-cy="delete-button"
+                    id="delete-button"
+                    disabled={!editMode}
+                    aria-label="delete"
+                    onClick={handleDeleteFile}
+                  >
+                    <DeleteForeverIcon />
+                  </IconButton>
+                </Tooltip>
               </Grid>
             </Grid>
           )}
@@ -152,7 +164,8 @@ UploadFile.propTypes = {
      {
       button: 'string',
       invalidFileMessage: 'string',
-      label: 'string'
+      label: 'string',
+      delete: 'string'
     }
    </pre>
    */
@@ -160,6 +173,7 @@ UploadFile.propTypes = {
     button: PropTypes.string.isRequired,
     invalidFileMessage: PropTypes.string.isRequired,
     label: PropTypes.string,
+    delete: PropTypes.string,
   }),
 };
 
@@ -172,5 +186,6 @@ UploadFile.defaultProps = {
     label: '',
     button: 'Browse',
     invalidFileMessage: 'Your file is invalid',
+    delete: 'Delete file',
   },
 };
