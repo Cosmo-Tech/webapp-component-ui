@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-export { CreateScenarioButton, SelfDestructLinkButton, SignInButton } from './buttons';
+export { CreateScenarioButton, SelfDestructLinkButton, SignInButton, RolesEditionButton } from './buttons';
 export { ScenarioNode } from './cards';
 export { CytoViz, Dashboard, ScenarioManagerTreeList, SimplePowerBIReportEmbed } from './charts';
 export { SimpleTwoActionsDialog, DontAskAgainDialog } from './dialogs';
