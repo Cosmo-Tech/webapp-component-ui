@@ -63,7 +63,7 @@ export const SelfDestructLinkButton = (props) => {
       {status === STATUS.GENERATING && <CircularProgress size={30} />}
       {status === STATUS.READY && (
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
           onClick={startDownload}
           style={dimensions}

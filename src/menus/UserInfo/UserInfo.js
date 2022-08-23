@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Menu, MenuItem, ClickAwayListener, IconButton, Tooltip } from '@material-ui/core';
+import { Box, ClickAwayListener, Fade, IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@material-ui/icons';
 import { DefaultAvatar } from '../../misc';
 import useStyles from './style';
@@ -41,7 +41,12 @@ export const UserInfo = (props) => {
     <ClickAwayListener onClickAway={handleClose}>
       <div>
         <Box data-cy="user-profile-menu" aria-controls="user-profile-button" aria-haspopup="true" onClick={handleClick}>
-          <Tooltip key="user-name-tooltip" title={userName}>
+          <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            key="user-name-tooltip"
+            title={userName}
+          >
             {profilePlaceholder ? (
               <img src={profilePlaceholder} />
             ) : (

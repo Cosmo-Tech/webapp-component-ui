@@ -19,6 +19,7 @@ export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1,
         <Typography variant="body1">{labels.body}</Typography>
       </DialogContent>
       <DialogActions>
+        {/* TODO Use button1Props and button2Props to enable variants and colors */}
         <Button data-cy={id + '-button1'} id={id + 'id-button1'} onClick={handleClickOnButton1} color="primary">
           {labels.button1}
         </Button>

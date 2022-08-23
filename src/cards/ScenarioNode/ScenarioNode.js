@@ -9,6 +9,7 @@ import {
   AccordionSummary,
   Box,
   CircularProgress,
+  Fade,
   IconButton,
   Paper,
   Tooltip,
@@ -133,7 +134,12 @@ export const ScenarioNode = ({
           </Typography>
         ) : null}
         {scenario.state === 'Created' ? null : (
-          <Tooltip key="scenario-status-tooltip" title={status}>
+          <Tooltip
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            key="scenario-status-tooltip"
+            title={status}
+          >
             {icon}
           </Tooltip>
         )}
@@ -154,7 +160,12 @@ export const ScenarioNode = ({
 
   const getScenarioName = () => {
     return (
-      <Tooltip key="scenario-name-tooltip" title={scenario.name}>
+      <Tooltip
+        TransitionComponent={Fade}
+        TransitionProps={{ timeout: 600 }}
+        key="scenario-name-tooltip"
+        title={scenario.name}
+      >
         <div>
           <EditableLabel
             value={scenario.name}
@@ -218,29 +229,29 @@ export const ScenarioNode = ({
       >
         {getScenarioHeader()}
         {showDeleteIcon && (
+          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.delete || 'Delete file'}>
+            <IconButton
+              className={classes.scenarioDeleteButton}
+              data-cy="scenario-delete-button"
+              aria-label="delete scenario"
+              size="small"
+              onClick={openConfirmDialog}
+            >
+              <DeleteForeverIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
+        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.redirect}>
           <IconButton
             className={classes.scenarioDeleteButton}
-            data-cy="scenario-delete-button"
-            aria-label="delete scenario"
+            data-cy="scenario-view-redirect"
+            aria-label="redirect to scenario view"
             size="small"
-            onClick={openConfirmDialog}
+            onClick={redirectToScenarioView}
           >
-            <Tooltip key="scenario-status-tooltip" title={labels.delete}>
-              <DeleteForeverIcon fontSize="small" />
-            </Tooltip>
-          </IconButton>
-        )}
-        <IconButton
-          className={classes.scenarioDeleteButton}
-          data-cy="scenario-view-redirect"
-          aria-label="redirect to scenario view"
-          size="small"
-          onClick={redirectToScenarioView}
-        >
-          <Tooltip key="scenario-status-tooltip" title={labels.redirect}>
             <OpenInNewIcon fontSize="small" color="primary" />
-          </Tooltip>
-        </IconButton>
+          </IconButton>
+        </Tooltip>
       </AccordionSummary>
     );
   };

@@ -5,15 +5,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box,
-  Menu,
-  MenuItem,
+  Button,
   ClickAwayListener,
   Dialog,
-  DialogTitle,
   DialogActions,
   DialogContent,
-  Button,
+  DialogTitle,
+  Fade,
   IconButton,
+  Menu,
+  MenuItem,
+  Tooltip,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import useStyles from './style';
@@ -45,9 +47,11 @@ export const HelpMenu = (props) => {
           onClick={handleClick}
           className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
         >
-          <IconButton aria-label="help" color="inherit">
-            <HelpOutlineIcon />
-          </IconButton>
+          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.title}>
+            <IconButton aria-label="help" color="inherit">
+              <HelpOutlineIcon />
+            </IconButton>
+          </Tooltip>
         </Box>
         <Menu className={classes.menu} keepMounted anchorEl={anchorEl} open={isMenuOpen} onClose={handleClick}>
           {documentationUrl && (
@@ -115,6 +119,7 @@ HelpMenu.propTypes = {
       suuport: 'string',
       aboutTitle: 'string',
       close: 'string',
+      title: 'string',
     }
    *   </pre>
    */
@@ -123,6 +128,7 @@ HelpMenu.propTypes = {
     support: PropTypes.string,
     aboutTitle: PropTypes.string,
     close: PropTypes.string,
+    title: PropTypes.string,
   }),
 };
 
@@ -132,6 +138,7 @@ HelpMenu.defaultProps = {
     support: 'Contact support',
     aboutTitle: 'About',
     close: 'Close',
+    title: 'Help',
   },
   about: null,
 };

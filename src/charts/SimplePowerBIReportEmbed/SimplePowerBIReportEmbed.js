@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
-import { IconButton, makeStyles, Tooltip } from '@material-ui/core';
+import { Fade, IconButton, makeStyles, Tooltip } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { FixedRatioContainer } from '../../misc/FixedRatioContainer';
@@ -233,7 +233,7 @@ export const SimplePowerBIReportEmbed = ({
       <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
         {refreshable && (
           <div className={classes.toolbar}>
-            <Tooltip title={labels.refreshTooltip}>
+            <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.refreshTooltip}>
               {/* span is required to prevent MUI warning when the child Button in Tooltip is disabled */}
               <span>
                 <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
@@ -369,7 +369,7 @@ SimplePowerBIReportEmbed.defaultProps = {
   labels: {
     noScenario: {
       title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on Create new scenario',
+      label: 'You can create a scenario by clicking on the CREATE button',
     },
     noDashboard: {
       label: "There isn't any dashboard configured for this run template",

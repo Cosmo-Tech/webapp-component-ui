@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   errorButton: {
     marginLeft: '5px',
     marginRight: '5px',
+    color: theme.palette.error.contrastText,
   },
 }));
 

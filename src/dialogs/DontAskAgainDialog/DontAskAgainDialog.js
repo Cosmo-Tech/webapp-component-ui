@@ -48,6 +48,7 @@ export const DontAskAgainDialog = ({ id, open, onClose, labels, onConfirm }) => 
         />
       </DialogContent>
       <DialogActions>
+        {/* TODO Use button1Props and button2Props to enable variants and colors */}
         <Button autoFocus data-cy={id + '-cancel-button'} id={id + '-cancel-button'} onClick={close} color="primary">
           {labels.cancel}
         </Button>

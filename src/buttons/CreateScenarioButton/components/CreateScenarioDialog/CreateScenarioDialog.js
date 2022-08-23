@@ -288,7 +288,7 @@ const CreateScenarioDialog = ({
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <Button id="cancel" onClick={handleCloseDialog} color="primary">
+        <Button id="cancel" onClick={handleCloseDialog} color="primary" data-cy="create-scenario-dialog-cancel-button">
           {dialogLabels.cancel}
         </Button>
         <Button
@@ -296,8 +296,8 @@ const CreateScenarioDialog = ({
           data-cy="create-scenario-dialog-submit-button"
           disabled={createScenarioDisabled}
           onClick={handleCreateScenario}
-          color="primary"
           variant="contained"
+          color="primary"
         >
           {dialogLabels.create}
         </Button>
