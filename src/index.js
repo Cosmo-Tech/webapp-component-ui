@@ -20,10 +20,11 @@ export {
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
 export {
+  ErrorBanner,
   ErrorsPanel,
   FixedRatioContainer,
-  ScenarioValidationStatusChip,
   LoadingLine,
-  ErrorBanner,
+  PermissionsGate,
+  ScenarioValidationStatusChip,
   DefaultAvatar,
 } from './misc';
