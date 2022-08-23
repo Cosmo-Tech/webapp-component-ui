@@ -94,6 +94,69 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
+  queryTextfields: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1em',
+  },
+  queryHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '0.5em',
+  },
+  querySearchByID: {
+    display: 'grid',
+    gridTemplateColumns: '2fr 3fr',
+    gap: '1em',
+    alignItems: 'center',
+  },
+  queryEdgetypes: {
+    display: 'grid',
+    gridTemplateColumns: '2fr 1fr',
+    gap: '1em',
+    alignItems: 'center',
+  },
+  tabPanel: {
+    '& .MuiBox-root': {
+      padding: 0,
+    },
+    '& .MuiAccordion-root': {
+      border: '1px solid rgba(0, 0, 0, .125)',
+      boxShadow: 'none',
+      '&:not(:last-child)': {
+        borderBottom: 0,
+      },
+      '&:before': {
+        display: 'none',
+      },
+      '&$expanded': {},
+    },
+    '& .MuiAccordion-root.Mui-expanded': {
+      margin: 0,
+    },
+    '& .MuiAccordionSummary-root': {
+      borderBottom: '1px solid rgba(0, 0, 0, .125)',
+      minHeight: 56,
+      '&$expanded': {
+        minHeight: 56,
+      },
+    },
+    '& .MuiAccordionSummary-content': {
+      '&$expanded': {
+        margin: '12px 0',
+      },
+    },
+    '& .MuiAccordionSummary-content.Mui-expanded': {
+      fontWeight: 'bolder',
+    },
+    '& .MuiAccordionDetails-root': {
+      padding: '16px 16px 16px',
+    },
+    '& .MuiButton-root': {
+      width: 'min-content',
+      alignSelf: 'flex-end',
+    },
+  },
 }));
 
 export default useStyles;

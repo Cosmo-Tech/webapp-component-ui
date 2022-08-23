@@ -1,15 +1,36 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, CircularProgress, Drawer, IconButton, MenuItem, Select, Slider, Tabs, Tab } from '@material-ui/core';
+import {
+  Checkbox,
+  CircularProgress,
+  Drawer,
+  IconButton,
+  MenuItem,
+  Select,
+  Slider,
+  Tabs,
+  Tab,
+  TextField,
+  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Link,
+  InputAdornment,
+} from '@material-ui/core';
 import {
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon,
   Settings as SettingsIcon,
   AccountTree as AccountTreeIcon,
+  BubbleChart as BubbleChartIcon,
+  ExpandMore as ExpandMoreIcon,
+  Done as DoneIcon,
 } from '@material-ui/icons';
+import { Autocomplete } from '@material-ui/lab';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
@@ -22,7 +43,6 @@ cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
 
 const DEFAULT_LAYOUTS = ['dagre'];
-
 export const CytoViz = (props) => {
   const classes = useStyles();
   const {
@@ -60,6 +80,11 @@ export const CytoViz = (props) => {
   const changeDrawerTab = (event, newValue) => {
     setCurrentDrawerTab(newValue);
   };
+  const [expanded, setExpanded] = React.useState('panel1');
+
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   // Settings
   const [currentLayout, setCurrentLayout] = useState(defaultSettings.layout);
@@ -69,6 +94,7 @@ export const CytoViz = (props) => {
     Math.log10(defaultSettings.minZoom),
     Math.log10(defaultSettings.maxZoom),
   ]);
+
   const changeCurrentLayout = (event) => {
     setCurrentLayout(event.target.value);
   };
@@ -84,6 +110,26 @@ export const CytoViz = (props) => {
   const changeZoomPrecision = (event, newValue) => {
     setZoomPrecision(newValue);
   };
+  //Cyto
+  const [cytoRef, setCytoRef] = useState(null);
+  const [selectedNodes, setSelectedNodes] = useState(cytoRef?.nodes().at(0) ?? []);
+  const [exploreDepth, setExploreDepth] = useState(1);
+  const [selectedEdgeClasses, setSelectedEdgeClasses] = useState(['ALL']);
+  const [numberFieldHasError, setNumberFieldHasError] = useState(false);
+
+  const handleChangeExploreDepth = (event) => {
+    const newValue = event.target.value;
+    console.log(newValue);
+    if (newValue.match(/^[1-9][0-9]*/)) {
+      setExploreDepth(newValue);
+      setNumberFieldHasError(false);
+    } else if (newValue.match(/^$/)) {
+      setExploreDepth(newValue);
+      setNumberFieldHasError(true);
+    } else {
+      setNumberFieldHasError(true);
+    }
+  };
 
   useEffect(() => {
     Object.values(extraLayouts).forEach((layout) => {
@@ -94,6 +140,11 @@ export const CytoViz = (props) => {
   }, [extraLayouts]);
 
   const initCytoscape = (cytoscapeRef) => {
+    if (cytoRef != null && cytoRef === cytoscapeRef) {
+      return;
+    }
+    setCytoRef(cytoscapeRef);
+    console.log(cytoscapeRef.edges().classNames());
     cytoscapeRef.removeAllListeners();
     // Prevent multiple selection & init elements selection behavior
     cytoscapeRef.on('select', 'node, edge', function (e) {
@@ -181,6 +232,7 @@ export const CytoViz = (props) => {
           container: document.getElementById('cytoviz-root'),
           style: { position: 'absolute' },
         }}
+        p={0}
       >
         <div className={classes.drawerHeader}>
           <Tabs
@@ -203,8 +255,147 @@ export const CytoViz = (props) => {
           </IconButton>
         </div>
         <div className={classes.drawerContent}>
-          <TabPanel data-cy="cytoviz-drawer-details-tab-content" value={currentDrawerTab} index={0}>
-            {currentElementDetails || labels_.noSelectedElement}
+          <TabPanel
+            data-cy="cytoviz-drawer-details-tab-content"
+            value={currentDrawerTab}
+            index={0}
+            className={classes.tabPanel}
+          >
+            <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+              <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
+                Node Details
+              </AccordionSummary>
+              <AccordionDetails>{currentElementDetails || labels_.noSelectedElement}</AccordionDetails>
+            </Accordion>
+            <Accordion square expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+              <AccordionSummary aria-controls="panel2d-content" id="panel2d-header" expandIcon={<ExpandMoreIcon />}>
+                Find a Node
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.querySearchByID}>
+                  Search by ID
+                  <TextField
+                    InputProps={{
+                      startAdornment: <InputAdornment position="start">id: </InputAdornment>,
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <DoneIcon color="primary" />
+                        </InputAdornment>
+                      ),
+                    }}
+                    size="small"
+                    variant="outlined"
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion square expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+              <AccordionSummary aria-controls="panel3d-content" id="panel3d-header" expandIcon={<ExpandMoreIcon />}>
+                Explore a Subgraph
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.queryTextfields}>
+                  Select the starting Node(s)
+                  <Autocomplete
+                    multiple
+                    limitTags={3}
+                    value={selectedNodes}
+                    onChange={(event, newValue) => {
+                      console.log(`newValue:`);
+                      console.log(newValue);
+                      newValue.map((node) => node.select());
+                      setSelectedNodes(newValue);
+                    }}
+                    options={cytoRef?.nodes() ?? []}
+                    getOptionLabel={(node) => node.data('label')}
+                    renderInput={(params) => <TextField {...params} variant="outlined" />}
+                  />
+                  <div className={classes.querySearchByID}>
+                    Limit the search depth
+                    <TextField
+                      size="Small"
+                      type="number"
+                      error={numberFieldHasError}
+                      errorText={'enter an positive integer'}
+                      value={exploreDepth}
+                      onChange={handleChangeExploreDepth}
+                      InputProps={{
+                        inputProps: {
+                          max: 1000,
+                          min: 1,
+                        },
+                      }}
+                    />
+                    Choose the flow direction
+                    <div className={classes.queryEdgetypes}>
+                      IN-Edges
+                      <Checkbox color="primary" />
+                      OUT-Edges
+                      <Checkbox color="primary" />
+                    </div>
+                  </div>
+                  Include relation types
+                  <Autocomplete
+                    multiple
+                    limitTags={3}
+                    value={selectedEdgeClasses}
+                    // onChange={(event, newValue) => {
+                    //   if (newValue.includes('ALL')) {
+                    //     setSelectedEdgeClasses('ALL');
+                    //   } else {
+                    //     setSelectedEdgeClasses(newValue);
+                    //   }
+                    //   console.log(selectedEdgeClasses);
+                    // }}
+                    // onChange={(event, newValue) => {
+                    //   setSelectedEdgeClasses(newValue);
+                    //   console.log(selectedEdgeClasses);
+                    // }}
+                    options={cytoRef?.edges().classNames().unshift('ALL') ?? ['ALL']}
+                    renderInput={(params) => <TextField {...params} variant="outlined" />}
+                  />
+                  <Button variant="contained" color="primary">
+                    Explore
+                  </Button>
+                </div>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion square expanded={expanded === 'panel4'} onChange={handleChange('panel4')}>
+              <AccordionSummary aria-controls="panel4d-content" id="panel4d-header" expandIcon={<ExpandMoreIcon />}>
+                Query
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.queryTextfields}>
+                  <p>Write custom queries in the cypher graphquery language.</p>
+
+                  <Link href="https://neo4j.com/developer/cypher/" target="_blank" rel="noopener">
+                    Cypher Doc
+                  </Link>
+
+                  <div className={classes.queryHeader}>
+                    <TextField
+                      disabled
+                      label="Redis Command "
+                      defaultValue="GRAPH.QUERY"
+                      variant="filled"
+                      size="small"
+                    />
+                    <TextField disabled label="Instance" defaultValue="Current" variant="filled" size="small" />
+                  </div>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Query"
+                    multiline
+                    rows={8}
+                    defaultValue="Match (n1)-[r]->(n2) return n1,r,n2" //dont forget to add the extra the quotationmarks around the query
+                    variant="outlined"
+                  />
+                  <Button variant="contained" color="primary">
+                    Run
+                  </Button>
+                </div>
+              </AccordionDetails>
+            </Accordion>
           </TabPanel>
           <TabPanel data-cy="cytoviz-drawer-settings-tab-content" value={currentDrawerTab} index={1}>
             <div className={classes.settingsContainer}>
