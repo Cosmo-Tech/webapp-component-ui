@@ -1,3 +1,6 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
+
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -19,10 +22,24 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { RoleEditor } from '../../../../inputs';
+import PersonIcon from '@material-ui/icons/Person';
+import DesktopMacIcon from '@material-ui/icons/DesktopMac';
 
 const useStyles = makeStyles((theme) => ({
+  dialogActions: {
+    marginRight: '4px',
+    marginBottom: '4px',
+  },
   chip: {
     margin: '3px',
+  },
+  textDisabled: {
+    color: theme.palette.text.disabled,
+  },
+  rolesEditorContainer: {
+    maxHeight: '300px',
+    overflow: 'auto',
   },
 }));
 const RolesEditionDialog = ({
@@ -35,79 +52,135 @@ const RolesEditionDialog = ({
   defaultAccess,
   open,
   closeDialog,
+  scenarioId,
 }) => {
   const classes = useStyles();
-  const [selectedAgent, setSelectedAgent] = useState(null);
   const allRoles = Object.keys(scenarioRolesPermissionsMapping);
-  const getGrantedRoles = () => {
-    let grantedRoles = {};
-    allRoles.map(
-      (role) =>
-        (grantedRoles = {
-          ...grantedRoles,
-          [role]:
-            specificRolesByAgent.find((agent) => agent.id === selectedAgent?.id)?.roles?.includes(role) ||
-            defaultAccess.roles.includes(role),
-        })
-    );
-    return grantedRoles;
+  const [isFirstScreenShown, setIsFirstScreenShown] = useState(true);
+  const [selectedAgent, setSelectedAgent] = useState(null);
+
+  const [grantedRoles, setGrantedRoles] = useState([]);
+  const defaultAccessRoles = [{ id: 'default', roles: defaultAccess }];
+  useEffect(() => {
+    setGrantedRoles(specificRolesByAgent.concat(defaultAccessRoles));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenarioId]);
+
+  const [agentsWithoutRoles, setAgentsWithoutRoles] = useState([]);
+  const getAgentsWithoutRoles = (accessList) => {
+    return users.filter((user) => !accessList.some((access) => access.id === user.id));
   };
-  const [grantedRoles, setGrantedRoles] = useState(getGrantedRoles);
+  useEffect(() => {
+    setAgentsWithoutRoles(getAgentsWithoutRoles(grantedRoles));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [grantedRoles]);
+
   const handleChangeAgent = (newAgent) => {
     if (!isReadOnly) {
       setSelectedAgent(newAgent);
       setIsFirstScreenShown(false);
     }
   };
-  useEffect(() => {
-    setGrantedRoles(getGrantedRoles);
-  }, [selectedAgent]);
 
-  const goBackToFirstScreen = () => {
+  const cancelAddNewSpecificAccess = () => {
+    setIsFirstScreenShown(true);
+    setGrantedRoles(grantedRoles.filter((agent) => agent.id !== selectedAgent.id));
+    setSelectedAgent(null);
+  };
+  const confirmAddNewSpecificAccess = () => {
     setIsFirstScreenShown(true);
     setSelectedAgent(null);
   };
-  const [isFirstScreenShown, setIsFirstScreenShown] = useState(true);
-
-  const confirmChangeAgentRoles = () => {
-    onConfirmChanges();
+  const cancelShareScenario = () => {
+    setGrantedRoles(specificRolesByAgent.concat(defaultAccessRoles));
     closeDialog();
   };
-  const prepareToChangeAgentRoles = () => {
-    const grantedRolesToAgent = Object.entries(grantedRoles).filter(([key, value]) => value === true);
-    if (specificRolesByAgent.some((agent) => agent.id === selectedAgent.id)) {
-      const agentToChange = specificRolesByAgent.findIndex((agent) => agent.id === selectedAgent.id);
-      specificRolesByAgent[agentToChange].roles = Object.keys(Object.fromEntries(grantedRolesToAgent));
-    } else {
-      specificRolesByAgent.push({ ...selectedAgent, roles: Object.keys(Object.fromEntries(grantedRolesToAgent)) });
-    }
-    goBackToFirstScreen();
-  };
+
+  const [grantedPermissions, setGrantedPermissions] = useState([]);
+  const [notGrantedPermissions, setNotGrantedPermissions] = useState([]);
   const getGrantedOrNotGrantedPermissions = (isRoleGranted) => {
-    const filtered = Object.entries(grantedRoles).filter(([key, value]) => value === isRoleGranted);
+    const agentsGrantedRoles = grantedRoles.find((agent) => agent.id === selectedAgent.id)?.roles ?? defaultAccess;
+    const agentsNotGrantedRoles = allRoles.filter((role) => !agentsGrantedRoles.includes(role));
 
     const filteredPermissions = new Set(
-      Object.keys(Object.fromEntries(filtered))
+      (isRoleGranted ? agentsGrantedRoles : agentsNotGrantedRoles)
         .map((role) => scenarioRolesPermissionsMapping[role])
         .flatMap((permission) => permission)
     );
     return Array.from(filteredPermissions);
   };
-  const [grantedPermissions, setGrantedPermissions] = useState(null);
-  const [notGrantedPermissions, setNotGrantedPermissions] = useState([]);
-  const handleRolesChecked = (event) => {
-    setGrantedRoles({ ...grantedRoles, [event.target.value]: event.target.checked });
-  };
   useEffect(() => {
-    setGrantedPermissions(getGrantedOrNotGrantedPermissions(true));
-  }, [grantedRoles]);
+    if (!isFirstScreenShown) {
+      setGrantedPermissions(getGrantedOrNotGrantedPermissions(true));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedAgent, grantedRoles]);
+
   useEffect(() => {
-    if (grantedPermissions)
+    if (grantedPermissions && !isFirstScreenShown)
       setNotGrantedPermissions(
         getGrantedOrNotGrantedPermissions(false).filter((permission) => !grantedPermissions.includes(permission))
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grantedPermissions]);
 
+  const addRoleInList = (agent, value) => {
+    return grantedRoles.map((user) =>
+      user.id === agent.id
+        ? {
+            id: user.id,
+            roles: [...user.roles, value],
+          }
+        : user
+    );
+  };
+  const removeRoleFromList = (agent, value) => {
+    return grantedRoles.map((user) =>
+      user.id === agent.id
+        ? {
+            id: user.id,
+            roles: user.roles.filter((role) => role !== value),
+          }
+        : user
+    );
+  };
+  const addNewAgentToAccessControlList = (agent, value) => {
+    return [
+      ...grantedRoles,
+      {
+        id: agent.id,
+        roles: value,
+      },
+    ];
+  };
+  const removeSpecificAccess = (agent) => {
+    setGrantedRoles(grantedRoles.filter((user) => user.id !== agent.id));
+  };
+  const handleCheckRole = (event, agent) => {
+    const hasAgentGrantedRoles = grantedRoles.some((user) => user.id === agent.id);
+    if (event.target.checked) {
+      setGrantedRoles(
+        hasAgentGrantedRoles
+          ? addRoleInList(agent, event.target.value)
+          : addNewAgentToAccessControlList(agent, [event.target.value])
+      );
+    } else {
+      agent.roles.length !== 1
+        ? setGrantedRoles(removeRoleFromList(agent, event.target.value))
+        : removeSpecificAccess(agent);
+    }
+  };
+
+  const confirmChangeAccessList = () => {
+    const scenarioSecurity = {
+      accessControlList: grantedRoles.filter((agent) => agent.id !== 'default'),
+      default: grantedRoles.find((agent) => agent.id === 'default').roles,
+    };
+    onConfirmChanges(scenarioSecurity);
+    closeDialog();
+  };
+  const personIcon = <PersonIcon className={classes.textDisabled} />;
+  const workspaceIcon = <DesktopMacIcon className={classes.textDisabled} />;
   const dialogContent = isFirstScreenShown ? (
     <DialogContent>
       <Grid container spacing={2}>
@@ -116,28 +189,69 @@ const RolesEditionDialog = ({
             <Autocomplete
               data-cy="share-scenario-dialog-agents-select"
               ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
-              id="agents"
-              label={labels.addPeople}
               freeSolo
-              options={users}
-              value={selectedAgent}
+              disableClearable={true}
+              options={agentsWithoutRoles}
+              value={selectedAgent?.id}
               onChange={(event, agent) => handleChangeAgent(agent)}
-              getOptionLabel={(option) => (option.email ? option.email : '')}
+              getOptionLabel={(option) => (option.id ? option.id : '')}
               getOptionSelected={(option, value) => option.id === value.id}
-              renderInput={(params) => <TextField {...params} placeholder={labels.addPeople} variant="standard" />}
+              renderInput={(params) => (
+                <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
+              )}
             />
           </Grid>
         )}
+        {grantedRoles.length > 0 && (
+          <Grid item xs={12} className={classes.rolesEditorContainer}>
+            <Typography variant="subtitle1">{labels.editor.usersAccess}</Typography>
+            {grantedRoles.map(
+              (agent) =>
+                agent.id !== 'default' && (
+                  <RoleEditor
+                    key={agent.id}
+                    agent={agent.id}
+                    agentRoles={agent.roles}
+                    allRoles={allRoles}
+                    icon={personIcon}
+                    isRemoveAccessAvailable={true}
+                    removeAccessLabel={labels.editor.removeAccess}
+                    onRoleChecked={(event) => handleCheckRole(event, agent)}
+                    onRemoveAccess={() => removeSpecificAccess(agent)}
+                    labels={labels.roles}
+                    isReadOnly={isReadOnly}
+                  />
+                )
+            )}
+          </Grid>
+        )}
+        <Grid item xs={12} className={classes.rolesEditorContainer}>
+          <Typography variant="subtitle1">{labels.editor.defaultAccess}</Typography>
+          <RoleEditor
+            agent={labels.workspace}
+            agentRoles={grantedRoles.find((agent) => agent.id === 'default')?.roles || []}
+            allRoles={allRoles}
+            icon={workspaceIcon}
+            labels={labels.roles}
+            isReadOnly={isReadOnly}
+            onRoleChecked={(event) =>
+              handleCheckRole(
+                event,
+                grantedRoles.find((agent) => agent?.id === 'default')
+              )
+            }
+            isRemoveAccessAvailable={false}
+          />
+        </Grid>
       </Grid>
-      <DialogActions>
-        <Button id="cancel" onClick={closeDialog} color="primary">
+      <DialogActions className={classes.dialogActions}>
+        <Button data-cy="share-scenario-dialog-first-cancel-button" onClick={cancelShareScenario} color="primary">
           {labels.cancel}
         </Button>
         {!isReadOnly && (
           <Button
-            id="share"
             data-cy="share-scenario-dialog-submit-button"
-            onClick={confirmChangeAgentRoles}
+            onClick={confirmChangeAccessList}
             color="primary"
             variant="contained"
           >
@@ -151,14 +265,15 @@ const RolesEditionDialog = ({
       <Divider />
       <Autocomplete
         disabled={true}
-        data-cy="share-scenario-dialog-agents-select"
+        data-cy="share-scenario-dialog-disabled-agents-select"
         options={users}
-        getOptionLabel={(option) => (option.email ? option.email : '')}
+        getOptionLabel={(option) => (option.id ? option.id : '')}
         value={selectedAgent}
+        getOptionSelected={(option, value) => option.id === value.id}
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder={selectedAgent.email}
+            placeholder={selectedAgent.id}
             label={labels.userSelected}
             variant="outlined"
             margin="normal"
@@ -169,20 +284,29 @@ const RolesEditionDialog = ({
         <Grid item xs={4}>
           <Typography variant="subtitle1">{labels.roles.label}</Typography>
           <FormGroup>
-            {Object.keys(scenarioRolesPermissionsMapping).map((role) => (
+            {allRoles.map((role) => (
               <FormControlLabel
                 style={{ marginLeft: '0px' }}
                 key={role}
                 control={
                   <Checkbox
-                    data-cy="share-scenario-dialog-roles-checkbox"
+                    data-cy={`share-scenario-dialog-roles-checkbox-${role}`}
                     value={role}
-                    checked={grantedRoles[role]}
-                    onChange={handleRolesChecked}
+                    checked={
+                      grantedRoles.find((agent) => agent.id === selectedAgent.id)?.roles.includes(role) ||
+                      grantedRoles.find((agent) => agent.id === 'default')?.roles.includes(role)
+                    }
+                    disabled={grantedRoles.find((agent) => agent.id === 'default')?.roles.includes(role)}
+                    onChange={(event) =>
+                      handleCheckRole(
+                        event,
+                        grantedRoles.find((agent) => agent.id === selectedAgent.id) || selectedAgent
+                      )
+                    }
                     color="secondary"
                   />
                 }
-                label={role}
+                label={labels.roles[role]}
               />
             ))}
           </FormGroup>
@@ -193,22 +317,38 @@ const RolesEditionDialog = ({
         <Grid item xs={7}>
           <Typography variant="subtitle2">{labels.permissions.granted}</Typography>
           {grantedPermissions.map((permission) => (
-            <Chip key={permission} color="secondary" label={permission} className={classes.chip} />
+            <Chip
+              data-cy={`share-scenario-dialog-granted-permission-chip-${permission}`}
+              key={permission}
+              color="secondary"
+              label={labels.permissions[permission]}
+              className={classes.chip}
+            />
           ))}
           <Typography variant="subtitle2">{labels.permissions.notGranted}</Typography>
           {notGrantedPermissions.map((permission) => (
-            <Chip key={permission} disabled label={permission} className={classes.chip} />
+            <Chip
+              data-cy={`share-scenario-dialog-not-granted-permission-chip-${permission}`}
+              key={permission}
+              disabled
+              label={labels.permissions[permission]}
+              className={classes.chip}
+            />
           ))}
         </Grid>
       </Grid>
       <DialogActions>
-        <Button id="cancel" onClick={goBackToFirstScreen} color="primary">
+        <Button
+          data-cy="share-scenario-dialog-second-cancel-button"
+          onClick={cancelAddNewSpecificAccess}
+          color="primary"
+        >
           {labels.cancel}
         </Button>
         <Button
           id="share"
-          data-cy="share-scenario-dialog-submit-button"
-          onClick={prepareToChangeAgentRoles}
+          data-cy="share-scenario-dialog-confirm-add-access-button"
+          onClick={confirmAddNewSpecificAccess}
           color="primary"
           variant="contained"
         >
@@ -223,7 +363,6 @@ const RolesEditionDialog = ({
       closeDialog();
     }
   };
-
   return (
     <Dialog
       data-cy="share-scenario-dialog"
@@ -233,9 +372,9 @@ const RolesEditionDialog = ({
       fullWidth={true}
       onClose={onClose}
     >
-      <DialogTitle id="form-dialog-title">
+      <DialogTitle data-cy="share-scenario-dialog-title">
         {!isFirstScreenShown && (
-          <IconButton onClick={goBackToFirstScreen}>
+          <IconButton onClick={cancelAddNewSpecificAccess}>
             <ArrowBackIcon />
           </IconButton>
         )}
@@ -252,21 +391,42 @@ RolesEditionDialog.propTypes = {
     cancel: PropTypes.string.isRequired,
     done: PropTypes.string.isRequired,
     userSelected: PropTypes.string.isRequired,
+    workspace: PropTypes.string.isRequired,
     roles: PropTypes.shape({
       label: PropTypes.string.isRequired,
+      commonroleadmin: PropTypes.string.isRequired,
+      commonrolecreator: PropTypes.string.isRequired,
+      commonrolereader: PropTypes.string.isRequired,
+      scenariorolevalidator: PropTypes.string.isRequired,
+      commonrolewriter: PropTypes.string.isRequired,
+    }),
+    editor: PropTypes.shape({
+      usersAccess: PropTypes.string.isRequired,
+      defaultAccess: PropTypes.string.isRequired,
+      removeAccess: PropTypes.string.isRequired,
     }),
     permissions: PropTypes.shape({
       granted: PropTypes.string.isRequired,
       notGranted: PropTypes.string.isRequired,
+      'acl.scenario.delete': PropTypes.string.isRequired,
+      'acl.scenario.editParameters': PropTypes.string.isRequired,
+      'acl.scenario.editPermissions': PropTypes.string.isRequired,
+      'acl.scenario.editValidationStatus': PropTypes.string.isRequired,
+      'acl.scenario.launch': PropTypes.string.isRequired,
+      'acl.scenario.rename': PropTypes.string.isRequired,
+      'acl.scenario.view': PropTypes.string.isRequired,
+      'acl.scenario.viewPermissions': PropTypes.string.isRequired,
+      'acl.scenario.viewResults': PropTypes.string.isRequired,
     }),
   }),
-  isReadOnly: PropTypes.bool,
-  scenarioRolesPermissionsMapping: PropTypes.object,
-  onConfirmChanges: PropTypes.func,
-  specificRolesByAgent: PropTypes.array,
-  users: PropTypes.array,
-  defaultAccess: PropTypes.object,
-  open: PropTypes.bool,
-  closeDialog: PropTypes.func,
+  isReadOnly: PropTypes.bool.isRequired,
+  scenarioRolesPermissionsMapping: PropTypes.object.isRequired,
+  onConfirmChanges: PropTypes.func.isRequired,
+  specificRolesByAgent: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired,
+  defaultAccess: PropTypes.array.isRequired,
+  open: PropTypes.bool.isRequired,
+  closeDialog: PropTypes.func.isRequired,
+  scenarioId: PropTypes.string.isRequired,
 };
 export default RolesEditionDialog;

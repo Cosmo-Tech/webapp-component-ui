@@ -1,4 +1,4 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-export { default } from './RolesEditionDialog';
+export { RoleEditor } from './RoleEditor';
