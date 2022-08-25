@@ -17,6 +17,8 @@ export {
   UPLOAD_FILE_STATUS_KEY,
   Table,
   TABLE_DATA_STATUS,
+  RoleEditor,
+  CheckmarksMultipleSelect,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
 export {

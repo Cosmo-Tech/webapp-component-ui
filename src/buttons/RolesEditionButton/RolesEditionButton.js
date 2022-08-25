@@ -1,3 +1,6 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, IconButton, Tooltip } from '@material-ui/core';
@@ -13,11 +16,10 @@ export const RolesEditionButton = ({
   onConfirmChanges,
   specificRolesByAgent,
   defaultAccess,
+  scenarioId,
 }) => {
   const [open, setOpen] = useState(false);
-  const openDialog = () => {
-    setOpen(true);
-  };
+  const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
   const buttonContent = isIconButton ? (
     <IconButton data-cy="share-scenario-button" size="medium" variant="outlined" onClick={openDialog} color="primary">
@@ -34,15 +36,16 @@ export const RolesEditionButton = ({
         <div>{buttonContent}</div>
       </Tooltip>
       <RolesEditionDialog
+        scenarioId={scenarioId}
         open={open}
         scenarioRolesPermissionsMapping={scenarioRolesPermissionsMapping}
         specificRolesByAgent={specificRolesByAgent}
+        defaultAccess={defaultAccess}
         users={users}
         labels={labels.dialog}
         isReadOnly={isReadOnly}
         onConfirmChanges={onConfirmChanges}
         closeDialog={closeDialog}
-        defaultAccess={defaultAccess}
       />
     </div>
   );
@@ -55,11 +58,12 @@ RolesEditionButton.propTypes = {
     }),
     dialog: PropTypes.object.isRequired,
   }),
+  scenarioId: PropTypes.string.isRequired,
   isIconButton: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
-  specificRolesByAgent: PropTypes.array,
-  users: PropTypes.array,
-  defaultAccess: PropTypes.object,
-  scenarioRolesPermissionsMapping: PropTypes.object,
-  onConfirmChanges: PropTypes.func,
+  specificRolesByAgent: PropTypes.array.isRequired,
+  users: PropTypes.array.isRequired,
+  defaultAccess: PropTypes.array.isRequired,
+  scenarioRolesPermissionsMapping: PropTypes.object.isRequired,
+  onConfirmChanges: PropTypes.func.isRequired,
 };
