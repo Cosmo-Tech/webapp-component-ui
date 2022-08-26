@@ -53,10 +53,17 @@ export const ScenarioManagerTreeList = (props) => {
     labels,
     buildScenarioNameToDelete,
     showDeleteIcon,
+    canUserDeleteScenario,
+    canUserRenameScenario,
   } = props;
   if (buildSearchInfo) {
     console.warn(
       '"buildSearchInfo" prop is deprecated in ScenarioManagerTreeList. Please consider removing this prop.'
+    );
+  }
+  if (showDeleteIcon != null) {
+    console.warn(
+      '"showDeleteIcon" prop is deprecated in ScenarioManagerTreeList. Please use "canUserDeleteScenario" instead.'
     );
   }
 
@@ -93,7 +100,12 @@ export const ScenarioManagerTreeList = (props) => {
 
   const formatScenariosToRSTList = (treeScenarios) => {
     const rstScenarios = treeScenarios.map((scenario) => {
-      const displayDeleteIcon = scenario.ownerId === userId && showDeleteIcon;
+      // For retro-compatibility, canUserDeleteScenario not defined is equivalent to showDeleteIcon = true
+      const displayDeleteIcon =
+        canUserDeleteScenario != null
+          ? canUserDeleteScenario(scenario)
+          : showDeleteIcon !== false && scenario.ownerId === userId;
+
       labels.dataset = buildDatasetInfo(scenario.datasetList);
       return {
         expanded: nodesExpandedChildren[scenario.id],
@@ -110,6 +122,7 @@ export const ScenarioManagerTreeList = (props) => {
             onScenarioRedirect={onScenarioRedirect}
             deleteScenario={deleteScenario}
             checkScenarioNameValue={checkScenarioNameValue}
+            canRenameScenario={canUserRenameScenario(scenario)}
             onScenarioRename={onScenarioRename}
             labels={labels}
             buildScenarioNameToDelete={buildScenarioNameToDelete}
@@ -292,11 +305,22 @@ ScenarioManagerTreeList.propTypes = {
    */
   buildDatasetInfo: PropTypes.func.isRequired,
   /**
-   *  Define ScenarioNode's delete buttons visibility (no matter who created scenario):
-   *  - true : the button is shown
-   *  - false : the button is hidden
+   * DEPRECATED: this prop is deprecated, use 'canUserDeleteScenario' instead
+   * Boolean value to define whether or not scenario delete buttons must be shown in ScenarioNode elements:
+   *  - false: delete buttons are always hidden
+   *  - true: delete buttons are shown if the user id matches the scenario owner id
    */
   showDeleteIcon: PropTypes.bool,
+  /**
+   * Function returning whether or not the current user can delete a given scenario. This function receives as parameter
+   * the scenario data and must return a boolean.
+   */
+  canUserDeleteScenario: PropTypes.func,
+  /**
+   * Function returning whether or not the current user can rename a given scenario. This function receives as parameter
+   * the scenario data and must return a boolean.
+   */
+  canUserRenameScenario: PropTypes.func,
   /**
    * Structure
    * <pre>
@@ -334,7 +358,6 @@ ScenarioManagerTreeList.propTypes = {
 
 ScenarioManagerTreeList.defaultProps = {
   onScenarioRedirect: null,
-  showDeleteIcon: true,
   labels: {
     status: 'Run status',
     successful: 'Successful',
@@ -365,6 +388,7 @@ ScenarioManagerTreeList.defaultProps = {
     },
   },
   checkScenarioNameValue: () => null,
+  canUserRenameScenario: () => true,
 };
 
 // Function to ignore drag & drop events in the parent div, to prevent
