@@ -1,32 +1,39 @@
 import React, { useState } from 'react';
-import { Button, Paper, Slide, Typography } from '@mui/material';
+import { Button, Collapse, Paper, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import useStyles from './style';
 
-export const ErrorBanner = (props) => {
+const DEFAULT_ERROR = {
+  comment: '',
+  detail: '',
+  status: '',
+  title: '',
+};
+
+export const ErrorBanner = ({ error, clearErrors, labels }) => {
   const classes = useStyles();
-  const { error, clearErrors, labels } = props;
+  const error_ = { ...DEFAULT_ERROR, ...error };
   const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {
     navigator.clipboard.writeText(message).then(() => setCopyButtonText(labels.toggledButtonText));
   };
   const errorMessageMaxLength = 200;
-  const errorStatusText = error.status ? error.status + ' ' : '';
+  const errorStatusText = error_.status ? error_.status + ' ' : '';
   return (
-    <Slide direction="down" in={error != null} unmountOnExit>
+    <Collapse in={error != null}>
       <Paper square elevation={0} className={classes.errorContainer} data-cy="error-banner">
         <div>
-          <Typography className={classes.errorTitle}>{errorStatusText + error.title}</Typography>
+          <Typography className={classes.errorTitle}>{errorStatusText + error_.title}</Typography>
           <Typography className={classes.errorText} data-cy="error-detail">
-            {error.detail.length < errorMessageMaxLength ? error.detail : labels.tooLongErrorMessage}
+            {error_.detail.length < errorMessageMaxLength ? error_.detail : labels.tooLongErrorMessage}
           </Typography>
           <Typography className={classes.errorText} data-cy="error-comment">
-            {error.comment}
+            {error_.comment}
           </Typography>
         </div>
         <div className={classes.errorText}>
-          {error.detail.length >= errorMessageMaxLength && (
-            <Button className={classes.errorButton} size="small" onClick={() => copyToClipboard(error.detail)}>
+          {error_.detail.length >= errorMessageMaxLength && (
+            <Button className={classes.errorButton} size="small" onClick={() => copyToClipboard(error_.detail)}>
               {copyButtonText}
             </Button>
           )}
@@ -37,7 +44,7 @@ export const ErrorBanner = (props) => {
           )}
         </div>
       </Paper>
-    </Slide>
+    </Collapse>
   );
 };
 
@@ -47,7 +54,7 @@ ErrorBanner.propTypes = {
     detail: PropTypes.string,
     status: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     title: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   clearErrors: PropTypes.func,
   labels: PropTypes.shape({
     tooLongErrorMessage: PropTypes.string,
