@@ -146,6 +146,19 @@ const CreateScenarioDialog = ({
     return scenarioData;
   }
 
+  function getMasterScenarioCheckBox() {
+    return (
+      <Checkbox
+        disabled={!currentScenarioSelected}
+        data-cy="create-scenario-dialog-master-checkbox"
+        checked={!currentScenarioSelected || isMaster}
+        onChange={handleChangeScenarioMaster}
+        id="isScenarioMaster"
+        color="primary"
+      />
+    );
+  }
+
   const handleCreateScenario = () => {
     const scenarioData = createScenarioData();
     createScenario(workspaceId, scenarioData);
@@ -218,22 +231,9 @@ const CreateScenarioDialog = ({
               fullWidth
             />
           </Grid>
-          {currentScenarioSelected && (
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    data-cy="create-scenario-dialog-master-checkbox"
-                    checked={isMaster}
-                    onChange={handleChangeScenarioMaster}
-                    id="isScenarioMaster"
-                    color="primary"
-                  />
-                }
-                label={dialogLabels.scenarioMaster}
-              />
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <FormControlLabel control={getMasterScenarioCheckBox()} label={dialogLabels.scenarioMaster} />
+          </Grid>
           <Grid item xs={12}>
             {isMaster || !currentScenarioSelected ? (
               <Autocomplete
