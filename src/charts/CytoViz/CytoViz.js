@@ -1,10 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Checkbox,
   CircularProgress,
   Drawer,
   Fade,
@@ -15,6 +14,7 @@ import {
   Tab,
   Tabs,
   Tooltip,
+  Switch,
 } from '@material-ui/core';
 import {
   ChevronRight as ChevronRightIcon,
@@ -97,6 +97,9 @@ export const CytoViz = (props) => {
     setZoomPrecision(newValue);
   };
 
+  // Cyto
+  const cytoRef = useRef(null);
+
   useEffect(() => {
     Object.values(extraLayouts).forEach((layout) => {
       if (layout) {
@@ -106,7 +109,12 @@ export const CytoViz = (props) => {
   }, [extraLayouts]);
 
   const initCytoscape = (cytoscapeRef) => {
+    if (cytoRef.current != null && cytoRef.current === cytoscapeRef) {
+      return;
+    }
+    cytoRef.current = cytoscapeRef;
     cytoscapeRef.removeAllListeners();
+    cytoscapeRef.elements().removeAllListeners();
     // Prevent multiple selection & init elements selection behavior
     cytoscapeRef.on('select', 'node, edge', function (e) {
       cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
@@ -129,7 +137,6 @@ export const CytoViz = (props) => {
         setCurrentElementDetails(getElementDetailsCallback(selectedElement));
       }
     });
-
     // Init bubblesets
     const bb = cytoscapeRef.bubbleSets();
     for (const groupName in bubblesets) {
@@ -247,10 +254,10 @@ export const CytoViz = (props) => {
               </div>
               <div className={classes.settingLine}>
                 <div className={classes.settingLabel} onClick={toggleUseCompactMode}>
-                  {labels.settings.compactMode}
+                  {labels_.settings.compactMode}
                 </div>
                 <div className={classes.settingInputContainer}>
-                  <Checkbox
+                  <Switch
                     data-cy="cytoviz-compact-mode-checkbox"
                     checked={useCompactMode}
                     onChange={changeUseCompactMode}
