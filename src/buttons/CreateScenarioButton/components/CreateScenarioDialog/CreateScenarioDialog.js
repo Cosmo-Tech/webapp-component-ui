@@ -201,7 +201,7 @@ const CreateScenarioDialog = ({
                 options={filteredDatasets}
                 value={datasetFieldValues}
                 onChange={(event, newDataset) => setDatasetFieldValues(newDataset)}
-                getOptionLabel={(option) => (option.name ? option.name : '')}
+                getOptionLabel={(option) => option.name ?? ''}
                 getOptionSelected={(option, value) => option.id === value.id}
                 renderInput={(params) => (
                   <TextField
@@ -230,7 +230,7 @@ const CreateScenarioDialog = ({
               value={selectedRunTemplate}
               options={runTemplates}
               onChange={(event, newScenarioType) => setSelectedRunTemplate(newScenarioType)}
-              getOptionLabel={(option) => (option.name ? option.name : '')}
+              getOptionLabel={(option) => option.name ?? ''}
               getOptionSelected={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
