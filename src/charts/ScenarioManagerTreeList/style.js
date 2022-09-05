@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     height: '100%',
     width: '100%',
-    position: 'fixed',
     '& .rst__tree': {
       height: '100%',
     },

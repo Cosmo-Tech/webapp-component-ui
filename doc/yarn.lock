@@ -1156,16 +1156,16 @@
     validator "^13.7.0"
     xlsx "^0.18.3"
 
-"@cosmotech/ui@^2.6.0":
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/@cosmotech/ui/-/ui-2.7.1.tgz#6b5234890af04afed50e1284f46c8374ac7585ab"
-  integrity sha512-DZeTkgmO5GNeLfvhEWeY6CpSFgEmWdaboyLcbmkyEpTSZUT3GzsCzStX5wezTze/lRJM3UEa7RJmleZaktN8QA==
+"@cosmotech/ui@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@cosmotech/ui/-/ui-4.1.0.tgz#1e8495458b510c28d8b405b124d4018c72638704"
+  integrity sha512-GC1KDGx0ARZpzH2q8wXgbqLX4hpYvWJkDQB7sXPARcvYg3jmEeLZ7cGELCUqa4Y1IBb0lgyZKClRf56uE/a/AA==
   dependencies:
     "@date-io/date-fns" "^1.3.13"
     "@material-ui/pickers" "^3.3.10"
     "@nosferatu500/react-sortable-tree" "^3.0.5"
-    ag-grid-community "^26.1.0"
-    ag-grid-react "^26.1.0"
+    ag-grid-community "^28.1.0"
+    ag-grid-react "^28.1.0"
     clsx "^1.1.1"
     cytoscape "^3.20.0"
     cytoscape-bubblesets "^3.1.0"
@@ -2632,17 +2632,17 @@ adler-32@~1.3.0:
   resolved "https://registry.yarnpkg.com/adler-32/-/adler-32-1.3.1.tgz#1dbf0b36dda0012189a32b3679061932df1821e2"
   integrity sha512-ynZ4w/nUUv5rrsR8UUGoe1VC9hZj6V5hU9Qw1HlMDJGEJw5S7TfTErWTjMys6M7vr0YWcPqs3qAr4ss0nDfP+A==
 
-ag-grid-community@^26.1.0:
-  version "26.2.1"
-  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-26.2.1.tgz#b217e1b62317817c7119511a1a8358992e3a2026"
-  integrity sha512-aChSGNdPkBda4BhOUUEAmAkRlIG7rFU8UTXx3NPStavrCOHKLDRV90djIKuiXfM6ONBqKmeqw2as0yuLnSN8dw==
+ag-grid-community@^28.1.0:
+  version "28.1.1"
+  resolved "https://registry.yarnpkg.com/ag-grid-community/-/ag-grid-community-28.1.1.tgz#68b849ecf4c0849faa8e012003afb0923ee00d69"
+  integrity sha512-WqWELTVXMrFHnyLHhD8HqMzrns+rjMuaOWcnLY+uO+j2jFN9QEasXPdT8zepNbNeUaIdCt1f1Q9Ipx0U1evNvQ==
 
-ag-grid-react@^26.1.0:
-  version "26.2.0"
-  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-26.2.0.tgz#79e851130a1806a5d3d3ba004ca0eecc7f344a63"
-  integrity sha512-sFU1C3OFWun/V5l5+93b4XQegT+RA21AUY1TqUcHActDY0myeEllPJkR0xKj82EZuKihNuH52WQjOrrhzAjoHA==
+ag-grid-react@^28.1.0:
+  version "28.1.1"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-28.1.1.tgz#c9bc1df2d09e7b7b3e51461881eb4a938e80b1f4"
+  integrity sha512-K1RUWNCKgwxeh6Y4Wb5LD6dVYyAbduH3tAd0ketVcVij2gruLVlvZdtT2HwHjeDvyyp0oqGqZVT2oik6+rZFTQ==
   dependencies:
-    prop-types "^15.6.2"
+    prop-types "^15.8.1"
 
 aggregate-error@^3.0.0:
   version "3.1.0"
