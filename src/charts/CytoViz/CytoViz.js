@@ -531,6 +531,49 @@ export const CytoViz = (props) => {
                 </div>
               </AccordionDetails>
             </Accordion>
+            <Accordion square expanded={expanded === 'panel4'} onChange={handleAccordeonChange('panel4')}>
+              <AccordionSummary aria-controls="panel4d-content" id="panel4d-header" expandIcon={<ExpandMoreIcon />}>
+                {labels_.accordeon.query.headline}
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.queryTextfields}>
+                  <Typography variant="caption"> {labels_.accordeon.query.description}</Typography>
+
+                  <Link href="https://neo4j.com/developer/cypher/" target="_blank" rel="noopener">
+                    {labels_.accordeon.query.docLink}
+                  </Link>
+
+                  <div className={classes.queryHeader}>
+                    <TextField
+                      disabled
+                      label={labels_.accordeon.query.command}
+                      defaultValue="GRAPH.QUERY"
+                      variant="filled"
+                      size="small"
+                    />
+                    <TextField
+                      disabled
+                      label={labels_.accordeon.query.instance}
+                      defaultValue="Current"
+                      variant="filled"
+                      size="small"
+                    />
+                  </div>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label={labels_.accordeon.query.query}
+                    multiline
+                    rows={8}
+                    // dont forget to add the extra the quotationmarks around the query
+                    defaultValue="Match (n1)-[r]->(n2) return n1,r,n2"
+                    variant="outlined"
+                  />
+                  <Button variant="contained" color="primary">
+                    {labels_.accordeon.query.launch}
+                  </Button>
+                </div>
+              </AccordionDetails>
+            </Accordion>
           </TabPanel>
           <TabPanel data-cy="cytoviz-drawer-settings-tab-content" value={currentDrawerTab} index={1}>
             <div className={classes.settingsContainer}>
@@ -750,6 +793,16 @@ const DEFAULT_LABELS = {
       excludeEdges: 'Exclude relation types',
       compoundNeighbors: 'Consider entities in compounds as neighbors',
       launch: 'Explore',
+    },
+
+    query: {
+      headline: 'Query',
+      description: 'Write custom queries in the cypher graphquery language.',
+      docLink: 'Cypher Doc',
+      command: 'Redis Command',
+      instance: 'Instance',
+      query: 'Query',
+      launch: 'Run',
     },
   },
 };
