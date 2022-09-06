@@ -14,6 +14,14 @@ import {
   Tab,
   Tabs,
   Tooltip,
+  Checkbox,
+  TextField,
+  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Menu,
   Switch,
 } from '@material-ui/core';
 import {
@@ -21,7 +29,9 @@ import {
   ChevronLeft as ChevronLeftIcon,
   Settings as SettingsIcon,
   AccountTree as AccountTreeIcon,
+  ExpandMore as ExpandMoreIcon,
 } from '@material-ui/icons';
+import { Autocomplete } from '@material-ui/lab';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
@@ -29,11 +39,15 @@ import dagre from 'cytoscape-dagre';
 import useStyles from './style';
 import { ElementData, TabPanel } from './components';
 import { ErrorBanner } from '../../misc';
-
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
 
+const GRAPH_EXPLORATION_STEP_DURATION_IN_MS = 1500;
 const DEFAULT_LAYOUTS = ['dagre'];
+const DEFAULT_CONTEXT_MENU_POSITION = {
+  mouseX: null,
+  mouseY: null,
+};
 
 export const CytoViz = (props) => {
   const classes = useStyles();
@@ -63,15 +77,11 @@ export const CytoViz = (props) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [currentDrawerTab, setCurrentDrawerTab] = useState(0);
   const [currentElementDetails, setCurrentElementDetails] = useState(null);
-  const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
-  const openDrawer = () => {
-    setIsDrawerOpen(true);
-  };
-  const changeDrawerTab = (event, newValue) => {
-    setCurrentDrawerTab(newValue);
-  };
+  const [expandedPanel, setExpandedPanel] = useState('nodeDetailsPanel');
+  const closeDrawer = () => setIsDrawerOpen(false);
+  const openDrawer = () => setIsDrawerOpen(true);
+  const changeDrawerTab = (event, newValue) => setCurrentDrawerTab(newValue);
+  const expandAccordionPanel = (panel) => (event, newExpanded) => setExpandedPanel(newExpanded ? panel : false);
 
   // Settings
   const [currentLayout, setCurrentLayout] = useState(defaultSettings.layout);
@@ -81,24 +91,142 @@ export const CytoViz = (props) => {
     Math.log10(defaultSettings.minZoom),
     Math.log10(defaultSettings.maxZoom),
   ]);
-  const changeCurrentLayout = (event) => {
-    setCurrentLayout(event.target.value);
+  const changeCurrentLayout = (event) => setCurrentLayout(event.target.value);
+  const toggleUseCompactMode = (event) => setUseCompactMode(!useCompactMode);
+  const changeUseCompactMode = (event) => setUseCompactMode(event.target.checked);
+  const toggleShowStats = (event) => setShowStats(!showStats);
+  const changeShowStats = (event) => setShowStats(event.target.checked);
+  const changeSpacingFactor = (event, newValue) => setSpacingFactor(newValue);
+  const changeZoomPrecision = (event, newValue) => setZoomPrecision(newValue);
+
+  // Cytoscape graph & scene
+  const cytoRef = useRef(null);
+  const [graphNodes, setGraphNodes] = useState([]);
+  const [selectedNodes, setSelectedNodes] = useState([]);
+  const [selectedNodesFieldHasError, setSelectedNodesFieldHasError] = useState(false);
+  const [explorationDepth, setExplorationDepth] = useState(10);
+  const [flowDirection, setFlowDirection] = useState({ inEdges: false, outEdges: true });
+  const [childrenAreNeighbors, setChildrenAreNeighbors] = useState(false);
+  const [edgeClassOptions, setEdgeClassOptions] = useState([]);
+  const [excludedEdgeClasses, setExcludedEdgeClasses] = useState([]);
+  const [explorationDepthFieldHasError, setExplorationDepthFieldHasError] = useState(false);
+  const [contextMenuPosition, setContextMenuPosition] = useState(DEFAULT_CONTEXT_MENU_POSITION);
+  const [isExplorationRunning, setIsExplorationRunning] = useState(false);
+
+  const closeContextMenu = () => {
+    setContextMenuPosition(DEFAULT_CONTEXT_MENU_POSITION);
   };
-  const toggleUseCompactMode = (event) => {
-    setUseCompactMode(!useCompactMode);
+  const changeSelectedNodesForExploration = (nodes) => {
+    nodes.map((node) => node.select());
+    setSelectedNodes(nodes);
+    setSelectedNodesFieldHasError(nodes.length === 0);
   };
-  const changeUseCompactMode = (event) => {
-    setUseCompactMode(event.target.checked);
-  };
-  const changeSpacingFactor = (event, newValue) => {
-    setSpacingFactor(newValue);
-  };
-  const changeZoomPrecision = (event, newValue) => {
-    setZoomPrecision(newValue);
+  const checkExplorationDepth = (event) => {
+    const newValue = event.target.value;
+    if (newValue.match(/^[0-9][0-9]*/)) {
+      setExplorationDepth(parseInt(newValue));
+      setExplorationDepthFieldHasError(false);
+    } else if (newValue.match(/^$/)) {
+      setExplorationDepth(NaN);
+      setExplorationDepthFieldHasError(true);
+    } else {
+      setExplorationDepthFieldHasError(true);
+    }
   };
 
-  // Cyto
-  const cytoRef = useRef(null);
+  const startGraphExploration = () => {
+    setIsExplorationRunning(true);
+    closeDrawer();
+
+    const selectedNodesCyto = cytoRef.current.collection();
+    selectedNodes.forEach((node) => {
+      selectedNodesCyto.merge(cytoRef.current.getElementById(node._private.data.id));
+    });
+
+    const visitedNodes = cytoRef.current.collection();
+    cytoRef.current.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
+    cytoRef.current.elements().data('hidden', true);
+    // remove excluded edges
+    const edgesToRemove = cytoRef.current.collection();
+    excludedEdgeClasses.forEach((excludedEdgeClass) =>
+      edgesToRemove.merge(cytoRef.current.elements(`edge.${excludedEdgeClass}`))
+    );
+    cytoRef.current.remove(edgesToRemove);
+
+    const onComplete = () => {
+      cytoRef.current.add(edgesToRemove);
+      cytoRef.current.elements().data('hidden', false);
+      setIsExplorationRunning(false);
+      openDrawer();
+    };
+
+    exploreOneStep(
+      selectedNodesCyto,
+      visitedNodes,
+      explorationDepth,
+      flowDirection.inEdges,
+      flowDirection.outEdges,
+      onComplete,
+      GRAPH_EXPLORATION_STEP_DURATION_IN_MS
+    );
+  };
+
+  const exploreOneStep = (
+    startingNodes,
+    visitedNodes,
+    depth,
+    followInEdges,
+    followOutEdges,
+    onComplete,
+    stepDuration
+  ) => {
+    let neighbors = cytoRef.current.collection(); // get an empty collection
+    startingNodes.forEach((node) => {
+      if (followInEdges) {
+        neighbors.merge(node.incomers('node'));
+        neighbors.merge(node.parent());
+      }
+      if (followOutEdges) {
+        neighbors.merge(node.outgoers('node'));
+        neighbors.merge(node.children());
+      }
+      if (childrenAreNeighbors) {
+        neighbors.merge(node.parent().children());
+      }
+    });
+    startingNodes.data('hidden', false);
+    startingNodes.parent().data('hidden', false); // otherwise the element wont be shown
+    visitedNodes.edgesWith(visitedNodes).data('hidden', false);
+    startingNodes.edgesWith(visitedNodes).data('hidden', false);
+
+    visitedNodes.merge(startingNodes); // mark all visited nodes
+    neighbors = neighbors.subtract(visitedNodes); // do not put already discovered nodes in the next searchrun
+
+    cytoRef.current.animate({
+      fit: { eles: startingNodes },
+      center: { eles: startingNodes },
+      duration: 1000,
+      complete: depth === 0 ? onComplete() : {},
+    });
+    if (depth < 1) {
+      return;
+    }
+    // to reduce maximal runtime
+    if (depth > 1 && neighbors.length === 0) {
+      depth = 1;
+    }
+    setTimeout(() => {
+      exploreOneStep(neighbors, visitedNodes, depth - 1, followInEdges, followOutEdges, onComplete, stepDuration);
+    }, stepDuration);
+  };
+
+  const getEdgesClasses = (cytoscapeRef) => {
+    const edgeClassesSet = new Set();
+    cytoscapeRef.edges().forEach((edge) => {
+      edge.classes().forEach((currentClass) => edgeClassesSet.add(currentClass));
+    });
+    return Array.from(edgeClassesSet);
+  };
 
   useEffect(() => {
     Object.values(extraLayouts).forEach((layout) => {
@@ -113,30 +241,52 @@ export const CytoViz = (props) => {
       return;
     }
     cytoRef.current = cytoscapeRef;
+    setGraphNodes(cytoscapeRef.nodes().toArray());
+    setEdgeClassOptions(getEdgesClasses(cytoscapeRef));
     cytoscapeRef.removeAllListeners();
     cytoscapeRef.elements().removeAllListeners();
+
     // Prevent multiple selection & init elements selection behavior
-    cytoscapeRef.on('select', 'node, edge', function (e) {
+    cytoscapeRef.on('select cxttap', 'node, edge', function (e) {
       cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
       const selectedElement = e.target;
       selectedElement.select();
       selectedElement.outgoers('edge').data('asOutEdgeHighlighted', true);
       selectedElement.incomers('edge').data('asInEdgeHighlighted', true);
+      selectedElement.neighborhood().data('hidden', false);
       setCurrentElementDetails(getElementDetailsCallback(selectedElement));
     });
-    cytoscapeRef.on('unselect', 'node, edge', function (e) {
+
+    cytoscapeRef.on('unselect tapunselect', 'node, edge', function (e) {
       cytoscapeRef.edges().data({ asInEdgeHighlighted: false, asOutEdgeHighlighted: false });
       setCurrentElementDetails(null);
     });
+
     // Add handling of double click events
     cytoscapeRef.on('dbltap', 'node, edge', function (e) {
       const selectedElement = e.target;
+      selectedElement.neighborhood().data('hidden', false);
       if (selectedElement.selectable()) {
-        setCurrentDrawerTab(0);
-        setIsDrawerOpen(true);
+        openDrawer();
+        setExpandedPanel('nodeDetailsPanel');
         setCurrentElementDetails(getElementDetailsCallback(selectedElement));
       }
     });
+
+    cytoscapeRef.on('cxttap', function (e) {
+      if (cytoscapeRef.nodes('node:selected').length > 0) {
+        e.preventDefault();
+        setContextMenuPosition({
+          mouseX: e.originalEvent.clientX - 2,
+          mouseY: e.originalEvent.clientY - 4,
+        });
+      }
+    });
+
+    cytoscapeRef.on('click', function (e) {
+      closeContextMenu();
+    });
+
     // Init bubblesets
     const bb = cytoscapeRef.bubbleSets();
     for (const groupName in bubblesets) {
@@ -226,8 +376,173 @@ export const CytoViz = (props) => {
           </Tooltip>
         </div>
         <div className={classes.drawerContent}>
-          <TabPanel data-cy="cytoviz-drawer-details-tab-content" value={currentDrawerTab} index={0}>
-            {currentElementDetails || labels_.noSelectedElement}
+          <TabPanel
+            data-cy="cytoviz-drawer-details-tab-content"
+            value={currentDrawerTab}
+            index={0}
+            className={classes.tabPanel}
+          >
+            <Accordion
+              square
+              expanded={expandedPanel === 'nodeDetailsPanel'}
+              onChange={expandAccordionPanel('nodeDetailsPanel')}
+            >
+              <AccordionSummary
+                aria-controls="nodeDetailsPanel-content"
+                id="nodeDetailsPanel-header"
+                expandIcon={<ExpandMoreIcon />}
+              >
+                {labels_.accordion.nodeDetails}
+              </AccordionSummary>
+              <AccordionDetails>{currentElementDetails || labels_.noSelectedElement}</AccordionDetails>
+            </Accordion>
+            <Accordion
+              square
+              expanded={expandedPanel === 'findNodePanel'}
+              onChange={expandAccordionPanel('findNodePanel')}
+            >
+              <AccordionSummary
+                aria-controls="findNodePanel-content"
+                id="findNodePanel-header"
+                expandIcon={<ExpandMoreIcon />}
+              >
+                {labels_.accordion.findNode.headline}
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.querySearchByID}>
+                  {labels_.accordion.findNode.searchByID}
+                  <Autocomplete
+                    onChange={(event, node) => {
+                      if (node) {
+                        node.parent().data('hidden', false);
+                        node.closedNeighborhood().data('hidden', false);
+                        cytoRef.current?.animate({
+                          center: { eles: node },
+                          duration: 1000,
+                        });
+                        node.select();
+                      }
+                    }}
+                    options={graphNodes}
+                    getOptionLabel={(node) => node.data('label')}
+                    getOptionSelected={(option, node) => node.data('label') === option.data('label')}
+                    renderInput={(params) => <TextField {...params} variant="outlined" size="small" />}
+                  />
+                </div>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              square
+              expanded={expandedPanel === 'exploreGraphPanel'}
+              onChange={expandAccordionPanel('exploreGraphPanel')}
+            >
+              <AccordionSummary
+                aria-controls="exploreGraphPanel-content"
+                id="exploreGraphPanel-header"
+                expandIcon={<ExpandMoreIcon />}
+              >
+                {labels_.accordion.exploreGraph.headline}
+              </AccordionSummary>
+              <AccordionDetails>
+                <div className={classes.queryTextfields}>
+                  {labels_.accordion.exploreGraph.startingNodes}
+                  <Autocomplete
+                    multiple
+                    limitTags={2}
+                    value={selectedNodes}
+                    onChange={(event, nodes) => changeSelectedNodesForExploration(nodes)}
+                    options={graphNodes}
+                    getOptionLabel={(node) => node.data('label')}
+                    getOptionSelected={(option, node) => node.data('label') === option.data('label')}
+                    renderInput={(params) => (
+                      <TextField
+                        helperText={selectedNodesFieldHasError ? labels_.accordion.exploreGraph.startingNodesError : ''}
+                        error={selectedNodesFieldHasError}
+                        {...params}
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                  <div className={classes.querySearchDepth}>
+                    {labels_.accordion.exploreGraph.limitDepth}
+                    <TextField
+                      size="small"
+                      type="number"
+                      error={explorationDepthFieldHasError}
+                      helperText={explorationDepthFieldHasError ? labels_.accordion.exploreGraph.limitDepthError : ''}
+                      value={explorationDepth}
+                      onChange={checkExplorationDepth}
+                      InputProps={{
+                        inputProps: {
+                          max: 1000,
+                          min: 1,
+                        },
+                      }}
+                    />
+                    <div>
+                      <p> {labels_.accordion.exploreGraph.flowDirection}</p>
+                      {!(flowDirection.inEdges || flowDirection.outEdges) && (
+                        <Typography variant="inherit" color="error">
+                          {labels_.accordion.exploreGraph.flowDirectionError}
+                        </Typography>
+                      )}
+                    </div>
+                    <div className={classes.queryEdgetypes}>
+                      {labels_.accordion.exploreGraph.inEdges}
+                      <Checkbox
+                        color="primary"
+                        checked={flowDirection.inEdges}
+                        onChange={(event) => {
+                          setFlowDirection({ ...flowDirection, inEdges: event.target.checked });
+                        }}
+                      />
+                      {labels_.accordion.exploreGraph.outEdges}
+                      <Checkbox
+                        color="primary"
+                        checked={flowDirection.outEdges}
+                        onChange={(event) => {
+                          setFlowDirection({ ...flowDirection, outEdges: event.target.checked });
+                        }}
+                      />
+                    </div>
+                  </div>
+                  {labels_.accordion.exploreGraph.excludeEdges}
+                  <Autocomplete
+                    multiple
+                    limitTags={2}
+                    value={excludedEdgeClasses}
+                    onChange={(event, newValue) => {
+                      setExcludedEdgeClasses(newValue);
+                    }}
+                    options={edgeClassOptions}
+                    renderInput={(params) => <TextField {...params} variant="outlined" />}
+                  />
+                  <div className={classes.querySearchDepth}>
+                    {labels_.accordion.exploreGraph.compoundNeighbors}
+                    <Checkbox
+                      color="primary"
+                      checked={childrenAreNeighbors}
+                      onChange={(event) => {
+                        setChildrenAreNeighbors(event.target.checked);
+                      }}
+                    />
+                  </div>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={startGraphExploration}
+                    disabled={
+                      explorationDepthFieldHasError ||
+                      isExplorationRunning ||
+                      !(flowDirection.inEdges || flowDirection.outEdges) ||
+                      selectedNodesFieldHasError
+                    }
+                  >
+                    {labels_.accordion.exploreGraph.launch}
+                  </Button>
+                </div>
+              </AccordionDetails>
+            </Accordion>
           </TabPanel>
           <TabPanel data-cy="cytoviz-drawer-settings-tab-content" value={currentDrawerTab} index={1}>
             <div className={classes.settingsContainer}>
@@ -258,7 +573,7 @@ export const CytoViz = (props) => {
                 </div>
                 <div className={classes.settingInputContainer}>
                   <Switch
-                    data-cy="cytoviz-compact-mode-checkbox"
+                    data-cy="cytoviz-compact-mode-switch"
                     checked={useCompactMode}
                     onChange={changeUseCompactMode}
                     name="useCompactMode"
@@ -303,6 +618,29 @@ export const CytoViz = (props) => {
           </TabPanel>
         </div>
       </Drawer>
+      <Menu
+        keepMounted
+        open={contextMenuPosition.mouseY !== null}
+        onClose={closeContextMenu}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenuPosition.mouseY !== null && contextMenuPosition.mouseX !== null
+            ? { top: contextMenuPosition.mouseY, left: contextMenuPosition.mouseX }
+            : undefined
+        }
+      >
+        <MenuItem
+          onClick={() => {
+            changeSelectedNodesForExploration(cytoRef.current.nodes('node:selected').toArray());
+            openDrawer();
+            setCurrentDrawerTab(0);
+            setExpandedPanel('exploreGraphPanel');
+            closeContextMenu();
+          }}
+        >
+          {labels_.accordion.exploreGraph.launch}
+        </MenuItem>
+      </Menu>
     </>
   );
 
@@ -414,6 +752,27 @@ const DEFAULT_LABELS = {
   elementData: {
     dictKey: 'Key',
     dictValue: 'Value',
+  },
+  accordion: {
+    nodeDetails: 'Node details',
+    findNode: {
+      headline: 'Find a node',
+      searchByID: 'Search by ID',
+    },
+    exploreGraph: {
+      headline: 'Explore a subgraph',
+      startingNodes: 'Select the starting node(s)',
+      startingNodesError: 'Select at least one node',
+      limitDepth: 'Limit the search depth',
+      limitDepthError: 'Enter a positive integer',
+      flowDirection: 'Choose the flow direction',
+      flowDirectionError: 'Select at least one',
+      inEdges: 'IN-Edges',
+      outEdges: 'OUT-Edges',
+      excludeEdges: 'Exclude relation types',
+      compoundNeighbors: 'Include the other entities of a compound',
+      launch: 'Explore',
+    },
   },
 };
 
