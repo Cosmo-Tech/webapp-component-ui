@@ -18,7 +18,7 @@ export {
   Table,
   TABLE_DATA_STATUS,
   RoleEditor,
-  CheckmarksMultipleSelect,
+  SelectWithAction,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
 export {
