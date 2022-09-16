@@ -1,18 +1,34 @@
+## **4.1.1** <sub><sup>2022-09-16 (7bf9186...c2fe7b1)</sup></sub>
+
+### Bug Fixes
+
+- minor improvements in CreateScenarioButton component ([389d5d1](https://github.com/Cosmo-Tech/webapp-component-ui/commit/389d5d1))
+- fix possible warning in HierarchicalComboBox ([a0847c3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a0847c3))
+- make master scenario checkbox always visible in creation dialog ([7bf9186](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7bf9186))
+
+### Performance Improvements
+
+- prevent unnecessary re-renders in CytoViz component ([0a46558](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0a46558))
+
+### Documentation
+
+- fix broken EditableLabel page in documentation ([270e9db](https://github.com/Cosmo-Tech/webapp-component-ui/commit/270e9db))
+
 ## **4.1.0** <sub><sup>2022-08-23 (0d83459...5f966bf)</sup></sub>
 
 ### Features
-*  highlight adjacent edges ([0d83459](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0d83459))
-*  use tooltip for every <IconButton\> ([79df591](https://github.com/Cosmo-Tech/webapp-component-ui/commit/79df591))
 
+- highlight adjacent edges ([0d83459](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0d83459))
+- use tooltip for every <IconButton\> ([79df591](https://github.com/Cosmo-Tech/webapp-component-ui/commit/79df591))
 
 ### Bug Fixes
-*  use contrastText for validated and rejected Chips ([e85aa30](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e85aa30))
-*  use correct variant for buttons according to Material Design ([29f317d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/29f317d))
-*  modify CREATE labels ([0897e28](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0897e28))
-*  adapt search part to new theme in Scenario Manager ([4b3e851](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4b3e851))
-*  use secondary color for some form controls ([c5cec5b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c5cec5b))
-*  add missing data-cy tag for CANCEL button in CreateScenarioDialog ([43d800d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/43d800d))
 
+- use contrastText for validated and rejected Chips ([e85aa30](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e85aa30))
+- use correct variant for buttons according to Material Design ([29f317d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/29f317d))
+- modify CREATE labels ([0897e28](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0897e28))
+- adapt search part to new theme in Scenario Manager ([4b3e851](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4b3e851))
+- use secondary color for some form controls ([c5cec5b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c5cec5b))
+- add missing data-cy tag for CANCEL button in CreateScenarioDialog ([43d800d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/43d800d))
 
 ## **4.0.1** <sub><sup>2022-08-12 (af96745...23b1a34)</sup></sub>
 
