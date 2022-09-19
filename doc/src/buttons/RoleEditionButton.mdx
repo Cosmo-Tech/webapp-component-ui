@@ -1,0 +1,103 @@
+---
+name: RolesEditionButton
+route: /RolesEditionButton
+menu: Buttons
+---
+import { Playground, Props } from 'docz';
+import { RolesEditionButton } from "../../../src/buttons/RolesEditionButton/RolesEditionButton";
+
+# Create Scenario Button
+
+The aim of this component is to display a share access button.
+This button will display a popup guiding users through adding and addition roles for given resource (e.g. scenario)
+
+### Props
+
+<Props of={RolesEditionButton} />
+<Playground>
+  <RolesEditionButton
+    isIconButton={false}
+    isReadOnly={false}
+    agents={[
+      { id: 'alice@somecompany.com' },
+      { id: 'bob@somecompany.com' },
+      { id: 'clara@somecompany.com' },
+      { id: 'tony@somecompany.com' },
+    ]}
+    specificAccessByAgent={[
+      { id: 'alice@somecompany.com',
+        roles: 'commonroleadmin'
+      },
+      { id: 'tony@somecompany.com',
+        roles: 'commonroleditor'
+      }
+    ]}
+    allRoles={
+      [
+        {
+          value: "commonroleviewer",
+          label: "Viewer"
+        },
+        {
+          value: "commonroleditor",
+          label: "Editor"
+        },
+        {
+          value: "scenariorolevalidator",
+          label: "Validator"
+        },
+        {
+          value: "commonroleadmin",
+          label: "Admin"
+        }
+      ]
+    }
+    allPermissions={{
+      "acl.scenario.delete": "Delete scenario",
+      "acl.scenario.editParameters": "Edit parameters",
+      "acl.scenario.editPermissions": "Edit permissions",
+      "acl.scenario.editValidationStatus": "Change validation status",
+      "acl.scenario.launch": "Launch scenario",
+      "acl.scenario.rename": "Rename scenario",
+      "acl.scenario.view": "View scenario",
+      "acl.scenario.viewPermissions": "See other people's permissions",
+      "acl.scenario.viewResults": "View results of the simulation"
+    }}
+    resourceRolesPermissionsMapping={{
+      commonroleadmin: [
+        "acl.scenario.delete",
+        "acl.scenario.editParameters",
+        "acl.scenario.editPermissions",
+        "acl.scenario.editValidationStatus",
+        "acl.scenario.launch",
+        "acl.scenario.rename",
+        "acl.scenario.view",
+        "acl.scenario.viewPermissions",
+        "acl.scenario.viewResults"
+      ],
+      commonroleditor: [
+        "acl.scenario.editParameters",
+        "acl.scenario.launch",
+        "acl.scenario.rename",
+        "acl.scenario.view",
+        "acl.scenario.viewPermissions",
+        "acl.scenario.viewResults"
+      ],
+      scenariorolevalidator: [
+        "acl.scenario.editValidationStatus",
+        "acl.scenario.launch",
+        "acl.scenario.view",
+        "acl.scenario.viewPermissions",
+        "acl.scenario.viewResults"
+      ],
+      commonroleviewer: [
+        "acl.scenario.view",
+        "acl.scenario.viewPermissions",
+        "acl.scenario.viewResults"
+      ]
+    }}
+    defaultRole='commonroleviewer'
+    defaultAccessScope='My workspace'
+    onConfirmChanges={() => alert('Scenario sharing')}
+  />
+</Playground>
