@@ -1,3 +1,24 @@
+## **4.2.0** <sub><sup>2022-09-20 (7bf9186...4a84b1a)</sup></sub>
+
+### Features
+*  make master scenario checkbox always visible in creation dialog ([7bf9186](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7bf9186))
+*  add PermissionsGate component ([e4bc032](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e4bc032))
+*  allow fine\-grained permissions system to rename & delete scenarios in scenario manager ([c8236a2](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c8236a2))
+*  create rolesEditionButton and RolesEditionDialog ([6fd9182](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6fd9182))
+*  create rolesEditor component ([da7b0e3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/da7b0e3))
+*  create RolesAddingDialog component and SelectWithAction component ([07de32f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/07de32f))
+
+
+### Bug Fixes
+*  minor improvements in CreateScenarioButton component ([389d5d1](https://github.com/Cosmo-Tech/webapp-component-ui/commit/389d5d1))
+*  fix possible warning in HierarchicalComboBox ([a0847c3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a0847c3))
+*  broken EditableLabel page in docz ([270e9db](https://github.com/Cosmo-Tech/webapp-component-ui/commit/270e9db))
+
+
+### Performance Improvements
+*  react switch ([0a46558](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0a46558))
+
+
 ## **4.1.0** <sub><sup>2022-08-23 (0d83459...5f966bf)</sup></sub>
 
 ### Features
