@@ -44,9 +44,10 @@ export const ScenarioNode = ({
 }) => {
   const classes = useStyles();
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
+
   const openConfirmDialog = (event) => {
     event.stopPropagation(); // Prevent opening the Accordion when clicking the "delete" button
-    labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
     setIsConfirmDialogOpen(true);
   };
   const closeConfirmDialog = () => {
