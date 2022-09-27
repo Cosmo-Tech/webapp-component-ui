@@ -92,7 +92,8 @@ const CreateScenarioDialog = ({
     } else {
       setParentScenarioFieldValues({});
     }
-  }, [open, currentScenario.data, currentScenarioSelected, runTemplates, defaultDataset, defaultRunTemplate]);
+    // eslint-disable-next-line
+  }, [open]);
 
   const handleChangeScenarioName = (event) => {
     const newScenarioName = event.target.value;
