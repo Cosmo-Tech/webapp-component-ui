@@ -123,6 +123,9 @@ export const CytoViz = (props) => {
     setSelectedNodes(nodes);
     setSelectedNodesFieldHasError(nodes.length === 0);
   };
+  useEffect(() => {
+    if (loading === true) setSelectedNodes([]);
+  }, [loading]);
   const checkExplorationDepth = (event) => {
     const newValue = event.target.value;
     if (newValue.match(/^[0-9][0-9]*/)) {
@@ -197,7 +200,7 @@ export const CytoViz = (props) => {
       }
     });
     startingNodes.data('hidden', false);
-    startingNodes.parent().data('hidden', false); // otherwise the element wont be shown
+    startingNodes.parent().data('hidden', false); // otherwise the element won't be shown
     visitedNodes.edgesWith(visitedNodes).data('hidden', false);
     startingNodes.edgesWith(visitedNodes).data('hidden', false);
 
