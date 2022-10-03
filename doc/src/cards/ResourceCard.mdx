@@ -1,0 +1,27 @@
+---
+name: ResourceCard
+route: /ResourceCard
+menu: Menus
+---
+
+import { Playground, Props } from 'docz';
+import { ResourceCard } from '@cosmotech/ui';
+
+# Help Menu
+
+The aim of this component is to display an interactive view of a list of resources
+
+## Props
+
+<Props of={ResourceCard} />
+
+## Basic Usage
+
+<Playground>
+  <ResourceCard
+    id={'ResourceId'}
+    name={'Resource Name'}
+    description={'This is the Resource description. Enjoy with it.'}
+    action={{ label: 'action', callback: () => console.log('Resource action') }}
+  />
+</Playground>
