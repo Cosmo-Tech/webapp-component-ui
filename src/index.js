@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 export { CreateScenarioButton, SelfDestructLinkButton, SignInButton } from './buttons';
-export { ScenarioNode } from './cards';
+export { ScenarioNode, ResourceCard } from './cards';
 export { CytoViz, Dashboard, ScenarioManagerTreeList, SimplePowerBIReportEmbed } from './charts';
 export { SimpleTwoActionsDialog, DontAskAgainDialog } from './dialogs';
 export {
