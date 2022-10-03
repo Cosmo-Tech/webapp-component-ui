@@ -398,7 +398,7 @@ export const CytoViz = (props) => {
                 id="nodeDetailsPanel-header"
                 expandIcon={<ExpandMoreIcon />}
               >
-                {labels_.accordion.nodeDetails}
+                <Typography variant="body1">{labels_.accordion.nodeDetails}</Typography>
               </AccordionSummary>
               <AccordionDetails>{currentElementDetails || labels_.noSelectedElement}</AccordionDetails>
             </Accordion>
@@ -412,7 +412,7 @@ export const CytoViz = (props) => {
                 id="findNodePanel-header"
                 expandIcon={<ExpandMoreIcon />}
               >
-                {labels_.accordion.findNode.headline}
+                <Typography variant="body1">{labels_.accordion.findNode.headline}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <div className={classes.querySearchByID}>
@@ -432,7 +432,14 @@ export const CytoViz = (props) => {
                     options={graphNodes}
                     getOptionLabel={(node) => node.data('label')}
                     getOptionSelected={(option, node) => node.data('label') === option.data('label')}
-                    renderInput={(params) => <TextField {...params} variant="outlined" size="small" />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        aria-label={labels_.accordion.findNode.searchByID}
+                        variant="outlined"
+                        size="small"
+                      />
+                    )}
                   />
                 </div>
               </AccordionDetails>
@@ -447,7 +454,7 @@ export const CytoViz = (props) => {
                 id="exploreGraphPanel-header"
                 expandIcon={<ExpandMoreIcon />}
               >
-                {labels_.accordion.exploreGraph.headline}
+                <Typography variant="body1">{labels_.accordion.exploreGraph.headline}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <div className={classes.queryTextfields}>
@@ -462,6 +469,7 @@ export const CytoViz = (props) => {
                     getOptionSelected={(option, node) => node.data('label') === option.data('label')}
                     renderInput={(params) => (
                       <TextField
+                        aria-label={labels_.accordion.exploreGraph.startingNodes}
                         helperText={selectedNodesFieldHasError ? labels_.accordion.exploreGraph.startingNodesError : ''}
                         error={selectedNodesFieldHasError}
                         {...params}
@@ -472,6 +480,7 @@ export const CytoViz = (props) => {
                   <div className={classes.querySearchDepth}>
                     {labels_.accordion.exploreGraph.limitDepth}
                     <TextField
+                      aria-label={labels_.accordion.exploreGraph.limitDepth}
                       size="small"
                       type="number"
                       error={explorationDepthFieldHasError}
@@ -486,7 +495,7 @@ export const CytoViz = (props) => {
                       }}
                     />
                     <div>
-                      <p> {labels_.accordion.exploreGraph.flowDirection}</p>
+                      <p>{labels_.accordion.exploreGraph.flowDirection}</p>
                       {!(flowDirection.inEdges || flowDirection.outEdges) && (
                         <Typography variant="inherit" color="error">
                           {labels_.accordion.exploreGraph.flowDirectionError}
@@ -496,6 +505,7 @@ export const CytoViz = (props) => {
                     <div className={classes.queryEdgetypes}>
                       {labels_.accordion.exploreGraph.inEdges}
                       <Checkbox
+                        aria-label={labels_.accordion.exploreGraph.inEdges}
                         color="primary"
                         checked={flowDirection.inEdges}
                         onChange={(event) => {
@@ -504,6 +514,7 @@ export const CytoViz = (props) => {
                       />
                       {labels_.accordion.exploreGraph.outEdges}
                       <Checkbox
+                        aria-label={labels_.accordion.exploreGraph.outEdges}
                         color="primary"
                         checked={flowDirection.outEdges}
                         onChange={(event) => {
@@ -521,11 +532,18 @@ export const CytoViz = (props) => {
                       setExcludedEdgeClasses(newValue);
                     }}
                     options={edgeClassOptions}
-                    renderInput={(params) => <TextField {...params} variant="outlined" />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        aria-label={labels_.accordion.exploreGraph.excludeEdges}
+                        variant="outlined"
+                      />
+                    )}
                   />
                   <div className={classes.querySearchDepth}>
                     {labels_.accordion.exploreGraph.compoundNeighbors}
                     <Checkbox
+                      aria-label={labels_.accordion.exploreGraph.compoundNeighbors}
                       color="primary"
                       checked={childrenAreNeighbors}
                       onChange={(event) => {
