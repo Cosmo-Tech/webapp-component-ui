@@ -15,6 +15,7 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
     'target',
     'asOutEdgeHighlighted',
     'asInEdgeHighlighted',
+    'hidden',
   ];
   if (attributesToIgnore.indexOf(attributeName) !== -1) {
     return null;
