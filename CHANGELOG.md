@@ -1,3 +1,17 @@
+## **4.2.0** <sub><sup>2022-10-04 (71bd30f...8f39e54)</sup></sub>
+
+### Features
+
+- improvements in the CytoViz component:
+  - graph exploration
+  - node search
+  - statistics HUD
+
+### Bug Fixes
+
+- prevent undesired re-renders of scenario creation dialog
+- prevent disappearing title in scenario removal confirmation dialog
+
 ## **4.1.1** <sub><sup>2022-09-16 (7bf9186...c2fe7b1)</sup></sub>
 
 ### Bug Fixes
@@ -18,7 +32,7 @@
 
 ### Features
 
-- highlight adjacent edges ([0d83459](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0d83459))
+- highlight adjacent edges in CytoViz component ([0d83459](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0d83459))
 - use tooltip for every <IconButton\> ([79df591](https://github.com/Cosmo-Tech/webapp-component-ui/commit/79df591))
 
 ### Bug Fixes
