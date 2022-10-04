@@ -64,6 +64,20 @@ export const CytoViz = (props) => {
     placeholderMessage,
   } = props;
 
+  // Default styles for hidden nodes & edges can be overridden in cytoscapeStylesheet by using the selectors below:
+  //   - edge[?hidden]
+  //   - node[?hidden]
+  useEffect(() => {
+    cytoscapeStylesheet.unshift({
+      selector: 'edge[?hidden]',
+      style: { visibility: 'hidden' },
+    });
+    cytoscapeStylesheet.unshift({
+      selector: 'node[?hidden]',
+      style: { visibility: 'hidden' },
+    });
+  }, [cytoscapeStylesheet]);
+
   const labels_ = { ...DEFAULT_LABELS, ...labels };
 
   let getElementDetailsCallback = getElementDetails;
