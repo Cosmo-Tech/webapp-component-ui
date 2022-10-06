@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.error.main,
   },
 }));
+
+const sortById = (agentA, agentB) => (agentA.id < agentB.id ? -1 : 1);
+
 export const RolesEditionDialog = ({
   labels,
   isReadOnly,
@@ -48,22 +51,22 @@ export const RolesEditionDialog = ({
   const classes = useStyles();
   const [isFirstScreenShown, setIsFirstScreenShown] = useState(true);
   const [selectedAgentForRoleAddition, setSelectedAgentForRoleAddition] = useState(null);
-  const [newAccessControlList, setNewAccessControlList] = useState(accessControlList);
+  const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
 
   useEffect(() => {
     if (open) {
       setIsFirstScreenShown(true);
       setSelectedAgentForRoleAddition(null);
-      setNewAccessControlList(accessControlList);
+      setNewAccessControlList([...accessControlList].sort(sortById));
       setNewDefaultRole(defaultRole);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  const agentsWithoutSpecificAccess = agents.filter(
-    (agent) => !newAccessControlList.some((aclAgent) => aclAgent.id === agent.id)
-  );
+  const agentsWithoutSpecificAccess = agents
+    .filter((agent) => !newAccessControlList.some((aclAgent) => aclAgent.id === agent.id))
+    .sort(sortById);
 
   const startAccessAddition = (newAgent) => {
     setSelectedAgentForRoleAddition(newAgent);
@@ -75,7 +78,7 @@ export const RolesEditionDialog = ({
   };
   const confirmAccessAddition = (newSpecificAccess) => {
     if (newSpecificAccess.role !== '') {
-      setNewAccessControlList((newAccessControlList) => [...newAccessControlList, newSpecificAccess]);
+      setNewAccessControlList((newAccessControlList) => [...newAccessControlList, newSpecificAccess].sort(sortById));
     }
     setIsFirstScreenShown(true);
     setSelectedAgentForRoleAddition(null);
