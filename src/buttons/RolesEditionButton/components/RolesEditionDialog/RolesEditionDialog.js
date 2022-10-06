@@ -69,6 +69,7 @@ export const RolesEditionDialog = ({
     .sort(sortById);
 
   const startAccessAddition = (newAgent) => {
+    if (agents.find((agent) => agent.id === newAgent.id) === undefined) return;
     setSelectedAgentForRoleAddition(newAgent);
     setIsFirstScreenShown(false);
   };
@@ -115,7 +116,7 @@ export const RolesEditionDialog = ({
               <Autocomplete
                 data-cy="share-scenario-dialog-agents-select"
                 ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
-                freeSolo
+                autoComplete
                 disableClearable={true}
                 options={agentsWithoutSpecificAccess}
                 value={selectedAgentForRoleAddition?.id}
