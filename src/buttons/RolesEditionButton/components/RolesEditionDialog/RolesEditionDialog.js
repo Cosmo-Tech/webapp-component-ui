@@ -245,8 +245,18 @@ RolesEditionDialog.propTypes = {
   defaultRole: PropTypes.string,
   open: PropTypes.bool.isRequired,
   closeDialog: PropTypes.func.isRequired,
-  allRoles: PropTypes.array.isRequired,
-  allPermissions: PropTypes.object.isRequired,
+  allRoles: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    }).isRequired
+  ),
+  allPermissions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    }).isRequired
+  ),
   defaultAccessScope: PropTypes.string.isRequired,
 };
 RolesEditionDialog.defaultProps = {

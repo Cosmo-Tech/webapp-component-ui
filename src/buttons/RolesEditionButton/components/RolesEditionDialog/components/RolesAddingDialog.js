@@ -29,7 +29,7 @@ const useStyle = makeStyles((theme) => ({
 const _sortGrantedPermissionsForRole = (rolesPermissionsMapping, allPermissions, selectedRole) => {
   const permissions = { granted: [], denied: [] };
   for (const permission of allPermissions) {
-    rolesPermissionsMapping[selectedRole]?.includes(permission)
+    rolesPermissionsMapping[selectedRole]?.includes(permission.value)
       ? permissions.granted.push(permission)
       : permissions.denied.push(permission);
   }
@@ -48,11 +48,7 @@ export const RolesAddingDialog = ({
 }) => {
   const classes = useStyle();
   const [selectedRole, setSelectedRole] = useState(defaultRole);
-  const sortedPermissions = _sortGrantedPermissionsForRole(
-    rolesPermissionsMapping,
-    Object.keys(allPermissions),
-    selectedRole
-  );
+  const sortedPermissions = _sortGrantedPermissionsForRole(rolesPermissionsMapping, allPermissions, selectedRole);
   return (
     <>
       <DialogContent>
@@ -106,20 +102,20 @@ export const RolesAddingDialog = ({
             <Typography variant="subtitle2">{labels.grantedPermissions}</Typography>
             {sortedPermissions.granted.map((permission) => (
               <Chip
-                data-cy={`share-scenario-dialog-granted-permission-chip-${permission}`}
-                key={permission}
+                data-cy={`share-scenario-dialog-granted-permission-chip-${permission.value}`}
+                key={permission.value}
                 color="secondary"
-                label={allPermissions[permission] ?? permission}
+                label={permission.label ?? permission.value}
                 className={classes.chip}
               />
             ))}
             <Typography variant="subtitle2">{labels.deniedPermissions}</Typography>
             {sortedPermissions.denied.map((permission) => (
               <Chip
-                data-cy={`share-scenario-dialog-not-granted-permission-chip-${permission}`}
-                key={permission}
+                data-cy={`share-scenario-dialog-not-granted-permission-chip-${permission.value}`}
+                key={permission.value}
                 disabled
-                label={allPermissions[permission] ?? permission}
+                label={permission.label ?? permission.value}
                 className={classes.chip}
               />
             ))}
@@ -178,8 +174,18 @@ RolesAddingDialog.propTypes = {
     rolesHelperText: PropTypes.string,
     userSelected: PropTypes.string,
   }),
-  allRoles: PropTypes.array.isRequired,
-  allPermissions: PropTypes.object.isRequired,
+  allRoles: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    }).isRequired
+  ),
+  allPermissions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    }).isRequired
+  ),
   defaultRole: PropTypes.string.isRequired,
   rolesPermissionsMapping: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
