@@ -85,14 +85,19 @@ RolesEditionButton.propTypes = {
     PropTypes.shape({
       value: PropTypes.string.isRequired,
       label: PropTypes.string,
-    })
+    }).isRequired
   ),
   /**
    * List of all permissions with corresponding labels
    */
-  allPermissions: PropTypes.object.isRequired,
+  allPermissions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    }).isRequired
+  ),
   /**
-   * List of all permissions with corresponding roles
+   * Object representing the mapping between roles (as keys) and permissions (as values)
    */
   resourceRolesPermissionsMapping: PropTypes.object.isRequired,
   /**
