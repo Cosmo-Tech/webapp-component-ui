@@ -1688,7 +1688,7 @@ cytoscape-layers@^2.2.0:
   dependencies:
     "@types/cytoscape" "^3.19.0"
 
-cytoscape@^3.2.19, cytoscape@^3.20.0:
+cytoscape@^3.20.0:
   version "3.23.0"
   resolved "https://registry.yarnpkg.com/cytoscape/-/cytoscape-3.23.0.tgz#054ee05a6d0aa3b4f139382bbf2f4e5226df3c6d"
   integrity sha512-gRZqJj/1kiAVPkrVFvz/GccxsXhF3Qwpptl32gKKypO4IlqnKBjTOu+HbXtEggSGzC5KCaHp3/F7GgENrtsFkA==
@@ -3446,13 +3446,12 @@ raf@^3.4.1:
   dependencies:
     performance-now "^2.1.0"
 
-react-cytoscapejs@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-cytoscapejs/-/react-cytoscapejs-1.2.1.tgz#ccce46acabf4f0c41dce9070743854f92b0dc050"
-  integrity sha512-8exVCetpzyGCAKuRjXPWGjFCnb22boZ3SXUPpPB/+wQI8Q8BwkT1URN3A7J1Czvj1qAbShh5QQ514mBUp7i7kw==
+react-cytoscapejs@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-cytoscapejs/-/react-cytoscapejs-2.0.0.tgz#fdc2547626df0678acfbb48e73a437ddc1687b01"
+  integrity sha512-t3SSl1DQy7+JQjN+8QHi1anEJlM3i3aAeydHTsJwmjo/isyKK7Rs7oCvU6kZsB9NwZidzZQR21Vm2PcBLG/Tjg==
   dependencies:
-    cytoscape "^3.2.19"
-    prop-types "^15.6.2"
+    prop-types "^15.8.1"
 
 react-display-name@^0.2.5:
   version "0.2.5"
@@ -3496,10 +3495,10 @@ react-lottie-player@1.4.1:
     lodash.clonedeep "^4.5.0"
     lottie-web "^5.7.6"
 
-react-number-format@^4.5.5:
-  version "4.9.4"
-  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-4.9.4.tgz#013ae526000e676e491763ce14da66fb330a9bd8"
-  integrity sha512-Gq20Z3ugqPLFgeaidnx5on9cNpbQZntPN3QgNAL/WJrNNlQnNznY0LCx7g8xtssmRBw0/hw+SCqw6zAcajooiA==
+react-number-format@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-5.0.1.tgz#23a3a693c978c7be328fa9c00dee5135111ca32b"
+  integrity sha512-Tyv5Ygb77ZbC5vUNNAfXwE+zQKaN0LsTo7GwjudU/MckXa7beVAlFddq7QQnGobEglyq+4zsBltKvM9HMQD0GA==
   dependencies:
     prop-types "^15.7.2"
 
