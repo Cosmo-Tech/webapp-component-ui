@@ -28,13 +28,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const DefaultAvatar = ({ userName, size }) => {
+export const DefaultAvatar = ({ userName, size, variant }) => {
   const avatarBackgroundColor = stringToColor(userName);
   const letter = userName.charAt(0).toUpperCase();
 
   const classes = useStyles({ avatarBackgroundColor, size });
 
-  return <Avatar className={classes.avatar}>{letter}</Avatar>;
+  return (
+    <Avatar className={classes.avatar} variant={variant}>
+      {letter}
+    </Avatar>
+  );
 };
 
 DefaultAvatar.propTypes = {
@@ -46,8 +50,14 @@ DefaultAvatar.propTypes = {
    * Icon size in pixels
    */
   size: PropTypes.number,
+  /**
+   * Shape of the avatar.
+   * See the Material UI documentation for the available variants : https://mui.com/material-ui/api/avatar/
+   */
+  variant: PropTypes.string,
 };
 
 DefaultAvatar.defaultProps = {
   size: 24,
+  variant: 'circular',
 };
