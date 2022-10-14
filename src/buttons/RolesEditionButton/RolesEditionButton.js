@@ -126,6 +126,7 @@ RolesEditionButton.propTypes = {
               cancel: 'string',
               done: 'string',
               share: 'string',
+              noAdminError: 'string',
               userSelected: 'string',
               usersAccess: 'string',
               generalAccess: 'string',

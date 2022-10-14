@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ADMIN_ROLE = 'admin';
 const sortById = (agentA, agentB) => (agentA.id < agentB.id ? -1 : 1);
 
 export const RolesEditionDialog = ({
@@ -106,6 +107,7 @@ export const RolesEditionDialog = ({
     closeDialog();
   };
 
+  const hasNoAdmin = newAccessControlList.filter((access) => access.role === ADMIN_ROLE).length === 0;
   const workspaceIcon = <DesktopMacIcon />;
   const dialogContent = isFirstScreenShown ? (
     <>
@@ -165,6 +167,11 @@ export const RolesEditionDialog = ({
               onOptionSelected={(event) => setNewDefaultRole(event.target.value)}
             />
           </Grid>
+          <Grid item xs={12} className={classes.rolesEditorContainer}>
+            <Grid container justifyContent="flex-end">
+              {hasNoAdmin && <Typography color="error">{labels.noAdminError}</Typography>}
+            </Grid>
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
@@ -177,6 +184,7 @@ export const RolesEditionDialog = ({
             onClick={confirmAndCloseDialog}
             color="primary"
             variant="contained"
+            disabled={hasNoAdmin}
           >
             {labels.share}
           </Button>
@@ -228,6 +236,7 @@ RolesEditionDialog.propTypes = {
     addPeople: PropTypes.string,
     cancel: PropTypes.string,
     share: PropTypes.string,
+    noAdminError: PropTypes.string,
     userSelected: PropTypes.string,
     usersAccess: PropTypes.string,
     generalAccess: PropTypes.string,
@@ -265,6 +274,7 @@ RolesEditionDialog.defaultProps = {
     addPeople: 'Add people',
     cancel: 'Cancel',
     share: 'Share',
+    noAdminError: 'The scenario must have at least one administrator',
     userSelected: 'Selected user',
     usersAccess: 'Users access',
     generalAccess: 'General access',
