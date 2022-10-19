@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     marginTop: '15px',
-    marginBottom: '15px',
   },
   nameGroup: {
     display: 'flex',
@@ -38,11 +37,11 @@ export const RoleEditor = ({
   const classes = useStyles();
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
   return (
-    <Grid item xs={12} className={classes.rolesEditor}>
+    <Grid data-cy={`role-editor-${agentName.replaceAll(/[@.]/g, '')}`} item xs={12} className={classes.rolesEditor}>
       <Grid item xs={7} className={classes.agentGroup}>
         {avatar}
         <div className={classes.nameGroup}>
-          <Typography data-cy="role-editor-agent" variant="body1">
+          <Typography data-cy="role-editor-agent-name" variant="body1">
             {agentName}
           </Typography>
           {helperText != null && (
