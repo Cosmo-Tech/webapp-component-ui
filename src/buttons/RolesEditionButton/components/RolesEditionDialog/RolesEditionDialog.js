@@ -131,10 +131,10 @@ export const RolesEditionDialog = ({
               />
             </Grid>
           )}
-          {newAccessControlList.length > 0 && (
-            <Grid item xs={12} className={classes.rolesEditorContainer}>
-              <Typography variant="subtitle1">{labels.usersAccess}</Typography>
-              {newAccessControlList.map((agent) => (
+          <Grid item xs={12} className={classes.rolesEditorContainer}>
+            <Typography variant="subtitle1">{labels.usersAccess}</Typography>
+            {newAccessControlList.length > 0 &&
+              newAccessControlList.map((agent) => (
                 <RoleEditor
                   key={agent.id}
                   agentName={agent.id}
@@ -153,8 +153,14 @@ export const RolesEditionDialog = ({
                   ]}
                 />
               ))}
-            </Grid>
-          )}
+          </Grid>
+          <Grid container>
+            {hasNoAdmin && (
+              <Typography data-cy="no-admin-error-message" variant="caption" color="error" paragraph={true}>
+                {labels.noAdminError}
+              </Typography>
+            )}
+          </Grid>
           <Grid item xs={12} className={classes.rolesEditorContainer}>
             <Typography variant="subtitle1">{labels.generalAccess}</Typography>
             <RoleEditor
@@ -166,11 +172,6 @@ export const RolesEditionDialog = ({
               isReadOnly={isReadOnly}
               onOptionSelected={(event) => setNewDefaultRole(event.target.value)}
             />
-          </Grid>
-          <Grid item xs={12} className={classes.rolesEditorContainer}>
-            <Grid container justifyContent="flex-end">
-              {hasNoAdmin && <Typography color="error">{labels.noAdminError}</Typography>}
-            </Grid>
           </Grid>
         </Grid>
       </DialogContent>
