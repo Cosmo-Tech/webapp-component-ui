@@ -12,6 +12,7 @@ export const RolesEditionButton = ({
   isIconButton,
   agents,
   resourceRolesPermissionsMapping,
+  preventNoneRoleForAgents,
   isReadOnly,
   onConfirmChanges,
   specificAccessByAgent,
@@ -45,6 +46,7 @@ export const RolesEditionButton = ({
       <RolesEditionDialog
         open={open}
         resourceRolesPermissionsMapping={resourceRolesPermissionsMapping}
+        preventNoneRoleForAgents={preventNoneRoleForAgents}
         accessControlList={specificAccessByAgent}
         defaultRole={defaultRole}
         agents={agents}
@@ -101,6 +103,10 @@ RolesEditionButton.propTypes = {
    */
   resourceRolesPermissionsMapping: PropTypes.object.isRequired,
   /**
+   * If enabled, do not display role "none" in the roles lists for agents
+   */
+  preventNoneRoleForAgents: PropTypes.bool,
+  /**
    * Role granted to all users by default
    */
   defaultRole: PropTypes.string,
@@ -152,6 +158,7 @@ RolesEditionButton.propTypes = {
 RolesEditionButton.defaultProps = {
   isIconButton: false,
   isReadOnly: false,
+  preventNoneRoleForAgents: false,
   defaultRole: '',
   labels: {
     button: {

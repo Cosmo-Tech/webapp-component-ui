@@ -39,6 +39,7 @@ export const RolesEditionDialog = ({
   labels,
   isReadOnly,
   resourceRolesPermissionsMapping,
+  preventNoneRoleForAgents,
   onConfirmChanges,
   agents,
   accessControlList,
@@ -107,6 +108,7 @@ export const RolesEditionDialog = ({
     closeDialog();
   };
 
+  const allRolesWithoutNone = allRoles.filter((role) => role.value.toLowerCase() !== 'none');
   const hasNoAdmin = newAccessControlList.filter((access) => access.role === ADMIN_ROLE).length === 0;
   const workspaceIcon = <DesktopMacIcon />;
   const dialogContent = isFirstScreenShown ? (
@@ -139,7 +141,7 @@ export const RolesEditionDialog = ({
                   key={agent.id}
                   agentName={agent.id}
                   agentAccess={agent.role}
-                  allRoles={allRoles}
+                  allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
                   onOptionSelected={(event) => editSpecificAccess(event, agent)}
                   isReadOnly={isReadOnly}
                   actions={[
@@ -195,7 +197,7 @@ export const RolesEditionDialog = ({
   ) : (
     <RolesAddingDialog
       selectedAgent={selectedAgentForRoleAddition}
-      allRoles={allRoles}
+      allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
       allPermissions={allPermissions}
       defaultRole={newDefaultRole}
       rolesPermissionsMapping={resourceRolesPermissionsMapping}
@@ -249,6 +251,7 @@ RolesEditionDialog.propTypes = {
   }),
   isReadOnly: PropTypes.bool,
   resourceRolesPermissionsMapping: PropTypes.object.isRequired,
+  preventNoneRoleForAgents: PropTypes.bool,
   onConfirmChanges: PropTypes.func.isRequired,
   accessControlList: PropTypes.array.isRequired,
   agents: PropTypes.array.isRequired,
@@ -285,5 +288,6 @@ RolesEditionDialog.defaultProps = {
     },
   },
   isReadOnly: false,
+  preventNoneRoleForAgents: false,
   defaultRole: '',
 };
