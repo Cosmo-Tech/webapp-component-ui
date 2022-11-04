@@ -107,7 +107,7 @@ export const EditableLabel = (props) => {
   return (
     <div data-cy="editable-label">
       {isEditing ? (
-        <FormControl>
+        <FormControl data-cy="editable-label-in-edition-mode">
           <OutlinedInput
             className={classes.outlinedInput}
             autoFocus

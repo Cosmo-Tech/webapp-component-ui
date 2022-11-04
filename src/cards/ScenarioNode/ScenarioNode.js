@@ -38,6 +38,7 @@ export const ScenarioNode = ({
   onScenarioRedirect,
   deleteScenario,
   checkScenarioNameValue,
+  canRenameScenario,
   onScenarioRename,
   labels,
   buildScenarioNameToDelete,
@@ -159,7 +160,7 @@ export const ScenarioNode = ({
     );
   };
 
-  const getScenarioName = () => {
+  const getEditableScenarioName = () => {
     return (
       <Tooltip
         TransitionComponent={Fade}
@@ -178,6 +179,23 @@ export const ScenarioNode = ({
         </div>
       </Tooltip>
     );
+  };
+  const getNonEditableScenarioName = () => {
+    return (
+      <Tooltip
+        TransitionComponent={Fade}
+        TransitionProps={{ timeout: 600 }}
+        key="scenario-name-tooltip"
+        title={scenario.name}
+      >
+        <Typography key="scenario-name" className={classes.scenarioTitle} variant="h6">
+          {scenario.name}
+        </Typography>
+      </Tooltip>
+    );
+  };
+  const getScenarioName = () => {
+    return canRenameScenario ? getEditableScenarioName() : getNonEditableScenarioName();
   };
 
   const getDetailedStatus = () => {
@@ -321,6 +339,10 @@ ScenarioNode.propTypes = {
    */
   deleteScenario: PropTypes.func.isRequired,
   /**
+   * Boolean value defining whether or not scenario edition is allowed in the ScenarioNode card
+   */
+  canRenameScenario: PropTypes.bool,
+  /**
    * Function to handle scenario renaming
    */
   onScenarioRename: PropTypes.func.isRequired,
@@ -397,6 +419,7 @@ ScenarioNode.propTypes = {
 
 ScenarioNode.defaultProps = {
   onScenarioRedirect: null,
+  canRenameScenario: true,
   showDeleteIcon: false,
   labels: {
     status: 'Run status:',

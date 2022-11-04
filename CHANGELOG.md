@@ -1,3 +1,13 @@
+## **4.3.0** <sub><sup>2022-09-20 (7bf9186...4a84b1a)</sup></sub>
+
+### Features
+
+- add PermissionsGate component ([e4bc032](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e4bc032))
+- allow fine\-grained permissions system to rename & delete scenarios in scenario manager ([c8236a2](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c8236a2))
+- create rolesEditionButton and RolesEditionDialog ([6fd9182](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6fd9182))
+- create rolesEditor component ([da7b0e3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/da7b0e3))
+- create RolesAddingDialog component and SelectWithAction component ([07de32f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/07de32f))
+
 ## **4.2.0** <sub><sup>2022-10-04 (71bd30f...8f39e54)</sup></sub>
 
 ### Features
