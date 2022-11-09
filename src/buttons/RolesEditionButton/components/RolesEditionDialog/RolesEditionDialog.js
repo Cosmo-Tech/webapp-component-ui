@@ -109,6 +109,8 @@ export const RolesEditionDialog = ({
   };
 
   const allRolesWithoutNone = allRoles.filter((role) => role.value.toLowerCase() !== 'none');
+  const defaultRoleForNewEntries =
+    preventNoneRoleForAgents && newDefaultRole === 'none' ? allRolesWithoutNone?.[0]?.value : newDefaultRole;
   const hasNoAdmin = newAccessControlList.filter((access) => access.role === ADMIN_ROLE).length === 0;
   const workspaceIcon = <DesktopMacIcon />;
   const dialogContent = isFirstScreenShown ? (
@@ -199,7 +201,7 @@ export const RolesEditionDialog = ({
       selectedAgent={selectedAgentForRoleAddition}
       allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
       allPermissions={allPermissions}
-      defaultRole={newDefaultRole}
+      defaultRole={defaultRoleForNewEntries}
       rolesPermissionsMapping={resourceRolesPermissionsMapping}
       onCancel={cancelAccessAddition}
       onConfirm={confirmAccessAddition}
@@ -212,6 +214,7 @@ export const RolesEditionDialog = ({
       closeDialog();
     }
   };
+
   return (
     <Dialog
       data-cy="share-scenario-dialog"
