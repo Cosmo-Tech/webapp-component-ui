@@ -1,3 +1,9 @@
+## **4.3.1** <sub><sup>2022-11-09 (3bd45ef...24cd559)</sup></sub>
+
+### Bug Fixes
+
+- prevent 'none' role in new ACL entries if `preventNoneRoleForAgents` is enabled ([24cd559](https://github.com/Cosmo-Tech/webapp-component-ui/commit/24cd559))
+
 ## **4.3.0** <sub><sup>2022-11-04 (2a96ca1...84dca8f)</sup></sub>
 
 ### Features
