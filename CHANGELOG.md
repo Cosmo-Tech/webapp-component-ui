@@ -1,3 +1,7 @@
+## **4.3.2** <sub><sup>2022-11-10 (5390c07...5390c07)</sup></sub>
+
+- remove lodash dependency
+
 ## **4.3.1** <sub><sup>2022-11-09 (3bd45ef...24cd559)</sup></sub>
 
 ### Bug Fixes
