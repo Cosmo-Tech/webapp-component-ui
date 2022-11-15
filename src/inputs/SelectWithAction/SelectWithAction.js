@@ -36,6 +36,7 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
               horizontal: 'left',
             },
             getContentAnchorEl: null,
+            'data-cy': 'select-with-action-menu',
           }}
         >
           {options.map((option) => (
