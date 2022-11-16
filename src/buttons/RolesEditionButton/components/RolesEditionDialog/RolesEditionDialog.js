@@ -21,6 +21,7 @@ import { RoleEditor } from '../../../../inputs';
 import DesktopMacIcon from '@material-ui/icons/DesktopMac';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { RolesAddingDialog } from './components';
+import { getIdentifierFromUserEmail } from '../../../../utils';
 
 const useStyles = makeStyles((theme) => ({
   rolesEditorContainer: {
@@ -132,6 +133,13 @@ export const RolesEditionDialog = ({
                 renderInput={(params) => (
                   <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
                 )}
+                renderOption={(option) => {
+                  return (
+                    <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
+                      {option.id}
+                    </span>
+                  );
+                }}
               />
             </Grid>
           )}
