@@ -37,7 +37,7 @@ export const RoleEditor = ({
   const classes = useStyles();
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
   return (
-    <Grid data-cy={`role-editor-${agentName.replaceAll(/[@.]/g, '')}`} item xs={12} className={classes.rolesEditor}>
+    <Grid data-cy={`role-editor-${agentName.replace(/[@.]/g, '')}`} item xs={12} className={classes.rolesEditor}>
       <Grid item xs={7} className={classes.agentGroup}>
         {avatar}
         <div className={classes.nameGroup}>

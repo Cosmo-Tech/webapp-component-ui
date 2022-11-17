@@ -31,9 +31,9 @@ export const Dashboard = (props) => {
   } = props;
 
   const formattedUrl = url
-    .replaceAll('<ScenarioName>', scenarioName)
-    .replaceAll('<ScenarioId>', scenarioId)
-    .replaceAll('<CsmSimulationRun>', csmSimulationRun);
+    .replace(/<ScenarioName>/g, scenarioName)
+    .replace(/<ScenarioId>/g, scenarioId)
+    .replace(/<CsmSimulationRun>/g, csmSimulationRun);
 
   // Handle optional status property
   const noRun = scenarioState === 'Created' || scenarioState === null;
