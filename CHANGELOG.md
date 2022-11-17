@@ -1,3 +1,10 @@
+## **4.3.3** <sub><sup>2022-11-17 (43d5d7f...7fe310d)</sup></sub>
+
+### Bug Fixes
+
+- Remove replaceAll not supported by node 14 ([85f5e0b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/85f5e0b))
+- add selector on share scenario agents select render option ([7fe310d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7fe310d))
+
 ## **4.3.2** <sub><sup>2022-11-10 (5390c07...5390c07)</sup></sub>
 
 - remove lodash dependency
