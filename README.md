@@ -13,4 +13,33 @@ Documentation for the components is available in the [doc](https://github.com/Co
 
 `yarn install && yarn build` will package the project.
 
-This command will allow you to use `yarn link` and `ỳarn link @cosmotech/ui` commands to deal with this project locally.
+## Use locally with yalc
+
+yalc is a tool that allow you to use local compiled packages in projets instead of published packages.
+
+- First use:
+
+install yalc :
+`npm i -g yalc`
+
+publish package locally:
+`yalc push --sig`
+
+link package to project (in project directory):
+`yalc add @cosmotech/ui`
+`yalc link @cosmotech/ui`
+`yarn/npm install`
+
+- Update package:
+
+rebuild package:
+`yarn build`
+
+publish updated package locally:
+`yalc push --sig`
+
+Refresh browser if project is running for see changes.
+
+- Remove link to project (in project directory):
+  `yalc remove @cosmotech/ui`
+  `yarn/npm install`

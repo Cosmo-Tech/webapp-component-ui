@@ -12,7 +12,8 @@
     "build": "rollup -c",
     "eslint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "npx prettier -w"
+    "prettier": "npx prettier -w",
+    "pushlocal": "yarn build && yalc push --sig"
   },
   "repository": {
     "type": "git",
