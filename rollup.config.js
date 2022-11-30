@@ -38,7 +38,7 @@ export default {
     external(),
     postcss(),
     babel({
-      exclude: 'node_modules/**',
+      exclude: ['node_modules/**', 'tests/**'],
       babelHelpers: 'bundled',
     }),
     resolve(),

@@ -77,7 +77,11 @@ export const RolesAddingDialog = ({
               </Typography>
             )}
             <Typography variant="body1">{labels.rolesTitle}</Typography>
-            <RadioGroup value={selectedRole} onChange={(event) => setSelectedRole(event.target.value)}>
+            <RadioGroup
+              data-cy="share-scenario-dialog-roles-checkboxes"
+              value={selectedRole}
+              onChange={(event) => setSelectedRole(event.target.value)}
+            >
               {allRoles.map((role) => (
                 <FormControlLabel
                   key={role.value}

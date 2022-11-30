@@ -25,3 +25,6 @@ package-lock.json
 .DS_Store
 
 doc/public
+
+# jest
+/coverage
