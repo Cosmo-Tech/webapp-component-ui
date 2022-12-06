@@ -6,14 +6,12 @@ import PropTypes from 'prop-types';
 import {
   CircularProgress,
   Drawer,
-  Fade,
   IconButton,
   MenuItem,
   Select,
   Slider,
   Tab,
   Tabs,
-  Tooltip,
   Checkbox,
   TextField,
   Button,
@@ -38,7 +36,7 @@ import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
 import useStyles from './style';
 import { ElementData, TabPanel, StatsHUD } from './components';
-import { ErrorBanner } from '../../misc';
+import { ErrorBanner, FadingTooltip } from '../../misc';
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
 
@@ -352,11 +350,11 @@ export const CytoViz = (props) => {
         maxZoom={10 ** zoomPrecision[1]}
       />
       <div data-cy="cytoviz-open-drawer-button" className={classes.openDrawerButton}>
-        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels_.settings.open}>
+        <FadingTooltip title={labels_.settings.open}>
           <IconButton onClick={openDrawer}>
             <ChevronRightIcon />
           </IconButton>
-        </Tooltip>
+        </FadingTooltip>
       </div>
       <Drawer
         data-cy="cytoviz-drawer"
@@ -389,11 +387,11 @@ export const CytoViz = (props) => {
             />
             <Tab data-cy="cytoviz-drawer-settings-tab-button" icon={<SettingsIcon />} label={labels_.settings.title} />
           </Tabs>
-          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels_.settings.close}>
+          <FadingTooltip title={labels_.settings.close}>
             <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer}>
               <ChevronLeftIcon />
             </IconButton>
-          </Tooltip>
+          </FadingTooltip>
         </div>
         <div className={classes.drawerContent}>
           <TabPanel

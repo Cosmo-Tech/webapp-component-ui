@@ -3,9 +3,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, TextField, Tooltip } from '@material-ui/core';
+import { makeStyles, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { ScenarioValidationStatusChip } from '../../misc';
+import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 
 const useStyles = makeStyles((theme) => ({
   validationStatusChip: {
@@ -55,7 +55,7 @@ export const HierarchicalComboBox = ({
         );
       }}
       renderInput={(params) => (
-        <Tooltip arrow title={renderInputToolType}>
+        <FadingTooltip arrow title={renderInputToolType}>
           <TextField
             {...params}
             data-cy="scenario-select-input"
@@ -63,7 +63,7 @@ export const HierarchicalComboBox = ({
             label={mainLabel}
             variant="outlined"
           />
-        </Tooltip>
+        </FadingTooltip>
       )}
     />
   );

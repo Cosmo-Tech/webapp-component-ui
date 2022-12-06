@@ -3,21 +3,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Button,
-  CircularProgress,
-  Fade,
-  Grid,
-  IconButton,
-  Link,
-  Tooltip,
-  Typography,
-  makeStyles,
-} from '@material-ui/core';
+import { Button, CircularProgress, Grid, IconButton, Link, Typography, makeStyles } from '@material-ui/core';
 import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
+import { FadingTooltip } from '../../misc/FadingTooltip';
 
 const useStyles = makeStyles((theme) => ({
   uploadFileContainer: {
@@ -87,7 +78,7 @@ export const UploadFile = (props) => {
                 )}
               </Grid>
               <Grid item>
-                <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.delete}>
+                <FadingTooltip title={labels.delete}>
                   <IconButton
                     data-cy="delete-button"
                     id="delete-button"
@@ -97,7 +88,7 @@ export const UploadFile = (props) => {
                   >
                     <DeleteForeverIcon />
                   </IconButton>
-                </Tooltip>
+                </FadingTooltip>
               </Grid>
             </Grid>
           )}
@@ -109,9 +100,9 @@ export const UploadFile = (props) => {
         </Grid>
         {isFileValid === false && (
           <Grid item>
-            <Tooltip title={labels.invalidFileMessage} placement="right-end">
+            <FadingTooltip title={labels.invalidFileMessage} placement="right-end">
               <ErrorIcon color="error" />
-            </Tooltip>
+            </FadingTooltip>
           </Grid>
         )}
       </Grid>

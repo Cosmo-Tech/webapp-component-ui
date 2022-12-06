@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Tooltip } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import CreateScenarioDialog from './components';
+import { FadingTooltip } from '../../misc/FadingTooltip';
 
 export const CreateScenarioButton = ({
   currentScenario,
@@ -25,20 +26,18 @@ export const CreateScenarioButton = ({
 
   return (
     <div>
-      <Tooltip arrow title={labels.button.tooltip}>
-        <div>
-          <Button
-            data-cy="create-scenario-button"
-            size="medium"
-            variant="contained"
-            onClick={openDialog}
-            color="primary"
-            disabled={disabled}
-          >
-            {labels.button.title}
-          </Button>
-        </div>
-      </Tooltip>
+      <FadingTooltip arrow title={labels.button.tooltip}>
+        <Button
+          data-cy="create-scenario-button"
+          size="medium"
+          variant="contained"
+          onClick={openDialog}
+          color="primary"
+          disabled={disabled}
+        >
+          {labels.button.title}
+        </Button>
+      </FadingTooltip>
       <CreateScenarioDialog
         createScenario={createScenario}
         workspaceId={workspaceId}

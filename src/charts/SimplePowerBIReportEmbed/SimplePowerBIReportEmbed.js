@@ -4,10 +4,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
-import { Fade, IconButton, makeStyles, Tooltip } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
-import { FixedRatioContainer } from '../../misc/FixedRatioContainer';
+import { FadingTooltip, FixedRatioContainer } from '../../misc';
 import { PowerBIUtils } from '@cosmotech/azure';
 
 const useStyles = makeStyles((theme) => ({
@@ -233,14 +233,11 @@ export const SimplePowerBIReportEmbed = ({
       <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
         {refreshable && (
           <div className={classes.toolbar}>
-            <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.refreshTooltip}>
-              {/* span is required to prevent MUI warning when the child Button in Tooltip is disabled */}
-              <span>
-                <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
-                  <RefreshIcon />
-                </IconButton>
-              </span>
-            </Tooltip>
+            <FadingTooltip title={labels.refreshTooltip}>
+              <IconButton aria-label="refresh" disabled={!report || disabled} color="primary" onClick={refreshReport}>
+                <RefreshIcon />
+              </IconButton>
+            </FadingTooltip>
           </div>
         )}
         {iframeContainer}

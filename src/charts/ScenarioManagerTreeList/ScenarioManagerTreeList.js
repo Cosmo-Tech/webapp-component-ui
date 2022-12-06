@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Fade, IconButton, Paper, TextField, Tooltip } from '@material-ui/core';
+import { IconButton, Paper, TextField } from '@material-ui/core';
 import {
   UnfoldMore as UnfoldMoreIcon,
   UnfoldLess as UnfoldLessIcon,
@@ -15,6 +15,7 @@ import SortableTree from '@nosferatu500/react-sortable-tree';
 import { ScenarioUtils } from '@cosmotech/core';
 import useStyles from './style';
 import { ScenarioNode } from '../../cards';
+import { FadingTooltip } from '../../misc';
 import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../cards/ScenarioNode/constants';
 
 const initNodesDict = (scenarios, defaultExpanded) => {
@@ -198,33 +199,21 @@ export const ScenarioManagerTreeList = (props) => {
           color="primary"
         />
         <div className={classes.toolbar}>
-          <Tooltip
-            TransitionComponent={Fade}
-            TransitionProps={{ timeout: 600 }}
-            title={labels?.toolbar?.collapseAll || 'Collapse all'}
-          >
+          <FadingTooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
             <IconButton className={classes.toolbarPrimaryAction} onClick={collapseAll}>
               <UnfoldLessIcon color="primary" />
             </IconButton>
-          </Tooltip>
-          <Tooltip
-            TransitionComponent={Fade}
-            TransitionProps={{ timeout: 600 }}
-            title={labels?.toolbar?.expandAll || 'Expand all'}
-          >
+          </FadingTooltip>
+          <FadingTooltip title={labels?.toolbar?.expandAll || 'Expand all'}>
             <IconButton className={classes.toolbarPrimaryAction} onClick={expandAll}>
               <UnfoldMoreIcon color="primary" />
             </IconButton>
-          </Tooltip>
-          <Tooltip
-            TransitionComponent={Fade}
-            TransitionProps={{ timeout: 600 }}
-            title={labels?.toolbar?.expandTree || 'Expand tree'}
-          >
+          </FadingTooltip>
+          <FadingTooltip title={labels?.toolbar?.expandTree || 'Expand tree'}>
             <IconButton className={classes.toolbarPrimaryAction} onClick={expandTree}>
               <AccountTreeIcon color="primary" />
             </IconButton>
-          </Tooltip>
+          </FadingTooltip>
         </div>
       </div>
       <div data-cy="scenario-manager-view" className={classes.treesContainer}>
