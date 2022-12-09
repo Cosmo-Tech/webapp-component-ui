@@ -142,7 +142,7 @@ describe('RolesEditionDialog', () => {
     test('when agents list is empty, "Add people" list is empty', async () => {
       setUp(propsWithoutUsers);
       await AddPeopleSelect.openList();
-      expect(AddPeopleSelect.List).toBeNull();
+      expect(AddPeopleSelect.List).not.toBeInTheDocument();
     });
 
     test('agents that are in specificAccessByAgent are not displayed in "Add people" list', async () => {
@@ -150,7 +150,7 @@ describe('RolesEditionDialog', () => {
       await AddPeopleSelect.openList();
 
       SAMPLE_AGENTS.specificAccessByAgent.forEach((agent) => {
-        expect(AddPeopleSelect.getOption(agent.id)).toBeNull();
+        expect(AddPeopleSelect.getOption(agent.id)).not.toBeInTheDocument();
       });
     });
 
@@ -165,9 +165,9 @@ describe('RolesEditionDialog', () => {
     test('selecting an agent in the “Add people” list opens the “New access” view in the dialog', async () => {
       setUp(propsWithUsers);
 
-      expect(getNewAccessView()).toBeNull();
+      expect(getNewAccessView()).not.toBeInTheDocument();
       await openNewAccessView('user2');
-      expect(getNewAccessView()).toBeDefined();
+      expect(getNewAccessView()).toBeInTheDocument();
     });
   });
 
@@ -224,7 +224,7 @@ describe('RolesEditionDialog', () => {
 
         test('agents not in specificAccessByAgent are not displayed', () => {
           agentsNotInSpecificAccess.forEach((agent) => {
-            expect(getRoleEditor(agent.id)).toBeNull();
+            expect(getRoleEditor(agent.id)).not.toBeInTheDocument();
           });
         });
       });
@@ -269,9 +269,9 @@ describe('RolesEditionDialog', () => {
 
         describe('Remove agent', () => {
           test('remove RoleEditor of agent in view', () => {
-            expect(getRoleEditor('user3')).toBeDefined();
+            expect(getRoleEditor('user3')).toBeInTheDocument();
             removeAgent('user3');
-            expect(getRoleEditor('user3')).toBeNull();
+            expect(getRoleEditor('user3')).not.toBeInTheDocument();
           });
         });
       });
@@ -366,7 +366,7 @@ describe('RolesEditionDialog', () => {
 
     test('remove all admin disable share button and show error message', () => {
       expect(ShareButton.Button).toBeEnabled();
-      expect(NoAdminErrorMessage.Typography).toBeNull();
+      expect(NoAdminErrorMessage.Typography).not.toBeInTheDocument();
       const adminsAgents = SAMPLE_AGENTS.specificAccessByAgent.filter((agent) => agent.role === 'admin');
       adminsAgents.forEach((agent) => {
         removeAgent(agent.id);
@@ -377,7 +377,7 @@ describe('RolesEditionDialog', () => {
 
     test('change all admin role disable share button and show error message', () => {
       expect(ShareButton.Button).toBeEnabled();
-      expect(NoAdminErrorMessage.Typography).toBeNull();
+      expect(NoAdminErrorMessage.Typography).not.toBeInTheDocument();
       const adminsAgents = SAMPLE_AGENTS.specificAccessByAgent.filter((agent) => agent.role === 'admin');
       adminsAgents.forEach((agent) => {
         selectRoleForAgent(agent.id, 'viewer');
@@ -393,11 +393,11 @@ describe('RolesEditionDialog', () => {
     });
 
     test('New user cannot be added', () => {
-      expect(AddPeopleSelect.Select).toBeNull();
+      expect(AddPeopleSelect.Select).not.toBeInTheDocument();
     });
 
     test('Share button is not visible', () => {
-      expect(ShareButton.Button).toBeNull();
+      expect(ShareButton.Button).not.toBeInTheDocument();
     });
 
     test('All RoleEditor are readOnly', () => {
