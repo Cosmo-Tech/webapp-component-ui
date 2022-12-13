@@ -7,4 +7,5 @@ export { ScenarioValidationStatusChip } from './ScenarioValidationStatusChip';
 export { LoadingLine } from './LoadingLine';
 export { ErrorBanner } from './ErrorBanner';
 export { DefaultAvatar } from './DefaultAvatar';
+export { FadingTooltip } from './FadingTooltip';
 export { PermissionsGate } from './PermissionsGate';

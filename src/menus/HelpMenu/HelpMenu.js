@@ -11,14 +11,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Fade,
   IconButton,
   Menu,
   MenuItem,
-  Tooltip,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import useStyles from './style';
+import { FadingTooltip } from '../../misc';
 
 export const HelpMenu = (props) => {
   const classes = useStyles();
@@ -47,11 +46,11 @@ export const HelpMenu = (props) => {
           onClick={handleClick}
           className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
         >
-          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.title}>
+          <FadingTooltip title={labels.title}>
             <IconButton aria-label="help" color="inherit">
               <HelpOutlineIcon />
             </IconButton>
-          </Tooltip>
+          </FadingTooltip>
         </Box>
         <Menu className={classes.menu} keepMounted anchorEl={anchorEl} open={isMenuOpen} onClose={handleClick}>
           {documentationUrl && (

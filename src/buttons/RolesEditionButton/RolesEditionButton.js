@@ -3,9 +3,10 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, IconButton, Tooltip, Fade } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
 import ShareIcon from '@material-ui/icons/Share';
 import { RolesEditionDialog } from './components';
+import { FadingTooltip } from '../../misc/FadingTooltip';
 
 export const RolesEditionButton = ({
   labels,
@@ -36,13 +37,7 @@ export const RolesEditionButton = ({
   );
   return (
     <div>
-      <Tooltip
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-        title={labels.button?.tooltip ?? 'Modify access'}
-      >
-        {buttonContent}
-      </Tooltip>
+      <FadingTooltip title={labels.button?.tooltip ?? 'Modify access'}>{buttonContent}</FadingTooltip>
       <RolesEditionDialog
         open={open}
         resourceRolesPermissionsMapping={resourceRolesPermissionsMapping}

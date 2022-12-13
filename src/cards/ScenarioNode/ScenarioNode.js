@@ -9,10 +9,8 @@ import {
   AccordionSummary,
   Box,
   CircularProgress,
-  Fade,
   IconButton,
   Paper,
-  Tooltip,
   Typography,
 } from '@material-ui/core';
 import {
@@ -25,7 +23,7 @@ import {
 } from '@material-ui/icons';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
-import { ScenarioValidationStatusChip } from '../../misc';
+import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 import { EditableLabel } from '../../inputs/EditableLabel';
 import useStyles from './style';
 
@@ -136,14 +134,9 @@ export const ScenarioNode = ({
           </Typography>
         ) : null}
         {scenario.state === 'Created' ? null : (
-          <Tooltip
-            TransitionComponent={Fade}
-            TransitionProps={{ timeout: 600 }}
-            key="scenario-status-tooltip"
-            title={status}
-          >
+          <FadingTooltip key="scenario-status-tooltip" title={status}>
             {icon}
-          </Tooltip>
+          </FadingTooltip>
         )}
       </>
     );
@@ -162,36 +155,24 @@ export const ScenarioNode = ({
 
   const getEditableScenarioName = () => {
     return (
-      <Tooltip
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-        key="scenario-name-tooltip"
-        title={scenario.name}
-      >
-        <div>
-          <EditableLabel
-            value={scenario.name}
-            checkValue={checkScenarioNameValue}
-            onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
-            labels={labels.scenarioRename}
-            typographyProps={{ variant: 'h6' }}
-          />
-        </div>
-      </Tooltip>
+      <FadingTooltip key="scenario-name-tooltip" title={scenario.name}>
+        <EditableLabel
+          value={scenario.name}
+          checkValue={checkScenarioNameValue}
+          onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+          labels={labels.scenarioRename}
+          typographyProps={{ variant: 'h6' }}
+        />
+      </FadingTooltip>
     );
   };
   const getNonEditableScenarioName = () => {
     return (
-      <Tooltip
-        TransitionComponent={Fade}
-        TransitionProps={{ timeout: 600 }}
-        key="scenario-name-tooltip"
-        title={scenario.name}
-      >
+      <FadingTooltip key="scenario-name-tooltip" title={scenario.name}>
         <Typography key="scenario-name" className={classes.scenarioTitle} variant="h6">
           {scenario.name}
         </Typography>
-      </Tooltip>
+      </FadingTooltip>
     );
   };
   const getScenarioName = () => {
@@ -248,7 +229,7 @@ export const ScenarioNode = ({
       >
         {getScenarioHeader()}
         {showDeleteIcon && (
-          <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.delete || 'Delete file'}>
+          <FadingTooltip title={labels.delete || 'Delete file'}>
             <IconButton
               className={classes.scenarioDeleteButton}
               data-cy="scenario-delete-button"
@@ -258,9 +239,9 @@ export const ScenarioNode = ({
             >
               <DeleteForeverIcon fontSize="small" />
             </IconButton>
-          </Tooltip>
+          </FadingTooltip>
         )}
-        <Tooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={labels.redirect}>
+        <FadingTooltip title={labels.redirect}>
           <IconButton
             className={classes.scenarioDeleteButton}
             data-cy="scenario-view-redirect"
@@ -270,7 +251,7 @@ export const ScenarioNode = ({
           >
             <OpenInNewIcon fontSize="small" color="primary" />
           </IconButton>
-        </Tooltip>
+        </FadingTooltip>
       </AccordionSummary>
     );
   };
