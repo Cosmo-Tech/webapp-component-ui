@@ -1,3 +1,11 @@
+## **4.4.0** <sub><sup>2022-12-19 (1cb512b...49d015e)</sup></sub>
+
+### Features
+
+- add ResourceCard component ([7360815](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7360815))
+- add generic tooltip component FadingTooltip ([722e95b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/722e95b))
+- add avatar shape option to DefaultAvatar ([e61a589](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e61a589))
+
 ## **4.3.3** <sub><sup>2022-11-17 (43d5d7f...7fe310d)</sup></sub>
 
 ### Bug Fixes
