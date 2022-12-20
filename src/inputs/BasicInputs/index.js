@@ -6,3 +6,4 @@ export { BasicNumberInput } from './BasicNumberInput';
 export { BasicEnumInput } from './BasicEnumInput';
 export { BasicToggleInput } from './BasicToggleInput';
 export { BasicDateInput } from './BasicDateInput';
+export { BasicInputWrapper } from './BasicInputWrapper';

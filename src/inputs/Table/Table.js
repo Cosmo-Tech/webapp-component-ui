@@ -3,7 +3,7 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, makeStyles, Typography } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
@@ -12,6 +12,7 @@ import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { ErrorsPanel } from '../../misc/ErrorsPanel/ErrorsPanel.js';
+import { BasicInputWrapper } from '../.';
 
 const useStyles = makeStyles((theme) => ({
   toolBar: {
@@ -97,6 +98,7 @@ export const Table = (props) => {
     columns,
     rows,
     labels,
+    tooltipText,
     extraToolbarActions,
     onCellChange,
     onClearErrors,
@@ -132,7 +134,9 @@ export const Table = (props) => {
 
   return (
     <div id="table-container" {...otherProps}>
-      <Typography data-cy="label">{labels.label}</Typography>
+      <div data-cy="label">
+        <BasicInputWrapper label={labels.label} tooltipText={tooltipText} {...otherProps} />
+      </div>
       <div className={classes.toolBar}>
         {extraToolbarActions}
         {isLoading && (
@@ -216,6 +220,10 @@ Table.propTypes = {
     loading: PropTypes.string,
     errorsPanelMainError: PropTypes.string,
   }),
+  /**
+   * Tooltip text
+   */
+  tooltipText: PropTypes.string,
   /**
    *  List of extra React elements to add in the Table toolbar
    */

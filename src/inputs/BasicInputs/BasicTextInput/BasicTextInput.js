@@ -1,29 +1,25 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
-
 export const BasicTextInput = (props) => {
-  const classes = useStyles();
-  const { label, value, textFieldProps, changeTextField, containerProps, labelProps, ...otherProps } = props;
+  const { label, tooltipText, value, textFieldProps, changeTextField, containerProps, labelProps, ...otherProps } =
+    props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
-      <Grid item>
-        <Typography {...labelProps}>{label}</Typography>
-      </Grid>
-      <Grid item>
-        <TextField {...textFieldProps} value={value} onChange={(event) => changeTextField(event.target.value)} />
-      </Grid>
-    </Grid>
+    <BasicInputWrapper
+      label={label}
+      tooltipText={tooltipText}
+      containerProps={containerProps}
+      labelProps={labelProps}
+      {...otherProps}
+    >
+      <TextField {...textFieldProps} value={value} onChange={(event) => changeTextField(event.target.value)} />
+    </BasicInputWrapper>
   );
 };
 
@@ -32,6 +28,10 @@ BasicTextInput.propTypes = {
    * BasicTextInput's label
    */
   label: PropTypes.string,
+  /**
+   * Tooltip text
+   */
+  tooltipText: PropTypes.string,
   /**
    * BasicTextInput's value
    */

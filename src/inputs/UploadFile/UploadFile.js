@@ -8,6 +8,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
+import { BasicInputWrapper } from '../.';
 import { FadingTooltip } from '../../misc/FadingTooltip';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +29,7 @@ export const UploadFile = (props) => {
     editMode,
     isFileValid,
     labels,
+    tooltipText,
     ...otherProps
   } = props;
   const classes = useStyles();
@@ -35,7 +37,9 @@ export const UploadFile = (props) => {
   return (
     <div className={classes.uploadFileContainer} {...otherProps}>
       <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
-        <Typography>{labels.label}</Typography>
+        <Grid item>
+          <BasicInputWrapper label={labels.label} tooltipText={tooltipText} {...otherProps} />
+        </Grid>
         <Grid item>
           <Button
             data-cy="browse-button"
@@ -166,6 +170,10 @@ UploadFile.propTypes = {
     label: PropTypes.string,
     delete: PropTypes.string,
   }),
+  /**
+   * Tooltip text
+   */
+  tooltipText: PropTypes.string,
 };
 
 UploadFile.defaultProps = {

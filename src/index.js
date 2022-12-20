@@ -12,6 +12,7 @@ export {
   BasicToggleInput,
   BasicTextInput,
   BasicEnumInput,
+  BasicInputWrapper,
   EditableLabel,
   UploadFile,
   UPLOAD_FILE_STATUS_KEY,

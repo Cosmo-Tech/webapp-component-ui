@@ -1,44 +1,48 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, MenuItem, TextField, Typography, makeStyles } from '@material-ui/core';
+import { MenuItem, TextField } from '@material-ui/core';
+import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
-
 export const BasicEnumInput = (props) => {
-  const classes = useStyles();
-  const { label, value, textFieldProps, enumValues, changeEnumField, containerProps, labelProps, ...otherProps } =
-    props;
+  const {
+    label,
+    tooltipText,
+    value,
+    textFieldProps,
+    enumValues,
+    changeEnumField,
+    containerProps,
+    labelProps,
+    ...otherProps
+  } = props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
-      <Grid item>
-        <Typography {...labelProps}>{label}</Typography>
-      </Grid>
-      <Grid item>
-        <TextField
-          data-cy="text_field"
-          select
-          value={value}
-          {...textFieldProps}
-          onChange={(event) => {
-            return changeEnumField(event.target.value);
-          }}
-        >
-          {enumValues.map((option) => (
-            <MenuItem key={option.key} value={option.key}>
-              {option.value}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Grid>
-    </Grid>
+    <BasicInputWrapper
+      label={label}
+      tooltipText={tooltipText}
+      containerProps={containerProps}
+      labelProps={labelProps}
+      {...otherProps}
+    >
+      <TextField
+        data-cy="text_field"
+        select
+        value={value}
+        {...textFieldProps}
+        onChange={(event) => {
+          return changeEnumField(event.target.value);
+        }}
+      >
+        {enumValues.map((option) => (
+          <MenuItem key={option.key} value={option.key}>
+            {option.value}
+          </MenuItem>
+        ))}
+      </TextField>
+    </BasicInputWrapper>
   );
 };
 
@@ -47,6 +51,10 @@ BasicEnumInput.propTypes = {
    * BasicEnumInput's label
    */
   label: PropTypes.string,
+  /**
+   * Tooltip text
+   */
+  tooltipText: PropTypes.string,
   /**
    * BasicEnumInput's value
    */

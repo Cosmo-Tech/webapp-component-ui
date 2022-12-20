@@ -1,39 +1,43 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, TextField, Typography, makeStyles } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
+import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { NumberFormatCustom } from '../../../misc/formatters';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
-
 export const BasicNumberInput = (props) => {
-  const classes = useStyles();
-  const { label, value, textFieldProps, inputProps, changeNumberField, containerProps, labelProps, ...otherProps } =
-    props;
+  const {
+    label,
+    tooltipText,
+    value,
+    textFieldProps,
+    inputProps,
+    changeNumberField,
+    containerProps,
+    labelProps,
+    ...otherProps
+  } = props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
-      <Grid item>
-        <Typography {...labelProps}>{label}</Typography>
-      </Grid>
-      <Grid item>
-        <TextField
-          {...textFieldProps}
-          value={value}
-          onChange={(event) => changeNumberField(parseFloat(event.target.value))}
-          inputProps={inputProps}
-          InputProps={{
-            inputComponent: NumberFormatCustom,
-          }}
-        />
-      </Grid>
-    </Grid>
+    <BasicInputWrapper
+      label={label}
+      tooltipText={tooltipText}
+      containerProps={containerProps}
+      labelProps={labelProps}
+      {...otherProps}
+    >
+      <TextField
+        {...textFieldProps}
+        value={value}
+        onChange={(event) => changeNumberField(parseFloat(event.target.value))}
+        inputProps={inputProps}
+        InputProps={{
+          inputComponent: NumberFormatCustom,
+        }}
+      />
+    </BasicInputWrapper>
   );
 };
 
@@ -42,6 +46,10 @@ BasicNumberInput.propTypes = {
    * BasicNumberInput's label
    */
   label: PropTypes.string,
+  /**
+   * Tooltip text
+   */
+  tooltipText: PropTypes.string,
   /**
    * BasicNumberInput's value
    */

@@ -3,32 +3,27 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Switch, Typography, makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
+import { Switch } from '@material-ui/core';
+import { BasicInputWrapper } from '../BasicInputWrapper';
 
 export const BasicToggleInput = (props) => {
-  const classes = useStyles();
-  const { label, value, switchProps, changeSwitchType, containerProps, labelProps, ...otherProps } = props;
+  const { label, tooltipText, value, switchProps, changeSwitchType, containerProps, labelProps, ...otherProps } = props;
 
   return (
-    <Grid container className={classes.root} {...containerProps} {...otherProps}>
-      <Grid item>
-        <Typography {...labelProps}>{label}</Typography>
-      </Grid>
-      <Grid item>
-        <Switch
-          color="secondary"
-          onChange={(event) => changeSwitchType(event.target.checked)}
-          checked={value}
-          {...switchProps}
-        />
-      </Grid>
-    </Grid>
+    <BasicInputWrapper
+      label={label}
+      tooltipText={tooltipText}
+      containerProps={containerProps}
+      labelProps={labelProps}
+      {...otherProps}
+    >
+      <Switch
+        color="secondary"
+        onChange={(event) => changeSwitchType(event.target.checked)}
+        checked={value}
+        {...switchProps}
+      />
+    </BasicInputWrapper>
   );
 };
 
@@ -37,6 +32,10 @@ BasicToggleInput.propTypes = {
    * BasicToggleInput's label
    */
   label: PropTypes.string,
+  /**
+   * Tooltip text
+   */
+  tooltipText: PropTypes.string,
   /**
    * BasicToggleInput's checked
    */
