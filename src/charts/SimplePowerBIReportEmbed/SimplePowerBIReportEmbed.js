@@ -7,7 +7,7 @@ import * as PropTypes from 'prop-types';
 import { IconButton, makeStyles } from '@material-ui/core';
 import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
-import { FadingTooltip, FixedRatioContainer } from '../../misc';
+import { FadingTooltip } from '../../misc';
 import { PowerBIUtils } from '@cosmotech/azure';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,14 +17,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   divContainer: {
-    height: '100%',
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
   },
   report: {
     height: '100%',
-    width: '100%',
+    flex: 1,
   },
   errorContainer: {
     'z-index': '1', // Need z-index > 0, otherwise the error banner is hidden behind the powerbi loading screen
@@ -47,13 +46,6 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     height: '100%',
   },
-  iframeContainerWithRatio: {
-    height: '100%',
-  },
-  iframeContainerWithoutRatio: ({ hasNavContentPane }) => ({
-    height: hasNavContentPane ? 'calc(100% - 35px)' : '100%',
-    width: '100%',
-  }),
 }));
 
 function getErrorCode(labels, reports) {
@@ -104,12 +96,11 @@ export const SimplePowerBIReportEmbed = ({
   refreshable,
   refreshTimeout,
   labels,
-  useAAD,
   iframeRatio,
+  useAAD,
 }) => {
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
   const hasNavContentPane = settings?.navContentPaneEnabled;
-  const iframeHeightOffset = hasNavContentPane ? '35px' : '0px';
   const classes = useStyles({ hasNavContentPane });
 
   // 1 Embed or 0 Aad
@@ -204,24 +195,19 @@ export const SimplePowerBIReportEmbed = ({
     console.error(error);
   }
 
-  let iframeContainer;
-  if (iframeRatio != null && iframeRatio > 0) {
-    iframeContainer = (
-      <FixedRatioContainer
-        className={classes.iframeContainerWithRatio}
-        width="100%"
-        ratio={iframeRatio}
-        heightOffset={iframeHeightOffset}
-      >
-        {iframe}
-      </FixedRatioContainer>
-    );
-  } else {
-    iframeContainer = <div className={classes.iframeContainerWithoutRatio}>{iframe}</div>;
-  }
-
   const placeholder = getPlaceholder();
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
+
+  const divContainerStyle = {};
+  if (!isReady && !alwaysShowReports) {
+    divContainerStyle.display = 'none';
+  }
+
+  if (iframeRatio && !Number.isNaN(iframeRatio)) {
+    divContainerStyle.aspectRatio = String(iframeRatio);
+  } else {
+    divContainerStyle.height = '100%';
+  }
 
   return (
     <div className={classes.root}>
@@ -230,7 +216,7 @@ export const SimplePowerBIReportEmbed = ({
         <div className={classes.errorDescription}>{errorDescription}</div>
       </div>
       {placeholder}
-      <div className={classes.divContainer} style={!isReady && !alwaysShowReports ? { display: 'none' } : {}}>
+      <div className={classes.divContainer} style={divContainerStyle}>
         {refreshable && (
           <div className={classes.toolbar}>
             <FadingTooltip title={labels.refreshTooltip}>
@@ -240,7 +226,7 @@ export const SimplePowerBIReportEmbed = ({
             </FadingTooltip>
           </div>
         )}
-        {iframeContainer}
+        {iframe}
       </div>
     </div>
   );
