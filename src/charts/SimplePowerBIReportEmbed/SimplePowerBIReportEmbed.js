@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
 import { IconButton, makeStyles } from '@material-ui/core';
@@ -163,6 +163,7 @@ export const SimplePowerBIReportEmbed = ({
       embedUrl: reports.data?.reportsInfo?.[reportId]?.embedUrl,
       accessToken: reports.data?.accessToken,
     };
+
     addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
     setEmbedConfig(newConfig);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -171,29 +172,42 @@ export const SimplePowerBIReportEmbed = ({
   const errorCode = getErrorCode(labels, reports);
   const errorDescription = getErrorDescription(labels, reports);
 
-  const refreshReport = () => {
+  const refreshReport = useCallback(() => {
+    if (!report) {
+      return;
+    }
+
     report.refresh();
     setDisabled(true);
     setTimeout(() => {
       setDisabled(false);
     }, refreshTimeout);
-  };
+  }, [refreshTimeout, report]);
 
-  let iframe = null;
-  try {
-    iframe = (
-      <PowerBIEmbed
-        cssClassName={classes.report}
-        embedConfig={embedConfig}
-        getEmbeddedComponent={(embedObject) => {
-          setReport(embedObject);
-        }}
-      />
-    );
-  } catch (error) {
-    console.log('Error when intializing the PowerBIEmbed component.');
-    console.error(error);
-  }
+  const iframe = useMemo(() => {
+    if (!embedConfig?.embedUrl) {
+      return null;
+    }
+
+    let content;
+    try {
+      content = (
+        <PowerBIEmbed
+          cssClassName={classes.report}
+          embedConfig={embedConfig}
+          getEmbeddedComponent={(embedObject) => {
+            setReport(embedObject);
+          }}
+        />
+      );
+    } catch (error) {
+      console.log('Error when intializing the PowerBIEmbed component.');
+      console.error(error);
+      return null;
+    }
+
+    return content;
+  }, [classes.report, embedConfig]);
 
   const placeholder = getPlaceholder();
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
