@@ -6,4 +6,5 @@ export { BasicNumberInput } from './BasicNumberInput';
 export { BasicEnumInput } from './BasicEnumInput';
 export { BasicToggleInput } from './BasicToggleInput';
 export { BasicDateInput } from './BasicDateInput';
+export { BasicSliderInput } from './BasicSliderInput';
 export { BasicInputWrapper } from './BasicInputWrapper';

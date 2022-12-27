@@ -10,6 +10,7 @@ export {
   BasicNumberInput,
   BasicToggleInput,
   BasicDateInput,
+  BasicSliderInput,
   BasicInputWrapper,
 } from './BasicInputs';
 export { EditableLabel } from './EditableLabel';
