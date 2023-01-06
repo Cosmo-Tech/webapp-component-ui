@@ -1,3 +1,13 @@
+## **4.5.0** <sub><sup>2023-01-06 (91c86ef...c3627dc)</sup></sub>
+
+### Features
+
+- implement Tooltip in all scenario parameters ([c3627dc](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c3627dc))
+
+### Bug Fixes
+
+- prevent blanck power bi report ([928b2c6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/928b2c6))
+
 ## **4.4.0** <sub><sup>2022-12-19 (1cb512b...49d015e)</sup></sub>
 
 ### Features
