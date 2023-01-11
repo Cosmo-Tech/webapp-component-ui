@@ -24,6 +24,7 @@ export {
 export { UserInfo, HelpMenu } from './menus';
 export {
   ErrorBanner,
+  ErrorBoundary,
   ErrorsPanel,
   FadingTooltip,
   FixedRatioContainer,
