@@ -12,7 +12,7 @@ import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { ErrorsPanel } from '../../misc/ErrorsPanel/ErrorsPanel.js';
-import { BasicInputWrapper } from '../.';
+import { BasicInputWrapper } from '../BasicInputs/BasicInputWrapper';
 
 const useStyles = makeStyles((theme) => ({
   toolBar: {

@@ -8,7 +8,7 @@ import ErrorIcon from '@material-ui/icons/Error';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
-import { BasicInputWrapper } from '../.';
+import { BasicInputWrapper } from '../BasicInputs/BasicInputWrapper';
 import { FadingTooltip } from '../../misc/FadingTooltip';
 
 const useStyles = makeStyles((theme) => ({
