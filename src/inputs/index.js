@@ -6,6 +6,7 @@ export { UploadFile, UPLOAD_FILE_STATUS_KEY } from './UploadFile';
 export { Table, TABLE_DATA_STATUS } from './Table';
 export {
   BasicEnumInput,
+  BasicRadioInput,
   BasicTextInput,
   BasicNumberInput,
   BasicToggleInput,
