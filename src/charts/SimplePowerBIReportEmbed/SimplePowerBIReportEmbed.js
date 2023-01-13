@@ -129,6 +129,7 @@ export const SimplePowerBIReportEmbed = ({
   const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
   const noRun = scenarioState === 'Created' || scenarioState === null;
   const runInProgress = scenarioState === 'Running';
+  const dataInTransfer = scenarioState === 'DataIngestionInProgress';
   const hasError = scenarioState === 'Failed';
   const hasUnknownStatus = scenarioState === 'Unknown';
   const noDashboardConfigured = reportConfiguration[index] === undefined;
@@ -145,6 +146,15 @@ export const SimplePowerBIReportEmbed = ({
           icon={<AccessTimeIcon color="primary" fontSize="large" />}
         />
       );
+    if (dataInTransfer) {
+      return (
+        <DashboardPlaceholder
+          label={labels.dataInTransfer.label}
+          title={labels.dataInTransfer.title}
+          icon={<AccessTimeIcon color="primary" fontSize="large" />}
+        />
+      );
+    }
     if (hasError)
       return (
         <DashboardPlaceholder
@@ -360,6 +370,10 @@ SimplePowerBIReportEmbed.propTypes = {
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
     }).isRequired,
+    dataInTransfer: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired,
+    }).isRequired,
     hasErrors: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
@@ -396,6 +410,9 @@ SimplePowerBIReportEmbed.defaultProps = {
     },
     inProgress: {
       label: 'Scenario run in progress...',
+    },
+    dataInTransfer: {
+      label: 'Scenario results transfer in progress...',
     },
     hasErrors: {
       label: 'An error occured during the scenario run',
