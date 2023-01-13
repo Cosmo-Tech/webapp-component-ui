@@ -24,25 +24,25 @@
   "private": true,
   "devDependencies": {
     "docz": "^2.4.0",
-    "eslint": "^8.31.0",
-    "eslint-config-prettier": "^8.6.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-loader": "^4.0.2"
   },
   "dependencies": {
-    "@cosmotech/azure": "^1.2.2",
-    "@cosmotech/core": "^1.10.3",
-    "@cosmotech/ui": "4.5.0",
-    "@emotion/core": "11.0.0",
+    "@cosmotech/azure": "^1.1.2",
+    "@cosmotech/core": "^1.6.11",
+    "@cosmotech/ui": "4.2.0-dev.0",
+    "@emotion/core": "10.1.1",
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.3",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-i18next": "^12.1.4",
-    "react-router-dom": "^6.6.2",
-    "typescript": "^4.9.4"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-i18next": "^11.8.13",
+    "react-router-dom": "^5.2.0",
+    "typescript": "^4.6.2"
   }
 }
