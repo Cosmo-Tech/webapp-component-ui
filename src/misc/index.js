@@ -1,6 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
+export { ErrorBoundary } from './ErrorBoundary';
 export { ErrorsPanel } from './ErrorsPanel';
 export { FixedRatioContainer } from './FixedRatioContainer';
 export { ScenarioValidationStatusChip } from './ScenarioValidationStatusChip';

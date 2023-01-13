@@ -98,6 +98,7 @@ export const SimplePowerBIReportEmbed = ({
   labels,
   iframeRatio,
   useAAD,
+  visibleScenarios,
 }) => {
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
   const hasNavContentPane = settings?.navContentPaneEnabled;
@@ -116,7 +117,10 @@ export const SimplePowerBIReportEmbed = ({
     tokenType: tokenType,
   });
 
-  const scenarioDTO = useMemo(() => PowerBIUtils.constructScenarioDTO(scenario), [scenario]);
+  const scenarioDTO = useMemo(
+    () => PowerBIUtils.constructScenarioDTO(scenario, visibleScenarios),
+    [scenario, visibleScenarios]
+  );
   const additionalFilters = useMemo(
     () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
     [dynamicFilters, scenarioDTO]
@@ -292,6 +296,21 @@ SimplePowerBIReportEmbed.propTypes = {
    */
   useAAD: PropTypes.bool,
   /**
+   * Array of scenarios data, containing only the scenarios that the current user has access to. You can leave this prop
+   * undefined to ignore scenario filters based on user permissions. Scenarios objects must respect the following
+   * schema:
+   *  - id (mandatory): scenario identifier
+   *  - runId (optional): scenario run identifier
+   *  - csmSimulationRun (optional): identifier of the csmSimulationRun
+   */
+  visibleScenarios: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      runId: PropTypes.string,
+      csmSimulationRun: PropTypes.string,
+    })
+  ),
+  /**
    *  Display ratio (width/height) of the PowerBI iframe, expressed as a number.
    */
   iframeRatio: PropTypes.number,
@@ -357,6 +376,7 @@ SimplePowerBIReportEmbed.propTypes = {
     }).isRequired,
   }),
 };
+
 SimplePowerBIReportEmbed.defaultProps = {
   index: 0,
   alwaysShowReports: false,

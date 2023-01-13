@@ -12,9 +12,6 @@ const useStyles = makeStyles((theme) => ({
   iconContainer: {
     textAlign: 'center',
   },
-  label: {
-    size: 14,
-  },
 }));
 
 const DashboardPlaceholder = (props) => {
@@ -24,7 +21,7 @@ const DashboardPlaceholder = (props) => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={4}
       direction="column"
       justifyContent="center"
       wrap="nowrap"
@@ -32,11 +29,11 @@ const DashboardPlaceholder = (props) => {
       className={classes.gridContainer}
     >
       <Grid>
-        <Typography variant="h4">{title}</Typography>
+        <Typography variant="h3">{title}</Typography>
       </Grid>
       <Grid item>
         {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
-        <Typography data-cy="dashboard-placeholder" color="textSecondary" className={classes.label}>
+        <Typography data-cy="dashboard-placeholder" color="textSecondary" variant="body1">
           {label}
         </Typography>
       </Grid>
