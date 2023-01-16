@@ -25,7 +25,7 @@ export const BasicSliderInput = (props) => {
     disabled,
     containerProps,
     labelProps,
-    sliderProps,
+    sliderStyle,
     color,
     ...otherProps
   } = props;
@@ -50,10 +50,9 @@ export const BasicSliderInput = (props) => {
       ) : (
         <Slider
           value={value}
-          style={sliderProps}
+          style={sliderStyle}
           color={color}
           onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
-          aria-labelledby="basic-slider-input-label"
           getAriaValueText={getValueText}
           valueLabelDisplay={valueLabelDisplay}
           step={step}
@@ -71,7 +70,7 @@ BasicSliderInput.propTypes = {
   /**
    * BasicSliderInput's label
    */
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   /**
    * Tooltip text
    */
@@ -128,7 +127,7 @@ BasicSliderInput.propTypes = {
   /**
    * Additional prop to override slider's css, e.g., width (200 px by default)
    */
-  sliderProps: PropTypes.object,
+  sliderStyle: PropTypes.object,
   /**
    * Color of the slider: primary (default color) or secondary
    */
@@ -142,7 +141,7 @@ BasicSliderInput.defaultProps = {
   max: 100,
   orientation: 'horizontal',
   disabled: true,
-  sliderProps: {
+  sliderStyle: {
     width: '200px',
   },
   color: 'primary',

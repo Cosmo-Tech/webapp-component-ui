@@ -5,7 +5,7 @@ menu: Inputs
 ---
 
 import { Playground, Props } from 'docz';
-import { BasicEnumInput, BasicNumberInput, BasicTextInput, BasicToggleInput, BasicDateInput } from '@cosmotech/ui';
+import { BasicEnumInput, BasicNumberInput, BasicTextInput, BasicToggleInput, BasicDateInput, BasicSliderInput } from '@cosmotech/ui';
 
 # Basic Inputs
 
@@ -218,4 +218,39 @@ This part will list all basic inputs that you can use.
     }
     return <BasicDateInputExample />;
   }}
+</Playground>
+## BasicSliderInput
+
+### Props
+
+<Props of={BasicSliderInput} />
+
+### Basic Usage
+
+<Playground>
+  { () => {
+    class BasicSliderInputExample extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = { value: 1 }
+      }
+      changeSliderValue(value) {
+        this.setState({ value: value })
+      };
+      render () {
+        return (
+          <>
+            <BasicSliderInput
+              label='Here is a label'
+              value={this.state.value}
+              handleSliderValueChange={(value) => this.changeSliderValue(value)}
+            />
+          </>
+        )
+      }
+    }
+    return <BasicSliderInputExample/>;
+  }
+  }
+
 </Playground>
