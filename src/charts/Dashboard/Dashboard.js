@@ -38,6 +38,7 @@ export const Dashboard = (props) => {
   // Handle optional status property
   const noRun = scenarioState === 'Created' || scenarioState === null;
   const runInProgress = scenarioState === 'Running';
+  const dataInTransfer = scenarioState === 'DataIngestionInProgress';
   const hasError = scenarioState === 'Failed';
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
 
@@ -49,6 +50,13 @@ export const Dashboard = (props) => {
         <DashboardPlaceholder
           label={labels.inProgress.label}
           title={labels.inProgress.title}
+          icon={<AccessTimeIcon color="primary" fontSize="large" />}
+        />
+      )}
+      {dataInTransfer && (
+        <DashboardPlaceholder
+          label={labels.dataInTransfer.label}
+          title={labels.dataInTransfer.title}
           icon={<AccessTimeIcon color="primary" fontSize="large" />}
         />
       )}
@@ -151,6 +159,10 @@ Dashboard.propTypes = {
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
     }).isRequired,
+    dataInTransfer: PropTypes.shape({
+      title: PropTypes.string,
+      label: PropTypes.string.isRequired,
+    }).isRequired,
     hasErrors: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
@@ -177,6 +189,10 @@ Dashboard.defaultProps = {
     inProgress: {
       title: '',
       label: 'Scenario run in progress...',
+    },
+    dataInTransfer: {
+      title: '',
+      label: 'Scenario results transfer in progress...',
     },
     hasErrors: {
       title: '',
