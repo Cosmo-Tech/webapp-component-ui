@@ -9,6 +9,7 @@ export {
   HierarchicalComboBox,
   BasicDateInput,
   BasicNumberInput,
+  BasicSliderInput,
   BasicToggleInput,
   BasicTextInput,
   BasicEnumInput,
