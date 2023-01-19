@@ -419,6 +419,14 @@ ScenarioNode.defaultProps = {
           'letters, digits, spaces, underscores, hyphens and dots.',
       },
     },
+    deleteDialog: {
+      description:
+        'This operation is irreversible. Dataset(s) will not be removed, but the scenario parameters will be lost. ' +
+        'If this scenario has children, they will be moved to a new parent. ' +
+        'The new parent will be the parent of the deleted scenario.',
+      cancel: 'Cancel',
+      confirm: 'Confirm',
+    },
     dataset: 'Datasets',
     validationStatus: {
       rejected: 'Rejected',

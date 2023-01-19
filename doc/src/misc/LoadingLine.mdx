@@ -13,45 +13,43 @@ import * as dataError from '../../../assets/loadingLine/dataError.json';
 export const animationsData = {
   dataLoading: dataLoading.default,
   dataError: dataError.default,
-  dataLoaded: dataLoaded.default
+  dataLoaded: dataLoaded.default,
 };
 
 export const style = {
   height: 75,
   width: 90,
-  variant: 'h5'
+  variant: 'h5',
 };
 
 # LoadingLine
 
 The aim of this component is to render loading animation then success or failed
 
-### Props
+## Props
 
 <Props of={LoadingLine} />
 
-### Basic Usage
+## Basic Usage with status 'Loading'
 
-<div>
-  <Playground>
-    <LoadingLine title={'Data loading'} hasError={false} isLoading={true} animations={animationsData} style={style} />
-  </Playground>
-  <Playground>
-    <LoadingLine
-      title={'Data load sucess'}
-      hasError={false}
-      isLoading={false}
-      animations={animationsData}
-      style={style}
-    />
-  </Playground>
-  <Playground>
-    <LoadingLine
-      title={'Data load failed'}
-      hasError={true}
-      isLoading={false}
-      animations={animationsData}
-      style={style}
-    />
-  </Playground>
-</div>
+<Playground>
+  <LoadingLine title={'Data loading'} hasError={false} isLoading={true} animations={animationsData} style={style} />
+</Playground>
+
+## Basic Usage with status 'Successful'
+
+<Playground>
+  <LoadingLine
+    title={'Data load success'}
+    hasError={false}
+    isLoading={false}
+    animations={animationsData}
+    style={style}
+  />
+</Playground>
+
+## Basic Usage with status 'Failed'
+
+<Playground>
+  <LoadingLine title={'Data load failed'} hasError={true} isLoading={false} animations={animationsData} style={style} />
+</Playground>
