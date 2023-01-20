@@ -46,9 +46,11 @@ export const BasicSliderInput = (props) => {
       {...otherProps}
     >
       {disabled ? (
-        <TextField value={value} disabled />
+        <TextField value={value} disabled data-cy="slider-input-textField" />
       ) : (
         <Slider
+          id="slider-input"
+          data-cy="slider-input"
           value={value}
           style={sliderStyle}
           color={color}
