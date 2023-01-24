@@ -1,3 +1,17 @@
+## **4.6.0** <sub><sup>2023-01-24 (c481816...1f53a3f)</sup></sub>
+
+### Features
+
+- add DataIngestionInProgress state ([24b3b50](https://github.com/Cosmo-Tech/webapp-component-ui/commit/24b3b50))
+- provide slider component for number input ([49088f6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/49088f6))
+- add basic radio input scenario parameters ([10f935e](https://github.com/Cosmo-Tech/webapp-component-ui/commit/10f935e))
+- add optional prop visibleScenarios in SimplePowerBIReportEmbed ([333843b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/333843b))
+- add ErrorBoundary component ([ce71a6b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ce71a6b))
+
+### Bug Fixes
+
+- improve dashboards placeholder layout & style ([943fce8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/943fce8))
+
 ## **4.5.0** <sub><sup>2023-01-06 (91c86ef...c3627dc)</sup></sub>
 
 ### Features
