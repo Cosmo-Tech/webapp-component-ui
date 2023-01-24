@@ -5,7 +5,15 @@ menu: Inputs
 ---
 
 import { Playground, Props } from 'docz';
-import { BasicEnumInput, BasicNumberInput, BasicTextInput, BasicToggleInput, BasicDateInput, BasicSliderInput } from '@cosmotech/ui';
+import {
+  BasicEnumInput,
+  BasicRadioInput,
+  BasicNumberInput,
+  BasicTextInput,
+  BasicToggleInput,
+  BasicDateInput,
+  BasicSliderInput,
+} from '@cosmotech/ui';
 
 # Basic Inputs
 
@@ -24,7 +32,7 @@ This part will list all basic inputs that you can use.
     class BasicEnumInputExample extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = { value: 'USD' };
       }
       changeEnumValue(value) {
         this.setState({ value: value });
@@ -35,18 +43,24 @@ This part will list all basic inputs that you can use.
             <BasicEnumInput
               label="Here is a label"
               value={this.state.value}
+              tooltipText={'Basic enum input tooltip'}
               changeEnumField={(value) => this.changeEnumValue(value)}
-              textFieldProps={{
-                id: 'basic-text-input-id',
-              }}
               enumValues={[
                 {
                   key: 'USD',
-                  value: 'A',
+                  value: '$',
                 },
                 {
                   key: 'EUR',
-                  value: 'Z',
+                  value: '€',
+                },
+                {
+                  key: 'BTC',
+                  value: '฿',
+                },
+                {
+                  key: 'YUAN',
+                  value: '¥',
                 },
               ]}
             />
@@ -55,6 +69,60 @@ This part will list all basic inputs that you can use.
       }
     }
     return <BasicEnumInputExample />;
+  }}
+</Playground>
+
+## BasicRadioInput
+
+### Props
+
+<Props of={BasicRadioInput} />
+
+### Basic Usage
+
+<Playground>
+  {() => {
+    class BasicRadioInputExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: '' };
+      }
+      changeRadioValue(value) {
+        this.setState({ value: value });
+      }
+      render() {
+        return (
+          <>
+            <BasicRadioInput
+              label={'Here is a label'}
+              value={this.state.value}
+              tooltipText={'Here is a tooltip'}
+              disabled={false}
+              changeRadioOption={(value) => this.changeRadioValue(value)}
+              enumValues={[
+                {
+                  key: 'A',
+                  value: 'A',
+                },
+                {
+                  key: 'B',
+                  value: 'B',
+                },
+                {
+                  key: 'C',
+                  value: 'C',
+                },
+                {
+                  key: 'D',
+                  value: 'D',
+                },
+              ]}
+            />
+          </>
+        );
+      }
+    }
+    return <BasicRadioInputExample />;
   }}
 </Playground>
 
@@ -67,36 +135,30 @@ This part will list all basic inputs that you can use.
 ### Basic Usage
 
 <Playground>
-{ () => {
-	class BasicNumberInputExample extends React.Component {
-	constructor (props) {
-		super(props)
-		this.state = { value: '' }
-	}
-	changeNumberValue(value) {
-		this.setState({ value: value })
-	};
-	render () {
-		return (
-			<>
-				<BasicNumberInput
-					label='Here is a label'
-					value={this.state.value}
-					changeNumberField={(value) => this.changeNumberValue(value)}
-					textFieldProps={
-						{
-							id: 'basic-number-input-id'
-						}
-					}
-				/>
-			</>
-		)
-	}
-	}
-	return <BasicNumberInputExample/>;
-	}
-}
-
+  {() => {
+    class BasicNumberInputExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: 5.3 };
+      }
+      changeNumberValue(value) {
+        this.setState({ value: value });
+      }
+      render() {
+        return (
+          <>
+            <BasicNumberInput
+              label="Here is a label"
+              value={this.state.value}
+              tooltipText={'Here is a tooltip'}
+              changeNumberField={(value) => this.changeNumberValue(value)}
+            />
+          </>
+        );
+      }
+    }
+    return <BasicNumberInputExample />;
+  }}
 </Playground>
 
 ## BasicTextInput
@@ -108,36 +170,30 @@ This part will list all basic inputs that you can use.
 ### Basic Usage
 
 <Playground>
-{ () => {
-	class BasicTextInputExample extends React.Component {
-	constructor (props) {
-		super(props)
-		this.state = { value: '' }
-	}
-	changeTextValue(value) {
-		this.setState({ value: value })
-	};
-	render () {
-			return (
-				<>
-					<BasicTextInput
-						label='Here is a label'
-						value={this.state.value}
-						changeTextField={(value) => this.changeTextValue(value)}
-						textFieldProps={
-							{
-								id: 'basic-text-input-id'
-							}
-						}
-					/>
-				</>
-			)
-		}
-	}
-	return <BasicTextInputExample/>;
-	}
-}
-
+  {() => {
+    class BasicTextInputExample extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { value: '' };
+      }
+      changeTextValue(value) {
+        this.setState({ value: value });
+      }
+      render() {
+        return (
+          <>
+            <BasicTextInput
+              label="Here is a label"
+              value={this.state.value}
+              tooltipText={'Here is a tooltip'}
+              changeTextField={(value) => this.changeTextValue(value)}
+            />
+          </>
+        );
+      }
+    }
+    return <BasicTextInputExample />;
+  }}
 </Playground>
 
 ## BasicToggleInput
@@ -153,7 +209,7 @@ This part will list all basic inputs that you can use.
     class BasicToggleInputExample extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { value: '' };
+        this.state = { value: true };
       }
       changeSwitchValue(value) {
         this.setState({ value: value });
@@ -164,10 +220,8 @@ This part will list all basic inputs that you can use.
             <BasicToggleInput
               label="Here is a label"
               value={this.state.value}
+              tooltipText={'Here is a tooltip'}
               changeSwitchType={(value) => this.changeSwitchValue(value)}
-              textFieldProps={{
-                id: 'basic-switch-input-id',
-              }}
             />
           </>
         );
@@ -190,7 +244,7 @@ This part will list all basic inputs that you can use.
     class BasicDateInputExample extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { value: '09/03/2021' };
+        this.state = { value: new Date('09/03/2021') };
       }
       changeDateValue(value) {
         this.setState({ value: value });
@@ -199,7 +253,9 @@ This part will list all basic inputs that you can use.
         return (
           <>
             <BasicDateInput
+              id="BasicDateInputId"
               value={this.state.value}
+              tooltipText={'Here is a tooltip'}
               changeSelectedDate={(value) => this.changeDateValue(value)}
               format={'MM/dd/yyyy'}
               label={'Pick a date'}
@@ -219,6 +275,7 @@ This part will list all basic inputs that you can use.
     return <BasicDateInputExample />;
   }}
 </Playground>
+
 ## BasicSliderInput
 
 ### Props
@@ -228,29 +285,29 @@ This part will list all basic inputs that you can use.
 ### Basic Usage
 
 <Playground>
-  { () => {
+  {() => {
     class BasicSliderInputExample extends React.Component {
-      constructor (props) {
-        super(props)
-        this.state = { value: 1 }
+      constructor(props) {
+        super(props);
+        this.state = { value: 1 };
       }
       changeSliderValue(value) {
-        this.setState({ value: value })
-      };
-      render () {
+        this.setState({ value: value });
+      }
+      render() {
         return (
           <>
             <BasicSliderInput
-              label='Here is a label'
+              disabled={false}
+              label="Here is a label"
+              tooltipText={'Here is a tooltip'}
               value={this.state.value}
               handleSliderValueChange={(value) => this.changeSliderValue(value)}
             />
           </>
-        )
+        );
       }
     }
-    return <BasicSliderInputExample/>;
-  }
-  }
-
+    return <BasicSliderInputExample />;
+  }}
 </Playground>

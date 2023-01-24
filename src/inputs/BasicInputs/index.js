@@ -4,6 +4,7 @@
 export { BasicTextInput } from './BasicTextInput';
 export { BasicNumberInput } from './BasicNumberInput';
 export { BasicEnumInput } from './BasicEnumInput';
+export { BasicRadioInput } from './BasicRadioInput';
 export { BasicToggleInput } from './BasicToggleInput';
 export { BasicDateInput } from './BasicDateInput';
 export { BasicSliderInput } from './BasicSliderInput';

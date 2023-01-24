@@ -11,11 +11,11 @@ import { ScenarioManagerTreeList } from '@cosmotech/ui';
 
 The aim of this component is to easily display a scenario tree.
 
-### Props
+## Props
 
 <Props of={ScenarioManagerTreeList} />
 
-### Basic Usage
+## Basic Usage
 
 <Playground>
   <div style={{ height: '500px' }}>
@@ -74,6 +74,8 @@ The aim of this component is to easily display a scenario tree.
       buildDatasetInfo={() => {
         return 'Dataset';
       }}
+      onScenarioRename={() => alert('Scenario renamed')}
+      buildScenarioNameToDelete={() => 'Remove scenario?'}
     />
   </div>
 </Playground>
