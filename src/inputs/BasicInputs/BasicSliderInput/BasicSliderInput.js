@@ -29,6 +29,12 @@ export const BasicSliderInput = (props) => {
     color,
     ...otherProps
   } = props;
+  const getValue = (value) => {
+    if (value == null || isNaN(value)) {
+      return 0;
+    }
+    return value;
+  };
   const getMarks = (marks) => {
     return marks !== undefined
       ? marks
@@ -46,10 +52,10 @@ export const BasicSliderInput = (props) => {
       {...otherProps}
     >
       {disabled ? (
-        <TextField value={value} disabled />
+        <TextField value={getValue(value)} disabled />
       ) : (
         <Slider
-          value={value}
+          value={getValue(value)}
           style={sliderStyle}
           color={color}
           onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
