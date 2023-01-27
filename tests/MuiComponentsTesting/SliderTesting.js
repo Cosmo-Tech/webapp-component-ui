@@ -3,10 +3,12 @@
 
 import { getByDataCy } from '../utils';
 import { getByRole } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 export class SliderTesting {
-  constructor({ dataCy }) {
+  constructor({ dataCy, user }) {
     this._dataCy = dataCy;
+    this.user = userEvent.setup();
   }
 
   get Slider() {
@@ -27,5 +29,12 @@ export class SliderTesting {
 
   get SliderTracker() {
     return getByRole(this.Slider, 'slider');
+  }
+
+  async moveSliderToTheRight(handlingFunction, sentValue) {
+    await this.user.click(this.SliderTracker);
+    await this.user.keyboard('[ArrowRight]');
+    expect(handlingFunction).toBeCalled();
+    expect(handlingFunction).toHaveBeenCalledWith(sentValue);
   }
 }

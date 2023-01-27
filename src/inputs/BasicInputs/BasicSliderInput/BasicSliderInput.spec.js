@@ -27,6 +27,11 @@ const propsInEditMode = {
   ...defaultProps,
   disabled: false,
 };
+const propsWithInvalidValue = {
+  ...defaultProps,
+  value: undefined,
+  disabled: false,
+};
 
 const sliderDisabled = new TextFieldTesting({ dataCy: 'slider-input-textField' });
 const sliderEditMode = new SliderTesting({ dataCy: 'slider-input' });
@@ -76,6 +81,23 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
       await user.keyboard('[ArrowLeft]');
       expect(mockOnValueChanged).toBeCalled();
       expect(mockOnValueChanged).toHaveBeenCalledWith(4);
+    });
+  });
+
+  describe('Checks slider value if provided one is null or undefined', () => {
+    beforeEach(() => {
+      setUp(propsWithInvalidValue);
+    });
+
+    // this test's output will be a console.error about null value in required prop "value"
+    // but the test passes correctly and checks component behaviour with null and undefined value
+    test('Checks slider value is 0', async () => {
+      expect(sliderEditMode.SliderValue).toHaveValue('0');
+      await sliderEditMode.moveSliderToTheRight(mockOnValueChanged, 1);
+      /*      await user.click(sliderEditMode.SliderTracker);
+      await user.keyboard('[ArrowRight]');
+      expect(mockOnValueChanged).toBeCalled();
+      expect(mockOnValueChanged).toHaveBeenCalledWith(1); */
     });
   });
 });
