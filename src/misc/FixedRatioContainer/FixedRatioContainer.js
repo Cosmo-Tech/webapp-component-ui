@@ -8,11 +8,11 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: ({ width }) => ({
-    width: width,
+    width,
   }),
   relativePosContainer: ({ paddingTop }) => ({
     position: 'relative',
-    paddingTop: paddingTop,
+    paddingTop,
   }),
   absolutePosContainer: {
     position: 'absolute',

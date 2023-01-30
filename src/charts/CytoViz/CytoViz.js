@@ -344,7 +344,7 @@ export const CytoViz = (props) => {
         layout={{
           name: currentLayout,
           nodeDimensionsIncludeLabels: !useCompactMode,
-          spacingFactor: spacingFactor,
+          spacingFactor,
         }}
         minZoom={10 ** zoomPrecision[0]}
         maxZoom={10 ** zoomPrecision[1]}

@@ -114,7 +114,7 @@ export const SimplePowerBIReportEmbed = ({
     id: reportId,
     embedUrl: '',
     accessToken: '',
-    tokenType: tokenType,
+    tokenType,
   });
 
   const scenarioDTO = useMemo(
@@ -173,7 +173,7 @@ export const SimplePowerBIReportEmbed = ({
     const newConfig = {
       type: 'report',
       id: reportId,
-      tokenType: tokenType,
+      tokenType,
       embedUrl: reports.data?.reportsInfo?.[reportId]?.embedUrl,
       accessToken: reports.data?.accessToken,
     };

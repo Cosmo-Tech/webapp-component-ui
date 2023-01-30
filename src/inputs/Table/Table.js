@@ -108,12 +108,12 @@ export const Table = (props) => {
   } = props;
 
   const gridRef = useRef();
-  const dimensions = { height: height, width: width };
+  const dimensions = { height, width };
   const classes = useStyles();
 
   const context = {
-    dateFormat: dateFormat,
-    editMode: editMode,
+    dateFormat,
+    editMode,
   };
   const defaultColDef = getDefaultColumnsProperties(onCellChange);
   const columnTypes = getColumnTypes(dateFormat);

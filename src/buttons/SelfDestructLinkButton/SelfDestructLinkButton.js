@@ -51,7 +51,7 @@ export const SelfDestructLinkButton = (props) => {
     reset();
   };
 
-  const dimensions = { height: height, width: width };
+  const dimensions = { height, width };
 
   return (
     <div className={classes.root} style={dimensions}>
