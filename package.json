@@ -9,7 +9,7 @@
     "dist/*"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "node --experimental-json-modules ./node_modules/.bin/rollup -c",
     "eslint": "eslint",
     "test": "jest",
     "prettier": "npx prettier -w",
@@ -35,10 +35,10 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.3",
-    "@rollup/plugin-babel": "^5.2.2",
-    "@rollup/plugin-commonjs": "^21.0.0",
-    "@rollup/plugin-image": "^2.0.5",
-    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-image": "^3.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.4.3",
@@ -66,7 +66,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.13",
-    "rollup": "^2.49.0",
+    "rollup": "^3.12.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-visualizer": "^5.5.0"
