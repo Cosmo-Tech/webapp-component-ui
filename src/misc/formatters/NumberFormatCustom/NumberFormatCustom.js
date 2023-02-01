@@ -3,7 +3,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 export function NumberFormatCustom(props) {
   const { inputRef, onChange, max, min, ...other } = props;
@@ -14,7 +14,7 @@ export function NumberFormatCustom(props) {
   };
 
   return (
-    <NumberFormat
+    <NumericFormat
       {...other}
       getInputRef={inputRef}
       isAllowed={valuesRange}
@@ -25,7 +25,7 @@ export function NumberFormatCustom(props) {
           },
         });
       }}
-      isNumericString
+      valueIsNumericString
     />
   );
 }
