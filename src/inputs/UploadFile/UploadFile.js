@@ -3,10 +3,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, Grid, IconButton, Link, Typography, makeStyles } from '@material-ui/core';
-import ErrorIcon from '@material-ui/icons/Error';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import { Button, CircularProgress, Grid, IconButton, Link, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import ErrorIcon from '@mui/icons-material/Error';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 import { BasicInputWrapper } from '../BasicInputs/BasicInputWrapper';
 import { FadingTooltip } from '../../misc/FadingTooltip';
@@ -89,6 +90,7 @@ export const UploadFile = (props) => {
                     disabled={!editMode}
                     aria-label="delete"
                     onClick={handleDeleteFile}
+                    size="large"
                   >
                     <DeleteForeverIcon />
                   </IconButton>

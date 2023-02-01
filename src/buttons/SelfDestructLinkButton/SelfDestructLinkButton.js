@@ -3,7 +3,7 @@
 
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress } from '@mui/material';
 import useStyles from './style';
 
 const STATUS = {

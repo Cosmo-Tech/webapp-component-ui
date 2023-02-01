@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, IconButton } from '@material-ui/core';
-import ShareIcon from '@material-ui/icons/Share';
+import { Button, IconButton } from '@mui/material';
+import ShareIcon from '@mui/icons-material/Share';
 import { RolesEditionDialog } from './components';
 import { FadingTooltip } from '../../misc/FadingTooltip';
 

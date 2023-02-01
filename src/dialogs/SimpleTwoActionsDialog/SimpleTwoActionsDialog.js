@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
+import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1, handleClickOnButton2 }) => {
   const onClose = (event, reason) => {

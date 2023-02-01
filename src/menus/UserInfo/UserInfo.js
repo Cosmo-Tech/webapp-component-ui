@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, ClickAwayListener, IconButton, Menu, MenuItem } from '@material-ui/core';
-import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@material-ui/icons';
+import { Box, ClickAwayListener, IconButton, Menu, MenuItem } from '@mui/material';
+import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@mui/icons-material';
 import { DefaultAvatar, FadingTooltip } from '../../misc';
 import useStyles from './style';
 
@@ -45,7 +45,7 @@ export const UserInfo = (props) => {
             {profilePlaceholder ? (
               <img src={profilePlaceholder} />
             ) : (
-              <IconButton aria-label="account">
+              <IconButton aria-label="account" size="large">
                 <DefaultAvatar userName={userName} />
               </IconButton>
             )}

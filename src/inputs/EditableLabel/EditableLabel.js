@@ -3,15 +3,9 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormControl,
-  OutlinedInput,
-  FormHelperText,
-  makeStyles,
-  Typography,
-  CircularProgress,
-} from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { FormControl, OutlinedInput, FormHelperText, Typography, CircularProgress } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import EditIcon from '@mui/icons-material/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {

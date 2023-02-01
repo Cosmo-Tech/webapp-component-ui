@@ -1,10 +1,11 @@
 // Copyright (c) Cosmo Tech.
 // Licenced under the MIT licence.
 
-import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { FadingTooltip } from '../../../misc';
 
 const useStyles = makeStyles((theme) => ({

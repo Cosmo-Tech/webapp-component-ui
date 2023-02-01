@@ -10,9 +10,9 @@ import {
   Divider,
   Paper,
   Typography,
-} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CancelIcon from '@material-ui/icons/Cancel';
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CancelIcon from '@mui/icons-material/Cancel';
 import useStyles from './style';
 
 export const ErrorsPanel = (props) => {

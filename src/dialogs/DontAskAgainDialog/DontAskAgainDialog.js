@@ -12,7 +12,7 @@ import {
   DialogActions,
   Checkbox,
   FormControlLabel,
-} from '@material-ui/core';
+} from '@mui/material';
 
 export const DontAskAgainDialog = ({ id, open, onClose, labels, onConfirm }) => {
   const [isChecked, setIsChecked] = useState(false);

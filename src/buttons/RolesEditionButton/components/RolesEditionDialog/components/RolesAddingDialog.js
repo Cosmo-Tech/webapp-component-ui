@@ -12,13 +12,13 @@ import {
   FormControlLabel,
   Divider,
   Chip,
-  makeStyles,
   RadioGroup,
   Radio,
-} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import Autocomplete from '@mui/lab/Autocomplete';
 import PropTypes from 'prop-types';
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from '@mui/icons-material/Check';
 
 const useStyle = makeStyles((theme) => ({
   chip: {
@@ -58,7 +58,7 @@ export const RolesAddingDialog = ({
           options={[selectedAgent]}
           getOptionLabel={(option) => (option.id ? option.id : '')}
           value={selectedAgent}
-          getOptionSelected={(option, value) => option.id === value.id}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => (
             <TextField
               {...params}

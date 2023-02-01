@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Chip, CircularProgress, makeStyles } from '@material-ui/core';
+import { Chip, CircularProgress } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   /// USE ERROR AND SUCCESS IN CHIP COLOR WHEN UPDATE TO MUI 5.X IS DONE

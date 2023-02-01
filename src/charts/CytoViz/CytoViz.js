@@ -21,15 +21,15 @@ import {
   Typography,
   Menu,
   Switch,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon,
   Settings as SettingsIcon,
   AccountTree as AccountTreeIcon,
   ExpandMore as ExpandMoreIcon,
-} from '@material-ui/icons';
-import { Autocomplete } from '@material-ui/lab';
+} from '@mui/icons-material';
+import { Autocomplete } from '@mui/lab';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
@@ -351,7 +351,7 @@ export const CytoViz = (props) => {
       />
       <div data-cy="cytoviz-open-drawer-button" className={classes.openDrawerButton}>
         <FadingTooltip title={labels_.settings.open}>
-          <IconButton onClick={openDrawer}>
+          <IconButton onClick={openDrawer} size="large">
             <ChevronRightIcon />
           </IconButton>
         </FadingTooltip>
@@ -388,7 +388,7 @@ export const CytoViz = (props) => {
             <Tab data-cy="cytoviz-drawer-settings-tab-button" icon={<SettingsIcon />} label={labels_.settings.title} />
           </Tabs>
           <FadingTooltip title={labels_.settings.close}>
-            <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer}>
+            <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer} size="large">
               <ChevronLeftIcon />
             </IconButton>
           </FadingTooltip>
@@ -443,7 +443,7 @@ export const CytoViz = (props) => {
                     }}
                     options={graphNodes}
                     getOptionLabel={(node) => node.data('label')}
-                    getOptionSelected={(option, node) => node.data('label') === option.data('label')}
+                    isOptionEqualToValue={(option, node) => node.data('label') === option.data('label')}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -478,7 +478,7 @@ export const CytoViz = (props) => {
                     onChange={(event, nodes) => changeSelectedNodesForExploration(nodes)}
                     options={graphNodes}
                     getOptionLabel={(node) => node.data('label')}
-                    getOptionSelected={(option, node) => node.data('label') === option.data('label')}
+                    isOptionEqualToValue={(option, node) => node.data('label') === option.data('label')}
                     renderInput={(params) => (
                       <TextField
                         aria-label={labels_.accordion.exploreGraph.startingNodes}

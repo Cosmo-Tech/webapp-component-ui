@@ -14,8 +14,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
-} from '@material-ui/core';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+} from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import useStyles from './style';
 import { FadingTooltip } from '../../misc';
 
@@ -47,7 +47,7 @@ export const HelpMenu = (props) => {
           className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
         >
           <FadingTooltip title={labels.title}>
-            <IconButton aria-label="help" color="inherit">
+            <IconButton aria-label="help" color="inherit" size="large">
               <HelpOutlineIcon />
             </IconButton>
           </FadingTooltip>

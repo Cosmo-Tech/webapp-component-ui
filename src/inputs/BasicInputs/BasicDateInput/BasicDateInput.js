@@ -3,10 +3,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import { makeStyles } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import makeStyles from '@mui/styles/makeStyles';
+
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,14 +21,16 @@ export const BasicDateInput = (props) => {
   const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <DatePicker
         className={classes.datePicker}
         disableToolbar
         variant="inline"
         margin="normal"
-        format={format}
-        label={<BasicInputWrapper label={label} tooltipText={tooltipText} iconTooltipStyle={{ color: 'inherit' }} />}
+        inputFormat={format}
+        renderInput={(props) => (
+          <BasicInputWrapper label={label} tooltipText={tooltipText} iconTooltipStyle={{ color: 'inherit' }} />
+        )}
         id={id}
         onChange={changeSelectedDate}
         KeyboardButtonProps={{
@@ -37,7 +40,7 @@ export const BasicDateInput = (props) => {
         {...dateProps}
         {...otherProps}
       />
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };
 

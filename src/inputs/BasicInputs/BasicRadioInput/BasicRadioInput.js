@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Radio, RadioGroup, FormControl, FormControlLabel, TextField } from '@material-ui/core';
+import { Radio, RadioGroup, FormControl, FormControlLabel, TextField } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 

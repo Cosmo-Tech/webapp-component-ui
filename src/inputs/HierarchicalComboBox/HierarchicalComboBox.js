@@ -3,8 +3,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, TextField } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import Autocomplete from '@mui/lab/Autocomplete';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +40,7 @@ export const HierarchicalComboBox = ({
       disableClearable
       disabled={disabled}
       options={values}
-      getOptionSelected={(option, value) => option.id === value.id}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(option) => option.name ?? ''}
       renderOption={(option) => {
         const marginLeft = option.depth * 20 || 0;

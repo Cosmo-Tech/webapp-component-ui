@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { FormControl, Select, Divider, makeStyles, MenuItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+import { FormControl, Select, Divider, MenuItem, ListItemText, ListItemIcon } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import CheckIcon from '@mui/icons-material/Check';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({

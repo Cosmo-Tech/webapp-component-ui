@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Button, Card, CardHeader, CardContent, CardActions, Tooltip, Fade } from '@material-ui/core';
+import { Typography, Button, Card, CardHeader, CardContent, CardActions, Tooltip, Fade } from '@mui/material';
 import { DefaultAvatar } from '../../misc';
 import useStyles from './style';
 

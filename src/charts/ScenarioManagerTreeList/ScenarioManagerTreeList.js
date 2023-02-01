@@ -3,12 +3,12 @@
 
 import React, { useEffect, useMemo, useState, useRef, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@material-ui/core';
+import { IconButton } from '@mui/material';
 import {
   UnfoldMore as UnfoldMoreIcon,
   UnfoldLess as UnfoldLessIcon,
   AccountTree as AccountTreeIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import '@nosferatu500/react-sortable-tree/style.css';
 import { ScenarioUtils } from '@cosmotech/core';
 import useStyles from './style';
@@ -153,17 +153,17 @@ export const ScenarioManagerTreeList = (props) => {
         <SearchInput label={labels.searchField} className={classes.searchField} onSearchChange={setSearchText} />
         <div className={classes.toolbar}>
           <FadingTooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
-            <IconButton className={classes.toolbarPrimaryAction} onClick={collapseAll}>
+            <IconButton className={classes.toolbarPrimaryAction} onClick={collapseAll} size="large">
               <UnfoldLessIcon color="primary" />
             </IconButton>
           </FadingTooltip>
           <FadingTooltip title={labels?.toolbar?.expandAll || 'Expand all'}>
-            <IconButton className={classes.toolbarPrimaryAction} onClick={expandAll}>
+            <IconButton className={classes.toolbarPrimaryAction} onClick={expandAll} size="large">
               <UnfoldMoreIcon color="primary" />
             </IconButton>
           </FadingTooltip>
           <FadingTooltip title={labels?.toolbar?.expandTree || 'Expand tree'}>
-            <IconButton className={classes.toolbarPrimaryAction} onClick={expandTree}>
+            <IconButton className={classes.toolbarPrimaryAction} onClick={expandTree} size="large">
               <AccountTreeIcon color="primary" />
             </IconButton>
           </FadingTooltip>

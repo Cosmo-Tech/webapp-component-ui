@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
 
 export const LoadingLine = (props) => {
   const { title, isLoading, hasError, animations, style } = props;
