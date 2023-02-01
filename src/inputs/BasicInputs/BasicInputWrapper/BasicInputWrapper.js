@@ -21,15 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BasicInputWrapper = ({
-  children,
-  label,
-  tooltipText,
-  containerProps,
-  labelProps,
-  iconTooltipStyle,
-  ...otherProps
-}) => {
+export const BasicInputWrapper = ({ children, label, tooltipText, containerProps, labelProps, ...otherProps }) => {
   const classes = useStyles();
 
   return (
@@ -38,7 +30,7 @@ export const BasicInputWrapper = ({
         <Typography {...labelProps}>{label}</Typography>
         {tooltipText && (
           <FadingTooltip title={tooltipText}>
-            <InfoOutlinedIcon className={classes.iconTooltip} style={iconTooltipStyle} fontSize="inherit" />
+            <InfoOutlinedIcon className={classes.iconTooltip} fontSize="inherit" />
           </FadingTooltip>
         )}
       </Grid>
@@ -60,10 +52,6 @@ BasicInputWrapper.propTypes = {
    * Tooltip text
    */
   tooltipText: PropTypes.string,
-  /**
-   * Customized style for tooltip Icon
-   */
-  iconTooltipStyle: PropTypes.object,
   /**
    * Additional props that you can specify for the child component Grid container that displays both label and input
    */

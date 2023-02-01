@@ -33,6 +33,7 @@ export const BasicRadioInput = (props) => {
       {disabled ? (
         <TextField
           data-cy="text-field"
+          variant="standard"
           value={enumValues.find((valueOption) => valueOption.key === value).value}
           disabled
           {...textFieldProps}

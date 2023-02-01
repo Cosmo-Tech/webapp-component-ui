@@ -58,6 +58,10 @@ export const UserInfo = (props) => {
           id="main-menu"
           keepMounted
           anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
           open={isMenuOpen}
           onClose={handleClick}
         >
@@ -77,7 +81,6 @@ export const UserInfo = (props) => {
             id="languages-menu"
             keepMounted
             anchorEl={langAnchorEl}
-            getContentAnchorEl={null}
             anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
             transformOrigin={{ vertical: 'center', horizontal: 'right' }}
             open={isLanguageMenuOpen}

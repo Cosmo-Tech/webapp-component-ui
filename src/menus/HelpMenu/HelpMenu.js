@@ -52,7 +52,17 @@ export const HelpMenu = (props) => {
             </IconButton>
           </FadingTooltip>
         </Box>
-        <Menu className={classes.menu} keepMounted anchorEl={anchorEl} open={isMenuOpen} onClose={handleClick}>
+        <Menu
+          className={classes.menu}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          keepMounted
+          anchorEl={anchorEl}
+          open={isMenuOpen}
+          onClose={handleClick}
+        >
           {documentationUrl && (
             <MenuItem data-cy="documentation-link" className={classes.link} onClick={handleClick}>
               <a href={documentationUrl} className={classes.link} target="_blank" rel="noreferrer">

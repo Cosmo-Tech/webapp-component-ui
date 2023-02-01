@@ -52,14 +52,15 @@ export const BasicSliderInput = (props) => {
       {...otherProps}
     >
       {disabled ? (
-        <TextField value={getValue(value)} disabled data-cy="slider-input-textField" />
+        <TextField value={getValue(value)} variant="standard" disabled data-cy="slider-input-textField" />
       ) : (
         <Slider
           value={getValue(value)}
-          id="slider-input"
-          data-cy="slider-input"
+          id="slider-root"
+          data-cy="slider-root"
           style={sliderStyle}
           color={color}
+          size="small"
           onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
           getAriaValueText={getValueText}
           valueLabelDisplay={valueLabelDisplay}

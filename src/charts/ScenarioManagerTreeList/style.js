@@ -83,10 +83,10 @@ const useStyles = makeStyles((theme) => ({
   },
   scenarioCard: {
     '& .rst__rowContents': {
-      backgroundColor: theme.palette.background.paper,
       border: 'none',
       boxShadow: 'none',
       padding: '0px',
+      backgroundColor: 'inherit',
     },
     '& .rst__rowLabel': {
       width: '100%',

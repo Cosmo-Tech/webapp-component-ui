@@ -29,6 +29,7 @@ export const BasicEnumInput = (props) => {
     >
       <TextField
         data-cy="text_field"
+        variant="standard"
         select
         value={value}
         {...textFieldProps}

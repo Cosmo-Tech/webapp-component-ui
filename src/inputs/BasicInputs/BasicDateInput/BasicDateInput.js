@@ -4,10 +4,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import makeStyles from '@mui/styles/makeStyles';
-
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import { TextField } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers//LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,26 +21,21 @@ export const BasicDateInput = (props) => {
   const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        className={classes.datePicker}
-        disableToolbar
-        variant="inline"
-        margin="normal"
-        inputFormat={format}
-        renderInput={(props) => (
-          <BasicInputWrapper label={label} tooltipText={tooltipText} iconTooltipStyle={{ color: 'inherit' }} />
-        )}
-        id={id}
-        onChange={changeSelectedDate}
-        KeyboardButtonProps={{
-          'aria-label': 'change date',
-        }}
-        value={value}
-        {...dateProps}
-        {...otherProps}
-      />
-    </LocalizationProvider>
+    <BasicInputWrapper label={label} tooltipText={tooltipText} {...otherProps}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DesktopDatePicker
+          className={classes.datePicker}
+          inputFormat={format}
+          disabled={dateProps.disabled}
+          minDate={dateProps.minDate}
+          maxDate={dateProps.maxDate}
+          renderInput={(params) => <TextField variant="standard" {...params} />}
+          id={id}
+          onChange={changeSelectedDate}
+          value={value}
+        />
+      </LocalizationProvider>
+    </BasicInputWrapper>
   );
 };
 

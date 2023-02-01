@@ -21,6 +21,7 @@ import {
   Typography,
   Menu,
   Switch,
+  Autocomplete,
 } from '@mui/material';
 import {
   ChevronRight as ChevronRightIcon,
@@ -29,7 +30,6 @@ import {
   AccountTree as AccountTreeIcon,
   ExpandMore as ExpandMoreIcon,
 } from '@mui/icons-material';
-import { Autocomplete } from '@mui/lab';
 import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
@@ -358,6 +358,7 @@ export const CytoViz = (props) => {
       </div>
       <Drawer
         data-cy="cytoviz-drawer"
+        elevation={1}
         className={classes.drawer}
         variant="temporary"
         anchor="left"
@@ -445,12 +446,7 @@ export const CytoViz = (props) => {
                     getOptionLabel={(node) => node.data('label')}
                     isOptionEqualToValue={(option, node) => node.data('label') === option.data('label')}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        aria-label={labels_.accordion.findNode.searchByID}
-                        variant="outlined"
-                        size="small"
-                      />
+                      <TextField {...params} aria-label={labels_.accordion.findNode.searchByID} size="small" />
                     )}
                   />
                 </div>
@@ -485,7 +481,6 @@ export const CytoViz = (props) => {
                         helperText={selectedNodesFieldHasError ? labels_.accordion.exploreGraph.startingNodesError : ''}
                         error={selectedNodesFieldHasError}
                         {...params}
-                        variant="outlined"
                       />
                     )}
                   />
@@ -505,6 +500,7 @@ export const CytoViz = (props) => {
                           min: 1,
                         },
                       }}
+                      variant="standard"
                     />
                     <div>
                       <p>{labels_.accordion.exploreGraph.flowDirection}</p>
@@ -545,11 +541,7 @@ export const CytoViz = (props) => {
                     }}
                     options={edgeClassOptions}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        aria-label={labels_.accordion.exploreGraph.excludeEdges}
-                        variant="outlined"
-                      />
+                      <TextField {...params} aria-label={labels_.accordion.exploreGraph.excludeEdges} />
                     )}
                   />
                   <div className={classes.querySearchDepth}>
@@ -586,6 +578,7 @@ export const CytoViz = (props) => {
                 <div className={classes.settingLabel}>{labels_.settings.layout}</div>
                 <div className={classes.settingInputContainer}>
                   <Select
+                    variant="standard"
                     data-cy="cytoviz-layout-selector"
                     value={currentLayout}
                     onChange={changeCurrentLayout}
@@ -632,6 +625,7 @@ export const CytoViz = (props) => {
                     data-cy="cytoviz-spacing-factor-slider"
                     className={classes.settingsSlider}
                     color="primary"
+                    size="small"
                     value={spacingFactor}
                     min={0.1}
                     step={0.1}
@@ -648,6 +642,7 @@ export const CytoViz = (props) => {
                     data-cy="cytoviz-zoom-limits-slider"
                     className={classes.settingsSlider}
                     color="primary"
+                    size="small"
                     value={zoomPrecision}
                     min={-3}
                     step={1}

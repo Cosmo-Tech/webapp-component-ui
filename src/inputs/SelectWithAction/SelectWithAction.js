@@ -23,6 +23,7 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
       <FormControl variant="outlined" fullWidth={true}>
         <Select
           data-cy="select-with-action"
+          variant="standard"
           disabled={isReadOnly}
           value={selectedOption}
           onChange={onOptionSelected}
@@ -36,7 +37,6 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
               vertical: 'top',
               horizontal: 'left',
             },
-            getContentAnchorEl: null,
             'data-cy': 'select-with-action-menu',
           }}
         >

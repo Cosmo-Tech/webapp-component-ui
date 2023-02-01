@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
   },
   label: {
+    marginTop: '10px',
     textAlign: 'center',
   },
 }));
@@ -29,7 +30,6 @@ const DashboardPlaceholder = (props) => {
   return (
     <Grid
       container
-      spacing={4}
       direction="column"
       justifyContent="center"
       wrap="nowrap"

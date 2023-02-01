@@ -14,9 +14,9 @@ import {
   Chip,
   RadioGroup,
   Radio,
+  Autocomplete,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Autocomplete from '@mui/lab/Autocomplete';
 import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -60,13 +60,7 @@ export const RolesAddingDialog = ({
           value={selectedAgent}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => (
-            <TextField
-              {...params}
-              placeholder={selectedAgent.id}
-              label={labels.userSelected}
-              variant="outlined"
-              margin="normal"
-            />
+            <TextField {...params} placeholder={selectedAgent.id} label={labels.userSelected} margin="normal" />
           )}
         />
         <Grid container spacing={2}>

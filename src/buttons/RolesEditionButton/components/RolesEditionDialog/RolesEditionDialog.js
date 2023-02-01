@@ -13,12 +13,12 @@ import {
   Button,
   IconButton,
   Typography,
+  Autocomplete,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Autocomplete from '@mui/lab/Autocomplete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { RoleEditor } from '../../../../inputs';
-import DesktopMacIcon from '@mui/icons-material/DesktopMac';
+import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { RolesAddingDialog } from './components';
 import { getIdentifierFromUserEmail } from '../../../../utils';
@@ -113,7 +113,7 @@ export const RolesEditionDialog = ({
   const defaultRoleForNewEntries =
     preventNoneRoleForAgents && newDefaultRole === 'none' ? allRolesWithoutNone?.[0]?.value : newDefaultRole;
   const hasNoAdmin = newAccessControlList.filter((access) => access.role === ADMIN_ROLE).length === 0;
-  const workspaceIcon = <DesktopMacIcon />;
+  const workspaceIcon = <DesktopMacOutlinedIcon />;
   const dialogContent = isFirstScreenShown ? (
     <>
       <DialogContent>
@@ -133,11 +133,13 @@ export const RolesEditionDialog = ({
                 renderInput={(params) => (
                   <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
                 )}
-                renderOption={(option) => {
+                renderOption={(props, option) => {
                   return (
-                    <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
-                      {option.id}
-                    </span>
+                    <li {...props}>
+                      <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
+                        {option.id}
+                      </span>
+                    </li>
                   );
                 }}
               />

@@ -29,6 +29,7 @@ export const BasicNumberInput = (props) => {
       {...otherProps}
     >
       <TextField
+        variant="standard"
         {...textFieldProps}
         value={value}
         onChange={(event) => changeNumberField(parseFloat(event.target.value))}

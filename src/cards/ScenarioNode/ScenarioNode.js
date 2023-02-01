@@ -273,7 +273,7 @@ export const ScenarioNode = ({
 
   const rootClass = isExpanded ? classes.rootExpandedScenarioContainer : classes.rootShrunkScenarioContainer;
   return (
-    <Paper key={scenario.id} className={rootClass} elevation={3}>
+    <Paper key={scenario.id} className={rootClass}>
       <ConfirmDeleteDialog
         open={isConfirmDialogOpen}
         closeDialog={closeConfirmDialog}

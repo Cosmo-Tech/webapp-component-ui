@@ -178,6 +178,7 @@ const CreateScenarioDialog = ({
           <Grid item xs={12}>
             <TextField
               data-cy="create-scenario-dialog-name-textfield"
+              variant="standard"
               onChange={handleChangeScenarioName}
               onBlur={handleChangeScenarioName}
               autoFocus
@@ -204,13 +205,13 @@ const CreateScenarioDialog = ({
                 onChange={(event, newDataset) => setDatasetFieldValues(newDataset)}
                 getOptionLabel={(option) => option.name ?? ''}
                 isOptionEqualToValue={(option, value) => option.id === value.id}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option.name}
+                  </li>
+                )}
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder={dialogLabels.datasetPlaceholder}
-                    label={dialogLabels.dataset}
-                    variant="outlined"
-                  />
+                  <TextField {...params} placeholder={dialogLabels.datasetPlaceholder} label={dialogLabels.dataset} />
                 )}
               />
             ) : (
@@ -238,7 +239,6 @@ const CreateScenarioDialog = ({
                   {...params}
                   placeholder={dialogLabels.scenarioTypePlaceholder}
                   label={dialogLabels.scenarioType}
-                  variant="outlined"
                 />
               )}
             />

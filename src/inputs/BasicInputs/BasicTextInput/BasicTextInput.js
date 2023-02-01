@@ -18,7 +18,12 @@ export const BasicTextInput = (props) => {
       labelProps={labelProps}
       {...otherProps}
     >
-      <TextField {...textFieldProps} value={value} onChange={(event) => changeTextField(event.target.value)} />
+      <TextField
+        {...textFieldProps}
+        variant="standard"
+        value={value}
+        onChange={(event) => changeTextField(event.target.value)}
+      />
     </BasicInputWrapper>
   );
 };

@@ -39,7 +39,6 @@ export const SearchInput = ({ onSearchChange, className, label }) => {
     <TextField
       data-cy="scenario-manager-search-field"
       id="standard-search"
-      variant="outlined"
       label={label}
       type="search"
       className={className}
