@@ -86,7 +86,7 @@ BasicSliderInput.propTypes = {
   /**
    * BasicSliderInput's value
    */
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number,
   /**
    * Function used when the user changes the BasicSliderInput value
    */
