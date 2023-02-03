@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import * as PropTypes from 'prop-types';
 import { IconButton, makeStyles } from '@material-ui/core';
-import { AccessTime as AccessTimeIcon, Refresh as RefreshIcon } from '@material-ui/icons';
+import { Refresh as RefreshIcon } from '@material-ui/icons';
 import DashboardPlaceholder from '../Dashboard/components';
 import { FadingTooltip } from '../../misc';
 import { PowerBIUtils } from '@cosmotech/azure';
@@ -139,20 +139,10 @@ export const SimplePowerBIReportEmbed = ({
     if (noScenario) return <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />;
     if (noRun) return <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />;
     if (runInProgress)
-      return (
-        <DashboardPlaceholder
-          label={labels.inProgress.label}
-          title={labels.inProgress.title}
-          icon={<AccessTimeIcon color="primary" fontSize="large" />}
-        />
-      );
+      return <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
     if (dataInTransfer) {
       return (
-        <DashboardPlaceholder
-          label={labels.dataInTransfer.label}
-          title={labels.dataInTransfer.title}
-          icon={<AccessTimeIcon color="primary" fontSize="large" />}
-        />
+        <DashboardPlaceholder label={labels.dataInTransfer.label} title={labels.dataInTransfer.title} inProgress />
       );
     }
     if (hasError)

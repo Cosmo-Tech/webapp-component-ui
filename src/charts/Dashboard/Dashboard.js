@@ -4,7 +4,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import DashboardPlaceholder from './components';
 
 const useStyles = makeStyles((theme) => ({
@@ -47,18 +46,10 @@ export const Dashboard = (props) => {
       {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
       {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
       {runInProgress && (
-        <DashboardPlaceholder
-          label={labels.inProgress.label}
-          title={labels.inProgress.title}
-          icon={<AccessTimeIcon color="primary" fontSize="large" />}
-        />
+        <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />
       )}
       {dataInTransfer && (
-        <DashboardPlaceholder
-          label={labels.dataInTransfer.label}
-          title={labels.dataInTransfer.title}
-          icon={<AccessTimeIcon color="primary" fontSize="large" />}
-        />
+        <DashboardPlaceholder label={labels.dataInTransfer.label} title={labels.dataInTransfer.title} inProgress />
       )}
       {hasError && (
         <DashboardPlaceholder
