@@ -1,3 +1,18 @@
+## **4.7.0** <sub><sup>2023-02-07 (7798970...7923344)</sup></sub>
+
+### Features
+
+- \[PROD\-10527\] add in progress animation on dashboard ([230ac04](https://github.com/Cosmo-Tech/webapp-component-ui/commit/230ac04))
+
+### Bug Fixes
+
+- \[PROD\-10462\] add fallback value when either `null` or `undefined` is provided to a slider component ([4ad6ea6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4ad6ea6))
+- remove unnecessarily required value prop in slider input ([127a225](https://github.com/Cosmo-Tech/webapp-component-ui/commit/127a225))
+
+### Performance Improvements
+
+- \[PROD\-10537\] imrpove scenario manager performance ([5447d67](https://github.com/Cosmo-Tech/webapp-component-ui/commit/5447d67))
+
 ## **4.6.0** <sub><sup>2023-01-24 (c481816...1f53a3f)</sup></sub>
 
 ### Features
