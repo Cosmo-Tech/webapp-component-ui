@@ -16,7 +16,7 @@ export class SliderTesting {
   }
 
   get SliderValue() {
-    return document.querySelector('#slider-input input');
+    return document.querySelector('#slider-root input');
   }
 
   get SliderMarks() {

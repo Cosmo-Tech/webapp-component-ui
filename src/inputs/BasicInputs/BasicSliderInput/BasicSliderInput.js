@@ -57,7 +57,7 @@ export const BasicSliderInput = (props) => {
         <Slider
           value={getValue(value)}
           id="slider-root"
-          data-cy="slider-root"
+          data-cy="slider-input"
           style={sliderStyle}
           color={color}
           size="small"
