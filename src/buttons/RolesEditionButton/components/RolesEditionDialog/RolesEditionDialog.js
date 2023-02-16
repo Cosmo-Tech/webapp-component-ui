@@ -37,7 +37,7 @@ const ADMIN_ROLE = 'admin';
 const sortById = (agentA, agentB) => (agentA.id < agentB.id ? -1 : 1);
 
 export const RolesEditionDialog = ({
-  labels,
+  labels: labelsBeforeDefaultValuesPatch,
   isReadOnly,
   resourceRolesPermissionsMapping,
   preventNoneRoleForAgents,
@@ -56,6 +56,8 @@ export const RolesEditionDialog = ({
   const [selectedAgentForRoleAddition, setSelectedAgentForRoleAddition] = useState(null);
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
+
+  const labels = { ...DEFAULT_LABELS, ...labelsBeforeDefaultValuesPatch };
 
   useEffect(() => {
     if (open) {
@@ -191,7 +193,7 @@ export const RolesEditionDialog = ({
       </DialogContent>
       <DialogActions>
         <Button data-cy="share-scenario-dialog-first-cancel-button" onClick={closeDialog} color="primary">
-          {labels.cancel}
+          {isReadOnly ? labels.close : labels.cancel}
         </Button>
         {!isReadOnly && (
           <Button
@@ -240,17 +242,20 @@ export const RolesEditionDialog = ({
             <ArrowBackIcon />
           </IconButton>
         )}
-        {labels.title}
+        {isReadOnly ? labels.readOnlyTitle : labels.title}
       </DialogTitle>
       {dialogContent}
     </Dialog>
   );
 };
+
 RolesEditionDialog.propTypes = {
   labels: PropTypes.shape({
     title: PropTypes.string,
+    readOnlyTitle: PropTypes.string,
     addPeople: PropTypes.string,
     cancel: PropTypes.string,
+    close: PropTypes.string,
     share: PropTypes.string,
     noAdminError: PropTypes.string,
     userSelected: PropTypes.string,
@@ -285,21 +290,26 @@ RolesEditionDialog.propTypes = {
   ),
   defaultAccessScope: PropTypes.string.isRequired,
 };
-RolesEditionDialog.defaultProps = {
-  labels: {
-    title: 'Share ',
-    addPeople: 'Add people',
-    cancel: 'Cancel',
-    share: 'Share',
-    noAdminError: 'The scenario must have at least one administrator',
-    userSelected: 'Selected user',
-    usersAccess: 'Users access',
-    generalAccess: 'General access',
-    removeAccess: 'Remove access',
-    editor: {
-      helperText: null,
-    },
+
+const DEFAULT_LABELS = {
+  title: 'Share ',
+  readOnlyTitle: 'Permissions for ',
+  addPeople: 'Add people',
+  cancel: 'Cancel',
+  close: 'Close',
+  share: 'Share',
+  noAdminError: 'The scenario must have at least one administrator',
+  userSelected: 'Selected user',
+  usersAccess: 'Users access',
+  generalAccess: 'General access',
+  removeAccess: 'Remove access',
+  editor: {
+    helperText: null,
   },
+};
+
+RolesEditionDialog.defaultProps = {
+  labels: DEFAULT_LABELS,
   isReadOnly: false,
   preventNoneRoleForAgents: false,
   defaultRole: '',
