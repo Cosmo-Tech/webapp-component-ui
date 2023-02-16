@@ -3,10 +3,10 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { render } from '@testing-library/react';
 import { BasicSliderInput } from './BasicSliderInput';
 import { TextFieldTesting } from '../../../../tests/MuiComponentsTesting/TextFieldTesting';
 import { SliderTesting } from '../../../../tests/MuiComponentsTesting/SliderTesting';
+import { renderInMuiThemeProvider } from '../../../../tests/utils';
 
 const mockOnValueChanged = jest.fn();
 
@@ -54,7 +54,7 @@ const sliderDisabled = new TextFieldTesting({ dataCy: 'slider-input-textField' }
 const sliderEditMode = new SliderTesting({ dataCy: 'slider-input' });
 
 const setUp = (props) => {
-  render(<BasicSliderInput {...props} />);
+  renderInMuiThemeProvider(<BasicSliderInput {...props} />);
 };
 
 describe('BasicSliderInput tests in disabled and edit mode', () => {

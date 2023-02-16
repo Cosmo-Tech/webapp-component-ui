@@ -3,10 +3,10 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { render } from '@testing-library/react';
 import { ALL_ROLES, LABELS, SAMPLE_AGENTS } from '../../../tests/samples/RoleEditionSample';
 
 import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../tests/utils';
 
 import { RoleEditor } from '.';
 
@@ -45,7 +45,7 @@ const TypographyAgentName = new TypographyTesting({ dataCy: 'role-editor-agent-n
 const TypographyHelperText = new TypographyTesting({ dataCy: 'role-editor-helper-text' });
 
 const setUp = (props) => {
-  render(<RoleEditor {...props} />);
+  renderInMuiThemeProvider(<RoleEditor {...props} />);
 };
 
 describe('RoleEditor', () => {

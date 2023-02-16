@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { render } from '@testing-library/react';
 
 import { SelectWithAction } from '.';
 import { SelectTesting } from '../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../tests/utils';
 
 const mockOnOptionSelected = jest.fn();
 const mockActionClick = jest.fn();
@@ -54,7 +54,7 @@ const getOptionIcon = (optionValue) => {
 };
 
 const setUp = (props) => {
-  render(<SelectWithAction {...props} />);
+  renderInMuiThemeProvider(<SelectWithAction {...props} />);
 };
 
 describe('SelectWithAction', () => {

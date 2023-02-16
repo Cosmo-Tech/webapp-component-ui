@@ -1,9 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 
 import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
-import { getByDataCy } from '../../../tests/utils';
-
+import { getByDataCy, renderInMuiThemeProvider } from '../../../tests/utils';
 import { SimplePowerBIReportEmbed } from '.';
 import { LABELS, DEFAULT_SCENARIO, SCENARIO_STATES } from '../../../tests/samples/DashboardSample';
 
@@ -24,7 +22,7 @@ const TypographyPlaceholderLabel = new TypographyTesting({ dataCy: 'dashboard-pl
 const getLinearProgress = () => getByDataCy('dashboard-in-progress');
 
 const setUp = (props) => {
-  render(<SimplePowerBIReportEmbed {...props} />);
+  renderInMuiThemeProvider(<SimplePowerBIReportEmbed {...props} />);
 };
 
 describe('SimplePowerBiReportEmbed', () => {
