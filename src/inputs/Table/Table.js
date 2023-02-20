@@ -93,6 +93,7 @@ export const Table = (props) => {
     editMode,
     dataStatus,
     errors,
+    maxErrorsCount,
     height,
     width,
     columns,
@@ -142,7 +143,7 @@ export const Table = (props) => {
         {isLoading && (
           <>
             <div className={classes.loadingLabel}>{labels.loading}</div>
-            <CircularProgress className={classes.loadingSpinner} size={18} />
+            <CircularProgress disableShrink color="primary" className={classes.loadingSpinner} size={18} />
           </>
         )}
       </div>
@@ -150,6 +151,7 @@ export const Table = (props) => {
         <ErrorsPanel
           labels={errorPanelLabels}
           errors={errors}
+          maxErrorsCount={maxErrorsCount}
           onClear={onClearErrors}
           buildErrorsCountLabel={buildErrorsPanelTitle}
         />
@@ -191,6 +193,10 @@ Table.propTypes = {
    *  List of errors to display instead of the table
    */
   errors: PropTypes.array,
+  /**
+   * Maximum number of displayed errors
+   */
+  maxErrorsCount: PropTypes.number,
   /**
    * Table height
    */
@@ -257,4 +263,5 @@ Table.defaultProps = {
     loading: 'Loading...',
   },
   onCellChange: () => {},
+  maxErrorsCount: 100,
 };

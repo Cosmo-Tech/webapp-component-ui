@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Accordion,
@@ -17,50 +17,59 @@ import useStyles from './style';
 
 export const ErrorsPanel = (props) => {
   const classes = useStyles();
-  const { errors, labels, onClear, buildErrorsCountLabel } = props;
+  const { errors, maxErrorsCount, labels, onClear, buildErrorsCountLabel } = props;
 
   let errorsCountLabel = labels.errorsCountLabel;
   if (buildErrorsCountLabel) {
-    errorsCountLabel = buildErrorsCountLabel(errors.length);
+    errorsCountLabel = buildErrorsCountLabel(errors.length, maxErrorsCount);
   }
+
+  const getErrors = useCallback(() => {
+    const errorsToRender = errors.slice(0, maxErrorsCount);
+    return (
+      <>
+        {errorsToRender.map((error, index) => (
+          <Accordion key={'error' + index} data-cy={'error-accordion-' + index}>
+            <AccordionSummary
+              className={classes.errorTitle}
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="errors-panel-content"
+              id="errors-panel-header"
+            >
+              <Box justifyContent="flex-start">
+                <Typography className={classes.errorSummary}>
+                  <CancelIcon className={classes.cancelIcon} />
+                </Typography>
+              </Box>
+              <Box flexGrow={1}>
+                <Typography className={classes.errorSummary} data-cy={'error-summary'}>
+                  {error.summary}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography className={classes.errorLoc} data-cy={'error-loc'}>
+                  {error.loc}
+                </Typography>
+              </Box>
+            </AccordionSummary>
+            <AccordionDetails className={classes.errorContextContainer}>
+              <Typography className={classes.errorContext} variant="caption">
+                {error.context}
+              </Typography>
+            </AccordionDetails>
+            <Divider />
+          </Accordion>
+        ))}
+      </>
+    );
+  }, [errors, maxErrorsCount, classes]);
 
   return (
     <Paper className={classes.errorsContainer} data-cy="errors-panel">
       <Typography className={classes.errorsHeader} data-cy="errors-header">
         {labels.mainError} {errorsCountLabel}
       </Typography>
-      {errors.map((error, index) => (
-        <Accordion key={'error' + index} data-cy={'error-accordion-' + index}>
-          <AccordionSummary
-            className={classes.errorTitle}
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="errors-panel-content"
-            id="errors-panel-header"
-          >
-            <Box justifyContent="flex-start">
-              <Typography className={classes.errorSummary}>
-                <CancelIcon className={classes.cancelIcon} />
-              </Typography>
-            </Box>
-            <Box flexGrow={1}>
-              <Typography className={classes.errorSummary} data-cy={'error-summary'}>
-                {error.summary}
-              </Typography>
-            </Box>
-            <Box>
-              <Typography className={classes.errorLoc} data-cy={'error-loc'}>
-                {error.loc}
-              </Typography>
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails className={classes.errorContextContainer}>
-            <Typography className={classes.errorContext} variant="caption">
-              {error.context}
-            </Typography>
-          </AccordionDetails>
-          <Divider />
-        </Accordion>
-      ))}
+      {getErrors()}
       <Accordion>
         <AccordionActions>
           <Button size="small" color="primary" variant="contained" onClick={onClear}>
@@ -83,6 +92,10 @@ ErrorsPanel.propTypes = {
       context: PropTypes.string,
     })
   ).isRequired,
+  /**
+   * Maximum number of displayed errors
+   */
+  maxErrorsCount: PropTypes.number,
   /**
    * Component's labels:
    * Structure:
@@ -118,4 +131,5 @@ ErrorsPanel.defaultProps = {
     clear: 'Clear',
     errorsCountLabel: 'Errors:',
   },
+  maxErrorsCount: 100,
 };
