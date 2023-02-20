@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Fade, Tooltip as MuiTooltip, withStyles } from '@material-ui/core';
+import { Fade, Tooltip as MuiTooltip } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 
 const Tooltip = ({ children, ...other }) => {
   return (

@@ -3,7 +3,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import {
   ALL_PERMISSIONS,
   ALL_ROLES,
@@ -13,6 +13,7 @@ import {
 } from '../../../../../tests/samples/RoleEditionSample';
 
 import { AutoCompleteTesting, ButtonTesting, TypographyTesting } from '../../../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../../../tests/utils';
 
 import { RolesEditionDialog } from '.';
 import { act } from 'react-dom/test-utils';
@@ -92,7 +93,7 @@ const agentsNotInSpecificAccess = SAMPLE_AGENTS.agents.filter(
 );
 
 const setUp = (props) => {
-  render(<RolesEditionDialog {...props} />);
+  renderInMuiThemeProvider(<RolesEditionDialog {...props} />);
 };
 
 const AddPeopleSelect = new AutoCompleteTesting({

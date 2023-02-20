@@ -1,34 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { Chip, CircularProgress, makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  /// USE ERROR AND SUCCESS IN CHIP COLOR WHEN UPDATE TO MUI 5.X IS DONE
-  validated: {
-    backgroundColor: theme.palette.success.main,
-    color: theme.palette.success.contrastText,
-    '&:focus': {
-      backgroundColor: theme.palette.success.main,
-    },
-    '& .MuiChip-deleteIcon': {
-      color: theme.palette.success.contrastText,
-    },
-  },
-  rejected: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText,
-    '&:focus': {
-      backgroundColor: theme.palette.error.main,
-    },
-    '& .MuiChip-deleteIcon': {
-      color: theme.palette.error.contrastText,
-    },
-  },
-}));
+import { Chip, CircularProgress } from '@mui/material';
 
 export const ScenarioValidationStatusChip = (props) => {
-  const classes = useStyles();
   const { labels, status, onDelete, className } = props;
   const lowerCaseStatus = status?.toLowerCase() || 'unknown';
 
@@ -39,21 +13,6 @@ export const ScenarioValidationStatusChip = (props) => {
       console.warn(`No label found for scenario status "${lowerCaseStatus}".`);
     }
     return 'Unknown';
-  };
-
-  const getClassName = () => {
-    let className = '';
-    switch (lowerCaseStatus) {
-      case 'validated':
-        className = classes.validated;
-        break;
-      case 'rejected':
-        className = classes.rejected;
-        break;
-      default:
-        break;
-    }
-    return className;
   };
 
   if (lowerCaseStatus === 'loading') {
@@ -67,14 +26,16 @@ export const ScenarioValidationStatusChip = (props) => {
     );
   }
 
+  const colorProp = lowerCaseStatus === 'validated' ? 'success' : 'error';
+
   return lowerCaseStatus === 'rejected' || lowerCaseStatus === 'validated' ? (
     <Chip
       clickable={false}
       data-cy="scenario-validation-status"
       label={getLabel()}
       onDelete={onDelete}
-      /// USE color="error | success" WHEN UPDATE TO MUI 5.X IS DONE
-      className={clsx(getClassName(), className)}
+      color={colorProp}
+      className={className}
     />
   ) : null;
 };

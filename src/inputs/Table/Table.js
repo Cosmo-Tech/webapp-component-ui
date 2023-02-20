@@ -3,7 +3,8 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, makeStyles } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';

@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { render } from '@testing-library/react';
 
 import { RolesAddingDialog } from '.';
 
@@ -20,6 +19,7 @@ import {
   RadioGroupTesting,
   ChipTesting,
 } from '../../../../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../../../../tests/utils';
 
 const mockOnCancel = jest.fn();
 const mockOnConfirm = jest.fn();
@@ -46,7 +46,7 @@ const CancelButton = new ButtonTesting({ dataCy: 'share-scenario-dialog-second-c
 const RolesRadioGroup = new RadioGroupTesting({ dataCy: 'share-scenario-dialog-roles-checkboxes' });
 
 const setUp = (props) => {
-  render(<RolesAddingDialog {...props} />);
+  renderInMuiThemeProvider(<RolesAddingDialog {...props} />);
 };
 
 const getSelectedRole = () => {

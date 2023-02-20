@@ -3,8 +3,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, TextField } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { TextField, Autocomplete } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,30 +39,26 @@ export const HierarchicalComboBox = ({
       disableClearable
       disabled={disabled}
       options={values}
-      getOptionSelected={(option, value) => option.id === value.id}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       getOptionLabel={(option) => option.name ?? ''}
-      renderOption={(option) => {
+      renderOption={(props, option) => {
         const marginLeft = option.depth * 20 || 0;
         return (
-          <span data-testid={'option-' + option.id} style={{ marginLeft }}>
-            {option.name}
-            <ScenarioValidationStatusChip
-              className={classes.validationStatusChip}
-              status={option.validationStatus || 'Unknown'}
-              labels={labels.validationStatus}
-            />
-          </span>
+          <li data-testid={'option-' + option.id} {...props}>
+            <span style={{ marginLeft }}>
+              {option.name}
+              <ScenarioValidationStatusChip
+                className={classes.validationStatusChip}
+                status={option.validationStatus || 'Unknown'}
+                labels={labels.validationStatus}
+              />
+            </span>
+          </li>
         );
       }}
       renderInput={(params) => (
         <FadingTooltip arrow title={renderInputToolType}>
-          <TextField
-            {...params}
-            data-cy="scenario-select-input"
-            placeholder={mainLabel}
-            label={mainLabel}
-            variant="outlined"
-          />
+          <TextField {...params} data-cy="scenario-select-input" placeholder={mainLabel} label={mainLabel} />
         </FadingTooltip>
       )}
     />

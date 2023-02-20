@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import CreateScenarioDialog from './components';
 import { FadingTooltip } from '../../misc/FadingTooltip';
 

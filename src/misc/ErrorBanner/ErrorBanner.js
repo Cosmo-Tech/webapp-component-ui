@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Paper, Slide, Typography } from '@material-ui/core';
+import { Button, Paper, Slide, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import useStyles from './style';
 

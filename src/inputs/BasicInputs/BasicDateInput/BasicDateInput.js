@@ -3,10 +3,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import { makeStyles } from '@material-ui/core';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import makeStyles from '@mui/styles/makeStyles';
+import { TextField } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers//LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,24 +21,21 @@ export const BasicDateInput = (props) => {
   const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        className={classes.datePicker}
-        disableToolbar
-        variant="inline"
-        margin="normal"
-        format={format}
-        label={<BasicInputWrapper label={label} tooltipText={tooltipText} iconTooltipStyle={{ color: 'inherit' }} />}
-        id={id}
-        onChange={changeSelectedDate}
-        KeyboardButtonProps={{
-          'aria-label': 'change date',
-        }}
-        value={value}
-        {...dateProps}
-        {...otherProps}
-      />
-    </MuiPickersUtilsProvider>
+    <BasicInputWrapper label={label} tooltipText={tooltipText} {...otherProps}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DesktopDatePicker
+          className={classes.datePicker}
+          inputFormat={format}
+          disabled={dateProps.disabled}
+          minDate={dateProps.minDate}
+          maxDate={dateProps.maxDate}
+          renderInput={(params) => <TextField variant="standard" {...params} />}
+          id={id}
+          onChange={changeSelectedDate}
+          value={value}
+        />
+      </LocalizationProvider>
+    </BasicInputWrapper>
   );
 };
 

@@ -14,9 +14,9 @@ import {
   FormControlLabel,
   Grid,
   TextField,
-  makeStyles,
-} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+  Autocomplete,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { HierarchicalComboBox } from '../../../../inputs';
 
 const useStyles = makeStyles((theme) => ({
@@ -178,6 +178,7 @@ const CreateScenarioDialog = ({
           <Grid item xs={12}>
             <TextField
               data-cy="create-scenario-dialog-name-textfield"
+              variant="standard"
               onChange={handleChangeScenarioName}
               onBlur={handleChangeScenarioName}
               autoFocus
@@ -203,14 +204,14 @@ const CreateScenarioDialog = ({
                 value={datasetFieldValues}
                 onChange={(event, newDataset) => setDatasetFieldValues(newDataset)}
                 getOptionLabel={(option) => option.name ?? ''}
-                getOptionSelected={(option, value) => option.id === value.id}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option.name}
+                  </li>
+                )}
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    placeholder={dialogLabels.datasetPlaceholder}
-                    label={dialogLabels.dataset}
-                    variant="outlined"
-                  />
+                  <TextField {...params} placeholder={dialogLabels.datasetPlaceholder} label={dialogLabels.dataset} />
                 )}
               />
             ) : (
@@ -232,13 +233,12 @@ const CreateScenarioDialog = ({
               options={runTemplates}
               onChange={(event, newScenarioType) => setSelectedRunTemplate(newScenarioType)}
               getOptionLabel={(option) => option.name ?? ''}
-              getOptionSelected={(option, value) => option.id === value.id}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   placeholder={dialogLabels.scenarioTypePlaceholder}
                   label={dialogLabels.scenarioType}
-                  variant="outlined"
                 />
               )}
             />

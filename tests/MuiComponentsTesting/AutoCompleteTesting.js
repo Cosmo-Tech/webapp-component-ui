@@ -17,7 +17,7 @@ export class AutoCompleteTesting {
   }
 
   get Input() {
-    return getByRole(this.Select, 'textbox');
+    return getByRole(this.Select, 'combobox');
   }
 
   get List() {

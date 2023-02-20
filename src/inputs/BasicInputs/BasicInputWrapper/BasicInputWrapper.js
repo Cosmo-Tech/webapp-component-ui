@@ -1,10 +1,11 @@
 // Copyright (c) Cosmo Tech.
 // Licenced under the MIT licence.
 
-import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { FadingTooltip } from '../../../misc';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,15 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BasicInputWrapper = ({
-  children,
-  label,
-  tooltipText,
-  containerProps,
-  labelProps,
-  iconTooltipStyle,
-  ...otherProps
-}) => {
+export const BasicInputWrapper = ({ children, label, tooltipText, containerProps, labelProps, ...otherProps }) => {
   const classes = useStyles();
 
   return (
@@ -37,7 +30,7 @@ export const BasicInputWrapper = ({
         <Typography {...labelProps}>{label}</Typography>
         {tooltipText && (
           <FadingTooltip title={tooltipText}>
-            <InfoOutlinedIcon className={classes.iconTooltip} style={iconTooltipStyle} fontSize="inherit" />
+            <InfoOutlinedIcon className={classes.iconTooltip} fontSize="inherit" />
           </FadingTooltip>
         )}
       </Grid>
@@ -59,10 +52,6 @@ BasicInputWrapper.propTypes = {
    * Tooltip text
    */
   tooltipText: PropTypes.string,
-  /**
-   * Customized style for tooltip Icon
-   */
-  iconTooltipStyle: PropTypes.object,
   /**
    * Additional props that you can specify for the child component Grid container that displays both label and input
    */

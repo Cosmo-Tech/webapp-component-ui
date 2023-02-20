@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Button, Card, CardHeader, CardContent, CardActions, Tooltip, Fade } from '@material-ui/core';
+import { Typography, Button, Card, CardHeader, CardContent, CardActions, Tooltip, Fade } from '@mui/material';
 import { DefaultAvatar } from '../../misc';
 import useStyles from './style';
 
@@ -19,7 +19,7 @@ export const ResourceCard = ({ id, name, description, action, style }) => {
   ) : null;
 
   return (
-    <Card key={id} data-cy={'resource-card-' + id} elevation={3} className={classes.card} style={style}>
+    <Card key={id} data-cy={'resource-card-' + id} elevation={1} className={classes.card} style={style}>
       <CardHeader
         data-cy={'resource-header'}
         avatar={<DefaultAvatar size={40} userName={name} variant="rounded" />}

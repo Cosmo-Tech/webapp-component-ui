@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NumericFormat } from 'react-number-format';
 
-export function NumberFormatCustom(props) {
-  const { inputRef, onChange, max, min, ...other } = props;
+export const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+  const { onChange, max, min, ...other } = props;
 
   const valuesRange = (inputObj) => {
     const { value } = inputObj;
@@ -16,7 +16,7 @@ export function NumberFormatCustom(props) {
   return (
     <NumericFormat
       {...other}
-      getInputRef={inputRef}
+      getInputRef={ref}
       isAllowed={valuesRange}
       onValueChange={(values) => {
         onChange({
@@ -28,10 +28,9 @@ export function NumberFormatCustom(props) {
       valueIsNumericString
     />
   );
-}
+});
 
 NumberFormatCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,

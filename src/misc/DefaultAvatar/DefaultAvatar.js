@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, makeStyles } from '@material-ui/core';
+import { Avatar } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 
 function stringToColor(str) {
   let hash = 0;

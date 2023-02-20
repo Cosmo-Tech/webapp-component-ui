@@ -2,8 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { FormControl, Select, Divider, makeStyles, MenuItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+import { FormControl, Select, Divider, MenuItem, ListItemText, ListItemIcon } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import CheckIcon from '@mui/icons-material/Check';
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +23,7 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
       <FormControl variant="outlined" fullWidth={true}>
         <Select
           data-cy="select-with-action"
+          variant="standard"
           disabled={isReadOnly}
           value={selectedOption}
           onChange={onOptionSelected}
@@ -35,7 +37,6 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
               vertical: 'top',
               horizontal: 'left',
             },
-            getContentAnchorEl: null,
             'data-cy': 'select-with-action-menu',
           }}
         >

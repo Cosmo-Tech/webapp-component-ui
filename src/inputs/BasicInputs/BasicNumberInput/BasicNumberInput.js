@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -29,6 +29,7 @@ export const BasicNumberInput = (props) => {
       {...otherProps}
     >
       <TextField
+        variant="standard"
         {...textFieldProps}
         value={value}
         onChange={(event) => changeNumberField(parseFloat(event.target.value))}

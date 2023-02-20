@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,15 +11,12 @@ const useStyles = makeStyles((theme) => ({
   openDrawerButton: {
     position: 'absolute',
     display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column',
     top: '0px',
     left: '0px',
     height: '80px',
   },
   drawer: {
     height: '100%',
-    width: '300px',
     position: 'absolute',
     left: '0px',
   },
@@ -30,10 +27,11 @@ const useStyles = makeStyles((theme) => ({
   drawerHeader: {
     display: 'flex',
     height: '80px',
+    justifyContent: 'space-between',
   },
   drawerContent: {
     height: '100%',
-    width: '100%',
+    width: '350px',
     overflow: 'auto',
   },
   loadingText: {
@@ -69,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   settingsContainer: {
     display: 'flex',
+    width: '100%',
     flexDirection: 'column',
     alignItems: 'stretch',
   },

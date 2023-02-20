@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, useRef } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export const SearchInput = ({ onSearchChange, className, label }) => {
@@ -39,7 +39,6 @@ export const SearchInput = ({ onSearchChange, className, label }) => {
     <TextField
       data-cy="scenario-manager-search-field"
       id="standard-search"
-      variant="outlined"
       label={label}
       type="search"
       className={className}

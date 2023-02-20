@@ -13,13 +13,13 @@ import {
   Button,
   IconButton,
   Typography,
-  makeStyles,
-} from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+  Autocomplete,
+} from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { RoleEditor } from '../../../../inputs';
-import DesktopMacIcon from '@material-ui/icons/DesktopMac';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { RolesAddingDialog } from './components';
 import { getIdentifierFromUserEmail } from '../../../../utils';
 
@@ -113,7 +113,7 @@ export const RolesEditionDialog = ({
   const defaultRoleForNewEntries =
     preventNoneRoleForAgents && newDefaultRole === 'none' ? allRolesWithoutNone?.[0]?.value : newDefaultRole;
   const hasNoAdmin = newAccessControlList.filter((access) => access.role === ADMIN_ROLE).length === 0;
-  const workspaceIcon = <DesktopMacIcon />;
+  const workspaceIcon = <DesktopMacOutlinedIcon />;
   const dialogContent = isFirstScreenShown ? (
     <>
       <DialogContent>
@@ -129,15 +129,17 @@ export const RolesEditionDialog = ({
                 value={selectedAgentForRoleAddition?.id}
                 onChange={(event, agent) => startAccessAddition(agent)}
                 getOptionLabel={(option) => (option.id ? option.id : '')}
-                getOptionSelected={(option, value) => option.id === value.id}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 renderInput={(params) => (
                   <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
                 )}
-                renderOption={(option) => {
+                renderOption={(props, option) => {
                   return (
-                    <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
-                      {option.id}
-                    </span>
+                    <li {...props}>
+                      <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
+                        {option.id}
+                      </span>
+                    </li>
                   );
                 }}
               />
@@ -234,7 +236,7 @@ export const RolesEditionDialog = ({
     >
       <DialogTitle data-cy="share-scenario-dialog-title">
         {!isFirstScreenShown && (
-          <IconButton onClick={cancelAccessAddition}>
+          <IconButton onClick={cancelAccessAddition} size="large">
             <ArrowBackIcon />
           </IconButton>
         )}

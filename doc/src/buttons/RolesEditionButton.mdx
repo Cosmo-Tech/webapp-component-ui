@@ -27,63 +27,39 @@ This button will display a popup guiding users through adding and editing roles 
       { id: 'tony@somecompany.com' },
     ]}
     specificAccessByAgent={[
-      { id: 'alice@somecompany.com',
-        roles: 'admin'
-      },
-      { id: 'tony@somecompany.com',
-        roles: 'editor'
-      }
+      { id: 'alice@somecompany.com', roles: 'admin' },
+      { id: 'tony@somecompany.com', roles: 'editor' },
     ]}
-    allRoles={
-      [
-        {
-          value: "viewer",
-          label: "Viewer"
-        },
-        {
-          value: "editor",
-          label: "Editor"
-        },
-        {
-          value: "admin",
-          label: "Admin"
-        }
-      ]
-    }
+    allRoles={[
+      {
+        value: 'viewer',
+        label: 'Viewer',
+      },
+      {
+        value: 'editor',
+        label: 'Editor',
+      },
+      {
+        value: 'admin',
+        label: 'Admin',
+      },
+    ]}
     allPermissions={{
-      "delete": "Delete",
-      "editParameters": "Edit",
-      "editPermissions": "Edit permissions",
-      "rename": "Rename",
-      "view": "View",
-      "viewPermissions": "See other people's permissions",
-      "viewResults": "View results"
+      delete: 'Delete',
+      editParameters: 'Edit',
+      editPermissions: 'Edit permissions',
+      rename: 'Rename',
+      view: 'View',
+      viewPermissions: "See other people's permissions",
+      viewResults: 'View results',
     }}
     resourceRolesPermissionsMapping={{
-      admin: [
-        "delete",
-        "editParameters",
-        "editPermissions",
-        "rename",
-        "view",
-        "viewPermissions",
-        "viewResults"
-      ],
-      editor: [
-        "editParameters",
-        "rename",
-        "view",
-        "viewPermissions",
-        "viewResults"
-      ],
-      viewer: [
-        "view",
-        "viewPermissions",
-        "viewResults"
-      ]
+      admin: ['delete', 'editParameters', 'editPermissions', 'rename', 'view', 'viewPermissions', 'viewResults'],
+      editor: ['editParameters', 'rename', 'view', 'viewPermissions', 'viewResults'],
+      viewer: ['view', 'viewPermissions', 'viewResults'],
     }}
-    defaultRole='viewer'
-    defaultAccessScope='My workspace'
+    defaultRole="viewer"
+    defaultAccessScope="My workspace"
     onConfirmChanges={() => alert('Scenario sharing')}
   />
 </Playground>

@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { render } from '@testing-library/react';
 import {
   ALL_PERMISSIONS,
   ALL_ROLES,
@@ -13,6 +12,7 @@ import {
 
 import { RolesEditionButton } from '..';
 import { ButtonTesting } from '../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../tests/utils';
 let mockRolesAddingDialogProps;
 jest.mock('./components', () => ({
   __esModule: true,
@@ -44,7 +44,7 @@ const openRoleEditionDialog = async () => {
 };
 
 const setUp = (props) => {
-  render(<RolesEditionButton {...props} />);
+  renderInMuiThemeProvider(<RolesEditionButton {...props} />);
 };
 
 describe('RoleEditionButton', () => {

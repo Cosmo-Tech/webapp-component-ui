@@ -13,6 +13,6 @@ export class ChipTesting {
   }
 
   get disabled() {
-    return this.Chip.getAttribute('aria-disabled');
+    return this.Chip.classList.contains('Mui-disabled');
   }
 }

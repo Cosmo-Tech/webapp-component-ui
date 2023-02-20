@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@material-ui/core';
+import { Switch } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 
 export const BasicToggleInput = (props) => {

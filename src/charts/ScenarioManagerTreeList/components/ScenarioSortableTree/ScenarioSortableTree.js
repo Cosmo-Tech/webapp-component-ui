@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useEffect, useState, useRef } from 'react';
-import { Paper } from '@material-ui/core';
+import { Paper } from '@mui/material';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import SortableTree from '@nosferatu500/react-sortable-tree';

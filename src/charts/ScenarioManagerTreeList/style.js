@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 
 const WEBAPP_HEADER_HEIGHT = 48;
 const SEARCH_FIELD_HEIGHT = 50;
@@ -83,10 +83,10 @@ const useStyles = makeStyles((theme) => ({
   },
   scenarioCard: {
     '& .rst__rowContents': {
-      backgroundColor: theme.palette.background.paper,
       border: 'none',
       boxShadow: 'none',
       padding: '0px',
+      backgroundColor: 'inherit',
     },
     '& .rst__rowLabel': {
       width: '100%',

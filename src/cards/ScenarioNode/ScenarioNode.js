@@ -12,7 +12,7 @@ import {
   IconButton,
   Paper,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   DeleteForever as DeleteForeverIcon,
   CheckCircle as CheckCircleIcon,
@@ -20,7 +20,7 @@ import {
   ExpandMore as ExpandMoreIcon,
   Help as HelpIcon,
   OpenInNew as OpenInNewIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { DatasetUtils } from '@cosmotech/core';
 import { ConfirmDeleteDialog } from './components';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
@@ -273,7 +273,7 @@ export const ScenarioNode = ({
 
   const rootClass = isExpanded ? classes.rootExpandedScenarioContainer : classes.rootShrunkScenarioContainer;
   return (
-    <Paper key={scenario.id} className={rootClass} elevation={3}>
+    <Paper key={scenario.id} className={rootClass}>
       <ConfirmDeleteDialog
         open={isConfirmDialogOpen}
         closeDialog={closeConfirmDialog}

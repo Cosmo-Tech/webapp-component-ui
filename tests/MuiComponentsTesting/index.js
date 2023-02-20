@@ -7,3 +7,4 @@ export { RadioGroupTesting } from './RadioGroupTesting';
 export { ChipTesting } from './ChipTesting';
 export { TypographyTesting } from './TypographyTesting';
 export { SelectTesting } from './SelectTesting';
+export { default as MockTheme } from './MockTheme';

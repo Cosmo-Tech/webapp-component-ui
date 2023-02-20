@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Slider, TextField } from '@material-ui/core';
+import { Slider, TextField } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 
@@ -52,14 +52,15 @@ export const BasicSliderInput = (props) => {
       {...otherProps}
     >
       {disabled ? (
-        <TextField value={getValue(value)} disabled data-cy="slider-input-textField" />
+        <TextField value={getValue(value)} variant="standard" disabled data-cy="slider-input-textField" />
       ) : (
         <Slider
           value={getValue(value)}
-          id="slider-input"
+          id="slider-root"
           data-cy="slider-input"
           style={sliderStyle}
           color={color}
+          size="small"
           onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
           getAriaValueText={getValueText}
           valueLabelDisplay={valueLabelDisplay}

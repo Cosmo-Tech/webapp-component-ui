@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Grid, Typography, Avatar, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Avatar } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import { SelectWithAction } from '../SelectWithAction';
 import { DefaultAvatar } from '../../misc';
