@@ -3,39 +3,47 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import makeStyles from '@mui/styles/makeStyles';
-import { TextField } from '@mui/material';
+import { Grid, Stack, TextField } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers//LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 
-const useStyles = makeStyles((theme) => ({
-  datePicker: {
-    maxWidth: '200px',
-  },
-}));
-
 export const BasicDateInput = (props) => {
-  const classes = useStyles();
   const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
 
+  const disabled = dateProps.disabled;
+
   return (
-    <BasicInputWrapper label={label} tooltipText={tooltipText} {...otherProps}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DesktopDatePicker
-          className={classes.datePicker}
-          inputFormat={format}
-          disabled={dateProps.disabled}
-          minDate={dateProps.minDate}
-          maxDate={dateProps.maxDate}
-          renderInput={(params) => <TextField variant="standard" {...params} />}
-          id={id}
-          onChange={changeSelectedDate}
-          value={value}
+    <>
+      {disabled ? (
+        <BasicInputWrapper
+          label={label}
+          tooltipText={tooltipText}
+          disabled={disabled}
+          value={value.toLocaleDateString()}
+          {...otherProps}
         />
-      </LocalizationProvider>
-    </BasicInputWrapper>
+      ) : (
+        <Grid item xs={3}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DesktopDatePicker
+                label={label}
+                inputFormat={format}
+                minDate={dateProps.minDate}
+                maxDate={dateProps.maxDate}
+                renderInput={(params) => <TextField variant="outlined" sx={{ flexGrow: 1 }} size="small" {...params} />}
+                id={id}
+                onChange={changeSelectedDate}
+                value={value}
+              />
+            </LocalizationProvider>
+            <BasicInputWrapper label={label} tooltipText={tooltipText} disabled={disabled} {...otherProps} />
+          </Stack>
+        </Grid>
+      )}
+    </>
   );
 };
 

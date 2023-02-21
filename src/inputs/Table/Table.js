@@ -3,7 +3,7 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -136,7 +136,12 @@ export const Table = (props) => {
   return (
     <div id="table-container" {...otherProps}>
       <div data-cy="label">
-        <BasicInputWrapper label={labels.label} tooltipText={tooltipText} {...otherProps} />
+        <Stack spacing={1} direction="row" alignItems="center">
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
+            {labels.label}
+          </Typography>
+          <BasicInputWrapper disabled={false} tooltipText={tooltipText} {...otherProps} />
+        </Stack>
       </div>
       <div className={classes.toolBar}>
         {extraToolbarActions}

@@ -3,22 +3,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, Grid, IconButton, Link, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
-import { BasicInputWrapper } from '../BasicInputs/BasicInputWrapper';
-import { FadingTooltip } from '../../misc/FadingTooltip';
-
-const useStyles = makeStyles((theme) => ({
-  uploadFileContainer: {
-    '& > div': {
-      margin: '0',
-    },
-  },
-}));
+import { BasicInputWrapper } from '../BasicInputs';
+import { FadingTooltip } from '../../misc';
 
 export const UploadFile = (props) => {
   const {
@@ -33,86 +24,84 @@ export const UploadFile = (props) => {
     tooltipText,
     ...otherProps
   } = props;
-  const classes = useStyles();
+
+  const smartFileName =
+    file.name.length > 20 ? (
+      <FadingTooltip title={file.name}>
+        <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
+          {file.name}
+        </Typography>
+      </FadingTooltip>
+    ) : (
+      <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
+        {file.name}
+      </Typography>
+    );
 
   return (
-    <div className={classes.uploadFileContainer} {...otherProps}>
-      <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
-        <Grid item>
-          <BasicInputWrapper label={labels.label} tooltipText={tooltipText} {...otherProps} />
-        </Grid>
-        <Grid item>
+    <Stack>
+      <BasicInputWrapper label={labels.label} labelOnly={true} tooltipText={tooltipText} {...otherProps} />
+      <Stack direction="row" alignItems="center" spacing={1}>
+        {!editMode && (file.status === 'EMPTY' || Object.keys(file).length === 0) && (
+          <Typography sx={{ fontStyle: 'italic', ml: 1 }} color="textSecondary">
+            {labels.noFileMessage}
+          </Typography>
+        )}
+        {editMode && (
           <Button
             data-cy="browse-button"
             id="browse-button"
-            disabled={!editMode}
             variant="outlined"
             color="primary"
             component="label"
             onChange={handleUploadFile}
+            sx={{ ml: 1, my: 1 }}
           >
             {labels.button}
             <input type="file" accept={acceptedFileTypes} hidden />
           </Button>
-        </Grid>
-        <Grid item>
-          {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
-            file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) && (
-            <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="center">
-              <Grid item>
-                {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD && (
-                  <Link
-                    data-cy="download-button"
-                    id="download-button"
-                    component="button"
-                    onClick={handleDownloadFile}
-                    download
-                  >
-                    <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
-                      <Grid item>
-                        <GetAppIcon />
-                      </Grid>
-                      <Grid item>
-                        <Typography data-cy="file-name">{file.name}</Typography>
-                      </Grid>
-                    </Grid>
-                  </Link>
-                )}
-                {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && (
-                  <Typography data-cy="file-name">{file.name}</Typography>
-                )}
-              </Grid>
-              <Grid item>
-                <FadingTooltip title={labels.delete}>
-                  <IconButton
-                    data-cy="delete-button"
-                    id="delete-button"
-                    disabled={!editMode}
-                    aria-label="delete"
-                    onClick={handleDeleteFile}
-                    size="large"
-                  >
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </FadingTooltip>
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
-        <Grid item>
-          {(file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
-            file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
-            file.status === UPLOAD_FILE_STATUS_KEY.DELETING) && <CircularProgress />}
-        </Grid>
-        {isFileValid === false && (
-          <Grid item>
-            <FadingTooltip title={labels.invalidFileMessage} placement="right-end">
-              <ErrorIcon color="error" />
-            </FadingTooltip>
-          </Grid>
         )}
-      </Grid>
-    </div>
+        {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD && (
+          <Link
+            data-cy="download-button"
+            id="download-button"
+            component="button"
+            underline="none"
+            onClick={handleDownloadFile}
+            download
+            sx={{ display: 'inline-flex' }}
+          >
+            <GetAppIcon />
+            {smartFileName}
+          </Link>
+        )}
+        {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && smartFileName}
+        {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
+          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
+          editMode && (
+            <FadingTooltip title={labels.delete}>
+              <IconButton
+                data-cy="delete-button"
+                id="delete-button"
+                aria-label="delete"
+                onClick={handleDeleteFile}
+                size="large"
+                color="error"
+              >
+                <DeleteForeverIcon />
+              </IconButton>
+            </FadingTooltip>
+          )}
+        {(file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
+          file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
+          file.status === UPLOAD_FILE_STATUS_KEY.DELETING) && <CircularProgress />}
+        {isFileValid === false && (
+          <FadingTooltip title={labels.invalidFileMessage} placement="right-end">
+            <ErrorIcon color="error" />
+          </FadingTooltip>
+        )}
+      </Stack>
+    </Stack>
   );
 };
 
@@ -171,6 +160,7 @@ UploadFile.propTypes = {
     invalidFileMessage: PropTypes.string.isRequired,
     label: PropTypes.string,
     delete: PropTypes.string,
+    noFileMessage: PropTypes.string,
   }),
   /**
    * Tooltip text
@@ -188,5 +178,6 @@ UploadFile.defaultProps = {
     button: 'Browse',
     invalidFileMessage: 'Your file is invalid',
     delete: 'Delete file',
+    noFileMessage: 'None',
   },
 };
