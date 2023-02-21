@@ -31,7 +31,7 @@
   "dependencies": {
     "@cosmotech/azure": "^1.1.2",
     "@cosmotech/core": "^1.6.11",
-    "@cosmotech/ui": "^4.5.0",
+    "@cosmotech/ui": "^5.0.0-dev.0",
     "@emotion/core": "10.1.1",
     "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.117",
