@@ -1,41 +1,52 @@
 // Copyright (c) Cosmo Tech.
 // Licenced under the MIT licence.
 
-import { Grid, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Stack, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import React from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { FadingTooltip } from '../../../misc';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  label: {
-    display: 'flex',
-  },
-  iconTooltip: {
-    marginLeft: '2px',
-    color: theme.palette.text.secondary,
-  },
-}));
-
-export const BasicInputWrapper = ({ children, label, tooltipText, containerProps, labelProps, ...otherProps }) => {
-  const classes = useStyles();
-
+export const BasicInputWrapper = ({ children, label, tooltipText, disabled, labelOnly, value, ...otherProps }) => {
   return (
-    <Grid container alignContent="flex-start" className={classes.root} {...containerProps} {...otherProps}>
-      <Grid item className={classes.label}>
-        <Typography {...labelProps}>{label}</Typography>
-        {tooltipText && (
-          <FadingTooltip title={tooltipText}>
-            <InfoOutlinedIcon className={classes.iconTooltip} fontSize="inherit" />
-          </FadingTooltip>
-        )}
-      </Grid>
-      <Grid item>{children}</Grid>
-    </Grid>
+    <>
+      {labelOnly ? (
+        <Stack spacing={1} direction="row" alignItems="center">
+          <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
+            {label}
+          </Typography>
+          {tooltipText && (
+            <FadingTooltip title={tooltipText}>
+              <InfoOutlinedIcon color="inherit" fontSize="inherit" />
+            </FadingTooltip>
+          )}
+        </Stack>
+      ) : disabled ? (
+        <Stack>
+          <Stack spacing={1} direction="row" alignItems="center">
+            <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
+              {label}
+            </Typography>
+            {tooltipText && (
+              <FadingTooltip title={tooltipText}>
+                <InfoOutlinedIcon color="inherit" fontSize="inherit" />
+              </FadingTooltip>
+            )}
+          </Stack>
+          <Typography data-cy="value-disabled-input" variant="body2" sx={{ ml: 1 }}>
+            {value}
+          </Typography>
+        </Stack>
+      ) : (
+        <>
+          {tooltipText && (
+            <FadingTooltip title={tooltipText}>
+              <InfoOutlinedIcon color="action" fontSize="small" />
+            </FadingTooltip>
+          )}
+        </>
+      )}
+    </>
   );
 };
 
@@ -53,23 +64,15 @@ BasicInputWrapper.propTypes = {
    */
   tooltipText: PropTypes.string,
   /**
-   * Additional props that you can specify for the child component Grid container that displays both label and input
+   * Value to be displayed in read only
    */
-  containerProps: PropTypes.object,
+  value: PropTypes.string,
   /**
-   * Additional props that you can specify for the the child component label
+   * Defines the possibility of changing value
    */
-  labelProps: PropTypes.object,
-};
-
-BasicInputWrapper.defaultProps = {
-  containerProps: {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2,
-  },
-  labelProps: {
-    variant: 'subtitle2',
-  },
+  disabled: PropTypes.bool,
+  /**
+   * Defines the possibility of displaying a label without value
+   */
+  labelOnly: PropTypes.bool,
 };

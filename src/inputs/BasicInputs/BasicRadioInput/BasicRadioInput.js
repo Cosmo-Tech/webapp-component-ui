@@ -2,66 +2,74 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Radio, RadioGroup, FormControl, FormControlLabel, TextField } from '@mui/material';
+import { Radio, RadioGroup, FormControl, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 
 export const BasicRadioInput = (props) => {
-  const {
-    label,
-    tooltipText,
-    value,
-    textFieldProps,
-    changeRadioOption,
-    enumValues,
-    row,
-    disabled,
-    containerProps,
-    labelProps,
-    radioStyle,
-    ...otherProps
-  } = props;
+  const { label, tooltipText, value, textFieldProps, changeRadioOption, enumValues, row, radioStyle, ...otherProps } =
+    props;
+
+  const valueString = enumValues.find((valueOption) => valueOption.key === value).value;
+
+  const disabled = textFieldProps.disabled;
 
   return (
-    <BasicInputWrapper
-      label={label}
-      tooltipText={tooltipText}
-      containerProps={containerProps}
-      labelProps={labelProps}
-      {...otherProps}
-    >
+    <>
       {disabled ? (
-        <TextField
-          data-cy="text-field"
-          variant="standard"
-          value={enumValues.find((valueOption) => valueOption.key === value).value}
-          disabled
-          {...textFieldProps}
+        <BasicInputWrapper
+          label={label}
+          tooltipText={tooltipText}
+          disabled={disabled}
+          value={valueString}
+          {...otherProps}
         />
       ) : (
-        <FormControl>
-          <RadioGroup
-            row={row}
-            data-cy="radio-group"
-            value={value}
-            onChange={(event) => changeRadioOption(event.target.value)}
-          >
-            {enumValues.map((option) => {
-              return (
-                <FormControlLabel
-                  key={option.key}
-                  value={option.key}
-                  control={
-                    <Radio data-cy={'radio-button-' + option.value} style={radioStyle} size="small" color="primary" />
-                  }
-                  label={option.value}
-                />
-              );
-            })}
-          </RadioGroup>
-        </FormControl>
+        <Grid item xs={3}>
+          <Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography variant="subtitle2" color="textSecondary" id="slider-input-label">
+                {label}
+              </Typography>
+              <BasicInputWrapper
+                label={label}
+                tooltipText={tooltipText}
+                disabled={disabled}
+                value={valueString}
+                {...otherProps}
+              />
+            </Stack>
+            <FormControl>
+              <RadioGroup
+                sx={{ ml: 1 }}
+                row={row}
+                data-cy="radio-group"
+                value={value}
+                onChange={(event) => changeRadioOption(event.target.value)}
+              >
+                {enumValues.map((option) => {
+                  return (
+                    <FormControlLabel
+                      key={option.key}
+                      value={option.key}
+                      control={
+                        <Radio
+                          data-cy={'radio-button-' + option.value}
+                          style={radioStyle}
+                          size="small"
+                          color="primary"
+                        />
+                      }
+                      label={option.value}
+                    />
+                  );
+                })}
+              </RadioGroup>
+            </FormControl>
+          </Stack>
+        </Grid>
       )}
-    </BasicInputWrapper>
+    </>
   );
 };
 
@@ -101,18 +109,6 @@ BasicRadioInput.propTypes = {
    */
   row: PropTypes.bool,
   /**
-   * Defines the possibility of changing value
-   */
-  disabled: PropTypes.bool,
-  /**
-   * Additional props that you can specify for the BasicRadioInput's Grid container that displays both label and input
-   */
-  containerProps: PropTypes.object,
-  /**
-   * Additional props that you can specify for the BasicRadioInput's label
-   */
-  labelProps: PropTypes.object,
-  /**
    * Additional prop to override radio's css
    */
   radioStyle: PropTypes.object,
@@ -120,14 +116,4 @@ BasicRadioInput.propTypes = {
 
 BasicRadioInput.defaultProps = {
   row: true,
-  disabled: true,
-  containerProps: {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2,
-  },
-  labelProps: {
-    variant: 'subtitle2',
-  },
 };

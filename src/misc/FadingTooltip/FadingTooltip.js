@@ -6,6 +6,10 @@ import withStyles from '@mui/styles/withStyles';
 const Tooltip = ({ children, ...other }) => {
   return (
     <MuiTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} {...other}>
+      {
+        // div to prevent warning from triggering when button is disabled
+        // see https://mui.com/material-ui/react-tooltip/#disabled-elements
+      }
       <div>{children}</div>
     </MuiTooltip>
   );

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Slider, TextField } from '@mui/material';
+import { Grid, Slider, Stack, Typography } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 
@@ -23,8 +23,6 @@ export const BasicSliderInput = (props) => {
     max,
     orientation,
     disabled,
-    containerProps,
-    labelProps,
     sliderStyle,
     color,
     ...otherProps
@@ -44,34 +42,50 @@ export const BasicSliderInput = (props) => {
         ];
   };
   return (
-    <BasicInputWrapper
-      label={label}
-      tooltipText={tooltipText}
-      containerProps={containerProps}
-      labelProps={labelProps}
-      {...otherProps}
-    >
+    <>
       {disabled ? (
-        <TextField value={getValue(value)} variant="standard" disabled data-cy="slider-input-textField" />
-      ) : (
-        <Slider
-          value={getValue(value)}
-          id="slider-root"
-          data-cy="slider-input"
-          style={sliderStyle}
-          color={color}
-          size="small"
-          onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
-          getAriaValueText={getValueText}
-          valueLabelDisplay={valueLabelDisplay}
-          step={step}
-          marks={getMarks(marks)}
-          min={min}
-          max={max}
-          orientation={orientation}
+        <BasicInputWrapper
+          label={label}
+          tooltipText={tooltipText}
+          disabled={disabled}
+          value={getValue(value).toString()}
+          {...otherProps}
         />
+      ) : (
+        <Grid item xs={3}>
+          <Stack>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
+                {label}
+              </Typography>
+              <BasicInputWrapper
+                label={label}
+                tooltipText={tooltipText}
+                disabled={disabled}
+                value={getValue(value).toString()}
+                {...otherProps}
+              />
+            </Stack>
+            <Slider
+              value={getValue(value)}
+              id="slider-root"
+              data-cy="slider-input"
+              sx={sliderStyle}
+              color={color}
+              size="small"
+              onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
+              getAriaValueText={getValueText}
+              valueLabelDisplay={valueLabelDisplay}
+              step={step}
+              marks={getMarks(marks)}
+              min={min}
+              max={max}
+              orientation={orientation}
+            />
+          </Stack>
+        </Grid>
       )}
-    </BasicInputWrapper>
+    </>
   );
 };
 
@@ -126,14 +140,6 @@ BasicSliderInput.propTypes = {
    */
   disabled: PropTypes.bool,
   /**
-   * Additional props that you can specify for the BasicSliderInput's Grid container that displays both label and input
-   */
-  containerProps: PropTypes.object,
-  /**
-   * Additional props that you can specify for the BasicNumberInput's label
-   */
-  labelProps: PropTypes.object,
-  /**
    * Additional prop to override slider's css, e.g., width (200 px by default)
    */
   sliderStyle: PropTypes.object,
@@ -150,8 +156,5 @@ BasicSliderInput.defaultProps = {
   max: 100,
   orientation: 'horizontal',
   disabled: true,
-  sliderStyle: {
-    width: '200px',
-  },
-  color: 'primary',
+  color: 'secondary',
 };

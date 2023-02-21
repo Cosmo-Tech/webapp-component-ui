@@ -7,7 +7,10 @@ import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from './constants';
 
 const useStyles = makeStyles((theme) => ({
   rootShrunkScenarioContainer: {
-    borderColor: theme.palette.text.primary,
+    borderColor: theme.palette.divider,
+    '&:hover': {
+      borderColor: theme.palette.text.primary,
+    },
     borderWidth: '1px',
     borderStyle: 'solid',
     width: '100%',
@@ -16,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   rootExpandedScenarioContainer: {
-    borderColor: theme.palette.text.primary,
+    borderColor: theme.palette.divider,
+    '&:hover': {
+      borderColor: theme.palette.text.primary,
+    },
     borderWidth: '1px',
     borderStyle: 'solid',
     width: '100%',

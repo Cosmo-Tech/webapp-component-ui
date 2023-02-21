@@ -1,49 +1,53 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, Grid, Stack, TextField } from '@mui/material';
 import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 export const BasicEnumInput = (props) => {
-  const {
-    label,
-    tooltipText,
-    value,
-    textFieldProps,
-    enumValues,
-    changeEnumField,
-    containerProps,
-    labelProps,
-    ...otherProps
-  } = props;
+  const { label, tooltipText, value, textFieldProps, enumValues, changeEnumField, ...otherProps } = props;
+
+  const disabled = textFieldProps.disabled;
 
   return (
-    <BasicInputWrapper
-      label={label}
-      tooltipText={tooltipText}
-      containerProps={containerProps}
-      labelProps={labelProps}
-      {...otherProps}
-    >
-      <TextField
-        data-cy="text_field"
-        variant="standard"
-        select
-        value={value}
-        {...textFieldProps}
-        onChange={(event) => {
-          return changeEnumField(event.target.value);
-        }}
-      >
-        {enumValues.map((option) => (
-          <MenuItem key={option.key} value={option.key}>
-            {option.value}
-          </MenuItem>
-        ))}
-      </TextField>
-    </BasicInputWrapper>
+    <>
+      {disabled ? (
+        <BasicInputWrapper label={label} tooltipText={tooltipText} disabled={disabled} value={value} {...otherProps} />
+      ) : (
+        <Grid item xs={3}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <TextField
+              {...textFieldProps}
+              variant="outlined"
+              label={label}
+              size="small"
+              data-cy="text_field"
+              sx={{ flexGrow: 1 }}
+              select
+              value={value}
+              onChange={(event) => {
+                return changeEnumField(event.target.value);
+              }}
+            >
+              {enumValues.map((option) => (
+                <MenuItem key={option.key} value={option.key}>
+                  {option.value}
+                </MenuItem>
+              ))}
+            </TextField>
+            <BasicInputWrapper
+              label={label}
+              tooltipText={tooltipText}
+              disabled={disabled}
+              value={value}
+              {...otherProps}
+            />
+          </Stack>
+        </Grid>
+      )}
+    </>
   );
 };
 
@@ -76,24 +80,4 @@ BasicEnumInput.propTypes = {
        }`
    */
   enumValues: PropTypes.array.isRequired,
-  /**
-   * Additional props that you can specify for the BasicEnumInput's Grid container that displays both label and input
-   */
-  containerProps: PropTypes.object,
-  /**
-   * Additional props that you can specify for the BasicEnumInput's label
-   */
-  labelProps: PropTypes.object,
-};
-
-BasicEnumInput.defaultProps = {
-  containerProps: {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2,
-  },
-  labelProps: {
-    variant: 'subtitle2',
-  },
 };
