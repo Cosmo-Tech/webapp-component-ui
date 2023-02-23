@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   editIcon: {
+    margin: 'auto',
     marginRight: '10px',
     fontWeight: 'bold',
     height: '20px',
