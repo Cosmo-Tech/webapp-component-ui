@@ -4,50 +4,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Stack, Switch, FormControlLabel } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { TooltipInfo } from '../../../misc';
 
 export const BasicToggleInput = (props) => {
   const { label, tooltipText, value, switchProps, changeSwitchType, ...otherProps } = props;
 
-  const disabled = switchProps.disabled;
+  if (switchProps.disabled)
+    return (
+      <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value ? 'ON' : 'OFF'} {...otherProps} />
+    );
 
   return (
-    <>
-      {disabled ? (
-        <BasicInputWrapper
+    <Grid item xs={3}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <FormControlLabel
+          value="value"
+          control={
+            <Switch
+              color="secondary"
+              onChange={(event) => changeSwitchType(event.target.checked)}
+              checked={value}
+              {...switchProps}
+            />
+          }
           label={label}
-          tooltipText={tooltipText}
-          disabled={disabled}
-          value={value ? 'ON' : 'OFF'}
-          {...otherProps}
+          labelPlacement="end"
         />
-      ) : (
-        <Grid item xs={3}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <FormControlLabel
-              value="value"
-              control={
-                <Switch
-                  color="secondary"
-                  onChange={(event) => changeSwitchType(event.target.checked)}
-                  checked={value}
-                  {...switchProps}
-                />
-              }
-              label={label}
-              labelPlacement="end"
-            />
-            <BasicInputWrapper
-              label={label}
-              tooltipText={tooltipText}
-              disabled={disabled}
-              value={value ? 'ON' : 'OFF'}
-              {...otherProps}
-            />
-          </Stack>
-        </Grid>
-      )}
-    </>
+        <TooltipInfo title={tooltipText} variant="small" />
+      </Stack>
+    </Grid>
   );
 };
 

@@ -2,53 +2,37 @@
 // Licensed under the MIT license.
 
 import { Grid, Stack, TextField } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormatCustom } from '../../../misc/formatters';
+import { TooltipInfo } from '../../../misc/TooltipInfo';
 
 export const BasicNumberInput = (props) => {
   const { label, tooltipText, value, textFieldProps, inputProps, changeNumberField, ...otherProps } = props;
 
-  const disabled = textFieldProps.disabled;
+  if (textFieldProps.disabled)
+    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value.toString()} {...otherProps} />;
 
   return (
-    <>
-      {disabled ? (
-        <BasicInputWrapper
+    <Grid item xs={3}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <TextField
+          {...textFieldProps}
+          sx={{ flexGrow: 1 }}
+          variant="outlined"
           label={label}
-          tooltipText={tooltipText}
-          disabled={disabled}
-          value={value.toString()}
-          {...otherProps}
+          size="small"
+          value={value}
+          onChange={(event) => changeNumberField(parseFloat(event.target.value))}
+          inputProps={inputProps}
+          InputProps={{
+            inputComponent: NumberFormatCustom,
+          }}
         />
-      ) : (
-        <Grid item xs={3}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <TextField
-              {...textFieldProps}
-              sx={{ flexGrow: 1 }}
-              variant="outlined"
-              label={label}
-              size="small"
-              value={value}
-              onChange={(event) => changeNumberField(parseFloat(event.target.value))}
-              inputProps={inputProps}
-              InputProps={{
-                inputComponent: NumberFormatCustom,
-              }}
-            />
-            <BasicInputWrapper
-              label={label}
-              tooltipText={tooltipText}
-              disabled={disabled}
-              value={value.toString()}
-              {...otherProps}
-            />
-          </Stack>
-        </Grid>
-      )}
-    </>
+        <TooltipInfo title={tooltipText} variant="small" />
+      </Stack>
+    </Grid>
   );
 };
 
