@@ -2,52 +2,42 @@
 // Licensed under the MIT license.
 
 import { MenuItem, Grid, Stack, TextField } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { TooltipInfo } from '../../../misc';
 
 export const BasicEnumInput = (props) => {
   const { label, tooltipText, value, textFieldProps, enumValues, changeEnumField, ...otherProps } = props;
 
-  const disabled = textFieldProps.disabled;
+  if (textFieldProps.disabled)
+    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value} {...otherProps} />;
 
   return (
-    <>
-      {disabled ? (
-        <BasicInputWrapper label={label} tooltipText={tooltipText} disabled={disabled} value={value} {...otherProps} />
-      ) : (
-        <Grid item xs={3}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <TextField
-              {...textFieldProps}
-              variant="outlined"
-              label={label}
-              size="small"
-              data-cy={`${otherProps.dataCy}-textField`}
-              sx={{ flexGrow: 1 }}
-              select
-              value={value}
-              onChange={(event) => {
-                return changeEnumField(event.target.value);
-              }}
-            >
-              {enumValues.map((option) => (
-                <MenuItem key={option.key} value={option.key} data-cy={option.key}>
-                  {option.value}
-                </MenuItem>
-              ))}
-            </TextField>
-            <BasicInputWrapper
-              label={label}
-              tooltipText={tooltipText}
-              disabled={disabled}
-              value={value}
-              {...otherProps}
-            />
-          </Stack>
-        </Grid>
-      )}
-    </>
+    <Grid item xs={3}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <TextField
+          {...textFieldProps}
+          variant="outlined"
+          label={label}
+          size="small"
+          data-cy={`${otherProps.dataCy}-textField`}
+          sx={{ flexGrow: 1 }}
+          select
+          value={value}
+          onChange={(event) => {
+            return changeEnumField(event.target.value);
+          }}
+        >
+          {enumValues.map((option) => (
+            <MenuItem key={option.key} value={option.key} data-cy={option.key}>
+              {option.value}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TooltipInfo title={tooltipText} size="small" />
+      </Stack>
+    </Grid>
   );
 };
 

@@ -3,8 +3,9 @@
 
 import React from 'react';
 import { Grid, Slider, Stack, Typography } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { TooltipInfo } from '../../../misc';
 
 const getValueText = (value) => {
   return value.toString();
@@ -27,12 +28,14 @@ export const BasicSliderInput = (props) => {
     color,
     ...otherProps
   } = props;
+
   const getValue = (value) => {
     if (value == null || isNaN(value)) {
       return 0;
     }
     return value;
   };
+
   const getMarks = (marks) => {
     return marks !== undefined
       ? marks
@@ -41,51 +44,44 @@ export const BasicSliderInput = (props) => {
           { value: max, label: max.toString() },
         ];
   };
+
+  if (disabled)
+    return (
+      <BasicInputPlaceholder
+        label={label}
+        tooltipText={tooltipText}
+        value={getValue(value).toString()}
+        {...otherProps}
+      />
+    );
+
   return (
-    <>
-      {disabled ? (
-        <BasicInputWrapper
-          label={label}
-          tooltipText={tooltipText}
-          disabled={disabled}
-          value={getValue(value).toString()}
-          {...otherProps}
+    <Grid item xs={3}>
+      <Stack>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
+            {label}
+          </Typography>
+          <TooltipInfo title={tooltipText} variant="small" />
+        </Stack>
+        <Slider
+          value={getValue(value)}
+          id="slider-root"
+          data-cy="slider-input"
+          sx={sliderStyle}
+          color={color}
+          size="small"
+          onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
+          getAriaValueText={getValueText}
+          valueLabelDisplay={valueLabelDisplay}
+          step={step}
+          marks={getMarks(marks)}
+          min={min}
+          max={max}
+          orientation={orientation}
         />
-      ) : (
-        <Grid item xs={3}>
-          <Stack>
-            <Stack direction="row" spacing={1} alignItems="center">
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
-                {label}
-              </Typography>
-              <BasicInputWrapper
-                label={label}
-                tooltipText={tooltipText}
-                disabled={disabled}
-                value={getValue(value).toString()}
-                {...otherProps}
-              />
-            </Stack>
-            <Slider
-              value={getValue(value)}
-              id="slider-root"
-              data-cy="slider-input"
-              sx={sliderStyle}
-              color={color}
-              size="small"
-              onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
-              getAriaValueText={getValueText}
-              valueLabelDisplay={valueLabelDisplay}
-              step={step}
-              marks={getMarks(marks)}
-              min={min}
-              max={max}
-              orientation={orientation}
-            />
-          </Stack>
-        </Grid>
-      )}
-    </>
+      </Stack>
+    </Grid>
   );
 };
 

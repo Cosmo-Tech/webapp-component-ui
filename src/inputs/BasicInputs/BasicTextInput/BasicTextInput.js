@@ -2,42 +2,32 @@
 // Licensed under the MIT license.
 
 import { Grid, Stack, TextField } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { TooltipInfo } from '../../../misc';
 
 export const BasicTextInput = (props) => {
   const { label, tooltipText, value, textFieldProps, changeTextField, ...otherProps } = props;
 
-  const disabled = textFieldProps.disabled;
+  if (textFieldProps.disabled)
+    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value} {...otherProps} />;
 
   return (
-    <>
-      {disabled ? (
-        <BasicInputWrapper label={label} tooltipText={tooltipText} disabled={disabled} value={value} {...otherProps} />
-      ) : (
-        <Grid item xs={3}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <TextField
-              {...textFieldProps}
-              variant="outlined"
-              label={label}
-              size="small"
-              value={value}
-              sx={{ flexGrow: 1 }}
-              onChange={(event) => changeTextField(event.target.value)}
-            />
-            <BasicInputWrapper
-              label={label}
-              tooltipText={tooltipText}
-              disabled={disabled}
-              value={value}
-              {...otherProps}
-            />
-          </Stack>
-        </Grid>
-      )}
-    </>
+    <Grid item xs={3}>
+      <Stack direction="row" spacing={1} alignItems="center">
+        <TextField
+          {...textFieldProps}
+          variant="outlined"
+          label={label}
+          size="small"
+          value={value}
+          sx={{ flexGrow: 1 }}
+          onChange={(event) => changeTextField(event.target.value)}
+        />
+        <TooltipInfo title={tooltipText} variant="small" />
+      </Stack>
+    </Grid>
   );
 };
 
