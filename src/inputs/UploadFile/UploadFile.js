@@ -8,8 +8,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
-import { BasicInputWrapper } from '../BasicInputs';
-import { FadingTooltip } from '../../misc';
+import { FadingTooltip, TooltipInfo } from '../../misc';
 
 export const UploadFile = (props) => {
   const {
@@ -45,7 +44,12 @@ export const UploadFile = (props) => {
 
   return (
     <Stack data-cy={otherProps.dataCy}>
-      <BasicInputWrapper label={labels.label} labelOnly={true} tooltipText={tooltipText} {...otherProps} />
+      <Stack spacing={1} direction="row" alignItems="center">
+        <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
+          {labels.label}
+        </Typography>
+        <TooltipInfo title={tooltipText} variant="small" />
+      </Stack>
       <Stack direction="row" alignItems="center" spacing={1}>
         {!editMode && (file.status === 'EMPTY' || Object.keys(file).length === 0) && (
           <Typography sx={{ fontStyle: 'italic', ml: 1 }} color="textSecondary">

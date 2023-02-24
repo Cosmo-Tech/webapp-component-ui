@@ -11,8 +11,7 @@ import 'ag-grid-community/styles/ag-theme-balham.css';
 import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
-import { ErrorsPanel } from '../../misc/ErrorsPanel/ErrorsPanel.js';
-import { BasicInputWrapper } from '../BasicInputs/BasicInputWrapper';
+import { ErrorsPanel, TooltipInfo } from '../../misc';
 
 const useStyles = makeStyles((theme) => ({
   toolBar: {
@@ -140,7 +139,7 @@ export const Table = (props) => {
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
             {labels.label}
           </Typography>
-          <BasicInputWrapper disabled={false} tooltipText={tooltipText} {...otherProps} />
+          <TooltipInfo title={tooltipText} variant="small" />
         </Stack>
       </div>
       <div className={classes.toolBar}>
