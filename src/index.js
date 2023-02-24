@@ -14,6 +14,7 @@ export {
   BasicTextInput,
   BasicEnumInput,
   BasicRadioInput,
+  BasicInputPlaceholder,
   BasicInputWrapper,
   EditableLabel,
   UploadFile,
