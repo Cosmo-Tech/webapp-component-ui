@@ -34,4 +34,5 @@ export {
   PermissionsGate,
   ScenarioValidationStatusChip,
   DefaultAvatar,
+  TooltipInfo,
 } from './misc';
