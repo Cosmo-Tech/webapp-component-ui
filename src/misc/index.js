@@ -9,4 +9,5 @@ export { LoadingLine } from './LoadingLine';
 export { ErrorBanner } from './ErrorBanner';
 export { DefaultAvatar } from './DefaultAvatar';
 export { FadingTooltip } from './FadingTooltip';
+export { TooltipInfo } from './TooltipInfo';
 export { PermissionsGate } from './PermissionsGate';
