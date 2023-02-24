@@ -39,7 +39,7 @@ export const UploadFile = (props) => {
     );
 
   return (
-    <Stack>
+    <Stack data-cy={otherProps.dataCy}>
       <BasicInputWrapper label={labels.label} labelOnly={true} tooltipText={tooltipText} {...otherProps} />
       <Stack direction="row" alignItems="center" spacing={1}>
         {!editMode && (file.status === 'EMPTY' || Object.keys(file).length === 0) && (

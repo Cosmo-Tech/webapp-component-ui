@@ -23,7 +23,7 @@ export const BasicEnumInput = (props) => {
               variant="outlined"
               label={label}
               size="small"
-              data-cy="text_field"
+              data-cy={`${otherProps.dataCy}-textField`}
               sx={{ flexGrow: 1 }}
               select
               value={value}
@@ -32,7 +32,7 @@ export const BasicEnumInput = (props) => {
               }}
             >
               {enumValues.map((option) => (
-                <MenuItem key={option.key} value={option.key}>
+                <MenuItem key={option.key} value={option.key} data-cy={option.key}>
                   {option.value}
                 </MenuItem>
               ))}

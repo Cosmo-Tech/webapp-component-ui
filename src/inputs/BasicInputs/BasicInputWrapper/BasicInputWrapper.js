@@ -33,7 +33,7 @@ export const BasicInputWrapper = ({ children, label, tooltipText, disabled, labe
               </FadingTooltip>
             )}
           </Stack>
-          <Typography data-cy="value-disabled-input" variant="body2" sx={{ ml: 1 }}>
+          <Typography data-cy={`${otherProps.dataCy}-value-disabled-input`} variant="body2" sx={{ ml: 1 }}>
             {value}
           </Typography>
         </Stack>
