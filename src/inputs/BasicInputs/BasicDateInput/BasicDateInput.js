@@ -25,7 +25,7 @@ export const BasicDateInput = (props) => {
           {...otherProps}
         />
       ) : (
-        <Grid item xs={3}>
+        <Grid item id={dateProps.id} xs={3}>
           <Stack direction="row" spacing={1} alignItems="center">
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker

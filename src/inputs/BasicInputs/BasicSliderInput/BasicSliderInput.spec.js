@@ -10,6 +10,9 @@ import { TypographyTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
 
+const otherProps = {
+  dataCy: 'stock',
+};
 const defaultProps = {
   label: 'Stock',
   value: 5,
@@ -20,6 +23,7 @@ const defaultProps = {
   orientation: 'horizontal',
   disabled: true,
   handleSliderValueChange: mockOnValueChanged,
+  ...otherProps,
 };
 const propsWithNullValue = {
   ...defaultProps,
@@ -39,7 +43,7 @@ const propsInEditMode = {
 };
 
 const disabledSliderLabel = new TypographyTesting({ dataCy: 'label-disabled-input' });
-const disabledSliderValue = new TypographyTesting({ dataCy: 'value-disabled-input' });
+const disabledSliderValue = new TypographyTesting({ dataCy: 'stock-value-disabled-input' });
 const sliderEditMode = new SliderTesting({ dataCy: 'slider-input' });
 
 const setUp = (props) => {
