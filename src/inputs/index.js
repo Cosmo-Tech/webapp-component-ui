@@ -13,7 +13,6 @@ export {
   BasicDateInput,
   BasicSliderInput,
   BasicInputPlaceholder,
-  BasicInputWrapper,
 } from './BasicInputs';
 export { EditableLabel } from './EditableLabel';
 export { RoleEditor } from './RoleEditor';

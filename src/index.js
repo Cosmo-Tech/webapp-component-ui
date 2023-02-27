@@ -15,7 +15,6 @@ export {
   BasicEnumInput,
   BasicRadioInput,
   BasicInputPlaceholder,
-  BasicInputWrapper,
   EditableLabel,
   UploadFile,
   UPLOAD_FILE_STATUS_KEY,
