@@ -8,16 +8,22 @@ import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 
 export const BasicToggleInput = (props) => {
-  const { label, tooltipText, value, switchProps, changeSwitchType, ...otherProps } = props;
+  const { id, label, tooltipText, value, switchProps, changeSwitchType, ...otherProps } = props;
 
   if (switchProps.disabled)
     return (
-      <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value ? 'ON' : 'OFF'} {...otherProps} />
+      <BasicInputPlaceholder
+        id={`toggle-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={value ? 'ON' : 'OFF'}
+        {...otherProps}
+      />
     );
 
   return (
     <Grid item xs={3}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} alignItems="center">
         <FormControlLabel
           value="value"
           control={
@@ -38,6 +44,10 @@ export const BasicToggleInput = (props) => {
 };
 
 BasicToggleInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicToggleInput's label
    */

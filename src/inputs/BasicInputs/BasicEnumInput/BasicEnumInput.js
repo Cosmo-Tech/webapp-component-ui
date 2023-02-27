@@ -8,20 +8,26 @@ import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 
 export const BasicEnumInput = (props) => {
-  const { label, tooltipText, value, textFieldProps, enumValues, changeEnumField, ...otherProps } = props;
+  const { id, label, tooltipText, value, textFieldProps, enumValues, changeEnumField, ...otherProps } = props;
 
   if (textFieldProps.disabled)
-    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value} {...otherProps} />;
+    return (
+      <BasicInputPlaceholder
+        id={`enum-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={value}
+        {...otherProps}
+      />
+    );
 
   return (
     <Grid item xs={3}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack data-cy={`enum-input-${id}`} direction="row" spacing={1} alignItems="center">
         <TextField
-          {...textFieldProps}
           variant="outlined"
           label={label}
           size="small"
-          data-cy={`${otherProps.dataCy}-textField`}
           sx={{ flexGrow: 1 }}
           select
           value={value}
@@ -42,6 +48,10 @@ export const BasicEnumInput = (props) => {
 };
 
 BasicEnumInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicEnumInput's label
    */

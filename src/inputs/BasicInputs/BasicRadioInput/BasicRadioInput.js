@@ -8,17 +8,35 @@ import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 
 export const BasicRadioInput = (props) => {
-  const { label, tooltipText, value, textFieldProps, changeRadioOption, enumValues, row, radioStyle, ...otherProps } =
-    props;
+  const {
+    id,
+    label,
+    tooltipText,
+    value,
+    textFieldProps,
+    changeRadioOption,
+    enumValues,
+    row,
+    radioStyle,
+    ...otherProps
+  } = props;
 
   if (textFieldProps.disabled) {
     const valueString = enumValues.find((valueOption) => valueOption.key === value).value;
-    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={valueString} {...otherProps} />;
+    return (
+      <BasicInputPlaceholder
+        id={`radio-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={valueString}
+        {...otherProps}
+      />
+    );
   }
 
   return (
     <Grid item xs={3}>
-      <Stack>
+      <Stack data-cy={`radio-input-${id}`}>
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="subtitle2" color="textSecondary" id="slider-input-label">
             {label}
@@ -39,7 +57,7 @@ export const BasicRadioInput = (props) => {
                   key={option.key}
                   value={option.key}
                   control={
-                    <Radio data-cy={'radio-button-' + option.value} style={radioStyle} size="small" color="primary" />
+                    <Radio data-cy={`radio-button-${option.value}`} style={radioStyle} size="small" color="primary" />
                   }
                   label={option.value}
                 />
@@ -53,6 +71,10 @@ export const BasicRadioInput = (props) => {
 };
 
 BasicRadioInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicRadioInput's label
    */

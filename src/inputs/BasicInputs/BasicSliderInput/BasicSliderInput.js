@@ -13,6 +13,7 @@ const getValueText = (value) => {
 
 export const BasicSliderInput = (props) => {
   const {
+    id,
     label,
     tooltipText,
     value,
@@ -48,6 +49,7 @@ export const BasicSliderInput = (props) => {
   if (disabled)
     return (
       <BasicInputPlaceholder
+        id={`slider-input-${id}`}
         label={label}
         tooltipText={tooltipText}
         value={getValue(value).toString()}
@@ -57,7 +59,7 @@ export const BasicSliderInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack>
+      <Stack data-cy={`slider-input-${id}`}>
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
             {label}
@@ -66,8 +68,6 @@ export const BasicSliderInput = (props) => {
         </Stack>
         <Slider
           value={getValue(value)}
-          id="slider-root"
-          data-cy="slider-input"
           sx={sliderStyle}
           color={color}
           size="small"
@@ -86,6 +86,10 @@ export const BasicSliderInput = (props) => {
 };
 
 BasicSliderInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicSliderInput's label
    */

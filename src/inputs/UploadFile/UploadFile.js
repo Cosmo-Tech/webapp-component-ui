@@ -12,6 +12,7 @@ import { FadingTooltip, TooltipInfo } from '../../misc';
 
 export const UploadFile = (props) => {
   const {
+    id,
     acceptedFileTypes,
     handleUploadFile,
     handleDeleteFile,
@@ -21,7 +22,6 @@ export const UploadFile = (props) => {
     isFileValid,
     labels,
     tooltipText,
-    ...otherProps
   } = props;
 
   const smartFileName =
@@ -38,7 +38,7 @@ export const UploadFile = (props) => {
     );
 
   return (
-    <Stack data-cy={otherProps.dataCy}>
+    <Stack data-cy={`file-upload-${id}`}>
       <Stack spacing={1} direction="row" alignItems="center">
         <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
           {labels.label}
@@ -110,6 +110,10 @@ export const UploadFile = (props) => {
 };
 
 UploadFile.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * Pre-filter extension files for upload
    */
