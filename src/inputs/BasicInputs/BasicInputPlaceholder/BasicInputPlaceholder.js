@@ -6,16 +6,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { TooltipInfo } from '../../../misc';
 
-export const BasicInputPlaceholder = ({ label, tooltipText, value, ...otherProps }) => {
+export const BasicInputPlaceholder = ({ id, label, tooltipText, value, ...otherProps }) => {
   return (
-    <Stack>
+    <Stack data-cy={id}>
       <Stack spacing={1} direction="row" alignItems="center">
-        <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
+        <Typography data-cy="disabled-input-label" variant="subtitle2" color="textSecondary">
           {label}
         </Typography>
         <TooltipInfo title={tooltipText} size="small" />
       </Stack>
-      <Typography data-cy={`${otherProps.dataCy}-value-disabled-input`} variant="body2" sx={{ ml: 1 }}>
+      <Typography data-cy="disabled-input-value" variant="body2" sx={{ ml: 1 }}>
         {value}
       </Typography>
     </Stack>
@@ -23,6 +23,10 @@ export const BasicInputPlaceholder = ({ label, tooltipText, value, ...otherProps
 };
 
 BasicInputPlaceholder.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * Basic input's label
    */

@@ -16,6 +16,7 @@ export const BasicDateInput = (props) => {
   if (dateProps.disabled)
     return (
       <BasicInputPlaceholder
+        id={`date-input-${id}`}
         label={label}
         tooltipText={tooltipText}
         value={value.toLocaleDateString()}
@@ -25,7 +26,7 @@ export const BasicDateInput = (props) => {
 
   return (
     <Grid item id={dateProps.id} xs={3}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack data-cy={`date-input-${id}`} direction="row" spacing={1} alignItems="center">
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
             label={label}
@@ -33,7 +34,7 @@ export const BasicDateInput = (props) => {
             minDate={dateProps.minDate}
             maxDate={dateProps.maxDate}
             renderInput={(params) => <TextField variant="outlined" sx={{ flexGrow: 1 }} size="small" {...params} />}
-            id={id}
+            id={`date-input-${id}`}
             onChange={changeSelectedDate}
             value={value}
           />

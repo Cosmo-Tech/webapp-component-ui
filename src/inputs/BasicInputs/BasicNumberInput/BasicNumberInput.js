@@ -9,16 +9,23 @@ import { NumberFormatCustom } from '../../../misc/formatters';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
 
 export const BasicNumberInput = (props) => {
-  const { label, tooltipText, value, textFieldProps, inputProps, changeNumberField, ...otherProps } = props;
+  const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, ...otherProps } = props;
 
   if (textFieldProps.disabled)
-    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value.toString()} {...otherProps} />;
+    return (
+      <BasicInputPlaceholder
+        id={`number-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={value.toString()}
+        {...otherProps}
+      />
+    );
 
   return (
     <Grid item xs={3}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack data-cy={`number-input-${id}`} direction="row" spacing={1} alignItems="center">
         <TextField
-          {...textFieldProps}
           sx={{ flexGrow: 1 }}
           variant="outlined"
           label={label}
@@ -37,6 +44,10 @@ export const BasicNumberInput = (props) => {
 };
 
 BasicNumberInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicNumberInput's label
    */

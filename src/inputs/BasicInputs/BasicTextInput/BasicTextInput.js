@@ -8,14 +8,22 @@ import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 
 export const BasicTextInput = (props) => {
-  const { label, tooltipText, value, textFieldProps, changeTextField, ...otherProps } = props;
+  const { id, label, tooltipText, value, textFieldProps, changeTextField, ...otherProps } = props;
 
   if (textFieldProps.disabled)
-    return <BasicInputPlaceholder label={label} tooltipText={tooltipText} value={value} {...otherProps} />;
+    return (
+      <BasicInputPlaceholder
+        id={`text-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={value}
+        {...otherProps}
+      />
+    );
 
   return (
     <Grid item xs={3}>
-      <Stack direction="row" spacing={1} alignItems="center">
+      <Stack data-cy={`text-input-${id}`} direction="row" spacing={1} alignItems="center">
         <TextField
           {...textFieldProps}
           variant="outlined"
@@ -32,6 +40,10 @@ export const BasicTextInput = (props) => {
 };
 
 BasicTextInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicTextInput's label
    */
