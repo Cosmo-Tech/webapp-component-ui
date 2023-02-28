@@ -1,3 +1,20 @@
+## **5.0.0** <sub><sup>2023-02-28</sup></sub>
+
+### Features
+
+- add TooltipInfo component ([70175cf](https://github.com/Cosmo-Tech/webapp-component-ui/commit/70175cf))
+- add BasicInputPlaceholder component ([b326339](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b326339))
+
+### Bug Fixes
+
+- \[PROD\-11110\] Limit display of file load errors ([0ec67ca](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0ec67ca))
+- change button and title labels in read\-only scenario sharing dialog ([810a9be](https://github.com/Cosmo-Tech/webapp-component-ui/commit/810a9be))
+
+### BREAKING CHANGES
+
+- remove component `BasicInputWrapper`
+- migrate material-ui from v4 to v5
+
 ## **4.7.0** <sub><sup>2023-02-07 (7798970...7923344)</sup></sub>
 
 ### Features
