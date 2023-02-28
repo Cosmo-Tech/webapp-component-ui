@@ -4,14 +4,15 @@
 
 import React from 'react';
 import { BasicSliderInput } from './BasicSliderInput';
-import { TextFieldTesting } from '../../../../tests/MuiComponentsTesting/TextFieldTesting';
 import { SliderTesting } from '../../../../tests/MuiComponentsTesting/SliderTesting';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
+import { TypographyTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
 
 const defaultProps = {
-  label: 'Stock',
+  id: 'average_consumption',
+  label: 'Average consumption',
   value: 5,
   valueLabelDisplay: 'auto',
   step: 1,
@@ -38,8 +39,9 @@ const propsInEditMode = {
   disabled: false,
 };
 
-const sliderDisabled = new TextFieldTesting({ dataCy: 'slider-input-textField' });
-const sliderEditMode = new SliderTesting({ dataCy: 'slider-input' });
+const disabledSliderLabel = new TypographyTesting({ dataCy: 'disabled-input-label' });
+const disabledSliderValue = new TypographyTesting({ dataCy: 'disabled-input-value' });
+const sliderEditMode = new SliderTesting({ dataCy: 'slider-input-average_consumption' });
 
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicSliderInput {...props} />);
@@ -50,14 +52,15 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
     mockOnValueChanged.mockClear();
   });
 
-  describe('Shows textField input in disabled mode', () => {
+  describe('Shows label and value as a text in disabled mode', () => {
     beforeEach(() => {
       setUp(defaultProps);
     });
 
-    test('Checks value in textField in disabled mode', () => {
-      expect(sliderDisabled.TextField).toBeInTheDocument();
-      expect(sliderDisabled.TextFieldValue).toHaveValue(defaultProps.value.toString());
+    test('Checks label and value in disabled mode', () => {
+      expect(disabledSliderLabel.Typography).toBeInTheDocument();
+      expect(disabledSliderValue.Typography).toBeInTheDocument();
+      expect(disabledSliderValue.text).toEqual(defaultProps.value.toString());
     });
   });
 
@@ -80,21 +83,19 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
   });
 
   describe('Checks slider value if provided one is null, undefined or NaN', () => {
-    // tests' output will be a console.error about null in required prop "value"
-    // but they pass correctly and check component behaviour with null, undefined or NaN value
     test('Checks textField value is 0 when null is provided', () => {
       setUp(propsWithNullValue);
-      expect(sliderDisabled.TextFieldValue).toHaveValue('0');
+      expect(disabledSliderValue.text).toEqual('0');
     });
 
     test('Checks textField value is 0 when undefined is provided', () => {
       setUp(propsWithUndefinedValue);
-      expect(sliderDisabled.TextFieldValue).toHaveValue('0');
+      expect(disabledSliderValue.text).toEqual('0');
     });
 
     test('Checks textField value is 0 when NaN is provided', () => {
       setUp(propsWithNaNValue);
-      expect(sliderDisabled.TextFieldValue).toHaveValue('0');
+      expect(disabledSliderValue.text).toEqual('0');
     });
   });
 });

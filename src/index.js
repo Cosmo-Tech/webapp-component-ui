@@ -14,7 +14,7 @@ export {
   BasicTextInput,
   BasicEnumInput,
   BasicRadioInput,
-  BasicInputWrapper,
+  BasicInputPlaceholder,
   EditableLabel,
   UploadFile,
   UPLOAD_FILE_STATUS_KEY,
@@ -34,4 +34,5 @@ export {
   PermissionsGate,
   ScenarioValidationStatusChip,
   DefaultAvatar,
+  TooltipInfo,
 } from './misc';

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -11,8 +11,7 @@ import 'ag-grid-community/styles/ag-theme-balham.css';
 import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
-import { ErrorsPanel } from '../../misc/ErrorsPanel/ErrorsPanel.js';
-import { BasicInputWrapper } from '../BasicInputs/BasicInputWrapper';
+import { ErrorsPanel, TooltipInfo } from '../../misc';
 
 const useStyles = makeStyles((theme) => ({
   toolBar: {
@@ -136,7 +135,12 @@ export const Table = (props) => {
   return (
     <div id="table-container" {...otherProps}>
       <div data-cy="label">
-        <BasicInputWrapper label={labels.label} tooltipText={tooltipText} {...otherProps} />
+        <Stack spacing={1} direction="row" alignItems="center">
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
+            {labels.label}
+          </Typography>
+          <TooltipInfo title={tooltipText} variant="small" />
+        </Stack>
       </div>
       <div className={classes.toolBar}>
         {extraToolbarActions}

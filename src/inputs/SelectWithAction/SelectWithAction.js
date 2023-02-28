@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: '44px',
   },
 }));
+
 export const SelectWithAction = ({ options, selectedOption, onOptionSelected, isReadOnly, actions }) => {
   const classes = useStyles();
 
@@ -23,7 +24,8 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
       <FormControl variant="outlined" fullWidth={true}>
         <Select
           data-cy="select-with-action"
-          variant="standard"
+          variant="outlined"
+          size="small"
           disabled={isReadOnly}
           value={selectedOption}
           onChange={onOptionSelected}

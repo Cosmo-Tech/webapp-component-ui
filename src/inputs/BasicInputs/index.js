@@ -8,4 +8,4 @@ export { BasicRadioInput } from './BasicRadioInput';
 export { BasicToggleInput } from './BasicToggleInput';
 export { BasicDateInput } from './BasicDateInput';
 export { BasicSliderInput } from './BasicSliderInput';
-export { BasicInputWrapper } from './BasicInputWrapper';
+export { BasicInputPlaceholder } from './BasicInputPlaceholder';

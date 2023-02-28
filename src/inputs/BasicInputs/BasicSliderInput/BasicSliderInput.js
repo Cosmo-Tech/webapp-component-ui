@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Slider, TextField } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
+import { Grid, Slider, Stack, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { TooltipInfo } from '../../../misc';
 
 const getValueText = (value) => {
   return value.toString();
@@ -12,6 +13,7 @@ const getValueText = (value) => {
 
 export const BasicSliderInput = (props) => {
   const {
+    id,
     label,
     tooltipText,
     value,
@@ -23,18 +25,18 @@ export const BasicSliderInput = (props) => {
     max,
     orientation,
     disabled,
-    containerProps,
-    labelProps,
     sliderStyle,
     color,
     ...otherProps
   } = props;
+
   const getValue = (value) => {
     if (value == null || isNaN(value)) {
       return 0;
     }
     return value;
   };
+
   const getMarks = (marks) => {
     return marks !== undefined
       ? marks
@@ -43,22 +45,30 @@ export const BasicSliderInput = (props) => {
           { value: max, label: max.toString() },
         ];
   };
+
+  if (disabled)
+    return (
+      <BasicInputPlaceholder
+        id={`slider-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={getValue(value).toString()}
+        {...otherProps}
+      />
+    );
+
   return (
-    <BasicInputWrapper
-      label={label}
-      tooltipText={tooltipText}
-      containerProps={containerProps}
-      labelProps={labelProps}
-      {...otherProps}
-    >
-      {disabled ? (
-        <TextField value={getValue(value)} variant="standard" disabled data-cy="slider-input-textField" />
-      ) : (
+    <Grid item xs={3}>
+      <Stack data-cy={`slider-input-${id}`}>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
+            {label}
+          </Typography>
+          <TooltipInfo title={tooltipText} variant="small" />
+        </Stack>
         <Slider
           value={getValue(value)}
-          id="slider-root"
-          data-cy="slider-input"
-          style={sliderStyle}
+          sx={sliderStyle}
           color={color}
           size="small"
           onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
@@ -70,12 +80,16 @@ export const BasicSliderInput = (props) => {
           max={max}
           orientation={orientation}
         />
-      )}
-    </BasicInputWrapper>
+      </Stack>
+    </Grid>
   );
 };
 
 BasicSliderInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicSliderInput's label
    */
@@ -126,14 +140,6 @@ BasicSliderInput.propTypes = {
    */
   disabled: PropTypes.bool,
   /**
-   * Additional props that you can specify for the BasicSliderInput's Grid container that displays both label and input
-   */
-  containerProps: PropTypes.object,
-  /**
-   * Additional props that you can specify for the BasicNumberInput's label
-   */
-  labelProps: PropTypes.object,
-  /**
    * Additional prop to override slider's css, e.g., width (200 px by default)
    */
   sliderStyle: PropTypes.object,
@@ -150,8 +156,5 @@ BasicSliderInput.defaultProps = {
   max: 100,
   orientation: 'horizontal',
   disabled: true,
-  sliderStyle: {
-    width: '200px',
-  },
-  color: 'primary',
+  color: 'secondary',
 };

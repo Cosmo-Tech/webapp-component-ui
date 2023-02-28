@@ -12,7 +12,7 @@ export {
   BasicToggleInput,
   BasicDateInput,
   BasicSliderInput,
-  BasicInputWrapper,
+  BasicInputPlaceholder,
 } from './BasicInputs';
 export { EditableLabel } from './EditableLabel';
 export { RoleEditor } from './RoleEditor';

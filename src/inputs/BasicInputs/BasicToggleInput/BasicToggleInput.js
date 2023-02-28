@@ -3,31 +3,51 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@mui/material';
-import { BasicInputWrapper } from '../BasicInputWrapper';
+import { Grid, Stack, Switch, FormControlLabel } from '@mui/material';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { TooltipInfo } from '../../../misc';
 
 export const BasicToggleInput = (props) => {
-  const { label, tooltipText, value, switchProps, changeSwitchType, containerProps, labelProps, ...otherProps } = props;
+  const { id, label, tooltipText, value, switchProps, changeSwitchType, ...otherProps } = props;
+
+  if (switchProps.disabled)
+    return (
+      <BasicInputPlaceholder
+        id={`toggle-input-${id}`}
+        label={label}
+        tooltipText={tooltipText}
+        value={value ? 'ON' : 'OFF'}
+        {...otherProps}
+      />
+    );
 
   return (
-    <BasicInputWrapper
-      label={label}
-      tooltipText={tooltipText}
-      containerProps={containerProps}
-      labelProps={labelProps}
-      {...otherProps}
-    >
-      <Switch
-        color="secondary"
-        onChange={(event) => changeSwitchType(event.target.checked)}
-        checked={value}
-        {...switchProps}
-      />
-    </BasicInputWrapper>
+    <Grid item xs={3}>
+      <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} alignItems="center">
+        <FormControlLabel
+          value="value"
+          control={
+            <Switch
+              color="secondary"
+              onChange={(event) => changeSwitchType(event.target.checked)}
+              checked={value}
+              {...switchProps}
+            />
+          }
+          label={label}
+          labelPlacement="end"
+        />
+        <TooltipInfo title={tooltipText} variant="small" />
+      </Stack>
+    </Grid>
   );
 };
 
 BasicToggleInput.propTypes = {
+  /**
+   * Component's id that is used as test selector
+   */
+  id: PropTypes.string,
   /**
    * BasicToggleInput's label
    */
@@ -48,24 +68,4 @@ BasicToggleInput.propTypes = {
    * Additional props that you can specify for the BasicToggleInput's toggle
    */
   switchProps: PropTypes.object,
-  /**
-   * Additional props that you can specify for the BasicToggleInput's Grid container that displays both label and input
-   */
-  containerProps: PropTypes.object,
-  /**
-   * Additional props that you can specify for the BasicToggleInput's label
-   */
-  labelProps: PropTypes.object,
-};
-
-BasicToggleInput.defaultProps = {
-  containerProps: {
-    direction: 'row',
-    alignItems: 'center',
-    alignContent: 'flex-start',
-    spacing: 2,
-  },
-  labelProps: {
-    variant: 'subtitle2',
-  },
 };
