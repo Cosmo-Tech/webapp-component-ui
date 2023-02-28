@@ -10,11 +10,9 @@ import { TypographyTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
 
-const otherProps = {
-  dataCy: 'stock',
-};
 const defaultProps = {
-  label: 'Stock',
+  id: 'average_consumption',
+  label: 'Average consumption',
   value: 5,
   valueLabelDisplay: 'auto',
   step: 1,
@@ -23,7 +21,6 @@ const defaultProps = {
   orientation: 'horizontal',
   disabled: true,
   handleSliderValueChange: mockOnValueChanged,
-  ...otherProps,
 };
 const propsWithNullValue = {
   ...defaultProps,
@@ -42,9 +39,9 @@ const propsInEditMode = {
   disabled: false,
 };
 
-const disabledSliderLabel = new TypographyTesting({ dataCy: 'label-disabled-input' });
-const disabledSliderValue = new TypographyTesting({ dataCy: 'stock-value-disabled-input' });
-const sliderEditMode = new SliderTesting({ dataCy: 'slider-input' });
+const disabledSliderLabel = new TypographyTesting({ dataCy: 'disabled-input-label' });
+const disabledSliderValue = new TypographyTesting({ dataCy: 'disabled-input-value' });
+const sliderEditMode = new SliderTesting({ dataCy: 'slider-input-average_consumption' });
 
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicSliderInput {...props} />);
