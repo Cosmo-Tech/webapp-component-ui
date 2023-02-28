@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -24,18 +24,23 @@ export const UploadFile = (props) => {
     tooltipText,
   } = props;
 
-  const smartFileName =
-    file.name.length > 20 ? (
-      <FadingTooltip title={file.name}>
-        <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
-          {file.name}
-        </Typography>
-      </FadingTooltip>
-    ) : (
+  // TODO: create a generic component to truncate texts in Typography elements
+  const smartFileName = useMemo(() => {
+    const fileNameLength = file?.name?.length ?? 0;
+    if (fileNameLength > 20)
+      return (
+        <FadingTooltip title={file.name}>
+          <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
+            {file.name}
+          </Typography>
+        </FadingTooltip>
+      );
+    return (
       <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
         {file.name}
       </Typography>
     );
+  }, [file.name]);
 
   return (
     <Stack data-cy={`file-upload-${id}`}>
