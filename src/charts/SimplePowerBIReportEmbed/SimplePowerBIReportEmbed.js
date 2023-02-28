@@ -28,13 +28,14 @@ const useStyles = makeStyles((theme) => ({
   },
   errorContainer: {
     'z-index': '1', // Need z-index > 0, otherwise the error banner is hidden behind the powerbi loading screen
-    height: '50px',
     width: '100%',
     position: 'absolute',
     textAlign: 'center',
-    padding: '5px 0',
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText,
+    padding: '8px',
+    background: theme.palette.errorContainer.main,
+    border: theme.palette.mode === 'dark' ? 'none' : `solid 1px ${theme.palette.errorContainer.contrastText}`,
+    color: theme.palette.errorContainer.contrastText,
+    borderRadius: '8px',
   },
   errorTitle: {
     fontWeight: 'bold',

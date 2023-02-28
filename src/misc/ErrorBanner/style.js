@@ -10,19 +10,19 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '10px',
     paddingLeft: '20px',
     paddingRight: '20px',
-    backgroundColor: theme.palette.error.main,
+    background: theme.palette.errorContainer.main,
   },
   errorTitle: {
     fontWeight: 'bold',
-    color: theme.palette.error.contrastText,
+    color: theme.palette.errorContainer.contrastText,
   },
   errorText: {
-    color: theme.palette.error.contrastText,
+    color: theme.palette.errorContainer.contrastText,
   },
   errorButton: {
     marginLeft: '5px',
     marginRight: '5px',
-    color: theme.palette.error.contrastText,
+    color: theme.palette.errorContainer.contrastText,
   },
 }));
 
