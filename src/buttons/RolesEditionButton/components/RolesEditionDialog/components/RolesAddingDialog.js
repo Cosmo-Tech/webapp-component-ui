@@ -23,6 +23,10 @@ import CheckIcon from '@mui/icons-material/Check';
 const useStyle = makeStyles((theme) => ({
   chip: {
     margin: '3px',
+    //color: `${theme.palette.secondaryContainer.contrastText}`,
+    color: `${theme.palette.infoContainer.contrastText}`,
+    //backgroundColor: `${theme.palette.secondaryContainer.main}`,
+    backgroundColor: `${theme.palette.infoContainer.main}`,
   },
 }));
 
@@ -102,7 +106,6 @@ export const RolesAddingDialog = ({
               <Chip
                 data-cy={`share-scenario-dialog-granted-permission-chip-${permission.value}`}
                 key={permission.value}
-                color="secondary"
                 label={permission.label ?? permission.value}
                 className={classes.chip}
               />
