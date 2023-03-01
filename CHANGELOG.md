@@ -1,3 +1,9 @@
+## **5.0.1** <sub><sup>2023-03-01 (40c40f3...0844050)</sup></sub>
+
+### Bug Fixes
+*  add DataIngestionInProgress status in ScenarioNode ([40c40f3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/40c40f3))
+
+
 ## **5.0.0** <sub><sup>2023-02-28</sup></sub>
 
 ### Features
