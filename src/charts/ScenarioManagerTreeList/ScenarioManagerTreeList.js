@@ -286,6 +286,7 @@ ScenarioManagerTreeList.defaultProps = {
     status: 'Run status',
     successful: 'Successful',
     running: 'Running',
+    dataingestioninprogress: 'Transferring results',
     failed: 'Failed',
     created: 'Created',
     delete: 'Delete this scenario',
