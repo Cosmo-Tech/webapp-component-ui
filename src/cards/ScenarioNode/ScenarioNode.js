@@ -77,7 +77,7 @@ export const ScenarioNode = ({
     if (scenario.state === 'Created') {
       return null;
     }
-    if (scenario.state === 'Running') {
+    if (scenario.state === 'Running' || scenario.state === 'DataIngestionInProgress') {
       return classes.statusRunningIcon;
     }
     if (scenario.state === 'Successful') {
@@ -93,7 +93,7 @@ export const ScenarioNode = ({
     if (scenario.state === 'Created') {
       return classes.statusCreated;
     }
-    if (scenario.state === 'Running') {
+    if (scenario.state === 'Running' || scenario.state === 'DataIngestionInProgress') {
       return classes.statusRunning;
     }
     if (scenario.state === 'Successful') {
@@ -118,6 +118,7 @@ export const ScenarioNode = ({
         icon = <CancelIcon className={iconClassName} aria-label={status} />;
         break;
       case 'Running':
+      case 'DataIngestionInProgress':
         icon = <CircularProgress size={25} className={iconClassName} aria-label={status} />;
         break;
       case 'Created':
