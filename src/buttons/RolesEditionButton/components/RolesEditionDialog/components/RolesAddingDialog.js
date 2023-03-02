@@ -23,9 +23,9 @@ import CheckIcon from '@mui/icons-material/Check';
 const useStyle = makeStyles((theme) => ({
   chip: {
     margin: '3px',
-    //color: `${theme.palette.secondaryContainer.contrastText}`,
+    // color: `${theme.palette.secondaryContainer.contrastText}`,
     color: `${theme.palette.infoContainer.contrastText}`,
-    //backgroundColor: `${theme.palette.secondaryContainer.main}`,
+    // backgroundColor: `${theme.palette.secondaryContainer.main}`,
     backgroundColor: `${theme.palette.infoContainer.main}`,
   },
 }));

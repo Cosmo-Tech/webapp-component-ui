@@ -38,7 +38,13 @@ export const ErrorBanner = ({ error, clearErrors, labels }) => {
             </Button>
           )}
           {clearErrors && (
-            <Button className={classes.errorButton} variant="text" size="small" data-cy="dismiss-error-button" onClick={clearErrors}>
+            <Button
+              className={classes.errorButton}
+              variant="text"
+              size="small"
+              data-cy="dismiss-error-button"
+              onClick={clearErrors}
+            >
               {labels.dismissButtonText}
             </Button>
           )}
