@@ -87,7 +87,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/x-date-pickers": "^5.0.18",
-    "@nosferatu500/react-sortable-tree": "^3.0.5",
+    "@nosferatu500/react-sortable-tree": "^4.3.0",
     "ag-grid-community": "~29.0.0",
     "ag-grid-react": "~29.0.0",
     "clsx": "^1.1.1",
