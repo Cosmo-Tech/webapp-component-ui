@@ -6,9 +6,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
+import makeStyles from '@mui/styles/makeStyles';
 
+const useStyles = makeStyles(() => ({
+  dirtyInput: {
+    fontWeight: 'bold',
+  },
+}));
 export const BasicEnumInput = (props) => {
-  const { id, label, tooltipText, value, textFieldProps, enumValues, changeEnumField, ...otherProps } = props;
+  const classes = useStyles();
+  const { id, label, tooltipText, value, textFieldProps, enumValues, changeEnumField, isDirty, ...otherProps } = props;
 
   if (textFieldProps.disabled)
     return (
@@ -31,6 +38,7 @@ export const BasicEnumInput = (props) => {
           sx={{ flexGrow: 1 }}
           select
           value={value}
+          inputProps={{ className: isDirty ? classes.dirtyInput : '' }}
           onChange={(event) => {
             return changeEnumField(event.target.value);
           }}
@@ -80,4 +88,11 @@ BasicEnumInput.propTypes = {
        }`
    */
   enumValues: PropTypes.array.isRequired,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
+};
+BasicEnumInput.defaultProps = {
+  isDirty: false,
 };

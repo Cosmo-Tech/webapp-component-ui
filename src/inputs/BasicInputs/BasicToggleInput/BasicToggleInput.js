@@ -8,7 +8,7 @@ import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 
 export const BasicToggleInput = (props) => {
-  const { id, label, tooltipText, value, switchProps, changeSwitchType, ...otherProps } = props;
+  const { id, label, tooltipText, value, switchProps, changeSwitchType, isDirty, ...otherProps } = props;
 
   if (switchProps.disabled)
     return (
@@ -68,4 +68,11 @@ BasicToggleInput.propTypes = {
    * Additional props that you can specify for the BasicToggleInput's toggle
    */
   switchProps: PropTypes.object,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
+};
+BasicToggleInput.defaultProps = {
+  isDirty: false,
 };

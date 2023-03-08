@@ -18,6 +18,7 @@ export const BasicRadioInput = (props) => {
     enumValues,
     row,
     radioStyle,
+    isDirty,
     ...otherProps
   } = props;
 
@@ -113,8 +114,13 @@ BasicRadioInput.propTypes = {
    * Additional prop to override radio's css
    */
   radioStyle: PropTypes.object,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
 };
 
 BasicRadioInput.defaultProps = {
   row: true,
+  isDirty: false,
 };

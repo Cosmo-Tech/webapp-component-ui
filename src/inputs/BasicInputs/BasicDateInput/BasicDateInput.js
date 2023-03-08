@@ -9,10 +9,18 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
+import makeStyles from '@mui/styles/makeStyles';
 
+const useStyles = makeStyles(() => ({
+  dirtyInput: {
+    '& input': {
+      fontWeight: 'bold',
+    },
+  },
+}));
 export const BasicDateInput = (props) => {
-  const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, ...otherProps } = props;
-
+  const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, isDirty, ...otherProps } = props;
+  const classes = useStyles();
   if (dateProps.disabled)
     return (
       <BasicInputPlaceholder
@@ -29,6 +37,7 @@ export const BasicDateInput = (props) => {
       <Stack data-cy={`date-input-${id}`} direction="row" spacing={1} alignItems="center">
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
+            className={isDirty ? classes.dirtyInput : ''}
             label={label}
             inputFormat={format}
             minDate={dateProps.minDate}
@@ -74,8 +83,13 @@ BasicDateInput.propTypes = {
    * Additional props that you can specify for the BasicDateInput's input
    */
   dateProps: PropTypes.object.isRequired,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
 };
 
 BasicDateInput.defaultProps = {
   format: 'MM/dd/yyyy',
+  isDirty: false,
 };

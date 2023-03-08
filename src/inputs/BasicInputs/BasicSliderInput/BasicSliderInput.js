@@ -27,6 +27,7 @@ export const BasicSliderInput = (props) => {
     disabled,
     sliderStyle,
     color,
+    isDirty,
     ...otherProps
   } = props;
 
@@ -147,6 +148,10 @@ BasicSliderInput.propTypes = {
    * Color of the slider: primary (default color) or secondary
    */
   color: PropTypes.string,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
 };
 
 BasicSliderInput.defaultProps = {
@@ -157,4 +162,5 @@ BasicSliderInput.defaultProps = {
   orientation: 'horizontal',
   disabled: true,
   color: 'secondary',
+  isDirty: false,
 };
