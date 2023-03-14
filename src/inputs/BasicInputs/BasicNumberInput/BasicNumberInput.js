@@ -7,10 +7,19 @@ import React from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormatCustom } from '../../../misc/formatters';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
+import makeStyles from '@mui/styles/makeStyles';
 
+const useStyles = makeStyles(() => ({
+  dirtyInput: {
+    '& input': {
+      fontWeight: 'bold',
+    },
+  },
+}));
 export const BasicNumberInput = (props) => {
-  const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, ...otherProps } = props;
-
+  const classes = useStyles();
+  const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, isDirty, ...otherProps } =
+    props;
   if (textFieldProps.disabled)
     return (
       <BasicInputPlaceholder
@@ -26,6 +35,7 @@ export const BasicNumberInput = (props) => {
     <Grid item xs={3}>
       <Stack data-cy={`number-input-${id}`} direction="row" spacing={1} alignItems="center">
         <TextField
+          className={isDirty ? classes.dirtyInput : ''}
           sx={{ flexGrow: 1 }}
           variant="outlined"
           label={label}
@@ -72,6 +82,10 @@ BasicNumberInput.propTypes = {
    * Additional props that you can specify for the BasicNumberInput's Grid container that displays both label and input
    */
   inputProps: PropTypes.object,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
 };
 
 BasicNumberInput.defaultProps = {
@@ -79,4 +93,5 @@ BasicNumberInput.defaultProps = {
     min: -9999,
     max: 9999,
   },
+  isDirty: false,
 };

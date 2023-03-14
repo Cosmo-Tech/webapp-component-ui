@@ -6,9 +6,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
+import makeStyles from '@mui/styles/makeStyles';
 
+const useStyles = makeStyles(() => ({
+  dirtyInput: {
+    '& input': {
+      fontWeight: 'bold',
+    },
+  },
+}));
 export const BasicTextInput = (props) => {
-  const { id, label, tooltipText, value, textFieldProps, changeTextField, ...otherProps } = props;
+  const classes = useStyles();
+  const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, ...otherProps } = props;
 
   if (textFieldProps.disabled)
     return (
@@ -25,6 +34,7 @@ export const BasicTextInput = (props) => {
     <Grid item xs={3}>
       <Stack data-cy={`text-input-${id}`} direction="row" spacing={1} alignItems="center">
         <TextField
+          className={isDirty ? classes.dirtyInput : ''}
           {...textFieldProps}
           variant="outlined"
           label={label}
@@ -64,4 +74,11 @@ BasicTextInput.propTypes = {
    * Additional props that you can specify for the BasicTextInput's textField that displays the text value selected
    */
   textFieldProps: PropTypes.object,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
+};
+BasicTextInput.defaultProps = {
+  isDirty: false,
 };
