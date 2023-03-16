@@ -3,11 +3,16 @@
 
 import React from 'react';
 import { Radio, RadioGroup, FormControl, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
+import { getCommonInputStyles } from '../../style';
+
+const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicRadioInput = (props) => {
+  const classes = useStyles();
   const {
     id,
     label,
@@ -37,7 +42,7 @@ export const BasicRadioInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack data-cy={`radio-input-${id}`}>
+      <Stack data-cy={`radio-input-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="subtitle2" color="textSecondary" id="slider-input-label">
             {label}

@@ -2,20 +2,16 @@
 // Licensed under the MIT license.
 
 import { Grid, Stack, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormatCustom } from '../../../misc/formatters';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
-import makeStyles from '@mui/styles/makeStyles';
+import { getCommonInputStyles } from '../../style';
 
-const useStyles = makeStyles(() => ({
-  dirtyInput: {
-    '& input': {
-      fontWeight: 'bold',
-    },
-  },
-}));
+const useStyles = makeStyles(getCommonInputStyles);
+
 export const BasicNumberInput = (props) => {
   const classes = useStyles();
   const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, isDirty, ...otherProps } =
@@ -33,9 +29,14 @@ export const BasicNumberInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack data-cy={`number-input-${id}`} direction="row" spacing={1} alignItems="center">
+      <Stack
+        data-cy={`number-input-${id}`}
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      >
         <TextField
-          className={isDirty ? classes.dirtyInput : ''}
           sx={{ flexGrow: 1 }}
           variant="outlined"
           label={label}

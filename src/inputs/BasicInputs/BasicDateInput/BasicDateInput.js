@@ -4,20 +4,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Stack, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
-import makeStyles from '@mui/styles/makeStyles';
+import { getCommonInputStyles } from '../../style';
 
-const useStyles = makeStyles(() => ({
-  dirtyInput: {
-    '& input': {
-      fontWeight: 'bold',
-    },
-  },
-}));
+const useStyles = makeStyles(getCommonInputStyles);
+
 export const BasicDateInput = (props) => {
   const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, isDirty, ...otherProps } = props;
   const classes = useStyles();
@@ -34,10 +30,15 @@ export const BasicDateInput = (props) => {
 
   return (
     <Grid item id={dateProps.id} xs={3}>
-      <Stack data-cy={`date-input-${id}`} direction="row" spacing={1} alignItems="center">
+      <Stack
+        data-cy={`date-input-${id}`}
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DesktopDatePicker
-            className={isDirty ? classes.dirtyInput : ''}
             label={label}
             inputFormat={format}
             minDate={dateProps.minDate}

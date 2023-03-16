@@ -4,11 +4,15 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import ErrorIcon from '@mui/icons-material/Error';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 import { FadingTooltip, TooltipInfo } from '../../misc';
+import { getCommonInputStyles } from '../style';
+
+const useStyles = makeStyles(getCommonInputStyles);
 
 export const UploadFile = (props) => {
   const {
@@ -22,8 +26,10 @@ export const UploadFile = (props) => {
     isFileValid,
     labels,
     tooltipText,
+    isDirty,
   } = props;
 
+  const classes = useStyles();
   // TODO: create a generic component to truncate texts in Typography elements
   const smartFileName = useMemo(() => {
     const fileNameLength = file?.name?.length ?? 0;
@@ -43,7 +49,7 @@ export const UploadFile = (props) => {
   }, [file.name]);
 
   return (
-    <Stack data-cy={`file-upload-${id}`}>
+    <Stack data-cy={`file-upload-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
       <Stack spacing={1} direction="row" alignItems="center">
         <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
           {labels.label}
@@ -179,13 +185,14 @@ UploadFile.propTypes = {
    * Tooltip text
    */
   tooltipText: PropTypes.string,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
 };
 
 UploadFile.defaultProps = {
   acceptedFileTypes: '*',
-};
-
-UploadFile.defaultProps = {
   labels: {
     label: '',
     button: 'Browse',
@@ -193,4 +200,5 @@ UploadFile.defaultProps = {
     delete: 'Delete file',
     noFileMessage: 'None',
   },
+  isDirty: false,
 };
