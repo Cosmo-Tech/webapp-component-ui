@@ -2,19 +2,15 @@
 // Licensed under the MIT license.
 
 import { Grid, Stack, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
-import makeStyles from '@mui/styles/makeStyles';
+import { getCommonInputStyles } from '../../style';
 
-const useStyles = makeStyles(() => ({
-  dirtyInput: {
-    '& input': {
-      fontWeight: 'bold',
-    },
-  },
-}));
+const useStyles = makeStyles(getCommonInputStyles);
+
 export const BasicTextInput = (props) => {
   const classes = useStyles();
   const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, ...otherProps } = props;
@@ -32,9 +28,14 @@ export const BasicTextInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack data-cy={`text-input-${id}`} direction="row" spacing={1} alignItems="center">
+      <Stack
+        data-cy={`text-input-${id}`}
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      >
         <TextField
-          className={isDirty ? classes.dirtyInput : ''}
           {...textFieldProps}
           variant="outlined"
           label={label}

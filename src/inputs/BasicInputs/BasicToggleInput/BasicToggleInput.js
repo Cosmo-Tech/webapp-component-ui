@@ -4,10 +4,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Stack, Switch, FormControlLabel } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
+import { getCommonInputStyles } from '../../style';
+
+const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicToggleInput = (props) => {
+  const classes = useStyles();
   const { id, label, tooltipText, value, switchProps, changeSwitchType, isDirty, ...otherProps } = props;
 
   if (switchProps.disabled)
@@ -23,7 +28,13 @@ export const BasicToggleInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} alignItems="center">
+      <Stack
+        data-cy={`toggle-input-${id}`}
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      >
         <FormControlLabel
           value="value"
           control={

@@ -12,8 +12,10 @@ import { DateUtils } from '@cosmotech/core';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { ErrorsPanel, TooltipInfo } from '../../misc';
+import { getCommonInputStyles } from '../style';
 
 const useStyles = makeStyles((theme) => ({
+  ...getCommonInputStyles(theme),
   toolBar: {
     height: '40px',
     display: 'flex',
@@ -104,6 +106,7 @@ export const Table = (props) => {
     onClearErrors,
     buildErrorsPanelTitle,
     agTheme,
+    isDirty,
     ...otherProps
   } = props;
 
@@ -133,7 +136,7 @@ export const Table = (props) => {
   }, [rows]);
 
   return (
-    <div id="table-container" {...otherProps}>
+    <div id="table-container" {...otherProps} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
       <div data-cy="label">
         <Stack spacing={1} direction="row" alignItems="center">
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
@@ -254,6 +257,10 @@ Table.propTypes = {
    *    errorsCount: number of errors in the errors panel
    */
   buildErrorsPanelTitle: PropTypes.func,
+  /**
+   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   */
+  isDirty: PropTypes.bool,
 };
 
 Table.defaultProps = {
@@ -268,4 +275,5 @@ Table.defaultProps = {
   },
   onCellChange: () => {},
   maxErrorsCount: 100,
+  isDirty: false,
 };

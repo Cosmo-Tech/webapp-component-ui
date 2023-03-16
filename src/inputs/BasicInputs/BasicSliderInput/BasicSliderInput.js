@@ -3,15 +3,20 @@
 
 import React from 'react';
 import { Grid, Slider, Stack, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
+import { getCommonInputStyles } from '../../style';
+
+const useStyles = makeStyles(getCommonInputStyles);
 
 const getValueText = (value) => {
   return value.toString();
 };
 
 export const BasicSliderInput = (props) => {
+  const classes = useStyles();
   const {
     id,
     label,
@@ -60,7 +65,7 @@ export const BasicSliderInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack data-cy={`slider-input-${id}`}>
+      <Stack data-cy={`slider-input-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
         <Stack direction="row" spacing={1} alignItems="center">
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
             {label}

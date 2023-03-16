@@ -2,17 +2,15 @@
 // Licensed under the MIT license.
 
 import { MenuItem, Grid, Stack, TextField } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
-import makeStyles from '@mui/styles/makeStyles';
+import { getCommonInputStyles } from '../../style';
 
-const useStyles = makeStyles(() => ({
-  dirtyInput: {
-    fontWeight: 'bold',
-  },
-}));
+const useStyles = makeStyles(getCommonInputStyles);
+
 export const BasicEnumInput = (props) => {
   const classes = useStyles();
   const { id, label, tooltipText, value, textFieldProps, enumValues, changeEnumField, isDirty, ...otherProps } = props;
@@ -30,7 +28,13 @@ export const BasicEnumInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack data-cy={`enum-input-${id}`} direction="row" spacing={1} alignItems="center">
+      <Stack
+        data-cy={`enum-input-${id}`}
+        direction="row"
+        spacing={1}
+        alignItems="center"
+        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      >
         <TextField
           variant="outlined"
           label={label}
@@ -38,7 +42,6 @@ export const BasicEnumInput = (props) => {
           sx={{ flexGrow: 1 }}
           select
           value={value}
-          inputProps={{ className: isDirty ? classes.dirtyInput : '' }}
           onChange={(event) => {
             return changeEnumField(event.target.value);
           }}
