@@ -52,7 +52,7 @@ export const BasicEnumInput = (props) => {
             </MenuItem>
           ))}
         </TextField>
-        <TooltipInfo title={tooltipText} size="small" />
+        <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
     </Grid>
   );
