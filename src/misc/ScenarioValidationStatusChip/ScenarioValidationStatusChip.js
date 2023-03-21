@@ -26,7 +26,7 @@ export const ScenarioValidationStatusChip = (props) => {
     );
   }
 
-  const colorProp = lowerCaseStatus === 'validated' ? 'success' : 'error';
+  const colorProp = lowerCaseStatus === 'validated' ? 'primary' : 'error';
 
   return lowerCaseStatus === 'rejected' || lowerCaseStatus === 'validated' ? (
     <Chip
@@ -34,6 +34,7 @@ export const ScenarioValidationStatusChip = (props) => {
       data-cy="scenario-validation-status"
       label={getLabel()}
       onDelete={onDelete}
+      variant="soft"
       color={colorProp}
       className={className}
     />

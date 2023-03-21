@@ -166,6 +166,6 @@ BasicSliderInput.defaultProps = {
   max: 100,
   orientation: 'horizontal',
   disabled: true,
-  color: 'secondary',
+  color: 'primary',
   isDirty: false,
 };

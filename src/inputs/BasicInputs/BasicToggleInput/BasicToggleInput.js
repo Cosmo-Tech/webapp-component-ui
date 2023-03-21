@@ -39,7 +39,7 @@ export const BasicToggleInput = (props) => {
           value="value"
           control={
             <Switch
-              color="secondary"
+              color="primary"
               onChange={(event) => changeSwitchType(event.target.checked)}
               checked={value}
               {...switchProps}

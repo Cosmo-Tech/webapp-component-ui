@@ -66,7 +66,7 @@ export const UploadFile = (props) => {
           <Button
             data-cy="browse-button"
             id="browse-button"
-            variant="outlined"
+            variant="soft"
             color="primary"
             component="label"
             onChange={handleUploadFile}

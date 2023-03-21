@@ -5,7 +5,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1, handleClickOnButton2 }) => {
+export const SimpleTwoActionsDialog = ({
+  id,
+  open,
+  labels,
+  handleClickOnButton1,
+  handleClickOnButton2,
+  colorConfirm,
+}) => {
   const onClose = (event, reason) => {
     if (reason !== 'backdropClick') {
       handleClickOnButton1();
@@ -23,7 +30,7 @@ export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1,
         <Button data-cy={id + '-button1'} id={id + 'id-button1'} onClick={handleClickOnButton1} color="primary">
           {labels.button1}
         </Button>
-        <Button data-cy={id + '-button2'} id={id + 'id-button2'} onClick={handleClickOnButton2} color="primary">
+        <Button data-cy={id + '-button2'} id={id + 'id-button2'} onClick={handleClickOnButton2} color={colorConfirm}>
           {labels.button2}
         </Button>
       </DialogActions>
@@ -69,6 +76,11 @@ SimpleTwoActionsDialog.propTypes = {
    *  ## Function used when button2 is clicked
    */
   handleClickOnButton2: PropTypes.func.isRequired,
+
+  /**
+   *
+   */
+  colorConfirm: PropTypes.string.isRequired,
 };
 
 SimpleTwoActionsDialog.defaultProps = {
@@ -87,4 +99,5 @@ SimpleTwoActionsDialog.defaultProps = {
     button1: 'Cancel',
     button2: 'Validate',
   },
+  colorConfirm: 'primary',
 };

@@ -27,11 +27,11 @@ export const RolesEditionButton = ({
   const closeDialog = () => setOpen(false);
   const buttonTitle = labels.button?.title ?? 'Share';
   const buttonContent = isIconButton ? (
-    <IconButton data-cy="share-scenario-button" size="medium" variant="outlined" onClick={openDialog} color="primary">
+    <IconButton data-cy="share-scenario-button" size="medium" variant="soft" onClick={openDialog} color="primary">
       <ShareIcon />
     </IconButton>
   ) : (
-    <Button data-cy="share-scenario-button" size="medium" variant="outlined" onClick={openDialog} color="primary">
+    <Button data-cy="share-scenario-button" size="medium" variant="soft" onClick={openDialog} color="primary">
       {buttonTitle}
     </Button>
   );

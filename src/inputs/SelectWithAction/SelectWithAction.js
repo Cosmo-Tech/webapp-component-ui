@@ -49,7 +49,7 @@ export const SelectWithAction = ({ options, selectedOption, onOptionSelected, is
                 className={classes.listItemIcon}
                 style={selectedOption === option.value ? { visibility: 'visible' } : { visibility: 'hidden' }}
               >
-                <CheckIcon color="secondary" />
+                <CheckIcon color="primary" />
               </ListItemIcon>
               <ListItemText
                 data-cy={`select-option-${option.value}`}
