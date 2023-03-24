@@ -4,7 +4,7 @@
 import { Grid, Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormatCustom } from '../../../misc/formatters';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
@@ -16,6 +16,28 @@ export const BasicNumberInput = (props) => {
   const classes = useStyles();
   const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, isDirty, ...otherProps } =
     props;
+
+  const [textInput, setTextInput] = useState(value.toString());
+  useEffect(() => {
+    if (textInput && parseFloat(textInput) !== value) setTextInput(value.toString());
+  }, [value, textInput]);
+
+  const handleChangeEvent = useCallback(
+    (event) => {
+      setTextInput(event.target.value);
+      const inputValueAsNumber = parseFloat(event.target.value);
+      if (inputValueAsNumber !== value) changeNumberField(inputValueAsNumber);
+    },
+    [value, changeNumberField]
+  );
+
+  const handleBlurEvent = useCallback(() => {
+    const valueAsString = value.toString();
+    if (valueAsString !== textInput) {
+      setTextInput(valueAsString);
+    }
+  }, [value, textInput, setTextInput]);
+
   if (textFieldProps.disabled)
     return (
       <BasicInputPlaceholder
@@ -41,8 +63,9 @@ export const BasicNumberInput = (props) => {
           variant="outlined"
           label={label}
           size="small"
-          value={value}
-          onChange={(event) => changeNumberField(parseFloat(event.target.value))}
+          value={textInput}
+          onChange={handleChangeEvent}
+          onBlur={handleBlurEvent}
           inputProps={inputProps}
           InputProps={{
             inputComponent: NumberFormatCustom,
