@@ -176,6 +176,7 @@ export const Table = (props) => {
             columnTypes={columnTypes}
             rowData={rows}
             context={context}
+            stopEditingWhenCellsLoseFocus={true}
           />
         )}
       </div>
