@@ -15,6 +15,7 @@ export const RolesEditionButton = ({
   resourceRolesPermissionsMapping,
   preventNoneRoleForAgents,
   isReadOnly,
+  disabled,
   onConfirmChanges,
   specificAccessByAgent,
   defaultRole,
@@ -31,7 +32,14 @@ export const RolesEditionButton = ({
       <ShareIcon />
     </IconButton>
   ) : (
-    <Button data-cy="share-scenario-button" size="medium" variant="outlined" onClick={openDialog} color="primary">
+    <Button
+      disabled={disabled}
+      data-cy="share-scenario-button"
+      size="medium"
+      variant="outlined"
+      onClick={openDialog}
+      color="primary"
+    >
       {buttonTitle}
     </Button>
   );
@@ -68,8 +76,15 @@ RolesEditionButton.propTypes = {
    */
   isReadOnly: PropTypes.bool,
   /**
+   *  Defines the RolesEditionButton's state:
+   *  - true : the button is disabled (the tooltip will guide users on how to enable the button)
+   *  - false : the button is enabled
+   */
+  disabled: PropTypes.bool,
+  /**
    * List of all users or users groups in the workspace
    */
+
   agents: PropTypes.array.isRequired,
   /**
    * List of users or users groups having specific access to the resource
@@ -153,6 +168,7 @@ RolesEditionButton.propTypes = {
 RolesEditionButton.defaultProps = {
   isIconButton: false,
   isReadOnly: false,
+  disabled: false,
   preventNoneRoleForAgents: false,
   defaultRole: '',
   labels: {
