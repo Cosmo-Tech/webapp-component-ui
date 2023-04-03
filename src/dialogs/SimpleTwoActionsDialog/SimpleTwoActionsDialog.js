@@ -5,25 +5,53 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
-export const SimpleTwoActionsDialog = ({ id, open, labels, handleClickOnButton1, handleClickOnButton2 }) => {
+export const SimpleTwoActionsDialog = ({
+  id,
+  open,
+  labels,
+  handleClickOnButton1,
+  handleClickOnButton2,
+  dialogProps,
+  button1Props,
+  button2Props,
+  closeOnBackdropClick,
+}) => {
   const onClose = (event, reason) => {
-    if (reason !== 'backdropClick') {
+    if (closeOnBackdropClick || reason !== 'backdropClick') {
       handleClickOnButton1();
     }
   };
 
   return (
-    <Dialog open={open} aria-labelledby={id + '-dialog-title'} maxWidth={'xs'} fullWidth={true} onClose={onClose}>
+    <Dialog
+      open={open}
+      aria-labelledby={id + '-dialog-title'}
+      maxWidth={'xs'}
+      fullWidth={true}
+      onClose={onClose}
+      {...dialogProps}
+    >
       <DialogTitle id={id + '-dialog-title'}>{labels.title}</DialogTitle>
       <DialogContent>
         <Typography variant="body1">{labels.body}</Typography>
       </DialogContent>
       <DialogActions>
-        {/* TODO Use button1Props and button2Props to enable variants and colors */}
-        <Button data-cy={id + '-button1'} id={id + 'id-button1'} onClick={handleClickOnButton1} color="primary">
+        <Button
+          data-cy={id + '-button1'}
+          id={id + 'id-button1'}
+          onClick={handleClickOnButton1}
+          color="primary"
+          {...button1Props}
+        >
           {labels.button1}
         </Button>
-        <Button data-cy={id + '-button2'} id={id + 'id-button2'} onClick={handleClickOnButton2} color="primary">
+        <Button
+          data-cy={id + '-button2'}
+          id={id + 'id-button2'}
+          onClick={handleClickOnButton2}
+          color="primary"
+          {...button2Props}
+        >
           {labels.button2}
         </Button>
       </DialogActions>
@@ -69,6 +97,26 @@ SimpleTwoActionsDialog.propTypes = {
    *  ## Function used when button2 is clicked
    */
   handleClickOnButton2: PropTypes.func.isRequired,
+
+  /**
+   * Properties to add or override to the dialog component
+   */
+  dialogProps: PropTypes.object,
+
+  /**
+   * Properties to add or override to the button1 component
+   */
+  button1Props: PropTypes.object,
+
+  /**
+   * Properties to add or override to the button2 component
+   */
+  button2Props: PropTypes.object,
+
+  /**
+   * Close dialog on backdrop click
+   */
+  closeOnBackdropClick: PropTypes.bool,
 };
 
 SimpleTwoActionsDialog.defaultProps = {
@@ -87,4 +135,8 @@ SimpleTwoActionsDialog.defaultProps = {
     button1: 'Cancel',
     button2: 'Validate',
   },
+  dialogProps: {},
+  button1Props: {},
+  button2Props: {},
+  closeOnBackdropClick: false,
 };
