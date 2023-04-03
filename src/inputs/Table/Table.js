@@ -136,7 +136,12 @@ export const Table = (props) => {
   }, [rows]);
 
   return (
-    <div id="table-container" {...otherProps} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
+    <div
+      id="table-container"
+      data-cy="table-input"
+      {...otherProps}
+      className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+    >
       <div data-cy="label">
         <Stack spacing={1} direction="row" alignItems="center">
           <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">

@@ -4,9 +4,8 @@
 
 import React from 'react';
 import { BasicSliderInput } from './BasicSliderInput';
-import { SliderTesting } from '../../../../tests/MuiComponentsTesting/SliderTesting';
+import { SliderTesting, TypographyTesting, StackContainerTesting } from '../../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
-import { TypographyTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
 
@@ -38,10 +37,15 @@ const propsInEditMode = {
   ...defaultProps,
   disabled: false,
 };
+const propsWithDirtyState = {
+  ...propsInEditMode,
+  isDirty: true,
+};
 
 const disabledSliderLabel = new TypographyTesting({ dataCy: 'disabled-input-label' });
 const disabledSliderValue = new TypographyTesting({ dataCy: 'disabled-input-value' });
 const sliderEditMode = new SliderTesting({ dataCy: 'slider-input-average_consumption' });
+const sliderEditModeContainer = new StackContainerTesting({ dataCy: 'slider-input-average_consumption' });
 
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicSliderInput {...props} />);
@@ -74,6 +78,10 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
       expect(sliderEditMode.SliderValue).toHaveValue(propsInEditMode.value.toString());
     });
 
+    test('Checks dirtyInput class is not applied when isDirty is false', () => {
+      expect(sliderEditModeContainer.Stack).not.toHaveDirtyInputClass();
+    });
+
     test('Checks marks of slider in edit mode', () => {
       expect(sliderEditMode.SliderMarks[0]).toBeInTheDocument();
       expect(sliderEditMode.SliderMarks[1]).toBeInTheDocument();
@@ -97,5 +105,9 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
       setUp(propsWithNaNValue);
       expect(disabledSliderValue.text).toEqual('0');
     });
+  });
+  describe('Checks dirtyInput style is applied when isDirty is true', () => {
+    setUp(propsWithDirtyState);
+    expect(sliderEditModeContainer.Stack).toHaveDirtyInputClass();
   });
 });
