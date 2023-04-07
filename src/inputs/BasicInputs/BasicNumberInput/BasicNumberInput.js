@@ -4,7 +4,7 @@
 import { Grid, Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormatCustom } from '../../../misc/formatters';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
@@ -17,37 +17,59 @@ export const BasicNumberInput = (props) => {
   const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, isDirty, ...otherProps } =
     props;
 
-  const [textInput, setTextInput] = useState(value.toString());
+  const convToStringValue = useCallback((numValue) => {
+    return numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 }) ?? '';
+  }, []);
+
+  const [textInput, setTextInput] = useState(convToStringValue(value));
+
+  const setTextInputByValue = useCallback(() => {
+    const stringValue = convToStringValue(value);
+    if (textInput !== stringValue) {
+      setTextInput(stringValue);
+    }
+  }, [convToStringValue, textInput, value]);
+
+  const isFocused = useRef(false);
   useEffect(() => {
-    if (textInput && parseFloat(textInput) !== value) setTextInput(value.toString());
-  }, [value, textInput]);
+    if (!isFocused.current) setTextInputByValue();
+  }, [setTextInputByValue]);
+
+  const handleFocusEvent = useCallback(() => {
+    isFocused.current = true;
+  }, []);
 
   const handleChangeEvent = useCallback(
     (event) => {
-      setTextInput(event.target.value);
-      const inputValueAsNumber = parseFloat(event.target.value);
-      if (inputValueAsNumber !== value) changeNumberField(inputValueAsNumber);
+      const textValue = event.target.value;
+      const numValue = parseFloat(textValue);
+      if (!isNaN(numValue)) {
+        changeNumberField(numValue);
+      } else {
+        changeNumberField(null);
+      }
+      setTextInput(textValue);
     },
-    [value, changeNumberField]
+    [changeNumberField]
   );
 
   const handleBlurEvent = useCallback(() => {
-    const valueAsString = value.toString();
-    if (valueAsString !== textInput) {
-      setTextInput(valueAsString);
-    }
-  }, [value, textInput, setTextInput]);
+    isFocused.current = false;
+    setTextInputByValue();
+  }, [setTextInputByValue]);
 
-  if (textFieldProps.disabled)
+  if (textFieldProps.disabled) {
+    isFocused.current = false;
     return (
       <BasicInputPlaceholder
         id={`number-input-${id}`}
         label={label}
         tooltipText={tooltipText}
-        value={value.toString()}
+        value={convToStringValue(value)}
         {...otherProps}
       />
     );
+  }
 
   return (
     <Grid item xs={3}>
@@ -66,6 +88,7 @@ export const BasicNumberInput = (props) => {
           value={textInput}
           onChange={handleChangeEvent}
           onBlur={handleBlurEvent}
+          onFocus={handleFocusEvent}
           inputProps={inputProps}
           InputProps={{
             inputComponent: NumberFormatCustom,
