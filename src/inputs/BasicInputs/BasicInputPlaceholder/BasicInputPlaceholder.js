@@ -13,7 +13,7 @@ export const BasicInputPlaceholder = ({ id, label, tooltipText, value, ...otherP
         <Typography data-cy="disabled-input-label" variant="subtitle2" color="textSecondary">
           {label}
         </Typography>
-        <TooltipInfo title={tooltipText} size="small" />
+        <TooltipInfo title={tooltipText} />
       </Stack>
       <Typography data-cy="disabled-input-value" variant="body2" sx={{ ml: 1 }}>
         {value}
