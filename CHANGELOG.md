@@ -1,18 +1,33 @@
-## **5.1.0**&emsp;<sub><sup>2022-08-27 (b505413d86d01cb4d4b05af3f30b264cc91cd6e1...b0d5c4db240065952d2400b51d4c5d5457d4b3b6)</sup></sub>
+## **5.2.0** <sub><sup>2023-04-18 (ac3a5a7...23ed453)</sup></sub>
 
 ### Features
-* \[PROD\-9516\] use vertical color indicator for modified inputs ([446662c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/446662c04bcb0e136d27e433a6d8ec5f1e30bd3a))
+
+- \[PROD\-7902\] add optional "disabled" prop in RolesEditionButton ([2ce8e46](https://github.com/Cosmo-Tech/webapp-component-ui/commit/2ce8e46))
+- \[PROD\-11431\] add optional customization props in SimpleTwoActionsDialog ([715887a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/715887a))
 
 ### Bug Fixes
-* fix error banner's animation, handle error properly ([b0d5c4d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b0d5c4db240065952d2400b51d4c5d5457d4b3b6))
+
+- \[PROD\-11411\] in Table component, save cell when it loses focus ([ac3a5a7](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ac3a5a7))
+- fix tooltips props in basic input components ([8caa6f0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/8caa6f0))
+- improve behavior of BasicInputNumber component ([23ed453](https://github.com/Cosmo-Tech/webapp-component-ui/commit/23ed453), [afd20e8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/afd20e8))
+
+## **5.1.0** <sub><sup>2022-08-27 (b505413d86d01cb4d4b05af3f30b264cc91cd6e1...b0d5c4db240065952d2400b51d4c5d5457d4b3b6)</sup></sub>
+
+### Features
+
+- \[PROD\-9516\] use vertical color indicator for modified inputs ([446662c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/446662c04bcb0e136d27e433a6d8ec5f1e30bd3a))
+
+### Bug Fixes
+
+- fix error banner's animation, handle error properly ([b0d5c4d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b0d5c4db240065952d2400b51d4c5d5457d4b3b6))
 
 <br>
 
 ## **5.0.1** <sub><sup>2023-03-01 (40c40f3...0844050)</sup></sub>
 
 ### Bug Fixes
-*  add DataIngestionInProgress status in ScenarioNode ([40c40f3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/40c40f3))
 
+- add DataIngestionInProgress status in ScenarioNode ([40c40f3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/40c40f3))
 
 ## **5.0.0** <sub><sup>2023-02-28</sup></sub>
 
