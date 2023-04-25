@@ -1,9 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Stack, Typography } from '@mui/material';
+import { CircularProgress, Dialog, DialogContent, Stack, Typography, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -13,6 +13,8 @@ import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { ErrorsPanel, TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
+import { TableToolbar } from './components';
+import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
 
 const useStyles = makeStyles((theme) => ({
   ...getCommonInputStyles(theme),
@@ -113,11 +115,6 @@ export const Table = (props) => {
   const gridRef = useRef();
   const dimensions = { height, width };
   const classes = useStyles();
-
-  const context = {
-    dateFormat,
-    editMode,
-  };
   const defaultColDef = getDefaultColumnsProperties(onCellChange);
   const columnTypes = getColumnTypes(dateFormat);
   const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
@@ -128,12 +125,39 @@ export const Table = (props) => {
     clear: labels.clearErrors,
     mainError: labels.errorsPanelMainError,
   };
+  const [isFullscreen, setFullscreen] = useState(false);
+
+  const toggleFullscreen = useCallback(() => {
+    setFullscreen(!isFullscreen);
+  }, [isFullscreen, setFullscreen]);
 
   useEffect(() => {
     // If gridRef is initialized and rows have been changed programmatically (i.e. not through the ag-grid UI), then we
     // have to force the refresh of the table cells for the changes to be re-rendered
     gridRef?.current?.api?.refreshCells();
   }, [rows]);
+
+  const AgGridData = useMemo(() => {
+    const context = {
+      dateFormat,
+      editMode,
+    };
+    return (
+      <AgGridReact
+        ref={gridRef}
+        undoRedoCellEditing={true}
+        rowDragManaged={true}
+        suppressDragLeaveHidesColumns={true}
+        allowDragFromColumnsToolPanel={true}
+        columnDefs={formattedColumns}
+        defaultColDef={defaultColDef}
+        columnTypes={columnTypes}
+        rowData={rows}
+        context={context}
+        stopEditingWhenCellsLoseFocus={true}
+      />
+    );
+  }, [columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
 
   return (
     <div
@@ -168,21 +192,24 @@ export const Table = (props) => {
           buildErrorsCountLabel={buildErrorsPanelTitle}
         />
       )}
-      <div data-cy="grid" id="grid-container" style={dimensions} className={agTheme}>
+      <div data-cy="grid" id="grid-container" className={agTheme}>
         {isReady && (
-          <AgGridReact
-            ref={gridRef}
-            undoRedoCellEditing={true}
-            rowDragManaged={true}
-            suppressDragLeaveHidesColumns={true}
-            allowDragFromColumnsToolPanel={true}
-            columnDefs={formattedColumns}
-            defaultColDef={defaultColDef}
-            columnTypes={columnTypes}
-            rowData={rows}
-            context={context}
-            stopEditingWhenCellsLoseFocus={true}
-          />
+          <>
+            <TableToolbar isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
+            <Box sx={dimensions}>{AgGridData}</Box>
+            <Dialog
+              fullScreen
+              open={isFullscreen}
+              onClose={toggleFullscreen}
+              className={agTheme}
+              data-cy="fullscreen-table"
+            >
+              <DialogContent data-cy="grid">
+                <TableToolbar isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
+                <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{AgGridData}</Box>
+              </DialogContent>
+            </Dialog>
+          </>
         )}
       </div>
     </div>
