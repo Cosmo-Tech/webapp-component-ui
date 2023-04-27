@@ -1,3 +1,7 @@
+## **5.2.1** <sub><sup>2023-04-27 (7d03254...7d03254)</sup></sub>
+
+- update dependencies
+
 ## **5.2.0** <sub><sup>2023-04-18 (ac3a5a7...23ed453)</sup></sub>
 
 ### Features
