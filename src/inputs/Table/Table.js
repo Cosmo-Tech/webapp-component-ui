@@ -46,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
+  nonEditableCell: {
+    backgroundColor: theme.palette.action.disabled,
+    color: theme.palette.text.disabled,
+  },
 }));
 
 const LOADING_STATUS_MAPPING = {
@@ -115,7 +119,7 @@ export const Table = (props) => {
   const gridRef = useRef();
   const dimensions = { height, width };
   const classes = useStyles();
-  const defaultColDef = getDefaultColumnsProperties(onCellChange);
+  const defaultColDef = getDefaultColumnsProperties(onCellChange, classes);
   const columnTypes = getColumnTypes(dateFormat);
   const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
   const hasErrors = errors && errors.length > 0;

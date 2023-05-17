@@ -131,7 +131,7 @@ const _dateFilterValueGetter = (params) => {
   return DateUtils.parse(strValue, dateFormat);
 };
 
-export const getDefaultColumnsProperties = (onCellChange) => {
+export const getDefaultColumnsProperties = (onCellChange, classes) => {
   return {
     editable: (params) => params.context.editMode,
     resizable: true,
@@ -140,6 +140,9 @@ export const getDefaultColumnsProperties = (onCellChange) => {
     valueSetter: _editModeSetter,
     onCellValueChanged: (event) => {
       onCellChange(event);
+    },
+    cellClass: (params) => {
+      return params?.column?.colDef?.editable ? null : classes.nonEditableCell;
     },
   };
 };
