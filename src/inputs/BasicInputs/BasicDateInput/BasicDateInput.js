@@ -15,7 +15,7 @@ import { getCommonInputStyles } from '../../style';
 const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicDateInput = (props) => {
-  const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, isDirty, ...otherProps } = props;
+  const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, isDirty, error, ...otherProps } = props;
   const classes = useStyles();
   if (dateProps.disabled)
     return (
@@ -23,7 +23,7 @@ export const BasicDateInput = (props) => {
         id={`date-input-${id}`}
         label={label}
         tooltipText={tooltipText}
-        value={value.toLocaleDateString()}
+        value={value?.toLocaleDateString() ?? ''}
         {...otherProps}
       />
     );
@@ -43,10 +43,19 @@ export const BasicDateInput = (props) => {
             inputFormat={format}
             minDate={dateProps.minDate}
             maxDate={dateProps.maxDate}
-            renderInput={(params) => <TextField variant="outlined" sx={{ flexGrow: 1 }} size="small" {...params} />}
+            renderInput={(params) => (
+              <TextField
+                variant="outlined"
+                sx={{ flexGrow: 1 }}
+                size="small"
+                error={error}
+                helperText={error?.message ?? ''}
+                {...params}
+              />
+            )}
             id={`date-input-${id}`}
             onChange={changeSelectedDate}
-            value={value}
+            value={value ?? new Date(undefined)}
           />
         </LocalizationProvider>
         <TooltipInfo title={tooltipText} variant="small" />
@@ -71,7 +80,7 @@ BasicDateInput.propTypes = {
   /**
    * BasicDateInput's value
    */
-  value: PropTypes.object.isRequired,
+  value: PropTypes.object,
   /**
    * BasicDateInput's date format
    */
@@ -88,6 +97,10 @@ BasicDateInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
 };
 
 BasicDateInput.defaultProps = {

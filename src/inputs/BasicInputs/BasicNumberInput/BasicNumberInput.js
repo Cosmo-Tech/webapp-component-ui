@@ -14,11 +14,23 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicNumberInput = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, value, textFieldProps, inputProps, changeNumberField, isDirty, ...otherProps } =
-    props;
+  const {
+    id,
+    label,
+    tooltipText,
+    value,
+    textFieldProps,
+    inputProps,
+    changeNumberField,
+    isDirty,
+    error,
+    ...otherProps
+  } = props;
 
   const convToStringValue = useCallback((numValue) => {
-    return numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 }) ?? '';
+    return isNaN(numValue)
+      ? ''
+      : numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 }) ?? '';
   }, []);
 
   const [textInput, setTextInput] = useState(convToStringValue(value));
@@ -81,6 +93,7 @@ export const BasicNumberInput = (props) => {
         className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
       >
         <TextField
+          id={`number-input-${id}`}
           sx={{ flexGrow: 1 }}
           variant="outlined"
           label={label}
@@ -93,6 +106,8 @@ export const BasicNumberInput = (props) => {
           InputProps={{
             inputComponent: NumberFormatCustom,
           }}
+          error={!!error}
+          helperText={error?.message ?? ''}
         />
         <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
@@ -133,6 +148,10 @@ BasicNumberInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
 };
 
 BasicNumberInput.defaultProps = {
