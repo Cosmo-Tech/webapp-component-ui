@@ -5,14 +5,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import { IconButton, Tooltip } from '@mui/material';
 
 export const FullscreenButton = (props) => {
-  const { isFullscreen, toggleFullscreen } = props;
+  const { isFullscreen, toggleFullscreen, isReady, label } = props;
 
-  return isFullscreen ? (
-    <CloseFullscreenIcon onClick={toggleFullscreen} fontSize="inherit" data-cy="grid-fullscreen-button" />
-  ) : (
-    <OpenInFullIcon onClick={toggleFullscreen} fontSize="inherit" data-cy="grid-fullscreen-button" />
+  return (
+    <Tooltip title={label}>
+      <span>
+        <IconButton
+          onClick={toggleFullscreen}
+          size="small"
+          data-cy="grid-fullscreen-button"
+          color="primary"
+          disabled={!isReady}
+        >
+          {isFullscreen ? <CloseFullscreenIcon fontSize="inherit" /> : <OpenInFullIcon fontSize="inherit" />}
+        </IconButton>
+      </span>
+    </Tooltip>
   );
 };
 
@@ -25,4 +36,12 @@ FullscreenButton.propTypes = {
    * Function used to translate parent table in fullscreen
    */
   toggleFullscreen: PropTypes.func.isRequired,
+  /*
+   * Boolean to indicate if the table has some data load
+   */
+  isReady: PropTypes.bool.isRequired,
+  /*
+   * label of the button used for Tooltip
+   */
+  label: PropTypes.string.isRequired,
 };

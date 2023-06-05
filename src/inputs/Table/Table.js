@@ -3,7 +3,7 @@
 
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { CircularProgress, Dialog, DialogContent, Stack, Typography, Box } from '@mui/material';
+import { Dialog, DialogContent, Stack, Typography, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -15,6 +15,7 @@ import { ErrorsPanel, TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
 import { TableToolbar } from './components';
 import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 const useStyles = makeStyles((theme) => ({
   ...getCommonInputStyles(theme),
@@ -50,16 +51,23 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.action.disabled,
     color: theme.palette.text.disabled,
   },
-}));
 
-const LOADING_STATUS_MAPPING = {
-  [TABLE_DATA_STATUS.EMPTY]: false,
-  [TABLE_DATA_STATUS.UPLOADING]: true,
-  [TABLE_DATA_STATUS.DOWNLOADING]: true,
-  [TABLE_DATA_STATUS.PARSING]: true,
-  [TABLE_DATA_STATUS.READY]: false,
-  [TABLE_DATA_STATUS.ERROR]: false,
-};
+  noTableTextDiv: {
+    textAlign: 'center',
+    padding: theme.spacing(4, 0),
+    width: '15%',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+  },
+
+  noTableTextTitle: {
+    marginBottom: theme.spacing(1),
+  },
+
+  noTableTextDescription: {
+    marginBottom: theme.spacing(4),
+  },
+}));
 
 const _formatMinMaxDatesInColumns = (col, dateFormat) => {
   if (col.type && col.type.indexOf('date') !== -1) {
@@ -113,6 +121,9 @@ export const Table = (props) => {
     buildErrorsPanelTitle,
     agTheme,
     isDirty,
+    onImport,
+    onExport,
+    customToolbarActions,
     ...otherProps
   } = props;
 
@@ -123,12 +134,13 @@ export const Table = (props) => {
   const columnTypes = getColumnTypes(dateFormat);
   const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
   const hasErrors = errors && errors.length > 0;
-  const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const isReady = dataStatus === TABLE_DATA_STATUS.READY;
-  const errorPanelLabels = {
-    clear: labels.clearErrors,
-    mainError: labels.errorsPanelMainError,
-  };
+  const errorPanelLabels = useMemo(() => {
+    return {
+      clear: labels.clearErrors,
+      mainError: labels.errorsPanelMainError,
+    };
+  }, [labels.clearErrors, labels.errorsPanelMainError]);
   const [isFullscreen, setFullscreen] = useState(false);
 
   const toggleFullscreen = useCallback(() => {
@@ -141,7 +153,48 @@ export const Table = (props) => {
     gridRef?.current?.api?.refreshCells();
   }, [rows]);
 
-  const agGridElement = useMemo(() => {
+  const tableToolbarElement = useMemo(() => {
+    return (
+      <>
+        {hasErrors && (
+          <ErrorsPanel
+            labels={errorPanelLabels}
+            errors={errors}
+            maxErrorsCount={maxErrorsCount}
+            onClear={onClearErrors}
+            buildErrorsCountLabel={buildErrorsPanelTitle}
+          />
+        )}
+        <TableToolbar
+          isFullscreen={isFullscreen}
+          toggleFullscreen={toggleFullscreen}
+          isReady={isReady}
+          onImport={onImport}
+          onExport={onExport}
+          editMode={editMode}
+          customToolbarActions={customToolbarActions}
+          labels={labels}
+        />
+      </>
+    );
+  }, [
+    buildErrorsPanelTitle,
+    customToolbarActions,
+    editMode,
+    errorPanelLabels,
+    errors,
+    hasErrors,
+    isFullscreen,
+    isReady,
+    labels,
+    maxErrorsCount,
+    onClearErrors,
+    onExport,
+    onImport,
+    toggleFullscreen,
+  ]);
+
+  const AgGridData = useMemo(() => {
     const context = {
       dateFormat,
       editMode,
@@ -178,43 +231,44 @@ export const Table = (props) => {
           <TooltipInfo title={tooltipText} variant="small" />
         </Stack>
       </div>
-      <div className={classes.toolBar}>
-        {extraToolbarActions}
-        {isLoading && (
-          <>
-            <div className={classes.loadingLabel}>{labels.loading}</div>
-            <CircularProgress disableShrink color="primary" className={classes.loadingSpinner} size={18} />
-          </>
-        )}
-      </div>
-      {hasErrors && (
-        <ErrorsPanel
-          labels={errorPanelLabels}
-          errors={errors}
-          maxErrorsCount={maxErrorsCount}
-          onClear={onClearErrors}
-          buildErrorsCountLabel={buildErrorsPanelTitle}
-        />
-      )}
+      {extraToolbarActions ? <div className={classes.toolBar}>{extraToolbarActions}</div> : null}
       <div data-cy="grid" id="grid-container" className={agTheme}>
-        {isReady && (
-          <>
-            <TableToolbar isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
-            <Box sx={dimensions}>{agGridElement}</Box>
-            <Dialog
-              fullScreen
-              open={isFullscreen}
-              onClose={toggleFullscreen}
-              className={agTheme}
-              data-cy="fullscreen-table"
-            >
-              <DialogContent data-cy="grid">
-                <TableToolbar isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
-                <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{agGridElement}</Box>
-              </DialogContent>
-            </Dialog>
-          </>
-        )}
+        {tableToolbarElement}
+        <Box sx={dimensions}>
+          {isReady ? (
+            AgGridData
+          ) : (
+            <div className={classes.noTableTextDiv}>
+              <h2 className={classes.noTableTextTitle}>{labels.placeholderTitle}</h2>
+              <p className={classes.noTableTextDescription}>{labels.placeholderBody}</p>
+              <Button
+                key="import-file-button"
+                data-cy="import-file-button"
+                disabled={!editMode}
+                color="primary"
+                variant="contained"
+                startIcon={<UploadFileIcon />}
+                component="label"
+                onChange={onImport}
+              >
+                {labels.import}
+                <input type="file" accept=".csv, .xlsx" hidden />
+              </Button>
+            </div>
+          )}
+        </Box>
+        <Dialog
+          fullScreen
+          open={isFullscreen}
+          onClose={toggleFullscreen}
+          className={agTheme}
+          data-cy="fullscreen-table"
+        >
+          <DialogContent data-cy="grid">
+            {tableToolbarElement}
+            <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{AgGridData}</Box>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
@@ -269,15 +323,24 @@ Table.propTypes = {
     label: PropTypes.string,
     loading: PropTypes.string,
     errorsPanelMainError: PropTypes.string,
+    placeholderTitle: PropTypes.string,
+    placeholderBody: PropTypes.string,
+    import: PropTypes.string,
+    export: PropTypes.string,
+    fullscreen: PropTypes.string,
   }),
   /**
    * Tooltip text
    */
   tooltipText: PropTypes.string,
   /**
-   *  List of extra React elements to add in the Table toolbar
+   *  List of extra React elements to add at top of TableToolbar
    */
-  extraToolbarActions: PropTypes.arrayOf(PropTypes.node),
+  extraToolbarActions: PropTypes.array,
+  /*
+   * List of extra React elements to add in the TableToolbar
+   */
+  customToolbarActions: PropTypes.array,
   /**
    *  Callback function that will be called when a cell is edited
    *  Function parameters:
@@ -298,6 +361,12 @@ Table.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /*
+   * Function used for there correspondant name in IconButton from TableToolbar.
+   * If there are not defined, the button will not be rendered.
+   */
+  onImport: PropTypes.func,
+  onExport: PropTypes.func,
 };
 
 Table.defaultProps = {
