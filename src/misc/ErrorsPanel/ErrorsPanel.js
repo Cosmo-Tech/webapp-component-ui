@@ -17,7 +17,7 @@ import useStyles from './style';
 
 export const ErrorsPanel = (props) => {
   const classes = useStyles();
-  const { errors, maxErrorsCount, labels, onClear, buildErrorsCountLabel } = props;
+  const { errors, maxErrorsCount, labels, onClear, buildErrorsCountLabel, className } = props;
 
   let errorsCountLabel = labels.errorsCountLabel;
   if (buildErrorsCountLabel) {
@@ -65,7 +65,7 @@ export const ErrorsPanel = (props) => {
   }, [errors, maxErrorsCount, classes]);
 
   return (
-    <Paper className={classes.errorsContainer} data-cy="errors-panel">
+    <Paper className={`${classes.errorsContainer} ${className}`} data-cy="errors-panel">
       <Typography className={classes.errorsHeader} data-cy="errors-header">
         {labels.mainError} {errorsCountLabel}
       </Typography>
@@ -124,6 +124,7 @@ ErrorsPanel.propTypes = {
    *    errorsCount: number of errors in the errors panel
    */
   buildErrorsCountLabel: PropTypes.func,
+  className: PropTypes.string,
 };
 
 ErrorsPanel.defaultProps = {

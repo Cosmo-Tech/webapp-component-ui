@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useStyles } from './style';
-import { FullscreenButton, ImportButton, ExportButton } from '..';
+import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from '..';
 import { CircularProgress } from '@mui/material';
 
 export const TableToolbar = (props) => {
@@ -15,6 +15,8 @@ export const TableToolbar = (props) => {
     isLoading,
     onImport,
     onExport,
+    onAddRow,
+    onDeleteRow,
     editMode,
     customToolbarActions,
     labels,
@@ -22,17 +24,23 @@ export const TableToolbar = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.tableToolbar} style={isReady ? { borderBottom: 'none' } : null}>
+    <div className={classes.tableToolbar} style={isReady ? { borderBottom: 'none' } : null} data-cy="table-toolbar">
       <FullscreenButton
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
-        disabled={!(isReady && !isLoading)}
-        label={labels.fullscreen ?? 'Fullscreen'}
+        disabled={!isReady || isLoading}
+        label={labels.fullscreen}
       />
-      {onImport && (
-        <ImportButton onImport={onImport} disabled={!(editMode && !isLoading)} label={labels.import ?? 'Import'} />
+      {onImport && <ImportButton onImport={onImport} label={labels.import} disabled={!editMode || isLoading} />}
+      {onExport && <ExportButton onExport={onExport} label={labels.export} disabled={isLoading} />}
+      {onAddRow && <AddRowButton onAddRow={onAddRow} label={labels.addRow} disabled={!editMode || isLoading} />}
+      {onDeleteRow && (
+        <DeleteRowButton
+          onDeleteRow={onDeleteRow}
+          labels={labels.deleteRows}
+          disabled={!editMode || !isReady || isLoading}
+        />
       )}
-      {onExport && <ExportButton onExport={onExport} label={labels.export ?? 'Export'} disabled={isLoading} />}
       {isLoading ? (
         <span className={classes.tableLoading}>
           {labels.loading}
@@ -75,6 +83,14 @@ TableToolbar.propTypes = {
    */
   onExport: PropTypes.func,
   /*
+   * Function used to add a row in the Table. If it's not defined, the button won't be displayed
+   */
+  onAddRow: PropTypes.func,
+  /*
+   * Function used to remove selected rows in the Table. If it's not defined, the button won't be displayed
+   */
+  onDeleteRow: PropTypes.func,
+  /*
    * List of extra React elements to add in the TableToolbar
    */
   customToolbarActions: PropTypes.array,
@@ -83,16 +99,21 @@ TableToolbar.propTypes = {
    * Structure:
    * <pre>
      {
+      loading: 'string',
       import: 'string',
       export: 'string',
+      addRow: 'string',
+      deleteRows: 'string',
       fullscreen: 'string',
     }
    </pre>
    */
   labels: PropTypes.shape({
+    loading: PropTypes.string,
     import: PropTypes.string,
     export: PropTypes.string,
+    addRow: PropTypes.string,
+    deleteRows: PropTypes.string,
     fullscreen: PropTypes.string,
-    loading: PropTypes.string,
-  }),
+  }).isRequired,
 };
