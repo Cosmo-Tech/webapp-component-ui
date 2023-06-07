@@ -137,7 +137,7 @@ export const Table = (props) => {
     gridRef?.current?.api?.refreshCells();
   }, [rows]);
 
-  const AgGridData = useMemo(() => {
+  const agGridElement = useMemo(() => {
     const context = {
       dateFormat,
       editMode,
@@ -196,7 +196,7 @@ export const Table = (props) => {
         {isReady && (
           <>
             <TableToolbar isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
-            <Box sx={dimensions}>{AgGridData}</Box>
+            <Box sx={dimensions}>{agGridElement}</Box>
             <Dialog
               fullScreen
               open={isFullscreen}
@@ -206,7 +206,7 @@ export const Table = (props) => {
             >
               <DialogContent data-cy="grid">
                 <TableToolbar isFullscreen={isFullscreen} toggleFullscreen={toggleFullscreen} />
-                <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{AgGridData}</Box>
+                <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{agGridElement}</Box>
               </DialogContent>
             </Dialog>
           </>
