@@ -168,18 +168,16 @@ export const Table = (props) => {
 
   const tableToolbarElement = useMemo(() => {
     return (
-      <>
-        <TableToolbar
-          isFullscreen={isFullscreen}
-          toggleFullscreen={toggleFullscreen}
-          isReady={isReady}
-          onImport={onImport}
-          onExport={onExport}
-          editMode={editMode}
-          customToolbarActions={customToolbarActions}
-          labels={labels}
-        />
-      </>
+      <TableToolbar
+        isFullscreen={isFullscreen}
+        toggleFullscreen={toggleFullscreen}
+        isReady={isReady}
+        onImport={onImport}
+        onExport={onExport}
+        editMode={editMode}
+        customToolbarActions={customToolbarActions}
+        labels={labels}
+      />
     );
   }, [customToolbarActions, editMode, isFullscreen, isReady, labels, onExport, onImport, toggleFullscreen]);
 

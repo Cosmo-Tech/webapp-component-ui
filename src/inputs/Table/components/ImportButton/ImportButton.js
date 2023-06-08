@@ -7,7 +7,7 @@ import { Tooltip, IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export const ImportButton = (props) => {
-  const { editMode, onImport, label } = props;
+  const { disabled, onImport, label } = props;
   return (
     <Tooltip title={label}>
       <span>
@@ -17,7 +17,7 @@ export const ImportButton = (props) => {
           onChange={onImport}
           size="small"
           color="primary"
-          disabled={!editMode}
+          disabled={disabled}
           data-cy="import-file-button"
         >
           <input type="file" accept=".csv, .xlsx" hidden />
@@ -36,7 +36,7 @@ ImportButton.propTypes = {
   /*
    * Boolean use to know if the user have rights to edit the solution
    */
-  editMode: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   /*
    * label of the button used for Tooltip
    */
