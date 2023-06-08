@@ -34,7 +34,7 @@ ImportButton.propTypes = {
    */
   onImport: PropTypes.func.isRequired,
   /*
-   * Boolean use to know if the user have rights to edit the solution
+   * Boolean to define is the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
   /*

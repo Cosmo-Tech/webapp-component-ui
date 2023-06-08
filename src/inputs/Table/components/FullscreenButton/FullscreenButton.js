@@ -37,7 +37,7 @@ FullscreenButton.propTypes = {
    */
   toggleFullscreen: PropTypes.func.isRequired,
   /*
-   * Boolean to indicate if the table has some data load
+   * Boolean to define is the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
   /*
