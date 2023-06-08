@@ -243,7 +243,6 @@ export const Table = (props) => {
               <p className={classes.noTableTextDescription}>{labels.placeholderBody}</p>
               <Button
                 key="import-file-button"
-                data-cy="import-file-button"
                 disabled={!editMode}
                 color="primary"
                 variant="contained"

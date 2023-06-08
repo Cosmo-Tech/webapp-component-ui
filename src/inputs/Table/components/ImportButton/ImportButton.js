@@ -18,6 +18,7 @@ export const ImportButton = (props) => {
           size="small"
           color="primary"
           disabled={!editMode}
+          data-cy="import-file-button"
         >
           <input type="file" accept=".csv, .xlsx" hidden />
           <UploadFileIcon fontSize="inherit" />

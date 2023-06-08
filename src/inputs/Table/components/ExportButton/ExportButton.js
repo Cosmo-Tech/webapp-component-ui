@@ -11,7 +11,7 @@ export const ExportButton = (props) => {
   return (
     <Tooltip title={label}>
       <span>
-        <IconButton onClick={onExport} size="small" color="primary" disabled={!isReady}>
+        <IconButton onClick={onExport} size="small" color="primary" disabled={!isReady} data-cy="export-button">
           <DownloadIcon fontSize="inherit" />
         </IconButton>
       </span>
