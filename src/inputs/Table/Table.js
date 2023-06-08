@@ -181,7 +181,7 @@ export const Table = (props) => {
     );
   }, [customToolbarActions, editMode, isFullscreen, isReady, labels, onExport, onImport, toggleFullscreen]);
 
-  const AgGridData = useMemo(() => {
+  const agGridElement = useMemo(() => {
     const context = {
       dateFormat,
       editMode,
@@ -224,7 +224,7 @@ export const Table = (props) => {
         {tableToolbarElement}
         <Box sx={dimensions}>
           {isReady ? (
-            AgGridData
+            agGridElement
           ) : (
             <div className={classes.emptyTablePlaceholderDiv}>
               <h2 className={classes.emptyTablePlaceholderTitle}>{labels.placeholderTitle}</h2>
@@ -256,7 +256,7 @@ export const Table = (props) => {
           <DialogContent data-cy="grid">
             {errorsPanelElement}
             {tableToolbarElement}
-            <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{AgGridData}</Box>
+            <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{agGridElement}</Box>
           </DialogContent>
         </Dialog>
       </div>
