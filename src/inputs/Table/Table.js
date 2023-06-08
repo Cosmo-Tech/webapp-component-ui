@@ -326,11 +326,11 @@ Table.propTypes = {
   /**
    *  List of extra React elements to add at top of TableToolbar
    */
-  extraToolbarActions: PropTypes.array,
+  extraToolbarActions: PropTypes.arrayOf(PropTypes.node),
   /*
    * List of extra React elements to add in the TableToolbar
    */
-  customToolbarActions: PropTypes.array,
+  customToolbarActions: PropTypes.arrayOf(PropTypes.node),
   /**
    *  Callback function that will be called when a cell is edited
    *  Function parameters:
