@@ -32,7 +32,7 @@ ImportButton.propTypes = {
   /*
    * Function use to import a file in Table component readable by AgGrid
    */
-  onImport: PropTypes.func,
+  onImport: PropTypes.func.isRequired,
   /*
    * Boolean use to know if the user have rights to edit the solution
    */

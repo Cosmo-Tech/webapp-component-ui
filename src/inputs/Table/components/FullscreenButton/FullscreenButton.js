@@ -8,7 +8,7 @@ import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import { IconButton, Tooltip } from '@mui/material';
 
 export const FullscreenButton = (props) => {
-  const { isFullscreen, toggleFullscreen, isReady, label } = props;
+  const { isFullscreen, toggleFullscreen, disabled, label } = props;
 
   return (
     <Tooltip title={label}>
@@ -18,7 +18,7 @@ export const FullscreenButton = (props) => {
           size="small"
           data-cy="grid-fullscreen-button"
           color="primary"
-          disabled={!isReady}
+          disabled={disabled}
         >
           {isFullscreen ? <CloseFullscreenIcon fontSize="inherit" /> : <OpenInFullIcon fontSize="inherit" />}
         </IconButton>
@@ -39,7 +39,7 @@ FullscreenButton.propTypes = {
   /*
    * Boolean to indicate if the table has some data load
    */
-  isReady: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   /*
    * label of the button used for Tooltip
    */

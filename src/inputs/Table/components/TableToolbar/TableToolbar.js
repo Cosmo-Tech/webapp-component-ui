@@ -15,11 +15,11 @@ export const TableToolbar = (props) => {
       <FullscreenButton
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
-        isReady={isReady}
+        disabled={!isReady}
         label={labels.fullscreen}
       />
       {onImport ? <ImportButton onImport={onImport} editMode={editMode} label={labels.import} /> : null}
-      {onExport ? <ExportButton onExport={onExport} isReady={isReady} label={labels.export} /> : null}
+      {onExport ? <ExportButton onExport={onExport} disabled={!isReady} label={labels.export} /> : null}
       {customToolbarActions}
     </div>
   );

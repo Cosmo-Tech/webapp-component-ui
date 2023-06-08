@@ -7,11 +7,11 @@ import { IconButton, Tooltip } from '@mui/material';
 import PropTypes from 'prop-types';
 
 export const ExportButton = (props) => {
-  const { onExport, isReady, label } = props;
+  const { onExport, disabled, label } = props;
   return (
     <Tooltip title={label}>
       <span>
-        <IconButton onClick={onExport} size="small" color="primary" disabled={!isReady} data-cy="export-button">
+        <IconButton onClick={onExport} size="small" color="primary" disabled={disabled} data-cy="export-button">
           <DownloadIcon fontSize="inherit" />
         </IconButton>
       </span>
@@ -23,11 +23,11 @@ ExportButton.propTypes = {
   /*
    * Function use to export a file from Table
    */
-  onExport: PropTypes.func,
+  onExport: PropTypes.func.isRequired,
   /*
    * Boolean value to know if there is some data fully loaded
    */
-  isReady: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
   /*
    * label of the button used for Tooltip
    */

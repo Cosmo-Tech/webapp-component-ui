@@ -51,20 +51,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.action.disabled,
     color: theme.palette.text.disabled,
   },
-
-  noTableTextDiv: {
+  emptyTablePlaceholderDiv: {
     textAlign: 'center',
     padding: theme.spacing(4, 0),
     width: '15%',
     marginRight: 'auto',
     marginLeft: 'auto',
   },
-
-  noTableTextTitle: {
+  emptyTablePlaceholderTitle: {
     marginBottom: theme.spacing(1),
   },
-
-  noTableTextDescription: {
+  emptyTablePlaceholderBody: {
     marginBottom: theme.spacing(4),
   },
 }));
@@ -153,7 +150,7 @@ export const Table = (props) => {
     gridRef?.current?.api?.refreshCells();
   }, [rows]);
 
-  const tableToolbarElement = useMemo(() => {
+  const errorsPanelElement = useMemo(() => {
     return (
       <>
         {hasErrors && (
@@ -165,6 +162,13 @@ export const Table = (props) => {
             buildErrorsCountLabel={buildErrorsPanelTitle}
           />
         )}
+      </>
+    );
+  }, [buildErrorsPanelTitle, errorPanelLabels, errors, hasErrors, maxErrorsCount, onClearErrors]);
+
+  const tableToolbarElement = useMemo(() => {
+    return (
+      <>
         <TableToolbar
           isFullscreen={isFullscreen}
           toggleFullscreen={toggleFullscreen}
@@ -177,22 +181,7 @@ export const Table = (props) => {
         />
       </>
     );
-  }, [
-    buildErrorsPanelTitle,
-    customToolbarActions,
-    editMode,
-    errorPanelLabels,
-    errors,
-    hasErrors,
-    isFullscreen,
-    isReady,
-    labels,
-    maxErrorsCount,
-    onClearErrors,
-    onExport,
-    onImport,
-    toggleFullscreen,
-  ]);
+  }, [customToolbarActions, editMode, isFullscreen, isReady, labels, onExport, onImport, toggleFullscreen]);
 
   const AgGridData = useMemo(() => {
     const context = {
@@ -233,26 +222,29 @@ export const Table = (props) => {
       </div>
       {extraToolbarActions ? <div className={classes.toolBar}>{extraToolbarActions}</div> : null}
       <div data-cy="grid" id="grid-container" className={agTheme}>
+        {errorsPanelElement}
         {tableToolbarElement}
         <Box sx={dimensions}>
           {isReady ? (
             AgGridData
           ) : (
-            <div className={classes.noTableTextDiv}>
-              <h2 className={classes.noTableTextTitle}>{labels.placeholderTitle}</h2>
-              <p className={classes.noTableTextDescription}>{labels.placeholderBody}</p>
-              <Button
-                key="import-file-button"
-                disabled={!editMode}
-                color="primary"
-                variant="contained"
-                startIcon={<UploadFileIcon />}
-                component="label"
-                onChange={onImport}
-              >
-                {labels.import}
-                <input type="file" accept=".csv, .xlsx" hidden />
-              </Button>
+            <div className={classes.emptyTablePlaceholderDiv}>
+              <h2 className={classes.emptyTablePlaceholderTitle}>{labels.placeholderTitle}</h2>
+              <p className={classes.emptyTablePlaceholderBody}>{labels.placeholderBody}</p>
+              {onImport ? (
+                <Button
+                  key="import-file-button"
+                  disabled={!editMode}
+                  color="primary"
+                  variant="contained"
+                  startIcon={<UploadFileIcon />}
+                  component="label"
+                  onChange={onImport}
+                >
+                  {labels.import}
+                  <input type="file" accept=".csv, .xlsx" hidden />
+                </Button>
+              ) : null}
             </div>
           )}
         </Box>
@@ -264,6 +256,7 @@ export const Table = (props) => {
           data-cy="fullscreen-table"
         >
           <DialogContent data-cy="grid">
+            {errorsPanelElement}
             {tableToolbarElement}
             <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{AgGridData}</Box>
           </DialogContent>
@@ -361,10 +354,14 @@ Table.propTypes = {
    */
   isDirty: PropTypes.bool,
   /*
-   * Function used for there correspondant name in IconButton from TableToolbar.
-   * If there are not defined, the button will not be rendered.
+   * Callback function that will be called when user click on one of the import buttons, in
+   * the toolbar or in the table placeholder.If not defined, these buttons will not be rendered.
    */
   onImport: PropTypes.func,
+  /*
+   * Callback function that will be called when user click on the export button.
+   * If not defined, this button will not be rendered.
+   */
   onExport: PropTypes.func,
 };
 
