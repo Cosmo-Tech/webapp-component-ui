@@ -18,8 +18,8 @@ export const TableToolbar = (props) => {
         disabled={!isReady}
         label={labels.fullscreen}
       />
-      {onImport ? <ImportButton onImport={onImport} editMode={editMode} label={labels.import} /> : null}
-      {onExport ? <ExportButton onExport={onExport} disabled={!isReady} label={labels.export} /> : null}
+      {onImport ? <ImportButton onImport={onImport} disabled={!editMode} label={labels.import} /> : null}
+      {onExport ? <ExportButton onExport={onExport} label={labels.export} /> : null}
       {customToolbarActions}
     </div>
   );
