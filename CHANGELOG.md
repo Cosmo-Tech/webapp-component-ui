@@ -1,3 +1,13 @@
+## **4.7.1** <sub><sup>2023-06-15 (94f1ab2...ca51fe3)</sup></sub>
+
+### Bug Fixes
+
+- make labels\.dataInTransfer prop optional in SimplePowerBIReportEmbed component to prevent breaking change ([5b7f6e8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/5b7f6e8235cbaab4112d6379fc0897adfdb5f15c))
+
+### Dependencies
+
+- update dependencies
+
 ## **4.7.0** <sub><sup>2023-02-07 (7798970...7923344)</sup></sub>
 
 ### Features
