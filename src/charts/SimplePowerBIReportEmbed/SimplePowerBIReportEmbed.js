@@ -142,7 +142,11 @@ export const SimplePowerBIReportEmbed = ({
       return <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
     if (dataInTransfer) {
       return (
-        <DashboardPlaceholder label={labels.dataInTransfer.label} title={labels.dataInTransfer.title} inProgress />
+        <DashboardPlaceholder
+          label={labels?.dataInTransfer?.label ?? 'Scenario results transfer in progress...'}
+          title={labels?.dataInTransfer?.title}
+          inProgress
+        />
       );
     }
     if (hasError)
@@ -363,7 +367,7 @@ SimplePowerBIReportEmbed.propTypes = {
     dataInTransfer: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
     hasErrors: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
