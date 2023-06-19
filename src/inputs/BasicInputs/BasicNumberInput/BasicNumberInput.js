@@ -70,7 +70,7 @@ export const BasicNumberInput = (props) => {
     setTextInputByValue();
   }, [setTextInputByValue]);
 
-  if (textFieldProps.disabled) {
+  if (textFieldProps?.disabled) {
     isFocused.current = false;
     return (
       <BasicInputPlaceholder

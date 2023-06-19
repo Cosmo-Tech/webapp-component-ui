@@ -27,7 +27,7 @@ export const BasicRadioInput = (props) => {
     ...otherProps
   } = props;
 
-  if (textFieldProps.disabled) {
+  if (textFieldProps?.disabled) {
     const valueString = enumValues.find((valueOption) => valueOption.key === value).value;
     return (
       <BasicInputPlaceholder

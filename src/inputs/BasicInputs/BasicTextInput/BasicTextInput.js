@@ -15,7 +15,7 @@ export const BasicTextInput = (props) => {
   const classes = useStyles();
   const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, ...otherProps } = props;
 
-  if (textFieldProps.disabled)
+  if (textFieldProps?.disabled)
     return (
       <BasicInputPlaceholder
         id={`text-input-${id}`}

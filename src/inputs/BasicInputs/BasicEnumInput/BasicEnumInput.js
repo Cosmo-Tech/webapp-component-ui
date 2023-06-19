@@ -15,7 +15,7 @@ export const BasicEnumInput = (props) => {
   const classes = useStyles();
   const { id, label, tooltipText, value, textFieldProps, enumValues, changeEnumField, isDirty, ...otherProps } = props;
 
-  if (textFieldProps.disabled)
+  if (textFieldProps?.disabled)
     return (
       <BasicInputPlaceholder
         id={`enum-input-${id}`}
