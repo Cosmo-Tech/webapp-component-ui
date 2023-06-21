@@ -13,7 +13,7 @@ const _editModeSetter = (params) => {
 };
 
 const _boolSetter = (params) => {
-  let newValue = params.newValue.toLowerCase();
+  let newValue = params.newValue?.toLowerCase() ?? '';
   const allowedEmptyField = params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0;
   if (!params.context.editMode) {
     newValue = params.oldValue;
@@ -30,7 +30,7 @@ const _boolSetter = (params) => {
 
 const _dateSetter = (params) => {
   const dateFormat = params.context.dateFormat;
-  let newValue = params.newValue;
+  let newValue = params.newValue ?? '';
   const allowedEmptyField =
     params.context.editMode && params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0;
   if (allowedEmptyField) {
@@ -55,7 +55,7 @@ const _dateSetter = (params) => {
 };
 
 const _intSetter = (params) => {
-  let newValue = params.newValue;
+  let newValue = params.newValue ?? '';
   const allowedEmptyField =
     params.context.editMode && params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0;
   if (!allowedEmptyField) {
@@ -80,7 +80,7 @@ const _intSetter = (params) => {
 };
 
 const _numberSetter = (params) => {
-  let newValue = params.newValue;
+  let newValue = params.newValue ?? '';
   const allowedEmptyField =
     params.context.editMode && params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0;
   if (!allowedEmptyField) {
@@ -108,7 +108,7 @@ const _enumSetter = (params) => {
   if (enumValues.length === 0) {
     console.warn(`Missing enum values for table column "${params.column.colId}"`);
   }
-  let newValue = params.newValue;
+  let newValue = params.newValue ?? '';
   const allowedEmptyField = params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0;
   if (!allowedEmptyField && (!params.context.editMode || enumValues.indexOf(newValue) === -1)) {
     newValue = params.oldValue;
