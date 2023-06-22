@@ -155,9 +155,5 @@ BasicNumberInput.propTypes = {
 };
 
 BasicNumberInput.defaultProps = {
-  inputProps: {
-    min: -9999,
-    max: 9999,
-  },
   isDirty: false,
 };
