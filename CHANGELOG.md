@@ -1,3 +1,16 @@
+## **5.3.0** <sub><sup>2023-06-22 (d669df3...7a44db0)</sup></sub>
+
+### Features
+
+- \[PROD\-10289\] add fullscreen button in table component ([99de0e6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/99de0e6))
+- \[PROD\-10572\] add specific style to identify non-editable cells in Table ([6e1e501](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6e1e501))
+- \[PROD\-11628\] add errors display to Number and Date inputs ([c55035f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c55035f))
+
+### Bug Fixes
+
+- fix error in some input components when prop textFieldProps is not defined ([230d367](https://github.com/Cosmo-Tech/webapp-component-ui/commit/230d367))
+- fix error when deleting the content of a table cell with DEL key ([7a44db0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7a44db0))
+
 ## **5.2.1** <sub><sup>2023-04-27 (7d03254...7d03254)</sup></sub>
 
 - update dependencies
