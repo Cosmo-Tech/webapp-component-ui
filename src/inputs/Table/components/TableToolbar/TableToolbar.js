@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useStyles } from './style';
-import { FullscreenButton, ImportButton, ExportButton } from '..';
+import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from '..';
 import { CircularProgress } from '@mui/material';
 
 export const TableToolbar = (props) => {
@@ -15,24 +15,31 @@ export const TableToolbar = (props) => {
     isLoading,
     onImport,
     onExport,
+    onAddRow,
+    onDeleteRow,
     editMode,
     customToolbarActions,
     labels,
+    enableAddRow,
   } = props;
   const classes = useStyles();
 
   return (
-    <div className={classes.tableToolbar} style={isReady ? { borderBottom: 'none' } : null}>
+    <div className={classes.tableToolbar} style={isReady ? { borderBottom: 'none' } : null} data-cy="table-toolbar">
       <FullscreenButton
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
         disabled={!(isReady && !isLoading)}
-        label={labels.fullscreen ?? 'Fullscreen'}
+        label={labels?.fullscreen ?? 'Fullscreen'}
       />
       {onImport && (
         <ImportButton onImport={onImport} disabled={!(editMode && !isLoading)} label={labels.import ?? 'Import'} />
       )}
       {onExport && <ExportButton onExport={onExport} label={labels.export ?? 'Export'} disabled={isLoading} />}
+      {onAddRow && enableAddRow && <AddRowButton onAddRow={onAddRow} label={labels?.addrow} disabled={!editMode} />}
+      {onDeleteRow && (
+        <DeleteRowButton onDeleteRow={onDeleteRow} label={labels?.deleterow} disabled={!(editMode && isReady)} />
+      )}
       {isLoading ? (
         <span className={classes.TableLoading}>
           Loading...
@@ -75,6 +82,18 @@ TableToolbar.propTypes = {
    */
   onExport: PropTypes.func,
   /*
+   * Function used to add a row in the Table. If it's not defined, he not not display the add row button
+   */
+  onAddRow: PropTypes.func,
+  /*
+   * Function used to remove selected rows in the Table. If it's not defined, he not not display the delete row button
+   */
+  onDeleteRow: PropTypes.func,
+  /*
+   * Boolean used to know if we had AddRow features enable in the webapp
+   */
+  enableAddRow: PropTypes.bool,
+  /*
    * List of extra React elements to add in the TableToolbar
    */
   customToolbarActions: PropTypes.array,
@@ -92,6 +111,8 @@ TableToolbar.propTypes = {
   labels: PropTypes.shape({
     import: PropTypes.string,
     export: PropTypes.string,
+    addrow: PropTypes.string,
+    deleterow: PropTypes.string,
     fullscreen: PropTypes.string,
   }),
 };

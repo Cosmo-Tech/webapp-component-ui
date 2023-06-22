@@ -92,7 +92,7 @@ const _moveKeyToCellEditorParams = (col, key) => {
 };
 
 const _moveExtraPropertiesToCellEditorParams = (col) => {
-  const keys = ['enumValues', 'minValue', 'maxValue', 'acceptsEmptyFields'];
+  const keys = ['enumValues', 'minValue', 'maxValue', 'defaultValue', 'acceptsEmptyFields'];
   keys.forEach((key) => _moveKeyToCellEditorParams(col, key));
 };
 
@@ -124,6 +124,9 @@ export const Table = (props) => {
     isDirty,
     onImport,
     onExport,
+    onAddRow,
+    onDeleteRow,
+    enableAddRow,
     customToolbarActions,
     ...otherProps
   } = props;
@@ -181,6 +184,9 @@ export const Table = (props) => {
         isLoading={isLoading}
         onImport={onImport}
         onExport={onExport}
+        onAddRow={onAddRow}
+        enableAddRow={enableAddRow}
+        onDeleteRow={onDeleteRow}
         editMode={editMode}
         customToolbarActions={customToolbarActions}
         labels={toolbarLabels}
@@ -188,6 +194,7 @@ export const Table = (props) => {
     );
   }, [
     customToolbarActions,
+    enableAddRow,
     editMode,
     isFullscreen,
     isLoading,
@@ -195,6 +202,8 @@ export const Table = (props) => {
     labels.export,
     labels.fullscreen,
     labels.import,
+    onAddRow,
+    onDeleteRow,
     onExport,
     onImport,
     toggleFullscreen,
@@ -218,6 +227,7 @@ export const Table = (props) => {
         rowData={rows}
         context={context}
         stopEditingWhenCellsLoseFocus={true}
+        rowSelection={'multiple'}
       />
     );
   }, [columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
@@ -348,6 +358,8 @@ Table.propTypes = {
     placeholderBody: PropTypes.string,
     import: PropTypes.string,
     export: PropTypes.string,
+    addrow: PropTypes.string,
+    deleterow: PropTypes.string,
     fullscreen: PropTypes.string,
   }),
   /**
@@ -392,6 +404,21 @@ Table.propTypes = {
    * If not defined, this button will not be rendered.
    */
   onExport: PropTypes.func,
+  /*
+   * Callback function that will be called when user click on the add row button.
+   * If not defined, this button will not be rendered.
+   */
+  onAddRow: PropTypes.func,
+  /*
+   * Callback function that will be called when user click on the delete row button.
+   * If not defined, this button will not be rendered.
+   */
+  onDeleteRow: PropTypes.func,
+  /*
+   * Boolean which define if you wan't to had the addRow features.
+   * Need to be disabled if you wan't to had some non editable columns.
+   */
+  enableAddRow: PropTypes.bool.isRequired,
 };
 
 Table.defaultProps = {
