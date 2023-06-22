@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useStyles } from './style';
-import { FullscreenButton } from '..';
+import { FullscreenButton } from '../FullscreenButton';
 
 export const TableToolbar = (props) => {
   const { isFullscreen, toggleFullscreen } = props;
