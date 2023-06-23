@@ -12,6 +12,18 @@ const _editModeSetter = (params) => {
   return true;
 };
 
+const _stringSetter = (params) => {
+  let newValue = params.newValue?.trim() ?? '';
+  const unauthorizedEmptyField = newValue.length === 0 && !params.colDef.cellEditorParams?.acceptsEmptyFields;
+
+  if (!params.context.editMode || unauthorizedEmptyField) {
+    newValue = params.oldValue;
+  }
+
+  params.data[params.colDef.field] = newValue;
+  return true;
+};
+
 const _boolSetter = (params) => {
   let newValue = params.newValue?.toLowerCase() ?? '';
   const allowedEmptyField = params.colDef.cellEditorParams?.acceptsEmptyFields && newValue.length === 0;
@@ -160,7 +172,7 @@ export const getColumnTypes = (dateFormat) => {
     nonEditable: { editable: false },
     nonResizable: { resizable: false },
     nonSortable: { sortable: false },
-    string: {}, // No specific behavior here, but required to prevent ag-grid warning
+    string: { valueSetter: _stringSetter },
     bool: {
       valueSetter: _boolSetter,
     },
