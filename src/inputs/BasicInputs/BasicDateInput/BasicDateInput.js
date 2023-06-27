@@ -45,6 +45,7 @@ export const BasicDateInput = (props) => {
             maxDate={dateProps.maxDate}
             renderInput={(params) => (
               <TextField
+                id={`date-text-field-${id}`}
                 variant="outlined"
                 sx={{ flexGrow: 1 }}
                 size="small"
