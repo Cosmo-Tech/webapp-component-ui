@@ -15,6 +15,7 @@ import { ErrorsPanel, TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
 import { TableToolbar } from './components';
 import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 const useStyles = makeStyles((theme) => ({
   ...getCommonInputStyles(theme),
