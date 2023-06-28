@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   emptyTablePlaceholderBody: {
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(1),
   },
 }));
 
