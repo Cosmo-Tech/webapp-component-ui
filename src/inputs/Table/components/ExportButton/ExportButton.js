@@ -25,7 +25,7 @@ ExportButton.propTypes = {
    */
   onExport: PropTypes.func.isRequired,
   /*
-   * Boolean that defines whether button is disabled
+   * label of the button, displayed as a tooltip
    */
   label: PropTypes.string.isRequired,
 };
