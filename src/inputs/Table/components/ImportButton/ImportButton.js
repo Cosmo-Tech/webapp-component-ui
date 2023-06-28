@@ -30,11 +30,11 @@ export const ImportButton = (props) => {
 
 ImportButton.propTypes = {
   /*
-   * Function use to import a file in Table component readable by AgGrid
+   * Function used to import a file in Table component readable by AgGrid
    */
   onImport: PropTypes.func.isRequired,
   /*
-   * Boolean to define is the button is disabled
+   * Boolean that defines whether button is disabled
    */
   disabled: PropTypes.bool.isRequired,
   /*

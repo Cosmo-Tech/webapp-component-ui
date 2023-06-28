@@ -21,11 +21,11 @@ export const ExportButton = (props) => {
 
 ExportButton.propTypes = {
   /*
-   * Function use to export a file from Table
+   * Function used to export a file from Table
    */
   onExport: PropTypes.func.isRequired,
   /*
-   * Boolean to define is the button is disabled
+   * Boolean that defines whether button is disabled
    */
   label: PropTypes.string.isRequired,
 };

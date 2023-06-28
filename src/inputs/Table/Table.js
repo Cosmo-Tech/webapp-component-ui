@@ -227,8 +227,12 @@ export const Table = (props) => {
             agGridElement
           ) : (
             <div className={classes.emptyTablePlaceholderDiv}>
-              <h2 className={classes.emptyTablePlaceholderTitle}>{labels.placeholderTitle}</h2>
-              <p className={classes.emptyTablePlaceholderBody}>{labels.placeholderBody}</p>
+              <Typography variant="h5" className={classes.emptyTablePlaceholderTitle}>
+                {labels.placeholderTitle}
+              </Typography>
+              <Typography variant="body1" className={classes.emptyTablePlaceholderBody}>
+                {labels.placeholderBody}
+              </Typography>
               {onImport ? (
                 <Button
                   key="import-file-button"
@@ -324,11 +328,11 @@ Table.propTypes = {
    */
   tooltipText: PropTypes.string,
   /**
-   *  List of extra React elements to add at top of TableToolbar
+   *  List of extra React elements. these elements will be added above AgGrid Table
    */
   extraToolbarActions: PropTypes.arrayOf(PropTypes.node),
   /*
-   * List of extra React elements to add in the TableToolbar
+   * List of extra React elements. these elements will be added in a smaller toolbar, better integrated with AgGrid
    */
   customToolbarActions: PropTypes.arrayOf(PropTypes.node),
   /**
@@ -352,12 +356,12 @@ Table.propTypes = {
    */
   isDirty: PropTypes.bool,
   /*
-   * Callback function that will be called when user click on one of the import buttons, in
+   * Callback function that will be called when user clicks on one of the import buttons, in
    * the toolbar or in the table placeholder.If not defined, these buttons will not be rendered.
    */
   onImport: PropTypes.func,
   /*
-   * Callback function that will be called when user click on the export button.
+   * Callback function that will be called when user clicks on the export button.
    * If not defined, this button will not be rendered.
    */
   onExport: PropTypes.func,

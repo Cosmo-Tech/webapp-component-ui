@@ -35,19 +35,19 @@ TableToolbar.propTypes = {
    */
   toggleFullscreen: PropTypes.func.isRequired,
   /*
-   * Boolean value to know if there is some data fully loaded
+   * Boolean value define if data is fully loaded
    */
   isReady: PropTypes.bool.isRequired,
   /*
-   * Boolean use to know if the user have rights to edit the solution
+   * Boolean value which defined if user can actually do modifications on the webapp
    */
   editMode: PropTypes.bool.isRequired,
   /*
-   * Function used to import a file in Table. If it's not defined, he do not display the import button
+   * Function used to import a file in Table. If undefined, import button is not displayed
    */
   onImport: PropTypes.func,
   /*
-   * Function used to export a file in Table. If it's not defined, he do not display the import button
+   * Function used to export a file in Table. If undefined, export button is not displayed
    */
   onExport: PropTypes.func,
   /*
