@@ -176,7 +176,13 @@ export const Table = (props) => {
   }, [buildErrorsPanelTitle, errorPanelLabels, errors, hasErrors, maxErrorsCount, onClearErrors]);
 
   const tableToolbarElement = useMemo(() => {
-    const toolbarLabels = { import: labels.import, export: labels.export, fullscreen: labels.fullscreen };
+    const toolbarLabels = {
+      import: labels.import,
+      export: labels.export,
+      fullscreen: labels.fullscreen,
+      addRow: labels.addRow,
+      deleteRows: labels.deleteRows,
+    };
     return (
       <TableToolbar
         isFullscreen={isFullscreen}
