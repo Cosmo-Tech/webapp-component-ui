@@ -59,7 +59,9 @@ TableToolbar.propTypes = {
    * Structure:
    * <pre>
      {
-      label: 'string'
+      import: 'string',
+      export: 'string',
+      fullscreen: 'string',
     }
    </pre>
    */

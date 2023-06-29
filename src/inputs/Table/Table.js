@@ -309,7 +309,15 @@ Table.propTypes = {
    * Structure:
    * <pre>
      {
-      label: 'string'
+      clearErrors: 'string',
+      label: 'string',
+      loading: 'string',
+      errorsPanelMainError: 'string',
+      placeholderTitle: 'string',
+      placeholderBody: 'string',
+      import: 'string',
+      export: 'string',
+      fullscreen: 'string',
     }
    </pre>
    */
