@@ -3,19 +3,18 @@
 
 import React from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
+import { FadingTooltip } from '../../../../misc';
 
 export const ExportButton = (props) => {
   const { onExport, label } = props;
   return (
-    <Tooltip title={label}>
-      <span>
-        <IconButton onClick={onExport} size="small" color="primary" data-cy="export-button">
-          <DownloadIcon fontSize="inherit" />
-        </IconButton>
-      </span>
-    </Tooltip>
+    <FadingTooltip title={label} useSpan={true}>
+      <IconButton onClick={onExport} size="small" color="primary" data-cy="export-button">
+        <DownloadIcon fontSize="inherit" />
+      </IconButton>
+    </FadingTooltip>
   );
 };
 

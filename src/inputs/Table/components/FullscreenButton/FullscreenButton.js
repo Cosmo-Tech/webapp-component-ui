@@ -5,25 +5,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton } from '@mui/material';
+import { FadingTooltip } from '../../../../misc';
 
 export const FullscreenButton = (props) => {
   const { isFullscreen, toggleFullscreen, disabled, label } = props;
 
   return (
-    <Tooltip title={label}>
-      <span>
-        <IconButton
-          onClick={toggleFullscreen}
-          size="small"
-          data-cy="grid-fullscreen-button"
-          color="primary"
-          disabled={disabled}
-        >
-          {isFullscreen ? <CloseFullscreenIcon fontSize="inherit" /> : <OpenInFullIcon fontSize="inherit" />}
-        </IconButton>
-      </span>
-    </Tooltip>
+    <FadingTooltip title={label} useSpan={true}>
+      <IconButton
+        onClick={toggleFullscreen}
+        size="small"
+        data-cy="grid-fullscreen-button"
+        color="primary"
+        disabled={disabled}
+      >
+        {isFullscreen ? <CloseFullscreenIcon fontSize="inherit" /> : <OpenInFullIcon fontSize="inherit" />}
+      </IconButton>
+    </FadingTooltip>
   );
 };
 

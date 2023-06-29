@@ -3,28 +3,27 @@
 
 import React from 'react';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Tooltip, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
+import { FadingTooltip } from '../../../../misc';
 
 export const ImportButton = (props) => {
   const { disabled, onImport, label } = props;
   return (
-    <Tooltip title={label}>
-      <span>
-        <IconButton
-          variant="text"
-          component="label"
-          onChange={onImport}
-          size="small"
-          color="primary"
-          disabled={disabled}
-          data-cy="import-file-button"
-        >
-          <input type="file" accept=".csv, .xlsx" hidden />
-          <UploadFileIcon fontSize="inherit" />
-        </IconButton>
-      </span>
-    </Tooltip>
+    <FadingTooltip title={label} useSpan={true}>
+      <IconButton
+        variant="text"
+        component="label"
+        onChange={onImport}
+        size="small"
+        color="primary"
+        disabled={disabled}
+        data-cy="import-file-button"
+      >
+        <input type="file" accept=".csv, .xlsx" hidden />
+        <UploadFileIcon fontSize="inherit" />
+      </IconButton>
+    </FadingTooltip>
   );
 };
 

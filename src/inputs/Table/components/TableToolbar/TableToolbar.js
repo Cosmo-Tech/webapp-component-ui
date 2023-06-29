@@ -16,10 +16,10 @@ export const TableToolbar = (props) => {
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
         disabled={!isReady}
-        label={labels.fullscreen}
+        label={labels.fullscreen ?? 'Fullscreen'}
       />
-      {onImport ? <ImportButton onImport={onImport} disabled={!editMode} label={labels.import} /> : null}
-      {onExport ? <ExportButton onExport={onExport} label={labels.export} /> : null}
+      {onImport ? <ImportButton onImport={onImport} disabled={!editMode} label={labels.import ?? 'Import'} /> : null}
+      {onExport ? <ExportButton onExport={onExport} label={labels.export ?? 'Export'} /> : null}
       {customToolbarActions}
     </div>
   );
@@ -64,12 +64,6 @@ TableToolbar.propTypes = {
    </pre>
    */
   labels: PropTypes.shape({
-    clearErrors: PropTypes.string,
-    label: PropTypes.string,
-    loading: PropTypes.string,
-    errorsPanelMainError: PropTypes.string,
-    placeholderTitle: PropTypes.string,
-    placeholderBody: PropTypes.string,
     import: PropTypes.string,
     export: PropTypes.string,
     fullscreen: PropTypes.string,
