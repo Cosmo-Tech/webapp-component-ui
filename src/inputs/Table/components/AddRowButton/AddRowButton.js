@@ -3,27 +3,26 @@
 
 import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
+import { FadingTooltip } from '../../../../misc';
 
 export const AddRowButton = (props) => {
   const { onAddRow, label, disabled } = props;
   return (
-    <Tooltip title={label}>
-      <span>
-        <IconButton
-          onClick={onAddRow}
-          component="label"
-          size="small"
-          color="primary"
-          data-cy="add-row-button"
-          disabled={disabled}
-          variant="text"
-        >
-          <AddIcon fontSize="inherit" />
-        </IconButton>
-      </span>
-    </Tooltip>
+    <FadingTooltip title={label} useSpan={true}>
+      <IconButton
+        onClick={onAddRow}
+        component="label"
+        size="small"
+        color="primary"
+        data-cy="add-row-button"
+        disabled={disabled}
+        variant="text"
+      >
+        <AddIcon fontSize="inherit" />
+      </IconButton>
+    </FadingTooltip>
   );
 };
 

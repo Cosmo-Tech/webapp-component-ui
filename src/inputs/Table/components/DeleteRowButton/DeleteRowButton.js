@@ -3,27 +3,26 @@
 
 import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
+import { FadingTooltip } from '../../../../misc';
 
 export const DeleteRowButton = (props) => {
   const { onDeleteRow, label, disabled } = props;
   return (
-    <Tooltip title={label}>
-      <span>
-        <IconButton
-          onClick={onDeleteRow}
-          component="label"
-          size="small"
-          color="primary"
-          data-cy="delete-rows-button"
-          disabled={disabled}
-          variant="text"
-        >
-          <DeleteIcon fontSize="inherit" />
-        </IconButton>
-      </span>
-    </Tooltip>
+    <FadingTooltip title={label} useSpan={true}>
+      <IconButton
+        onClick={onDeleteRow}
+        component="label"
+        size="small"
+        color="primary"
+        data-cy="delete-rows-button"
+        disabled={disabled}
+        variant="text"
+      >
+        <DeleteIcon fontSize="inherit" />
+      </IconButton>
+    </FadingTooltip>
   );
 };
 
