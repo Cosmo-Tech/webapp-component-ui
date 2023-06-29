@@ -336,6 +336,8 @@ Table.propTypes = {
       placeholderBody: 'string',
       import: 'string',
       export: 'string',
+      addRow: 'string',
+      deleteRows: 'string',
       fullscreen: 'string',
     }
    </pre>
@@ -349,8 +351,8 @@ Table.propTypes = {
     placeholderBody: PropTypes.string,
     import: PropTypes.string,
     export: PropTypes.string,
-    addrow: PropTypes.string,
-    deleterow: PropTypes.string,
+    addRow: PropTypes.string,
+    deleteRows: PropTypes.string,
     fullscreen: PropTypes.string,
   }),
   /**

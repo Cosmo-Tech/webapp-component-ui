@@ -32,9 +32,15 @@ export const TableToolbar = (props) => {
       />
       {onImport && <ImportButton onImport={onImport} disabled={!editMode} label={labels?.import ?? 'Import'} />}
       {onExport && <ExportButton onExport={onExport} label={labels?.export ?? 'Export'} />}
-      {onAddRow && enableAddRow && <AddRowButton onAddRow={onAddRow} label={labels?.addrow} disabled={!editMode} />}
+      {onAddRow && enableAddRow && (
+        <AddRowButton onAddRow={onAddRow} label={labels?.addRow ?? 'Add a new row'} disabled={!editMode} />
+      )}
       {onDeleteRow && (
-        <DeleteRowButton onDeleteRow={onDeleteRow} label={labels?.deleterow} disabled={!(editMode && isReady)} />
+        <DeleteRowButton
+          onDeleteRow={onDeleteRow}
+          label={labels?.deleteRows ?? 'Remove selected rows'}
+          disabled={!(editMode && isReady)}
+        />
       )}
       {customToolbarActions}
     </div>
@@ -89,6 +95,8 @@ TableToolbar.propTypes = {
      {
       import: 'string',
       export: 'string',
+      addrow: 'string',
+      deleterow: 'string',
       fullscreen: 'string',
     }
    </pre>
@@ -96,8 +104,8 @@ TableToolbar.propTypes = {
   labels: PropTypes.shape({
     import: PropTypes.string,
     export: PropTypes.string,
-    addrow: PropTypes.string,
-    deleterow: PropTypes.string,
+    addRow: PropTypes.string,
+    deleteRows: PropTypes.string,
     fullscreen: PropTypes.string,
   }),
 };
