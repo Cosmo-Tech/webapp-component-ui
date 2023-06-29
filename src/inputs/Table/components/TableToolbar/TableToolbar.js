@@ -7,7 +7,17 @@ import { useStyles } from './style';
 import { FullscreenButton, ImportButton, ExportButton } from '..';
 
 export const TableToolbar = (props) => {
-  const { isFullscreen, toggleFullscreen, isReady, onImport, onExport, editMode, customToolbarActions, labels } = props;
+  const {
+    isFullscreen,
+    toggleFullscreen,
+    isReady,
+    isLoading,
+    onImport,
+    onExport,
+    editMode,
+    customToolbarActions,
+    labels,
+  } = props;
   const classes = useStyles();
 
   return (
@@ -18,8 +28,15 @@ export const TableToolbar = (props) => {
         disabled={!isReady}
         label={labels.fullscreen ?? 'Fullscreen'}
       />
-      {onImport ? <ImportButton onImport={onImport} disabled={!editMode} label={labels.import ?? 'Import'} /> : null}
-      {onExport ? <ExportButton onExport={onExport} label={labels.export ?? 'Export'} /> : null}
+      {onImport ? (
+        <ImportButton
+          onImport={onImport}
+          isLoading={isLoading}
+          disabled={!editMode}
+          label={labels?.import ?? 'Import'}
+        />
+      ) : null}
+      {onExport ? <ExportButton onExport={onExport} isLoading={isLoading} label={labels?.export ?? 'Export'} /> : null}
       {customToolbarActions}
     </div>
   );
@@ -38,6 +55,10 @@ TableToolbar.propTypes = {
    * Boolean value define if data is fully loaded
    */
   isReady: PropTypes.bool.isRequired,
+  /*
+   * Boolean value define if data from cloud is downloading
+   */
+  isLoading: PropTypes.bool.isRequired,
   /*
    * Boolean value which defined if user can actually do modifications on the webapp
    */

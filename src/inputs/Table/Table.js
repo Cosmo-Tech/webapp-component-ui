@@ -43,10 +43,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 'auto',
     marginBottom: 'auto',
   },
-  loadingSpinner: {
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
   nonEditableCell: {
     backgroundColor: theme.palette.action.disabled,
     color: theme.palette.text.disabled,
@@ -65,6 +61,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
 }));
+
+const LOADING_STATUS_MAPPING = {
+  [TABLE_DATA_STATUS.EMPTY]: false,
+  [TABLE_DATA_STATUS.UPLOADING]: true,
+  [TABLE_DATA_STATUS.DOWNLOADING]: true,
+  [TABLE_DATA_STATUS.PARSING]: true,
+  [TABLE_DATA_STATUS.READY]: false,
+  [TABLE_DATA_STATUS.ERROR]: false,
+};
 
 const _formatMinMaxDatesInColumns = (col, dateFormat) => {
   if (col.type && col.type.indexOf('date') !== -1) {
@@ -130,6 +135,7 @@ export const Table = (props) => {
   const defaultColDef = getDefaultColumnsProperties(onCellChange, classes);
   const columnTypes = getColumnTypes(dateFormat);
   const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
+  const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const hasErrors = errors && errors.length > 0;
   const isReady = dataStatus === TABLE_DATA_STATUS.READY;
   const errorPanelLabels = useMemo(() => {
@@ -173,6 +179,7 @@ export const Table = (props) => {
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
         isReady={isReady}
+        isLoading={isLoading}
         onImport={onImport}
         onExport={onExport}
         editMode={editMode}
@@ -180,7 +187,19 @@ export const Table = (props) => {
         labels={toolbarLabels}
       />
     );
-  }, [customToolbarActions, editMode, isFullscreen, isReady, labels, onExport, onImport, toggleFullscreen]);
+  }, [
+    customToolbarActions,
+    editMode,
+    isFullscreen,
+    isLoading,
+    isReady,
+    labels.export,
+    labels.fullscreen,
+    labels.import,
+    onExport,
+    onImport,
+    toggleFullscreen,
+  ]);
 
   const agGridElement = useMemo(() => {
     const context = {
