@@ -28,7 +28,7 @@ export const DeleteRowButton = (props) => {
 
 DeleteRowButton.propTypes = {
   /*
-   * Function use to export a file from Table
+   * Function use to delete selected lines
    */
   onDeleteRow: PropTypes.func.isRequired,
   /*
@@ -36,7 +36,7 @@ DeleteRowButton.propTypes = {
    */
   label: PropTypes.string.isRequired,
   /*
-   * Boolean to define is the button is disabled
+   * Boolean to define if the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
 };

@@ -91,7 +91,7 @@ TableToolbar.propTypes = {
    */
   onExport: PropTypes.func,
   /*
-   * Function used to add a row in the Table. If it's not defined, he not not display the add row button
+   * Function used to add a row in the Table. If it's not defined, the button won't be displayed
    */
   onAddRow: PropTypes.func,
   /*
@@ -109,8 +109,8 @@ TableToolbar.propTypes = {
      {
       import: 'string',
       export: 'string',
-      addrow: 'string',
-      deleterow: 'string',
+      addRow: 'string',
+      deleteRows: 'string',
       fullscreen: 'string',
     }
    </pre>

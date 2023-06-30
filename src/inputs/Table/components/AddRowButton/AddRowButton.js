@@ -28,7 +28,7 @@ export const AddRowButton = (props) => {
 
 AddRowButton.propTypes = {
   /*
-   * Function use to export a file from Table
+   * Function use to add a line after the last selected line
    */
   onAddRow: PropTypes.func.isRequired,
   /*
@@ -36,7 +36,7 @@ AddRowButton.propTypes = {
    */
   label: PropTypes.string.isRequired,
   /*
-   * Boolean to define is the button is disabled
+   * Boolean to define if the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
 };

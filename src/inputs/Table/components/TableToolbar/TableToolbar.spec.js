@@ -6,7 +6,6 @@ import { TableToolbar } from './TableToolbar';
 import { renderInMuiThemeProvider } from '../../../../../tests/utils';
 import { StackContainerTesting } from '../../../../../tests/MuiComponentsTesting';
 
-const tableToolbarInputContainer = new StackContainerTesting({ dataCy: 'table-toolbar' });
 const FullscreenButtonContainer = new StackContainerTesting({ dataCy: 'grid-fullscreen-button' });
 const ImportButtonContainer = new StackContainerTesting({ dataCy: 'import-file-button' });
 const ExportButtonContainer = new StackContainerTesting({ dataCy: 'export-button' });
@@ -25,10 +24,6 @@ const setUp = (props) => {
 };
 
 describe('Check if TableToolbar buttons is displayed or not', () => {
-  test('Check if tableToolbar is displayed with default data', () => {
-    setUp(defaultProps);
-    expect(tableToolbarInputContainer.Stack).toBeInTheDocument();
-  });
   test('Check if open fullscreen button is displayed with default values', () => {
     setUp(defaultProps);
     expect(FullscreenButtonContainer.Stack).toBeInTheDocument();
@@ -62,7 +57,7 @@ describe('Check if TableToolbar buttons is displayed or not', () => {
     test('Check if ExportButton is displayed with onExport function and default value', () => {
       setUp({ ...defaultProps, onExport: () => {} });
       expect(ExportButtonContainer.Stack).toBeInTheDocument();
-      expect(ExportButtonContainer.Stack);
+      expect(ExportButtonContainer.Stack).not.toHaveAttribute('aria-disabled');
     });
   });
 
