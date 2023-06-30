@@ -33,6 +33,10 @@ Tooltip.propTypes = {
   useSpan: PropTypes.bool,
 };
 
+Tooltip.defaultProps = {
+  useSpan: false,
+};
+
 export const FadingTooltip = withStyles((theme) => ({
   tooltip: {
     whiteSpace: 'pre-wrap',
