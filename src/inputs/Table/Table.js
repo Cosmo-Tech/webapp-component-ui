@@ -243,7 +243,7 @@ export const Table = (props) => {
         {errorsPanelElement}
         {tableToolbarElement}
         <Box sx={dimensions}>
-          {isReady ? (
+          {isReady && !isLoading ? (
             agGridElement
           ) : (
             <div className={classes.emptyTablePlaceholderDiv}>

@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useStyles } from './style';
 import { FullscreenButton, ImportButton, ExportButton } from '..';
+import { CircularProgress } from '@mui/material';
 
 export const TableToolbar = (props) => {
   const {
@@ -25,19 +26,21 @@ export const TableToolbar = (props) => {
       <FullscreenButton
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
-        disabled={!isReady}
+        disabled={!(isReady && !isLoading)}
         label={labels.fullscreen ?? 'Fullscreen'}
       />
-      {onImport ? (
-        <ImportButton
-          onImport={onImport}
-          isLoading={isLoading}
-          disabled={!editMode}
-          label={labels?.import ?? 'Import'}
-        />
-      ) : null}
-      {onExport ? <ExportButton onExport={onExport} isLoading={isLoading} label={labels?.export ?? 'Export'} /> : null}
-      {customToolbarActions}
+      {onImport && (
+        <ImportButton onImport={onImport} disabled={!(editMode && !isLoading)} label={labels.import ?? 'Import'} />
+      )}
+      {onExport && <ExportButton onExport={onExport} label={labels.export ?? 'Export'} disabled={isLoading} />}
+      {isLoading ? (
+        <span className={classes.TableLoading}>
+          Loading...
+          <CircularProgress size="10px" />
+        </span>
+      ) : (
+        customToolbarActions
+      )}
     </div>
   );
 };

@@ -17,4 +17,11 @@ export const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(1),
     },
   },
+  TableLoading: {
+    marginLeft: theme.spacing(1),
+    color: theme.palette.text.primary,
+    '& .MuiCircularProgress-root': {
+      marginLeft: theme.spacing(1),
+    },
+  },
 }));
