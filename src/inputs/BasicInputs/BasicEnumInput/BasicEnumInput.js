@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { MenuItem, Grid, Stack, TextField } from '@mui/material';
+import { MenuItem, Grid, Stack, TextField, Tooltip, Fade, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -42,13 +42,34 @@ export const BasicEnumInput = (props) => {
           sx={{ flexGrow: 1 }}
           select
           value={value}
-          onChange={(event) => {
-            return changeEnumField(event.target.value);
+          SelectProps={{
+            renderValue: (value) => <Box>{value}</Box>, // Prevent extra padding on selected value
+            'data-cy': `enum-input-select-${id}`,
+            MenuProps: { 'data-cy': `enum-input-menu-${id}` },
           }}
+          onChange={(event) => changeEnumField(event.target.value)}
         >
           {enumValues.map((option) => (
-            <MenuItem key={option.key} value={option.key} data-cy={option.key}>
-              {option.value}
+            <MenuItem
+              key={option.key}
+              value={option.key}
+              data-cy={option.key}
+              sx={{ p: '0px' }} // Remove default MenuItem padding to increase the hover area for the items tooltips
+            >
+              <Tooltip
+                data-cy={`enum-input-value-tooltip-${option.key}`}
+                title={option.tooltip}
+                placement="right-end"
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+              >
+                <Box
+                  // Extra padding on menu items to increase the hover area for the items tooltips
+                  sx={{ px: '16px', py: '6px', width: '100%' }}
+                >
+                  {option.value}
+                </Box>
+              </Tooltip>
             </MenuItem>
           ))}
         </TextField>
