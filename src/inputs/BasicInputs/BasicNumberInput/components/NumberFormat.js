@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { NumericFormat } from 'react-number-format';
 
-export const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+export const NumberFormat = React.forwardRef(function NumberFormatCustom(props, ref) {
   const { onChange, max, min, ...other } = props;
 
-  const valuesRange = (inputObj) => {
-    const { value } = inputObj;
-    if ((value === '-' && min < 0) || (min <= value && value <= max)) return inputObj;
+  const valuesRange = ({ floatValue }) => {
+    const isBelowMin = min != null && floatValue != null && floatValue < min;
+    const isAboveMax = max != null && floatValue != null && floatValue > max;
+    return !isBelowMin && !isAboveMax;
   };
 
   return (
@@ -30,7 +31,7 @@ export const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(p
   );
 });
 
-NumberFormatCustom.propTypes = {
+NumberFormat.propTypes = {
   onChange: PropTypes.func.isRequired,
   min: PropTypes.number,
   max: PropTypes.number,

@@ -6,7 +6,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
-import { NumberFormatCustom } from '../../../misc/formatters';
+import { NumberFormat } from './components/NumberFormat';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
 import { getCommonInputStyles } from '../../style';
 
@@ -104,7 +104,7 @@ export const BasicNumberInput = (props) => {
           onFocus={handleFocusEvent}
           inputProps={inputProps}
           InputProps={{
-            inputComponent: NumberFormatCustom,
+            inputComponent: NumberFormat,
           }}
           error={!!error}
           helperText={error?.message ?? ''}
@@ -155,9 +155,5 @@ BasicNumberInput.propTypes = {
 };
 
 BasicNumberInput.defaultProps = {
-  inputProps: {
-    min: -9999,
-    max: 9999,
-  },
   isDirty: false,
 };
