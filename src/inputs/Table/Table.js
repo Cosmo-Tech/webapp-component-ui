@@ -200,20 +200,22 @@ export const Table = (props) => {
       />
     );
   }, [
-    customToolbarActions,
-    enableAddRow,
-    editMode,
-    isFullscreen,
-    isLoading,
-    isReady,
+    labels.import,
     labels.export,
     labels.fullscreen,
-    labels.import,
-    onAddRow,
-    onDeleteRow,
-    onExport,
-    onImport,
+    labels.addRow,
+    labels.deleteRows,
+    isFullscreen,
     toggleFullscreen,
+    isReady,
+    isLoading,
+    onImport,
+    onExport,
+    onAddRow,
+    enableAddRow,
+    onDeleteRow,
+    editMode,
+    customToolbarActions,
   ]);
 
   const agGridElement = useMemo(() => {
