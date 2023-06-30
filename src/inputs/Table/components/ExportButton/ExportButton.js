@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 import { FadingTooltip } from '../../../../misc';
 
 export const ExportButton = (props) => {
-  const { onExport, label } = props;
+  const { onExport, disabled, label } = props;
   return (
     <FadingTooltip title={label} useSpan={true}>
-      <IconButton onClick={onExport} size="small" color="primary" data-cy="export-button">
+      <IconButton onClick={onExport} size="small" color="primary" data-cy="export-button" disabled={disabled}>
         <DownloadIcon fontSize="inherit" />
       </IconButton>
     </FadingTooltip>
@@ -23,6 +23,10 @@ ExportButton.propTypes = {
    * Function used to export a file from Table
    */
   onExport: PropTypes.func.isRequired,
+  /*
+   * Boolean that defines whether button is disabled
+   */
+  disabled: PropTypes.bool.isRequired,
   /*
    * label of the button, displayed as a tooltip
    */
