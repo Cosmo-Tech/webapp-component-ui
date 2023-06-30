@@ -18,6 +18,7 @@ const defaultProps = {
   toggleFullscreen: () => {},
   isReady: false,
   editMode: true,
+  isLoading: false,
 };
 const setUp = (props) => {
   renderInMuiThemeProvider(<TableToolbar {...props} />);
@@ -72,18 +73,10 @@ describe('Check if TableToolbar buttons is displayed or not', () => {
     });
     test('Check if AddRowButton is not displayed with onAddRow function and default value', () => {
       setUp({ ...defaultProps, onAddRow: () => {} });
-      expect(AddRowButtonContainer.Stack).not.toBeInTheDocument();
-    });
-    test('Check if AddRowButton is not displayed with enableAddRow=true and default value', () => {
-      setUp({ ...defaultProps, enableAddRow: true });
-      expect(AddRowButtonContainer.Stack).not.toBeInTheDocument();
-    });
-    test('Check if AddRowButton is displayed with onAddRow function, enableAddRow=true and default value', () => {
-      setUp({ ...defaultProps, onAddRow: () => {}, enableAddRow: true });
       expect(AddRowButtonContainer.Stack).toBeInTheDocument();
     });
-    test('Check if AddRowButton is disabled with onAddRow function, enableAddRow editMode=false', () => {
-      setUp({ ...defaultProps, onAddRow: () => {}, enableAddRow: true, editMode: false });
+    test('Check if AddRowButton is disabled with onAddRow function editMode=false', () => {
+      setUp({ ...defaultProps, onAddRow: () => {}, editMode: false });
       expect(AddRowButtonContainer.Stack).toBeInTheDocument();
       expect(AddRowButtonContainer.Stack).toHaveAttribute('aria-disabled');
     });

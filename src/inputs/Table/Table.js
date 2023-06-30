@@ -127,7 +127,6 @@ export const Table = (props) => {
     onExport,
     onAddRow,
     onDeleteRow,
-    enableAddRow,
     customToolbarActions,
     ...otherProps
   } = props;
@@ -192,7 +191,6 @@ export const Table = (props) => {
         onImport={onImport}
         onExport={onExport}
         onAddRow={onAddRow}
-        enableAddRow={enableAddRow}
         onDeleteRow={onDeleteRow}
         editMode={editMode}
         customToolbarActions={customToolbarActions}
@@ -212,7 +210,6 @@ export const Table = (props) => {
     onImport,
     onExport,
     onAddRow,
-    enableAddRow,
     onDeleteRow,
     editMode,
     customToolbarActions,
@@ -425,11 +422,6 @@ Table.propTypes = {
    * If not defined, this button will not be rendered.
    */
   onDeleteRow: PropTypes.func,
-  /*
-   * Boolean which define if you wan't to had the addRow features.
-   * Need to be disabled if you wan't to had some non editable columns.
-   */
-  enableAddRow: PropTypes.bool.isRequired,
 };
 
 Table.defaultProps = {

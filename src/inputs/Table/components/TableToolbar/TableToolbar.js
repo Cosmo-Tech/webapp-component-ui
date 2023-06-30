@@ -20,7 +20,6 @@ export const TableToolbar = (props) => {
     editMode,
     customToolbarActions,
     labels,
-    enableAddRow,
   } = props;
   const classes = useStyles();
 
@@ -33,10 +32,10 @@ export const TableToolbar = (props) => {
         label={labels?.fullscreen ?? 'Fullscreen'}
       />
       {onImport && (
-        <ImportButton onImport={onImport} disabled={!(editMode && !isLoading)} label={labels.import ?? 'Import'} />
+        <ImportButton onImport={onImport} disabled={!(editMode && !isLoading)} label={labels?.import ?? 'Import'} />
       )}
-      {onExport && <ExportButton onExport={onExport} label={labels.export ?? 'Export'} disabled={isLoading} />}
-      {onAddRow && enableAddRow && (
+      {onExport && <ExportButton onExport={onExport} label={labels?.export ?? 'Export'} disabled={isLoading} />}
+      {onAddRow && (
         <AddRowButton
           onAddRow={onAddRow}
           label={labels?.addRow ?? 'Add a new row'}
@@ -99,10 +98,6 @@ TableToolbar.propTypes = {
    * Function used to remove selected rows in the Table. If it's not defined, he not not display the delete row button
    */
   onDeleteRow: PropTypes.func,
-  /*
-   * Boolean used to know if we had AddRow features enable in the webapp
-   */
-  enableAddRow: PropTypes.bool,
   /*
    * List of extra React elements to add in the TableToolbar
    */
