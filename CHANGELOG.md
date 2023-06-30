@@ -1,3 +1,14 @@
+## **5.4.0** <sub><sup>2023-06-30 (04c21be...0dcd78e)</sup></sub>
+
+### Features
+
+- \[PROD\-11209\] add optional tooltips for enum values in BasicEnumInput ([e1afa50](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e1afa50))
+- \[PROD\-11627\] add helper text to display errors in BasicTextField component ([e6d8f04](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e6d8f04))
+
+### Bug Fixes
+
+- prevent empty fields in columns of type 'string' when `acceptsEmptyFields` option is disabled ([04c21be](https://github.com/Cosmo-Tech/webapp-component-ui/commit/04c21be))
+
 ## **5.3.0** <sub><sup>2023-06-22 (d669df3...7a44db0)</sup></sub>
 
 ### Features
