@@ -250,6 +250,7 @@ ScenarioManagerTreeList.propTypes = {
    * <pre>
    {
     status: 'string',
+    runTemplateLabel: 'string',
     successful: 'string',
     running: 'string',
     failed: 'string',
@@ -283,7 +284,8 @@ ScenarioManagerTreeList.propTypes = {
 ScenarioManagerTreeList.defaultProps = {
   onScenarioRedirect: null,
   labels: {
-    status: 'Run status',
+    status: 'Run status:',
+    runTemplateLabel: 'Run type:',
     successful: 'Successful',
     running: 'Running',
     dataingestioninprogress: 'Transferring results',

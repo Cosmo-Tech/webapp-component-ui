@@ -62,9 +62,7 @@ export const ScenarioNode = ({
     setIsExpanded(newIsExpanded);
   };
 
-  function getDatasetsLabel() {
-    return labels.dataset + ':';
-  }
+  const getDatasetsLabel = () => labels.dataset + ':';
 
   const getTranslatedStatus = () => {
     if (!scenario.state) {
@@ -162,7 +160,7 @@ export const ScenarioNode = ({
           checkValue={checkScenarioNameValue}
           onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
           labels={labels.scenarioRename}
-          typographyProps={{ variant: 'h6' }}
+          typographyProps={{ variant: 'h6', flexGrow: 1 }}
         />
       </FadingTooltip>
     );
@@ -189,11 +187,14 @@ export const ScenarioNode = ({
     );
   };
 
-  const getScenarioNameAndValidationStatus = (isValidationChipClickable = true) => {
+  const getScenarioDetailNameLine = (isExpanded = false) => {
     return (
       <>
-        {getScenarioName()}
-        {getValidationStatus(isValidationChipClickable)}
+        <Box sx={{ alignContent: 'flex-start' }}>
+          {getScenarioName()}
+          {!isExpanded && <Typography variant="subtitle2">{scenario.runTemplateName}</Typography>}
+        </Box>
+        {getValidationStatus(isExpanded)}
       </>
     );
   };
@@ -212,7 +213,7 @@ export const ScenarioNode = ({
   const getScenarioHeader = () => {
     return (
       <Box className={classes.scenarioHeader} flexGrow={1}>
-        {isExpanded ? getScenarioCreationData() : getScenarioNameAndValidationStatus(true)}
+        {isExpanded ? getScenarioCreationData() : getScenarioDetailNameLine(false)}
       </Box>
     );
   };
@@ -260,13 +261,15 @@ export const ScenarioNode = ({
   const getAccordionDetails = () => {
     return (
       <AccordionDetails className={classes.scenarioDetailsContainer}>
-        <div className={classes.scenarioDetailsNameLine}>{getScenarioNameAndValidationStatus(false)}</div>
+        <div className={classes.scenarioDetailsNameLine}>{getScenarioDetailNameLine(true)}</div>
         {getDetailedStatus()}
+        <Typography className={classes.cardLabel}>{labels.runTemplateLabel ?? 'Run type:'}</Typography>
+        <Typography data-cy="scenario-run-template" className={classes.runTemplateName}>
+          {scenario.runTemplateName}
+        </Typography>
         <Typography className={classes.cardLabel}>{getDatasetsLabel()}</Typography>
-        <Typography>
-          <span data-cy="scenario-datasets" className={classes.datasets}>
-            {DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}
-          </span>
+        <Typography data-cy="scenario-datasets" className={classes.datasets}>
+          {DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}
         </Typography>
       </AccordionDetails>
     );
@@ -339,6 +342,7 @@ ScenarioNode.propTypes = {
    * <pre>
    *   {
         status: 'string',
+        runTemplateLabel: 'string',
         successful: 'string',
         failed: 'string',
         created: 'string',
@@ -368,6 +372,7 @@ ScenarioNode.propTypes = {
    */
   labels: PropTypes.shape({
     status: PropTypes.string.isRequired,
+    runTemplateLabel: PropTypes.string,
     successful: PropTypes.string.isRequired,
     failed: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired,
@@ -405,6 +410,7 @@ ScenarioNode.defaultProps = {
   showDeleteIcon: false,
   labels: {
     status: 'Run status:',
+    runTemplateLabel: 'Run type:',
     successful: 'Successful',
     running: 'Running',
     failed: 'Failed',

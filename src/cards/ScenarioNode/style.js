@@ -136,6 +136,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '10px',
     color: theme.palette.warning.main,
   },
+  runTemplateName: {
+    marginLeft: '15px',
+  },
   datasets: {
     marginLeft: '15px',
   },
