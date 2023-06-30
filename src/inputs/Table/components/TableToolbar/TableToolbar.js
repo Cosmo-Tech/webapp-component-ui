@@ -37,10 +37,18 @@ export const TableToolbar = (props) => {
       )}
       {onExport && <ExportButton onExport={onExport} label={labels.export ?? 'Export'} disabled={isLoading} />}
       {onAddRow && enableAddRow && (
-        <AddRowButton onAddRow={onAddRow} label={labels?.addRow ?? 'Add a new row'} disabled={!editMode} />
+        <AddRowButton
+          onAddRow={onAddRow}
+          label={labels?.addRow ?? 'Add a new row'}
+          disabled={!(editMode && !isLoading)}
+        />
       )}
       {onDeleteRow && (
-        <DeleteRowButton onDeleteRow={onDeleteRow} label={labels?.deleteRows} disabled={!(editMode && isReady)} />
+        <DeleteRowButton
+          onDeleteRow={onDeleteRow}
+          label={labels?.deleteRows}
+          disabled={!(editMode && isReady && !isLoading)}
+        />
       )}
       {isLoading ? (
         <span className={classes.TableLoading}>
