@@ -13,7 +13,7 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicTextInput = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, ...otherProps } = props;
+  const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, error, ...otherProps } = props;
 
   if (textFieldProps?.disabled)
     return (
@@ -43,6 +43,8 @@ export const BasicTextInput = (props) => {
           value={value}
           sx={{ flexGrow: 1 }}
           onChange={(event) => changeTextField(event.target.value)}
+          error={!!error}
+          helperText={error?.message ?? ''}
         />
         <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
@@ -79,6 +81,10 @@ BasicTextInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
 };
 BasicTextInput.defaultProps = {
   isDirty: false,
