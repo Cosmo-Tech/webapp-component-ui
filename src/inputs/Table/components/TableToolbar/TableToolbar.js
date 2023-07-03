@@ -83,11 +83,11 @@ TableToolbar.propTypes = {
    */
   editMode: PropTypes.bool.isRequired,
   /*
-   * Function used to import a file in Table. If undefined, import button is not displayed
+   * Function used to import a file in Table. If it's not defined, the button won't be displayed
    */
   onImport: PropTypes.func,
   /*
-   * Function used to export a file in Table. If undefined, export button is not displayed
+   * Function used to export a file in Table. If it's not defined, the button won't be displayed
    */
   onExport: PropTypes.func,
   /*
@@ -95,7 +95,7 @@ TableToolbar.propTypes = {
    */
   onAddRow: PropTypes.func,
   /*
-   * Function used to remove selected rows in the Table. If it's not defined, he not not display the delete row button
+   * Function used to remove selected rows in the Table. If it's not defined, the button won't be displayed
    */
   onDeleteRow: PropTypes.func,
   /*

@@ -14,7 +14,7 @@ const DeleteRowButtonContainer = new StackContainerTesting({ dataCy: 'delete-row
 
 const defaultProps = {
   isFullscreen: false,
-  toggleFullscreen: () => {},
+  toggleFullscreen: jest.fn(),
   isReady: false,
   editMode: true,
   isLoading: false,
@@ -23,7 +23,7 @@ const setUp = (props) => {
   renderInMuiThemeProvider(<TableToolbar {...props} />);
 };
 
-describe('Check if TableToolbar buttons is displayed or not', () => {
+describe('Check if TableToolbar buttons are displayed or not', () => {
   test('Check if open fullscreen button is displayed with default values', () => {
     setUp(defaultProps);
     expect(FullscreenButtonContainer.Stack).toBeInTheDocument();
@@ -39,12 +39,12 @@ describe('Check if TableToolbar buttons is displayed or not', () => {
       expect(ImportButtonContainer.Stack).not.toBeInTheDocument();
     });
     test('Check if ImportButton is disabled with onImport function and default value', () => {
-      setUp({ ...defaultProps, onImport: () => {} });
+      setUp({ ...defaultProps, onImport: jest.fn() });
       expect(ImportButtonContainer.Stack).toBeInTheDocument();
       expect(ImportButtonContainer.Stack).not.toHaveAttribute('aria-disabled');
     });
     test('Check if ImportButton is disabled with editMode=false and onImport function', () => {
-      setUp({ ...defaultProps, editMode: false, onImport: () => {} });
+      setUp({ ...defaultProps, editMode: false, onImport: jest.fn() });
       expect(ImportButtonContainer.Stack).toHaveAttribute('aria-disabled');
     });
   });
@@ -55,7 +55,7 @@ describe('Check if TableToolbar buttons is displayed or not', () => {
       expect(ExportButtonContainer.Stack).not.toBeInTheDocument();
     });
     test('Check if ExportButton is displayed with onExport function and default value', () => {
-      setUp({ ...defaultProps, onExport: () => {} });
+      setUp({ ...defaultProps, onExport: jest.fn() });
       expect(ExportButtonContainer.Stack).toBeInTheDocument();
       expect(ExportButtonContainer.Stack).not.toHaveAttribute('aria-disabled');
     });
@@ -67,11 +67,11 @@ describe('Check if TableToolbar buttons is displayed or not', () => {
       expect(AddRowButtonContainer.Stack).not.toBeInTheDocument();
     });
     test('Check if AddRowButton is not displayed with onAddRow function and default value', () => {
-      setUp({ ...defaultProps, onAddRow: () => {} });
+      setUp({ ...defaultProps, onAddRow: jest.fn() });
       expect(AddRowButtonContainer.Stack).toBeInTheDocument();
     });
     test('Check if AddRowButton is disabled with onAddRow function editMode=false', () => {
-      setUp({ ...defaultProps, onAddRow: () => {}, editMode: false });
+      setUp({ ...defaultProps, onAddRow: jest.fn(), editMode: false });
       expect(AddRowButtonContainer.Stack).toBeInTheDocument();
       expect(AddRowButtonContainer.Stack).toHaveAttribute('aria-disabled');
     });
@@ -83,17 +83,17 @@ describe('Check if TableToolbar buttons is displayed or not', () => {
       expect(DeleteRowButtonContainer.Stack).not.toBeInTheDocument();
     });
     test('Check if DeleteRowButton is disabled with onDeleteRow function and default value', () => {
-      setUp({ ...defaultProps, onDeleteRow: () => {} });
+      setUp({ ...defaultProps, onDeleteRow: jest.fn() });
       expect(DeleteRowButtonContainer.Stack).toBeInTheDocument();
       expect(DeleteRowButtonContainer.Stack).toHaveAttribute('aria-disabled');
     });
     test('Check if DeleteRowButton is disabled with onDeleteRow function, enableAddRow editMode=false', () => {
-      setUp({ ...defaultProps, onDeleteRow: () => {}, editMode: false });
+      setUp({ ...defaultProps, onDeleteRow: jest.fn(), editMode: false });
       expect(DeleteRowButtonContainer.Stack).toBeInTheDocument();
       expect(DeleteRowButtonContainer.Stack).toHaveAttribute('aria-disabled');
     });
-    test('Check if DeleteRowButton is disabled with onDeleteRow function, enableAddRow isReady=true', () => {
-      setUp({ ...defaultProps, onDeleteRow: () => {}, isReady: true });
+    test('Check if DeleteRowButton is not disabled with onDeleteRow function, isReady=true', () => {
+      setUp({ ...defaultProps, onDeleteRow: jest.fn(), isReady: true });
       expect(DeleteRowButtonContainer.Stack).toBeInTheDocument();
       expect(DeleteRowButtonContainer.Stack).not.toHaveAttribute('aria-disabled');
     });
