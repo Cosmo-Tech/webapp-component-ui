@@ -195,6 +195,7 @@ export const Table = (props) => {
         editMode={editMode}
         customToolbarActions={customToolbarActions}
         labels={toolbarLabels}
+        gridApi={gridRef?.current?.api}
       />
     );
   }, [
@@ -213,6 +214,42 @@ export const Table = (props) => {
     onDeleteRow,
     editMode,
     customToolbarActions,
+  ]);
+
+  const emptyTablePlaceholder = useMemo(() => {
+    return (
+      <div className={classes.emptyTablePlaceholderDiv}>
+        <Typography variant="h5" className={classes.emptyTablePlaceholderTitle}>
+          {labels.placeholderTitle}
+        </Typography>
+        <Typography variant="body1" className={classes.emptyTablePlaceholderBody}>
+          {labels.placeholderBody}
+        </Typography>
+        {onImport ? (
+          <Button
+            key="import-file-button"
+            disabled={!editMode}
+            color="primary"
+            variant="contained"
+            startIcon={<UploadFileIcon />}
+            component="label"
+            onChange={onImport}
+          >
+            {labels.import}
+            <input type="file" accept=".csv, .xlsx" hidden />
+          </Button>
+        ) : null}
+      </div>
+    );
+  }, [
+    classes.emptyTablePlaceholderBody,
+    classes.emptyTablePlaceholderDiv,
+    classes.emptyTablePlaceholderTitle,
+    editMode,
+    labels.import,
+    labels.placeholderBody,
+    labels.placeholderTitle,
+    onImport,
   ]);
 
   const agGridElement = useMemo(() => {
@@ -257,34 +294,7 @@ export const Table = (props) => {
       <div data-cy="grid" id="grid-container" className={agTheme}>
         {errorsPanelElement}
         {tableToolbarElement}
-        <Box sx={dimensions}>
-          {isReady && !isLoading ? (
-            agGridElement
-          ) : (
-            <div className={classes.emptyTablePlaceholderDiv}>
-              <Typography variant="h5" className={classes.emptyTablePlaceholderTitle}>
-                {labels.placeholderTitle}
-              </Typography>
-              <Typography variant="body1" className={classes.emptyTablePlaceholderBody}>
-                {labels.placeholderBody}
-              </Typography>
-              {onImport ? (
-                <Button
-                  key="import-file-button"
-                  disabled={!editMode}
-                  color="primary"
-                  variant="contained"
-                  startIcon={<UploadFileIcon />}
-                  component="label"
-                  onChange={onImport}
-                >
-                  {labels.import}
-                  <input type="file" accept=".csv, .xlsx" hidden />
-                </Button>
-              ) : null}
-            </div>
-          )}
-        </Box>
+        <Box sx={dimensions}>{isReady && !isFullscreen && !isLoading ? agGridElement : emptyTablePlaceholder}</Box>
         <Dialog
           fullScreen
           open={isFullscreen}

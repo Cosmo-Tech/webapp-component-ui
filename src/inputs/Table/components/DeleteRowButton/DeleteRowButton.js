@@ -9,14 +9,14 @@ import { FadingTooltip } from '../../../../misc';
 import { DontAskAgainDialog } from '../../../../dialogs';
 
 export const DeleteRowButton = (props) => {
-  const { onDeleteRow, label, disabled } = props;
+  const { onDeleteRow, label, disabled, gridApi } = props;
   const [isOpen, setOpen] = useState(false);
   const switchDontAskAgainToDeleteRow = useCallback((isChecked) => {
     localStorage.setItem('dontAskAgainToDeleteRow', isChecked);
   }, []);
   const switchOpenValue = useCallback(() => {
-    localStorage.getItem('dontAskAgainToDeleteRow') === 'true' ? onDeleteRow() : setOpen(!isOpen);
-  }, [isOpen, onDeleteRow]);
+    localStorage.getItem('dontAskAgainToDeleteRow') === 'true' ? onDeleteRow(gridApi) : setOpen(!isOpen);
+  }, [gridApi, isOpen, onDeleteRow]);
   return (
     <>
       <FadingTooltip title={label} useSpan={true}>
@@ -38,7 +38,7 @@ export const DeleteRowButton = (props) => {
         onConfirm={(isChecked) => {
           switchOpenValue();
           switchDontAskAgainToDeleteRow(isChecked);
-          onDeleteRow();
+          onDeleteRow(gridApi);
         }}
         open={isOpen}
       ></DontAskAgainDialog>
@@ -59,4 +59,8 @@ DeleteRowButton.propTypes = {
    * Boolean to define if the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
+  /*
+   * AgGrid API, regroup all function to get and set data
+   */
+  gridApi: PropTypes.object,
 };
