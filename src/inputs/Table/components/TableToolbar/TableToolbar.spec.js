@@ -87,7 +87,7 @@ describe('Check if TableToolbar buttons are displayed or not', () => {
       expect(DeleteRowButtonContainer.Stack).toBeInTheDocument();
       expect(DeleteRowButtonContainer.Stack).toHaveAttribute('aria-disabled');
     });
-    test('Check if DeleteRowButton is disabled with onDeleteRow function, enableAddRow editMode=false', () => {
+    test('Check if DeleteRowButton is disabled with onDeleteRow function, editMode=false', () => {
       setUp({ ...defaultProps, onDeleteRow: jest.fn(), editMode: false });
       expect(DeleteRowButtonContainer.Stack).toBeInTheDocument();
       expect(DeleteRowButtonContainer.Stack).toHaveAttribute('aria-disabled');

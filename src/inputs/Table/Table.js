@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   emptyTablePlaceholderDiv: {
     textAlign: 'center',
     padding: theme.spacing(4, 0),
-    width: '15%',
+    maxWidth: '400px',
     marginRight: 'auto',
     marginLeft: 'auto',
   },
