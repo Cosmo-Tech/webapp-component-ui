@@ -20,7 +20,6 @@ export const TableToolbar = (props) => {
     editMode,
     customToolbarActions,
     labels,
-    gridApi,
   } = props;
   const classes = useStyles();
 
@@ -41,7 +40,6 @@ export const TableToolbar = (props) => {
           onAddRow={onAddRow}
           label={labels?.addRow ?? 'Add a new row'}
           disabled={!(editMode && !isLoading)}
-          gridApi={gridApi}
         />
       )}
       {onDeleteRow && (
@@ -49,7 +47,6 @@ export const TableToolbar = (props) => {
           onDeleteRow={onDeleteRow}
           label={labels?.deleteRows}
           disabled={!(editMode && isReady && !isLoading)}
-          gridApi={gridApi}
         />
       )}
       {isLoading ? (
@@ -125,8 +122,4 @@ TableToolbar.propTypes = {
     deleteRows: PropTypes.string,
     fullscreen: PropTypes.string,
   }),
-  /*
-   * AgGrid API, regroup all function to get and set data
-   */
-  gridApi: PropTypes.object,
 };

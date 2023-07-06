@@ -190,12 +190,11 @@ export const Table = (props) => {
         isLoading={isLoading}
         onImport={onImport}
         onExport={onExport}
-        onAddRow={onAddRow}
-        onDeleteRow={onDeleteRow}
+        onAddRow={() => onAddRow(gridRef?.current?.api)}
+        onDeleteRow={() => onDeleteRow(gridRef?.current?.api)}
         editMode={editMode}
         customToolbarActions={customToolbarActions}
         labels={toolbarLabels}
-        gridApi={gridRef?.current?.api}
       />
     );
   }, [

@@ -8,13 +8,11 @@ import PropTypes from 'prop-types';
 import { FadingTooltip } from '../../../../misc';
 
 export const AddRowButton = (props) => {
-  const { onAddRow, label, disabled, gridApi } = props;
+  const { onAddRow, label, disabled } = props;
   return (
     <FadingTooltip title={label} useSpan={true}>
       <IconButton
-        onClick={() => {
-          onAddRow(gridApi);
-        }}
+        onClick={onAddRow}
         component="label"
         size="small"
         color="primary"
@@ -41,8 +39,4 @@ AddRowButton.propTypes = {
    * Boolean to define if the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
-  /*
-   * AgGrid API, regroup all function to get and set data
-   */
-  gridApi: PropTypes.object,
 };
