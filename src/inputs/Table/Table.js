@@ -156,7 +156,17 @@ export const Table = (props) => {
     // If gridRef is initialized and rows have been changed programmatically (i.e. not through the ag-grid UI), then we
     // have to force the refresh of the table cells for the changes to be re-rendered
     gridRef?.current?.api?.refreshCells();
+    console.log('rows modified');
   }, [rows]);
+
+  useEffect(() => {
+    // Clear ref to aggrid API when component is unmounted
+    console.log('on mount');
+    return () => {
+      console.log('on unmount');
+      gridRef?.current?.reset();
+    };
+  }, []);
 
   const errorsPanelElement = useMemo(() => {
     return (
@@ -174,6 +184,10 @@ export const Table = (props) => {
     );
   }, [buildErrorsPanelTitle, errorPanelLabels, errors, hasErrors, maxErrorsCount, onClearErrors]);
 
+  const deleteRows = useCallback(() => {
+    onDeleteRow(gridRef?.current?.api);
+  }, [onDeleteRow]);
+
   const tableToolbarElement = useMemo(() => {
     const toolbarLabels = {
       import: labels.import,
@@ -182,6 +196,7 @@ export const Table = (props) => {
       addRow: labels.addRow,
       deleteRows: labels.deleteRows,
     };
+
     return (
       <TableToolbar
         isFullscreen={isFullscreen}
@@ -190,14 +205,16 @@ export const Table = (props) => {
         isLoading={isLoading}
         onImport={onImport}
         onExport={onExport}
-        onAddRow={() => onAddRow(gridRef?.current?.api)}
-        onDeleteRow={() => onDeleteRow(gridRef?.current?.api)}
+        onAddRow={() => onAddRow(gridRef)}
+        onDeleteRow={deleteRows}
         editMode={editMode}
         customToolbarActions={customToolbarActions}
         labels={toolbarLabels}
       />
     );
   }, [
+    deleteRows,
+    gridRef,
     labels.import,
     labels.export,
     labels.fullscreen,
@@ -256,6 +273,7 @@ export const Table = (props) => {
       dateFormat,
       editMode,
     };
+
     return (
       <AgGridReact
         ref={gridRef}
@@ -270,6 +288,12 @@ export const Table = (props) => {
         context={context}
         stopEditingWhenCellsLoseFocus={true}
         rowSelection={'multiple'}
+        onGridReady={(params) => {
+          // gridRef.current = params;
+          // console.log('grid is ready');
+          // console.log('new api:');
+          // console.log(gridRef.current);
+        }}
       />
     );
   }, [columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
@@ -295,6 +319,7 @@ export const Table = (props) => {
         {tableToolbarElement}
         <Box sx={dimensions}>{isReady && !isFullscreen && !isLoading ? agGridElement : emptyTablePlaceholder}</Box>
         <Dialog
+          // keepMounted={true}
           fullScreen
           open={isFullscreen}
           onClose={toggleFullscreen}
