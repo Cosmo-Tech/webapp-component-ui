@@ -3,7 +3,7 @@
 
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, DialogContent, Stack, Typography, Box, Button } from '@mui/material';
+import { Stack, Typography, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -46,6 +46,11 @@ const useStyles = makeStyles((theme) => ({
   nonEditableCell: {
     backgroundColor: theme.palette.action.disabled,
     color: theme.palette.text.disabled,
+  },
+  gridContainerFullscreen: {
+    border: theme.spacing(2) + ' solid',
+    borderColor: 'var(--ag-odd-row-background-color)',
+    height: '100%',
   },
   emptyTablePlaceholderDiv: {
     textAlign: 'center',
@@ -150,6 +155,7 @@ export const Table = (props) => {
 
   const toggleFullscreen = useCallback(() => {
     setFullscreen(!isFullscreen);
+    isFullscreen ? document.exitFullscreen() : document.getElementById('grid-container').requestFullscreen();
   }, [isFullscreen, setFullscreen]);
 
   useEffect(() => {
@@ -300,22 +306,13 @@ export const Table = (props) => {
       </div>
       {extraToolbarActions ? <div className={classes.toolBar}>{extraToolbarActions}</div> : null}
       <div data-cy="grid" id="grid-container" className={agTheme}>
-        {errorsPanelElement}
-        {tableToolbarElement}
-        <Box sx={dimensions}>{isReady && !isFullscreen && !isLoading ? agGridElement : emptyTablePlaceholder}</Box>
-        <Dialog
-          fullScreen
-          open={isFullscreen}
-          onClose={toggleFullscreen}
-          className={agTheme}
-          data-cy="fullscreen-table"
-        >
-          <DialogContent data-cy="grid">
-            {errorsPanelElement}
-            {tableToolbarElement}
-            <Box sx={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}>{agGridElement}</Box>
-          </DialogContent>
-        </Dialog>
+        <div className={isFullscreen ? classes.gridContainerFullscreen : null}>
+          {errorsPanelElement}
+          {tableToolbarElement}
+          <Box sx={isFullscreen ? { height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` } : dimensions}>
+            {isReady && !isLoading ? agGridElement : emptyTablePlaceholder}
+          </Box>
+        </div>
       </div>
     </div>
   );
@@ -370,7 +367,16 @@ Table.propTypes = {
       import: 'string',
       export: 'string',
       addRow: 'string',
-      deleteRows: 'string',
+      deleteRows: {
+        deleteRows: 'string',
+        dialog: {
+          title: 'string',
+          body: 'string',
+          cancel: 'string',
+          confirm: 'string',
+          checkbox: 'string',
+        },
+      },
       fullscreen: 'string',
     }
    </pre>
@@ -385,7 +391,16 @@ Table.propTypes = {
     import: PropTypes.string,
     export: PropTypes.string,
     addRow: PropTypes.string,
-    deleteRows: PropTypes.string,
+    deleteRows: PropTypes.shape({
+      deleteRows: PropTypes.string,
+      dialog: {
+        title: PropTypes.string,
+        body: PropTypes.string,
+        cancel: PropTypes.string,
+        confirm: PropTypes.string,
+        checkbox: PropTypes.string,
+      },
+    }),
     fullscreen: PropTypes.string,
   }),
   /**

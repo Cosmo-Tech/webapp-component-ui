@@ -20,7 +20,7 @@ export const DeleteRowButton = (props) => {
 
   return (
     <>
-      <FadingTooltip title={label} useSpan={true}>
+      <FadingTooltip title={labels?.deleteRows} useSpan={true}>
         <IconButton
           onClick={switchOpenValue}
           component="label"
@@ -42,6 +42,8 @@ export const DeleteRowButton = (props) => {
           onDeleteRow();
         }}
         open={isOpen}
+        labels={labels?.dialog}
+        confirmColor="error"
       ></DontAskAgainDialog>
     </>
   );
@@ -52,10 +54,32 @@ DeleteRowButton.propTypes = {
    * Function use to delete selected lines
    */
   onDeleteRow: PropTypes.func.isRequired,
-  /*
-   * label of the button used for Tooltip
+  /**
+   * Component's labels:
+   * Structure:
+   * <pre>
+     {
+      deleteRows: 'string',
+      dialog: {
+        title: 'string',
+        body: 'string',
+        cancel: 'string',
+        confirm: 'string',
+        checkbox: 'string',
+      },
+    }
+   </pre>
    */
-  label: PropTypes.string.isRequired,
+  labels: PropTypes.shape({
+    deleteRows: PropTypes.string,
+    dialog: {
+      title: PropTypes.string,
+      body: PropTypes.string,
+      cancel: PropTypes.string,
+      confirm: PropTypes.string,
+      checkbox: PropTypes.string,
+    },
+  }),
   /*
    * Boolean to define if the button is disabled
    */

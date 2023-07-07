@@ -45,7 +45,7 @@ export const TableToolbar = (props) => {
       {onDeleteRow && (
         <DeleteRowButton
           onDeleteRow={onDeleteRow}
-          label={labels?.deleteRows}
+          labels={labels?.deleteRows}
           disabled={!(editMode && isReady && !isLoading)}
         />
       )}
@@ -110,7 +110,16 @@ TableToolbar.propTypes = {
       import: 'string',
       export: 'string',
       addRow: 'string',
-      deleteRows: 'string',
+      deleteRows: {
+        deleteRows: 'string',
+        dialog: {
+          title: 'string',
+          body: 'string',
+          cancel: 'string',
+          confirm: 'string',
+          checkbox: 'string',
+        },
+      },
       fullscreen: 'string',
     }
    </pre>
@@ -119,7 +128,16 @@ TableToolbar.propTypes = {
     import: PropTypes.string,
     export: PropTypes.string,
     addRow: PropTypes.string,
-    deleteRows: PropTypes.string,
+    deleteRows: PropTypes.shape({
+      deleteRows: PropTypes.string,
+      dialog: {
+        title: PropTypes.string,
+        body: PropTypes.string,
+        cancel: PropTypes.string,
+        confirm: PropTypes.string,
+        checkbox: PropTypes.string,
+      },
+    }),
     fullscreen: PropTypes.string,
   }),
 };

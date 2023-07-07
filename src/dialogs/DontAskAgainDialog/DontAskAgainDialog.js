@@ -14,7 +14,7 @@ import {
   FormControlLabel,
 } from '@mui/material';
 
-export const DontAskAgainDialog = ({ id, open, onClose, labels, onConfirm }) => {
+export const DontAskAgainDialog = ({ id, open, onClose, labels, onConfirm, confirmColor, cancelColor }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const confirm = () => {
@@ -49,10 +49,16 @@ export const DontAskAgainDialog = ({ id, open, onClose, labels, onConfirm }) => 
       </DialogContent>
       <DialogActions>
         {/* TODO Use button1Props and button2Props to enable variants and colors */}
-        <Button autoFocus data-cy={id + '-cancel-button'} id={id + '-cancel-button'} onClick={close} color="primary">
+        <Button
+          autoFocus
+          data-cy={id + '-cancel-button'}
+          id={id + '-cancel-button'}
+          onClick={close}
+          color={cancelColor}
+        >
           {labels.cancel}
         </Button>
-        <Button data-cy={id + '-confirm-button'} id={id + '-confirm-button'} onClick={confirm} color="primary">
+        <Button data-cy={id + '-confirm-button'} id={id + '-confirm-button'} onClick={confirm} color={confirmColor}>
           {labels.confirm}
         </Button>
       </DialogActions>
@@ -99,6 +105,8 @@ DontAskAgainDialog.propTypes = {
     confirm: PropTypes.string.isRequired,
     checkbox: PropTypes.string.isRequired,
   }),
+  confirmColor: PropTypes.string,
+  cancelColor: PropTypes.string,
 };
 
 DontAskAgainDialog.defaultProps = {
@@ -111,4 +119,6 @@ DontAskAgainDialog.defaultProps = {
     confirm: 'Confirm',
     checkbox: 'Do not ask again',
   },
+  confirmColor: 'primary',
+  cancelColor: 'primary',
 };
