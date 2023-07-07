@@ -304,7 +304,6 @@ export const Table = (props) => {
         {tableToolbarElement}
         <Box sx={dimensions}>{isReady && !isFullscreen && !isLoading ? agGridElement : emptyTablePlaceholder}</Box>
         <Dialog
-          // keepMounted={true}
           fullScreen
           open={isFullscreen}
           onClose={toggleFullscreen}

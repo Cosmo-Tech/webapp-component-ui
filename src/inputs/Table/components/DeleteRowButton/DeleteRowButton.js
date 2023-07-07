@@ -39,6 +39,7 @@ export const DeleteRowButton = (props) => {
         onConfirm={(isChecked) => {
           switchOpenValue();
           switchDontAskAgainToDeleteRow(isChecked);
+          onDeleteRow();
         }}
         open={isOpen}
       ></DontAskAgainDialog>
