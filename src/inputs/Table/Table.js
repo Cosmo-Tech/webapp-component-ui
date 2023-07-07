@@ -156,17 +156,7 @@ export const Table = (props) => {
     // If gridRef is initialized and rows have been changed programmatically (i.e. not through the ag-grid UI), then we
     // have to force the refresh of the table cells for the changes to be re-rendered
     gridRef?.current?.api?.refreshCells();
-    console.log('rows modified');
   }, [rows]);
-
-  useEffect(() => {
-    // Clear ref to aggrid API when component is unmounted
-    console.log('on mount');
-    return () => {
-      console.log('on unmount');
-      gridRef?.current?.reset();
-    };
-  }, []);
 
   const errorsPanelElement = useMemo(() => {
     return (
@@ -187,6 +177,9 @@ export const Table = (props) => {
   const deleteRows = useCallback(() => {
     onDeleteRow(gridRef?.current?.api);
   }, [onDeleteRow]);
+  const addRows = useCallback(() => {
+    onAddRow(gridRef?.current?.api);
+  }, [onAddRow]);
 
   const tableToolbarElement = useMemo(() => {
     const toolbarLabels = {
@@ -205,7 +198,7 @@ export const Table = (props) => {
         isLoading={isLoading}
         onImport={onImport}
         onExport={onExport}
-        onAddRow={() => onAddRow(gridRef)}
+        onAddRow={addRows}
         onDeleteRow={deleteRows}
         editMode={editMode}
         customToolbarActions={customToolbarActions}
@@ -213,8 +206,6 @@ export const Table = (props) => {
       />
     );
   }, [
-    deleteRows,
-    gridRef,
     labels.import,
     labels.export,
     labels.fullscreen,
@@ -226,8 +217,8 @@ export const Table = (props) => {
     isLoading,
     onImport,
     onExport,
-    onAddRow,
-    onDeleteRow,
+    addRows,
+    deleteRows,
     editMode,
     customToolbarActions,
   ]);
@@ -288,12 +279,6 @@ export const Table = (props) => {
         context={context}
         stopEditingWhenCellsLoseFocus={true}
         rowSelection={'multiple'}
-        onGridReady={(params) => {
-          // gridRef.current = params;
-          // console.log('grid is ready');
-          // console.log('new api:');
-          // console.log(gridRef.current);
-        }}
       />
     );
   }, [columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
