@@ -173,7 +173,12 @@ export const Table = (props) => {
   }, [buildErrorsPanelTitle, errorPanelLabels, errors, hasErrors, maxErrorsCount, onClearErrors]);
 
   const tableToolbarElement = useMemo(() => {
-    const toolbarLabels = { import: labels.import, export: labels.export, fullscreen: labels.fullscreen };
+    const toolbarLabels = {
+      import: labels.import,
+      export: labels.export,
+      fullscreen: labels.fullscreen,
+      loading: labels.loading,
+    };
     return (
       <TableToolbar
         isFullscreen={isFullscreen}
@@ -196,6 +201,7 @@ export const Table = (props) => {
     labels.export,
     labels.fullscreen,
     labels.import,
+    labels.loading,
     onExport,
     onImport,
     toggleFullscreen,
@@ -356,7 +362,7 @@ Table.propTypes = {
    */
   tooltipText: PropTypes.string,
   /**
-   *  List of extra React elements. these elements will be added above AgGrid Table
+   *  List of extra React elements. These elements will be added above AgGrid Table
    */
   extraToolbarActions: PropTypes.arrayOf(PropTypes.node),
   /*

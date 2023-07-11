@@ -36,11 +36,11 @@ FullscreenButton.propTypes = {
    */
   toggleFullscreen: PropTypes.func.isRequired,
   /*
-   * Boolean to define is the button is disabled
+   * Boolean that defines IF the button is disabled
    */
   disabled: PropTypes.bool.isRequired,
   /*
-   * label of the button used for Tooltip
+   * Label of the button used for Tooltip
    */
   label: PropTypes.string.isRequired,
 };

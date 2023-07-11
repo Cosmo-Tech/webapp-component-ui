@@ -34,8 +34,8 @@ export const TableToolbar = (props) => {
       )}
       {onExport && <ExportButton onExport={onExport} label={labels.export ?? 'Export'} disabled={isLoading} />}
       {isLoading ? (
-        <span className={classes.TableLoading}>
-          Loading...
+        <span className={classes.tableLoading}>
+          {labels.loading}
           <CircularProgress size="10px" />
         </span>
       ) : (
@@ -55,7 +55,7 @@ TableToolbar.propTypes = {
    */
   toggleFullscreen: PropTypes.func.isRequired,
   /*
-   * Boolean value define if data is fully loaded
+   * Boolean value that defines if data is fully loaded
    */
   isReady: PropTypes.bool.isRequired,
   /*
@@ -63,7 +63,7 @@ TableToolbar.propTypes = {
    */
   isLoading: PropTypes.bool.isRequired,
   /*
-   * Boolean value which defined if user can actually do modifications on the webapp
+   * Boolean value which defines if user can actually do modifications on the webapp
    */
   editMode: PropTypes.bool.isRequired,
   /*
@@ -93,5 +93,6 @@ TableToolbar.propTypes = {
     import: PropTypes.string,
     export: PropTypes.string,
     fullscreen: PropTypes.string,
+    loading: PropTypes.string,
   }),
 };

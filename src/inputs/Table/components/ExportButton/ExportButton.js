@@ -28,7 +28,7 @@ ExportButton.propTypes = {
    */
   disabled: PropTypes.bool.isRequired,
   /*
-   * label of the button, displayed as a tooltip
+   * Label of the button, displayed as a tooltip
    */
   label: PropTypes.string.isRequired,
 };

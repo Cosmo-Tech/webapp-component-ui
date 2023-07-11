@@ -28,7 +28,7 @@ Tooltip.propTypes = {
    */
   title: PropTypes.string,
   /**
-   * Boolean value not required, if set to true, span will be displayed instead of a div on the children
+   * Boolean value, if set to true, children component will be wrapped in span tag
    */
   useSpan: PropTypes.bool,
 };
