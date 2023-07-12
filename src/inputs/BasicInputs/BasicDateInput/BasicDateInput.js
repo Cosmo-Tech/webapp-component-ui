@@ -43,13 +43,13 @@ export const BasicDateInput = (props) => {
             inputFormat={format}
             minDate={dateProps.minDate}
             maxDate={dateProps.maxDate}
-            renderInput={(params) => (
+            renderInput={({ error: _, ...params }) => (
               <TextField
                 id={`date-text-field-${id}`}
                 variant="outlined"
                 sx={{ flexGrow: 1 }}
                 size="small"
-                error={error}
+                error={error?.message?.length > 0}
                 helperText={error?.message ?? ''}
                 {...params}
               />
