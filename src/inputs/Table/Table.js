@@ -128,9 +128,13 @@ const _moveExtraPropertiesToCellEditorParams = (col) => {
 };
 
 const _formatColumnsData = (columns, dateFormat) =>
-  clone(columns).map((col) => {
-    _formatMinMaxDatesInColumns(col, dateFormat);
-    _moveExtraPropertiesToCellEditorParams(col);
+  columns.map((col) => {
+    if (col.children) {
+      col.children = _formatColumnsData(col.children, dateFormat);
+    } else {
+      _formatMinMaxDatesInColumns(col, dateFormat);
+      _moveExtraPropertiesToCellEditorParams(col);
+    }
     return col;
   });
 
@@ -166,7 +170,7 @@ export const Table = (props) => {
   const classes = useStyles();
   const defaultColDef = getDefaultColumnsProperties(onCellChange, classes);
   const columnTypes = getColumnTypes(dateFormat);
-  const formattedColumns = useMemo(() => _formatColumnsData(columns, dateFormat), [columns, dateFormat]);
+  const formattedColumns = useMemo(() => _formatColumnsData(clone(columns), dateFormat), [columns, dateFormat]);
   const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const hasErrors = errors && errors.length > 0;
   const isReady = rows.length > 0 && dataStatus === TABLE_DATA_STATUS.READY;
