@@ -16,6 +16,9 @@ import { getCommonInputStyles } from '../style';
 import { TableToolbar } from './components';
 import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import rfdc from 'rfdc';
+
+const clone = rfdc();
 
 const useStyles = makeStyles((theme) => ({
   ...getCommonInputStyles(theme),
@@ -98,7 +101,7 @@ const _moveExtraPropertiesToCellEditorParams = (col) => {
 };
 
 const _formatColumnsData = (columns, dateFormat) =>
-  columns.map((col, index) => {
+  clone(columns).map((col) => {
     _formatMinMaxDatesInColumns(col, dateFormat);
     _moveExtraPropertiesToCellEditorParams(col);
     return col;
