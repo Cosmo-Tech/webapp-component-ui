@@ -24,40 +24,45 @@ export const UploadFile = (props) => {
     file,
     editMode,
     isFileValid,
+    error,
     labels,
     tooltipText,
     isDirty,
   } = props;
+  if (isFileValid) {
+    console.warn('"isFileValid" prop is deprecated in UploadFile. Please use "error" instead.');
+  }
 
   const classes = useStyles();
+
   // TODO: create a generic component to truncate texts in Typography elements
   const smartFileName = useMemo(() => {
     const fileNameLength = file?.name?.length ?? 0;
-    if (fileNameLength > 20)
-      return (
-        <FadingTooltip title={file.name}>
-          <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
-            {file.name}
-          </Typography>
-        </FadingTooltip>
-      );
-    return (
+    const fileName = (
       <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
         {file.name}
       </Typography>
+    );
+
+    return (
+      <Stack>{fileNameLength > 20 ? <FadingTooltip title={file.name}>{fileName}</FadingTooltip> : fileName}</Stack>
     );
   }, [file.name]);
 
   return (
     <Stack data-cy={`file-upload-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
       <Stack spacing={1} direction="row" alignItems="center">
-        <Typography data-cy="label-disabled-input" variant="subtitle2" color="textSecondary">
+        <Typography
+          data-cy="label-disabled-input"
+          variant="subtitle2"
+          color={error != null ? 'error' : 'textSecondary'}
+        >
           {labels.label}
         </Typography>
         <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
       <Stack direction="row" alignItems="center" spacing={1}>
-        {!editMode && (file.status === 'EMPTY' || Object.keys(file).length === 0) && (
+        {!editMode && (file.status === UPLOAD_FILE_STATUS_KEY.EMPTY || Object.keys(file).length === 0) && (
           <Typography sx={{ fontStyle: 'italic', ml: 1 }} color="textSecondary">
             {labels.noFileMessage}
           </Typography>
@@ -92,7 +97,8 @@ export const UploadFile = (props) => {
         )}
         {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && smartFileName}
         {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
-          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
+          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD ||
+          error != null) &&
           editMode && (
             <FadingTooltip title={labels.delete}>
               <IconButton
@@ -107,15 +113,20 @@ export const UploadFile = (props) => {
               </IconButton>
             </FadingTooltip>
           )}
-        {(file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
-          file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
-          file.status === UPLOAD_FILE_STATUS_KEY.DELETING) && <CircularProgress />}
         {isFileValid === false && (
           <FadingTooltip title={labels.invalidFileMessage} placement="right-end">
             <ErrorIcon color="error" />
           </FadingTooltip>
         )}
+        {(file.status === UPLOAD_FILE_STATUS_KEY.UPLOADING ||
+          file.status === UPLOAD_FILE_STATUS_KEY.DOWNLOADING ||
+          file.status === UPLOAD_FILE_STATUS_KEY.DELETING) && <CircularProgress data-cy="circular-progress" />}
       </Stack>
+      {error != null && (
+        <Typography data-cy="file-error-message" color="error" fontSize="small" sx={{ ml: 1 }}>
+          {error?.message}
+        </Typography>
+      )}
     </Stack>
   );
 };
@@ -153,15 +164,20 @@ UploadFile.propTypes = {
    */
   file: PropTypes.object,
   /**
-   *  Define the UploadFile's state:
-   *  - true : the button is enabled
-   *  - false : the button is disabled
+   * Define the UploadFile's state:
+   * - true : the button is enabled
+   * - false : the button is disabled
    */
   editMode: PropTypes.bool.isRequired,
   /**
-   *  Defines if the uploaded file is valid or not
+   * DEPRECATED: this prop is deprecated, Please consider removing this prop
+   * Defines if the uploaded file is valid or not
    */
   isFileValid: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
   /**
    * Component's labels:
    * Structure:
@@ -170,7 +186,8 @@ UploadFile.propTypes = {
       button: 'string',
       invalidFileMessage: 'string',
       label: 'string',
-      delete: 'string'
+      delete: 'string',
+      noFileMessage: 'string',
     }
    </pre>
    */
@@ -196,7 +213,7 @@ UploadFile.defaultProps = {
   labels: {
     label: '',
     button: 'Browse',
-    invalidFileMessage: 'Your file is invalid',
+    invalidFileMessage: 'File format not supported',
     delete: 'Delete file',
     noFileMessage: 'None',
   },
