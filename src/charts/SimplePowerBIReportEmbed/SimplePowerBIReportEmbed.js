@@ -50,19 +50,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getErrorCode(labels, reports) {
-  let errorCode = labels.errors.unknown;
-  if (reports?.error?.status && reports?.error?.statusText) {
-    errorCode = `${reports?.error?.status} - ${reports?.error?.statusText}`;
-  }
-  return errorCode;
+  if (!reports?.error?.status && !reports?.error?.statusText) return labels.errors.unknown;
+  return `${reports?.error?.status ?? ''} ${reports?.error?.statusText ?? ''}`;
 }
 
 function getErrorDescription(labels, reports) {
-  let errorDescription = labels.errors.details;
-  if (reports?.error?.powerBIErrorInfo) {
-    errorDescription = reports?.error?.powerBIErrorInfo;
-  }
-  return errorDescription;
+  return reports?.error?.powerBIErrorInfo ?? labels.errors.details;
 }
 
 function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
@@ -256,6 +249,7 @@ export const SimplePowerBIReportEmbed = ({
     </div>
   );
 };
+
 SimplePowerBIReportEmbed.propTypes = {
   /**
    * Index of reportConfiguration
