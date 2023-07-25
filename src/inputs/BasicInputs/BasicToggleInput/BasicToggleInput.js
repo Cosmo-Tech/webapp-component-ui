@@ -3,7 +3,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Stack, Switch, FormControlLabel } from '@mui/material';
+import { Grid, Stack, Switch, FormControlLabel, FormHelperText, FormControl } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
@@ -13,7 +13,7 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicToggleInput = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, value, switchProps, changeSwitchType, isDirty, ...otherProps } = props;
+  const { id, label, tooltipText, value, switchProps, changeSwitchType, isDirty, error, ...otherProps } = props;
 
   if (switchProps.disabled)
     return (
@@ -28,28 +28,25 @@ export const BasicToggleInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Stack
-        data-cy={`toggle-input-${id}`}
-        direction="row"
-        spacing={1}
-        alignItems="center"
-        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
-      >
-        <FormControlLabel
-          value="value"
-          control={
-            <Switch
-              color="secondary"
-              onChange={(event) => changeSwitchType(event.target.checked)}
-              checked={value}
-              {...switchProps}
-            />
-          }
-          label={label}
-          labelPlacement="end"
-        />
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
+      <FormControl className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
+        <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} alignItems="center">
+          <FormControlLabel
+            value="value"
+            control={
+              <Switch
+                color="secondary"
+                onChange={(event) => changeSwitchType(event.target.checked)}
+                checked={value}
+                {...switchProps}
+              />
+            }
+            label={label}
+            labelPlacement="end"
+          />
+          <TooltipInfo title={tooltipText} variant="small" />
+        </Stack>
+        <FormHelperText error={error?.message?.length > 0}>{error?.message ?? ''}</FormHelperText>
+      </FormControl>
     </Grid>
   );
 };
@@ -83,6 +80,10 @@ BasicToggleInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
 };
 BasicToggleInput.defaultProps = {
   isDirty: false,
