@@ -5,10 +5,10 @@
 import React from 'react';
 import { Table } from './Table';
 import { renderInMuiThemeProvider } from '../../../tests/utils';
-import { StackContainerTesting } from '../../../tests/MuiComponentsTesting';
+import { ContainerTesting } from '../../../tests/MuiComponentsTesting';
 
 const mockOnClearErrors = jest.fn();
-const tableInputContainer = new StackContainerTesting({ dataCy: 'table-input' });
+const tableInputContainer = new ContainerTesting({ dataCy: 'table-input' });
 const defaultProps = {
   editMode: true,
   columns: [
@@ -34,11 +34,11 @@ const setUp = (props) => {
 describe('Checks table input in edit mode', () => {
   test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
     setUp(defaultProps);
-    expect(tableInputContainer.Stack).toBeInTheDocument();
-    expect(tableInputContainer.Stack).not.toHaveDirtyInputClass();
+    expect(tableInputContainer.Container).toBeInTheDocument();
+    expect(tableInputContainer.Container).not.toHaveDirtyInputClass();
   });
   test('dirtyInput class is applied when isDirty is true', () => {
     setUp(propsWithDirtyState);
-    expect(tableInputContainer.Stack).toHaveDirtyInputClass();
+    expect(tableInputContainer.Container).toHaveDirtyInputClass();
   });
 });

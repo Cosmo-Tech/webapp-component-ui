@@ -8,6 +8,6 @@ export { ChipTesting } from './ChipTesting';
 export { TypographyTesting } from './TypographyTesting';
 export { SelectTesting } from './SelectTesting';
 export { SliderTesting } from './SliderTesting';
-export { StackContainerTesting } from './StackContainerTesting';
 export { default as MockTheme } from './MockTheme';
 export { DialogTesting } from './DialogTesting';
+export { ContainerTesting } from './ContainerTesting';

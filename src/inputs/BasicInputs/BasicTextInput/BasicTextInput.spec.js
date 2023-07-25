@@ -5,11 +5,11 @@
 import React from 'react';
 import { BasicTextInput } from './BasicTextInput';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
-import { StackContainerTesting } from '../../../../tests/MuiComponentsTesting';
 import { screen } from '@testing-library/react';
+import { ContainerTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
-const textInputContainer = new StackContainerTesting({ dataCy: 'text-input-comment' });
+const textInputContainer = new ContainerTesting({ dataCy: 'text-input-comment' });
 const defaultProps = {
   id: 'comment',
   value: 'short comment',
@@ -39,12 +39,12 @@ const setUp = (props) => {
 describe('Checks text input in edit mode', () => {
   test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
     setUp(defaultProps);
-    expect(textInputContainer.Stack).toBeInTheDocument();
-    expect(textInputContainer.Stack).not.toHaveDirtyInputClass();
+    expect(textInputContainer.Container).toBeInTheDocument();
+    expect(textInputContainer.Container).not.toHaveDirtyInputClass();
   });
   test('dirtyInput class is applied when isDirty is true', () => {
     setUp(propsWithDirtyState);
-    expect(textInputContainer.Stack).toHaveDirtyInputClass();
+    expect(textInputContainer.Container).toHaveDirtyInputClass();
   });
   test("helperText isn't displayed when error is undefined", () => {
     setUp(defaultProps);

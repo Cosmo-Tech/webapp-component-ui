@@ -5,8 +5,8 @@
 import React from 'react';
 import { BasicDateInput } from './BasicDateInput';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
-import { StackContainerTesting } from '../../../../tests/MuiComponentsTesting';
 import { screen } from '@testing-library/react';
+import { ContainerTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
 
@@ -32,7 +32,7 @@ const propsWithRequiredError = {
   },
 };
 
-const dateInputContainer = new StackContainerTesting({ dataCy: 'date-input-start-date' });
+const dateInputContainer = new ContainerTesting({ dataCy: 'date-input-start-date' });
 
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicDateInput {...props} />);
@@ -41,13 +41,13 @@ const setUp = (props) => {
 describe('Checks date input in edit mode', () => {
   test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
     setUp(defaultProps);
-    expect(dateInputContainer.Stack).toBeInTheDocument();
-    expect(dateInputContainer.Stack).not.toHaveDirtyInputClass();
+    expect(dateInputContainer.Container).toBeInTheDocument();
+    expect(dateInputContainer.Container).not.toHaveDirtyInputClass();
   });
 
   test('dirtyInput class is applied when isDirty is true', () => {
     setUp(propsWithDirtyState);
-    expect(dateInputContainer.Stack).toHaveDirtyInputClass();
+    expect(dateInputContainer.Container).toHaveDirtyInputClass();
   });
   test("helperText isn't displayed when error is undefined", () => {
     setUp(defaultProps);
