@@ -1,3 +1,15 @@
+## **5.5.0** <sub><sup>2023-07-25 (cd255f5...e1e7c90)</sup></sub>
+
+### Features
+
+- \[PROD\-10350\] add scenario run type in scenario manager cards ([cd255f5](https://github.com/Cosmo-Tech/webapp-component-ui/commit/cd255f5))
+- \[PROD\-12032\] add error display and helperText to GenericToggleInput ([6504560](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6504560))
+
+### Bug Fixes
+
+- \[PROD\-11662\] fix the way to pass errors and error messages in DesktopDatePicker ([e660eb4](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e660eb4))
+- \[PROD\-11969\] minor improvements in error code display in SimplePowerBIReportEmbed ([49afe5a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/49afe5a))
+
 ## **5.4.0** <sub><sup>2023-06-30 (04c21be...0dcd78e)</sup></sub>
 
 ### Features
