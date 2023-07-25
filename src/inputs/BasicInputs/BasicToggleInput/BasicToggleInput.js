@@ -28,7 +28,10 @@ export const BasicToggleInput = (props) => {
 
   return (
     <Grid item xs={3}>
-      <FormControl className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
+      <FormControl
+        data-cy={`toggle-form-control-${id}`}
+        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      >
         <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} alignItems="center">
           <FormControlLabel
             value="value"
