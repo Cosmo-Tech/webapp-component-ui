@@ -5,10 +5,10 @@
 import React from 'react';
 import { BasicRadioInput } from './BasicRadioInput';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
-import { StackContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { ContainerTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
-const radioInputContainer = new StackContainerTesting({ dataCy: 'radio-input-unit' });
+const radioInputContainer = new ContainerTesting({ dataCy: 'radio-input-unit' });
 const defaultProps = {
   id: 'unit',
   value: 'LITRE',
@@ -43,11 +43,11 @@ const setUp = (props) => {
 describe('Checks radio input in edit mode', () => {
   test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
     setUp(defaultProps);
-    expect(radioInputContainer.Stack).toBeInTheDocument();
-    expect(radioInputContainer.Stack).not.toHaveDirtyInputClass();
+    expect(radioInputContainer.Container).toBeInTheDocument();
+    expect(radioInputContainer.Container).not.toHaveDirtyInputClass();
   });
   test('dirtyInput class is applied when isDirty is true', () => {
     setUp(propsWithDirtyState);
-    expect(radioInputContainer.Stack).toHaveDirtyInputClass();
+    expect(radioInputContainer.Container).toHaveDirtyInputClass();
   });
 });

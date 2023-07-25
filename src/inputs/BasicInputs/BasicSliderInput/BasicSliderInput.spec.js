@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { BasicSliderInput } from './BasicSliderInput';
-import { SliderTesting, TypographyTesting, StackContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { SliderTesting, TypographyTesting, ContainerTesting } from '../../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
 
 const mockOnValueChanged = jest.fn();
@@ -45,7 +45,7 @@ const propsWithDirtyState = {
 const disabledSliderLabel = new TypographyTesting({ dataCy: 'disabled-input-label' });
 const disabledSliderValue = new TypographyTesting({ dataCy: 'disabled-input-value' });
 const sliderEditMode = new SliderTesting({ dataCy: 'slider-input-average_consumption' });
-const sliderEditModeContainer = new StackContainerTesting({ dataCy: 'slider-input-average_consumption' });
+const sliderEditModeContainer = new ContainerTesting({ dataCy: 'slider-input-average_consumption' });
 
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicSliderInput {...props} />);
@@ -79,7 +79,7 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
     });
 
     test('Checks dirtyInput class is not applied when isDirty is false', () => {
-      expect(sliderEditModeContainer.Stack).not.toHaveDirtyInputClass();
+      expect(sliderEditModeContainer.Container).not.toHaveDirtyInputClass();
     });
 
     test('Checks marks of slider in edit mode', () => {
@@ -108,6 +108,6 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
   });
   describe('Checks dirtyInput style is applied when isDirty is true', () => {
     setUp(propsWithDirtyState);
-    expect(sliderEditModeContainer.Stack).toHaveDirtyInputClass();
+    expect(sliderEditModeContainer.Container).toHaveDirtyInputClass();
   });
 });

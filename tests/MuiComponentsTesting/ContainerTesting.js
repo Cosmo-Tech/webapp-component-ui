@@ -3,12 +3,12 @@
 
 import { getByDataCy } from '../utils';
 
-export class StackContainerTesting {
+export class ContainerTesting {
   constructor({ dataCy }) {
     this._dataCy = dataCy;
   }
 
-  get Stack() {
+  get Container() {
     return getByDataCy(this._dataCy);
   }
 }

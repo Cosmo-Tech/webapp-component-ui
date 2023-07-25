@@ -6,7 +6,7 @@ import React from 'react';
 import { BasicEnumInput } from './BasicEnumInput';
 import userEvent from '@testing-library/user-event';
 import { getByDataCy, renderInMuiThemeProvider } from '../../../../tests/utils';
-import { SelectTesting, StackContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { SelectTesting, ContainerTesting } from '../../../../tests/MuiComponentsTesting';
 
 const mockOnValueChanged = jest.fn();
 const defaultProps = {
@@ -46,7 +46,7 @@ const propsWithTooltips = {
   enumValues: defaultProps.enumValues.map((enumValue) => ({ ...enumValue, tooltipText: `tooltip_${enumValue.key}` })),
 };
 
-const enumInputContainer = new StackContainerTesting({ dataCy: 'enum-input-currency' });
+const enumInputContainer = new ContainerTesting({ dataCy: 'enum-input-currency' });
 const enumSelect = new SelectTesting({ dataCy: 'enum-input-select-currency', dataCyMenu: 'enum-input-menu-currency' });
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicEnumInput {...props} />);
@@ -55,12 +55,12 @@ const setUp = (props) => {
 describe('Checks enumInput in edit mode', () => {
   test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
     setUp(defaultProps);
-    expect(enumInputContainer.Stack).toBeInTheDocument();
-    expect(enumInputContainer.Stack).not.toHaveDirtyInputClass();
+    expect(enumInputContainer.Container).toBeInTheDocument();
+    expect(enumInputContainer.Container).not.toHaveDirtyInputClass();
   });
   test('dirtyInput class is applied when isDirty is true', () => {
     setUp(propsWithDirtyState);
-    expect(enumInputContainer.Stack).toHaveDirtyInputClass();
+    expect(enumInputContainer.Container).toHaveDirtyInputClass();
   });
 });
 
