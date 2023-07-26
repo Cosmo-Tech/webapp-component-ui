@@ -28,7 +28,7 @@ export const TableToolbar = (props) => {
       <FullscreenButton
         isFullscreen={isFullscreen}
         toggleFullscreen={toggleFullscreen}
-        disabled={!isReady || isLoading}
+        disabled={isLoading}
         label={labels.fullscreen}
       />
       {onImport && <ImportButton onImport={onImport} label={labels.import} disabled={!editMode || isLoading} />}
