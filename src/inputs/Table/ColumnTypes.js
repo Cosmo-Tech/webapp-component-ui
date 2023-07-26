@@ -3,15 +3,6 @@
 
 import { DateUtils } from '@cosmotech/core';
 
-const _editModeSetter = (params) => {
-  let newValue = params.newValue;
-  if (!params.context.editMode) {
-    newValue = params.oldValue;
-  }
-  params.data[params.colDef.field] = newValue;
-  return true;
-};
-
 const _stringSetter = (params) => {
   let newValue = params.newValue?.trim() ?? '';
   const unauthorizedEmptyField = newValue.length === 0 && !params.colDef.cellEditorParams?.acceptsEmptyFields;
@@ -149,7 +140,7 @@ export const getDefaultColumnsProperties = (onCellChange, classes) => {
     resizable: true,
     sortable: true,
     filter: 'agTextColumnFilter',
-    valueSetter: _editModeSetter,
+    valueSetter: _stringSetter,
     onCellValueChanged: (event) => {
       onCellChange(event);
     },
