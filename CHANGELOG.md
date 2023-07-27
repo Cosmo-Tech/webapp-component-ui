@@ -1,3 +1,15 @@
+## **5.6.0** <sub><sup>2023-07-27 (067409a...2094153)</sup></sub>
+
+### Features
+
+- add native import & export buttons in `Table` toolbar ([067409a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/067409a))
+- add optional prop `useSpan` in `FadingTooltip` ([067409a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/067409a))
+- add native buttons in `Table` to add and delete rows ([e895f77](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e895f77))
+
+### Bug Fixes
+
+- \[PROD\-11885\] prevent leaving empty cells in columns of type string when option is disabled ([2094153](https://github.com/Cosmo-Tech/webapp-component-ui/commit/2094153))
+
 ## **5.5.0** <sub><sup>2023-07-25 (cd255f5...e1e7c90)</sup></sub>
 
 ### Features
