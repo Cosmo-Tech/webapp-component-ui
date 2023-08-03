@@ -315,7 +315,7 @@ ScenarioManagerTreeList.defaultProps = {
       cancel: 'Cancel',
       confirm: 'Confirm',
     },
-    dataset: 'Dataset',
+    dataset: 'Dataset:',
     searchField: 'Filter',
     toolbar: {
       expandAll: 'Expand all',
