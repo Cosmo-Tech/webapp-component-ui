@@ -1,3 +1,9 @@
+## **5.7.0**&emsp;<sub><sup>2023-08-03 (784365fe2b61d7b645103bdad5e49fc1d4463e74...880bff477c23746d67163ae25be2db89a318e2c7)</sup></sub>
+
+### Features
+
+- \[PROD\-11630\] add file format validation for file upload input ([784365f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/784365fe2b61d7b645103bdad5e49fc1d4463e74))
+
 ## **5.6.0** <sub><sup>2023-07-27 (067409a...2094153)</sup></sub>
 
 ### Features
