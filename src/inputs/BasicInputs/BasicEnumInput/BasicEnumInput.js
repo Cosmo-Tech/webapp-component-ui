@@ -13,7 +13,19 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicEnumInput = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, value, textFieldProps, enumValues, changeEnumField, isDirty, ...otherProps } = props;
+  const {
+    id,
+    label,
+    tooltipText,
+    value,
+    textFieldProps,
+    enumValues: selectEnumValues,
+    changeEnumField,
+    isDirty,
+    ...otherProps
+  } = props;
+
+  const enumValues = Array.isArray(selectEnumValues) ? selectEnumValues : [];
 
   if (textFieldProps?.disabled)
     return (
@@ -21,7 +33,7 @@ export const BasicEnumInput = (props) => {
         id={`enum-input-${id}`}
         label={label}
         tooltipText={tooltipText}
-        value={value}
+        value={typeof value === 'string' ? value : ''}
         {...otherProps}
       />
     );
@@ -41,7 +53,7 @@ export const BasicEnumInput = (props) => {
           size="small"
           sx={{ flexGrow: 1 }}
           select
-          value={value}
+          value={typeof value === 'string' ? value : ''}
           SelectProps={{
             renderValue: (value) => <Box>{value}</Box>, // Prevent extra padding on selected value
             'data-cy': `enum-input-select-${id}`,
