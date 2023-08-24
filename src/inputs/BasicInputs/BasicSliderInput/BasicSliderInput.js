@@ -26,8 +26,8 @@ export const BasicSliderInput = (props) => {
     valueLabelDisplay,
     step,
     marks,
-    min,
-    max,
+    min: minValue,
+    max: maxValue,
     orientation,
     disabled,
     sliderStyle,
@@ -36,9 +36,12 @@ export const BasicSliderInput = (props) => {
     ...otherProps
   } = props;
 
+  const min = typeof minValue === 'number' ? minValue : 0;
+  const max = typeof maxValue === 'number' ? maxValue : 100;
+
   const getValue = (value) => {
-    if (value == null || isNaN(value)) {
-      return 0;
+    if (typeof value !== 'number' || isNaN(value)) {
+      return min;
     }
     return value;
   };

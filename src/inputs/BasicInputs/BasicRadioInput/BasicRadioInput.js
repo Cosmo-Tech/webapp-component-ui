@@ -20,15 +20,17 @@ export const BasicRadioInput = (props) => {
     value,
     textFieldProps,
     changeRadioOption,
-    enumValues,
+    enumValues: radioEnumValues,
     row,
     radioStyle,
     isDirty,
     ...otherProps
   } = props;
 
+  const enumValues = Array.isArray(radioEnumValues) ? radioEnumValues : [];
+
   if (textFieldProps?.disabled) {
-    const valueString = enumValues.find((valueOption) => valueOption.key === value).value;
+    const valueString = enumValues.find((valueOption) => valueOption.key === value)?.value ?? '';
     return (
       <BasicInputPlaceholder
         id={`radio-input-${id}`}
@@ -54,7 +56,7 @@ export const BasicRadioInput = (props) => {
             sx={{ ml: 1 }}
             row={row}
             data-cy="radio-group"
-            value={value}
+            value={value ?? ''}
             onChange={(event) => changeRadioOption(event.target.value)}
           >
             {enumValues.map((option) => {

@@ -53,7 +53,7 @@ const setUp = (props) => {
 };
 
 describe('Checks enumInput in edit mode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
+  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", async () => {
     setUp(defaultProps);
     expect(enumInputContainer.Container).toBeInTheDocument();
     expect(enumInputContainer.Container).not.toHaveDirtyInputClass();
@@ -70,5 +70,23 @@ describe('Check enum options tooltips', () => {
     await enumSelect.openMenu();
     userEvent.hover(enumSelect.getMenuChild('USD'));
     expect(getByDataCy('enum-input-value-tooltip-USD')).toBeVisible();
+  });
+});
+
+describe('Wrong enum values', () => {
+  test.each`
+    enumValues
+    ${null}
+    ${undefined}
+    ${{}}
+    ${'value'}
+  `('Component is mount with empty select list if enum values are not acceptable', async ({ enumValues }) => {
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const error = jest.spyOn(console, 'error').mockImplementation(() => {});
+    setUp({ ...defaultProps, enumValues });
+    await enumSelect.openMenu();
+    expect(document.getElementsByClassName('MuiMenuItem-root').length).toEqual(0);
+    warn.mockReset();
+    error.mockReset();
   });
 });
