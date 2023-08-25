@@ -144,6 +144,7 @@ const _formatColumnsData = (columns, dateFormat) =>
 
 export const Table = (props) => {
   const {
+    gridRef: optionalGridRef,
     dateFormat,
     editMode,
     dataStatus,
@@ -169,7 +170,9 @@ export const Table = (props) => {
     ...otherProps
   } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
-  const gridRef = useRef();
+  const fallbackRef = useRef(null);
+  const gridRef = optionalGridRef || fallbackRef;
+
   const dimensions = { height, width };
   const classes = useStyles();
   const defaultColDef = getDefaultColumnsProperties(onCellChange, classes);
@@ -199,11 +202,12 @@ export const Table = (props) => {
       window.removeEventListener('keydown', onEscapeKeyDown);
     };
   }, []);
+
   useEffect(() => {
     // If gridRef is initialized and rows have been changed programmatically (i.e. not through the ag-grid UI), then we
     // have to force the refresh of the table cells for the changes to be re-rendered
     gridRef?.current?.api?.refreshCells();
-  }, [rows]);
+  }, [gridRef, rows]);
 
   const errorsPanelElement = useMemo(() => {
     return (
@@ -232,12 +236,14 @@ export const Table = (props) => {
     onClearErrors,
   ]);
 
+  // Deprecated: deleteRows and addRows will be removed in a future version, the api will no longer be an argument sent
+  // to onDeleteRow and onAddRow. Use gridRef prop instead to retrieve the ag-grid reference
   const deleteRows = useCallback(() => {
     onDeleteRow(gridRef?.current?.api);
-  }, [onDeleteRow]);
+  }, [gridRef, onDeleteRow]);
   const addRows = useCallback(() => {
     onAddRow(gridRef?.current?.api);
-  }, [onAddRow]);
+  }, [gridRef, onAddRow]);
 
   const tableToolbarElement = useMemo(() => {
     const toolbarLabels = {
@@ -344,7 +350,7 @@ export const Table = (props) => {
         rowSelection={'multiple'}
       />
     );
-  }, [columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
+  }, [gridRef, columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
 
   return (
     <div
@@ -380,6 +386,10 @@ export const Table = (props) => {
 };
 
 Table.propTypes = {
+  /**
+   *  Ref object initialized with the ag-grid ref on table creation
+   */
+  gridRef: PropTypes.object,
   /**
    *  Custom date format for columns of type "date". Default value: 'dd/MM/yyyy'
    */
