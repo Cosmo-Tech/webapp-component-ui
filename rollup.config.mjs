@@ -8,6 +8,10 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from './package.json' assert { type: 'json' };
 
 export default {
+  onwarn: (warning, warn) => {
+    if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('"use client"')) return;
+    warn(warning);
+  },
   input: './src/index.js',
   output: [
     {
