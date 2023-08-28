@@ -1,3 +1,9 @@
+## **5.7.1** <sub><sup>2023-08-28 (b34da2f...b2cbf64)</sup></sub>
+
+### Bug Fixes
+
+- \[PROD\-11756\] add fallbacks values to input components
+
 ## **5.7.0**&emsp;<sub><sup>2023-08-03 (784365fe2b61d7b645103bdad5e49fc1d4463e74...880bff477c23746d67163ae25be2db89a318e2c7)</sup></sub>
 
 ### Features
