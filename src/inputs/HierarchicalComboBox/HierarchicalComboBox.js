@@ -44,7 +44,7 @@ export const HierarchicalComboBox = ({
       renderOption={(props, option) => {
         const marginLeft = option.depth * 20 || 0;
         return (
-          <li data-testid={'option-' + option.id} {...props}>
+          <li data-testid={'option-' + option.id} {...props} key={option.id}>
             <span style={{ marginLeft }}>
               {option.name}
               <ScenarioValidationStatusChip
