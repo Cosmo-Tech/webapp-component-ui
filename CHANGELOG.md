@@ -1,3 +1,13 @@
+## **5.8.0** <sub><sup>2023-08-30 (1e11f58...1233c25)</sup></sub>
+
+### Features
+
+- add optional prop 'gridRef' in Table component to retrieve ag-grid ref ([1233c25](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1233c25))
+
+### Bug Fixes
+
+- fix possible duplicated keys in HierarchicalComboBox ([07599ce](https://github.com/Cosmo-Tech/webapp-component-ui/commit/07599ce))
+
 ## **5.7.1** <sub><sup>2023-08-28 (b34da2f...b2cbf64)</sup></sub>
 
 ### Bug Fixes
