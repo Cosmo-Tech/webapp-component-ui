@@ -1,3 +1,9 @@
+## **5.8.1** <sub><sup>2023-09-06 (bc653ce...bcffc1c)</sup></sub>
+
+### Bug Fixes
+
+- \[PROD\-12227\] fix float numbers input when using FR locale ([bc653ce](https://github.com/Cosmo-Tech/webapp-component-ui/commit/bc653ce))
+
 ## **5.8.0** <sub><sup>2023-08-30 (1e11f58...1233c25)</sup></sub>
 
 ### Features
