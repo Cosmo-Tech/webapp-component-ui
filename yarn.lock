@@ -1034,10 +1034,10 @@
   dependencies:
     "@azure/msal-browser" "~2.23.0"
 
-"@cosmotech/core@^1.11.6":
-  version "1.11.6"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.11.6.tgz#117b3de2660fccf6a358c5d9ad2c0a174c4a4f9d"
-  integrity sha512-JxyrPw+AAF3rV2b+i90Ke/dtZl7PQMOtKZ/pFod2Q0m06E5qhUf+7hJxeoHwhjemyrSD7/R346mgCMjsR6uIIw==
+"@cosmotech/core@^1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.12.0.tgz#9bdb2cba6fdc20ef10a872bb0e1b4e9ad657d755"
+  integrity sha512-175dFziF90RM9BpPy5xNUlyOihfNdga2OjUplD/tnAPpmwNZtOoMcYAIMXVW/l0gAArN+xQ+tVnK12WRK2eCtA==
   dependencies:
     csv-string "^4.0.1"
     date-fns "^2.25.0"
