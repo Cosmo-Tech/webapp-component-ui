@@ -28,9 +28,10 @@ export const BasicNumberInput = (props) => {
   } = props;
 
   const convToStringValue = useCallback((numValue) => {
-    return isNaN(numValue)
-      ? ''
-      : numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 }) ?? '';
+    if (isNaN(numValue)) return '';
+
+    const wideFormattedStr = numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 });
+    return wideFormattedStr.replace(',', '.'); // Replace first comma decimal separator by dot
   }, []);
 
   const [textInput, setTextInput] = useState(convToStringValue(value));

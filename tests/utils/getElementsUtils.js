@@ -15,3 +15,7 @@ export const getAllByDataCyRegEx = (dataCyRegEx, parent = document) => {
 
   return output;
 };
+
+export const getById = (id, parent = document) => {
+  return parent.querySelector(`[id="${id}"]`);
+};

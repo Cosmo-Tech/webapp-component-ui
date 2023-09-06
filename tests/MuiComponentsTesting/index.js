@@ -11,3 +11,4 @@ export { SliderTesting } from './SliderTesting';
 export { default as MockTheme } from './MockTheme';
 export { DialogTesting } from './DialogTesting';
 export { ContainerTesting } from './ContainerTesting';
+export { TextFieldTesting } from './TextFieldTesting';
