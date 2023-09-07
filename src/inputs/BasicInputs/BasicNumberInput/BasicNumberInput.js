@@ -18,7 +18,9 @@ export const BasicNumberInput = (props) => {
     props;
 
   const convToStringValue = useCallback((numValue) => {
-    return numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 }) ?? '';
+    const wideFormattedStr =
+      numValue?.toLocaleString('fullwide', { useGrouping: false, maximumFractionDigits: 15 }) ?? '';
+    return wideFormattedStr.replace(',', '.'); // Replace first comma decimal separator by dot
   }, []);
 
   const [textInput, setTextInput] = useState(convToStringValue(value));
