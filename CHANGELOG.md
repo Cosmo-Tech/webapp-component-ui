@@ -74,6 +74,12 @@
 - fix error in some input components when prop textFieldProps is not defined ([230d367](https://github.com/Cosmo-Tech/webapp-component-ui/commit/230d367))
 - fix error when deleting the content of a table cell with DEL key ([7a44db0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7a44db0))
 
+## **5.2.2** <sub><sup>2023-09-07</sup></sub>
+
+### Bug Fixes
+
+- fix float numbers input when using FR locale ([1f86f9d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1f86f9d8dbc1d56350ac7268870b2a90ea9985a0))
+
 ## **5.2.1** <sub><sup>2023-04-27 (7d03254...7d03254)</sup></sub>
 
 - update dependencies
@@ -125,6 +131,16 @@
 
 - remove component `BasicInputWrapper`
 - migrate material-ui from v4 to v5
+
+## **4.7.1** <sub><sup>2023-06-15 (94f1ab2...ca51fe3)</sup></sub>
+
+### Bug Fixes
+
+- make labels\.dataInTransfer prop optional in SimplePowerBIReportEmbed component to prevent breaking change ([5b7f6e8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/5b7f6e8235cbaab4112d6379fc0897adfdb5f15c))
+
+### Dependencies
+
+- update dependencies
 
 ## **4.7.0** <sub><sup>2023-02-07 (7798970...7923344)</sup></sub>
 
