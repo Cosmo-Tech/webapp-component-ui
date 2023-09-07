@@ -1,3 +1,9 @@
+## **5.2.2** <sub><sup>2023-09-07</sup></sub>
+
+### Bug Fixes
+
+- fix float numbers input when using FR locale ([1f86f9d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1f86f9d8dbc1d56350ac7268870b2a90ea9985a0))
+
 ## **5.2.1** <sub><sup>2023-04-27 (7d03254...7d03254)</sup></sub>
 
 - update dependencies
