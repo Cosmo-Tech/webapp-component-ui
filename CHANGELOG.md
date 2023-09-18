@@ -1,3 +1,9 @@
+## **5.9.0**&emsp;<sub><sup>2023-09-07 (5475a1e3f63a8343209c6fc697fc13743b673659...09dd215ecc751856e685abd9e3d9bb6780da9e07)</sup></sub>
+
+### Features
+
+- \[PROD\-11739\] add technical informations entry in help menu ([09dd215](https://github.com/Cosmo-Tech/webapp-component-ui/commit/09dd215ecc751856e685abd9e3d9bb6780da9e07))
+
 ## **5.8.1** <sub><sup>2023-09-06 (bc653ce...bcffc1c)</sup></sub>
 
 ### Bug Fixes
