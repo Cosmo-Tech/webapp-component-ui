@@ -170,17 +170,24 @@ export const SimplePowerBIReportEmbed = ({
   const errorCode = getErrorCode(labels, reports);
   const errorDescription = getErrorDescription(labels, reports);
 
-  const refreshReport = useCallback(() => {
-    if (!report) {
-      return;
-    }
+  const refreshReport = useCallback(
+    (triggerTimeout = true) => {
+      if (!report) return;
+      report.refresh();
 
-    report.refresh();
-    setDisabled(true);
-    setTimeout(() => {
-      setDisabled(false);
-    }, refreshTimeout);
-  }, [refreshTimeout, report]);
+      if (triggerTimeout) {
+        setDisabled(true);
+        setTimeout(() => {
+          setDisabled(false);
+        }, refreshTimeout);
+      }
+    },
+    [refreshTimeout, report]
+  );
+
+  useEffect(() => {
+    if (scenarioState === 'Successful') refreshReport(false);
+  }, [refreshReport, scenarioState]);
 
   const iframe = useMemo(() => {
     if (!embedConfig?.embedUrl) {
