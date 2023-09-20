@@ -245,6 +245,11 @@ export const Table = (props) => {
     onAddRow(gridRef?.current?.api);
   }, [gridRef, onAddRow]);
 
+  const [isRowSelected, setIsRowSelected] = useState(false);
+  const onSelectionChanged = useCallback(() => {
+    setIsRowSelected(gridRef.current.api.getSelectedRows().length > 0);
+  }, [gridRef]);
+
   const tableToolbarElement = useMemo(() => {
     const toolbarLabels = {
       import: labels.import,
@@ -263,6 +268,7 @@ export const Table = (props) => {
         isLoading={isLoading}
         onImport={onImport}
         onExport={onExport}
+        isRowSelected={isRowSelected}
         onAddRow={onAddRow ? addRows : undefined}
         onDeleteRow={onDeleteRow ? deleteRows : undefined}
         editMode={editMode}
@@ -284,8 +290,9 @@ export const Table = (props) => {
     onImport,
     onExport,
     onAddRow,
-    addRows,
     onDeleteRow,
+    isRowSelected,
+    addRows,
     deleteRows,
     editMode,
     customToolbarActions,
@@ -348,9 +355,10 @@ export const Table = (props) => {
         context={context}
         stopEditingWhenCellsLoseFocus={true}
         rowSelection={'multiple'}
+        onSelectionChanged={onSelectionChanged}
       />
     );
-  }, [gridRef, columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows]);
+  }, [gridRef, columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows, onSelectionChanged]);
 
   return (
     <div

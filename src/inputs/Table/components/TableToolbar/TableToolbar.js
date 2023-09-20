@@ -15,6 +15,7 @@ export const TableToolbar = (props) => {
     isLoading,
     onImport,
     onExport,
+    isRowSelected,
     onAddRow,
     onDeleteRow,
     editMode,
@@ -38,7 +39,7 @@ export const TableToolbar = (props) => {
         <DeleteRowButton
           onDeleteRow={onDeleteRow}
           labels={labels.deleteRows}
-          disabled={!editMode || !isReady || isLoading}
+          disabled={!editMode || !isReady || isLoading || !(isRowSelected ?? true)}
         />
       )}
       {isLoading ? (
@@ -82,6 +83,10 @@ TableToolbar.propTypes = {
    * Function used to export a file in Table. If undefined, export button is not displayed
    */
   onExport: PropTypes.func,
+  /*
+   * Boolean value that defines if a row is selected or not
+   */
+  isRowSelected: PropTypes.bool,
   /*
    * Function used to add a row in the Table. If it's not defined, the button won't be displayed
    */
