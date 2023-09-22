@@ -1,29 +1,79 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateUtils } from '@cosmotech/core';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 import { getCommonInputStyles } from '../../style';
 
 const useStyles = makeStyles(getCommonInputStyles);
 
+const _computeInternalDate = (value, reverseTimezoneOffset) => {
+  if (value == null) return value;
+  return reverseTimezoneOffset ? DateUtils.addLocalDateToUTCOffset(value) : value;
+};
+
+const _getInternalDateToReturnToParent = (value, reverseTimezoneOffset) => {
+  if (value == null) return value;
+  return reverseTimezoneOffset ? DateUtils.addUTCToLocalDateOffset(value) : value;
+};
+
 export const BasicDateInput = (props) => {
-  const { id, label, tooltipText, format, value, dateProps, changeSelectedDate, isDirty, error, ...otherProps } = props;
+  const {
+    id,
+    label,
+    tooltipText,
+    format,
+    value,
+    dateProps,
+    changeSelectedDate,
+    isDirty,
+    error,
+    reverseTimezoneOffset,
+    ...otherProps
+  } = props;
   const classes = useStyles();
+
+  // DesktopDatePicker always work in users' local time, meaning that dates provided as UTC may be displayed as a
+  // different day based on users' timezeone offset. For uses cases that only need tha "date" part withtout "time", we
+  // should ignore timezones and must thus add an internal state to reverse the timezone offset (this behavior is
+  // enabled only if reverseTimezoneOffset is set to true)
+  const [internalDate, setInternalDate] = useState(_computeInternalDate(value, reverseTimezoneOffset));
+  const minDate = useMemo(
+    () => _computeInternalDate(dateProps.minDate, reverseTimezoneOffset),
+    [dateProps, reverseTimezoneOffset]
+  );
+  const maxDate = useMemo(
+    () => _computeInternalDate(dateProps.maxDate, reverseTimezoneOffset),
+    [dateProps, reverseTimezoneOffset]
+  );
+
+  useEffect(() => {
+    setInternalDate(_computeInternalDate(value, reverseTimezoneOffset));
+  }, [reverseTimezoneOffset, value]);
+
+  const onChange = useCallback(
+    (newValue) => {
+      setInternalDate(newValue);
+      changeSelectedDate(_getInternalDateToReturnToParent(newValue, reverseTimezoneOffset));
+    },
+    [reverseTimezoneOffset, changeSelectedDate]
+  );
+
   if (dateProps.disabled)
     return (
       <BasicInputPlaceholder
         id={`date-input-${id}`}
         label={label}
         tooltipText={tooltipText}
-        value={value?.toLocaleDateString() ?? ''}
+        value={internalDate?.toLocaleDateString() ?? ''}
         {...otherProps}
       />
     );
@@ -41,8 +91,8 @@ export const BasicDateInput = (props) => {
           <DesktopDatePicker
             label={label}
             inputFormat={format}
-            minDate={dateProps.minDate}
-            maxDate={dateProps.maxDate}
+            minDate={minDate}
+            maxDate={maxDate}
             renderInput={({ error: _, ...params }) => (
               <TextField
                 id={`date-text-field-${id}`}
@@ -55,8 +105,8 @@ export const BasicDateInput = (props) => {
               />
             )}
             id={`date-input-${id}`}
-            onChange={changeSelectedDate}
-            value={value ?? new Date(undefined)}
+            onChange={onChange}
+            value={internalDate ?? new Date(undefined)}
           />
         </LocalizationProvider>
         <TooltipInfo title={tooltipText} variant="small" />
@@ -102,9 +152,17 @@ BasicDateInput.propTypes = {
    * Error object that contains the type of error and its message
    */
   error: PropTypes.object,
+  /**
+   * Boolean value that defines whether the component should prevent the date picker component to convert dates in local
+   * time by adding a "reverse offset" to the input value and store it in an internal state. If the input of value prop
+   * is an UTC date and you want to work only with UTC dates, then you should set reverseTimezoneOffset to true to have
+   * a consistent behavior in all timezones.
+   */
+  reverseTimezoneOffset: PropTypes.bool,
 };
 
 BasicDateInput.defaultProps = {
   format: 'MM/dd/yyyy',
   isDirty: false,
+  reverseTimezoneOffset: false,
 };
