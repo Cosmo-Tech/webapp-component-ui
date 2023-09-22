@@ -1,3 +1,9 @@
+## **5.9.2**&emsp;<sub><sup>2023-09-20 (0f59dbcef51b7963406295e237949cedb20ec285...0f59dbcef51b7963406295e237949cedb20ec285)</sup></sub>
+
+### Bug Fixes
+
+- \[PROD\-12177\] delete rows button is now enabled only when at least a row is selected ([0f59dbc](https://github.com/Cosmo-Tech/webapp-component-ui/commit/0f59dbcef51b7963406295e237949cedb20ec285))
+
 ## **5.9.1** <sub><sup>2023-09-22 (8340d08...69cfee4)</sup></sub>
 
 ### Bug Fixes
