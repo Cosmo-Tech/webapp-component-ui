@@ -1,3 +1,10 @@
+## **5.9.1** <sub><sup>2023-09-22 (8340d08...69cfee4)</sup></sub>
+
+### Bug Fixes
+
+- fix empty results when first displaying dashboards ([8340d08](https://github.com/Cosmo-Tech/webapp-component-ui/commit/8340d08))
+- add an option to force date as UTC in BasicDateInput date picker component ([9e894c7](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9e894c7))
+
 ## **5.9.0**&emsp;<sub><sup>2023-09-07 (5475a1e3f63a8343209c6fc697fc13743b673659...09dd215ecc751856e685abd9e3d9bb6780da9e07)</sup></sub>
 
 ### Features
