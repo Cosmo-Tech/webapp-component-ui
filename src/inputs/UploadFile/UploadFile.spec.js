@@ -43,6 +43,24 @@ const propsFileReadyToUpload = {
   },
 };
 
+const propsHiddenFileNameReadyToDownload = {
+  ...defaultProps,
+  shouldHideFileName: true,
+  file: {
+    name: 'file.csv',
+    status: UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD,
+  },
+};
+
+const propsHiddenFileNameReadyToUpload = {
+  ...defaultProps,
+  shouldHideFileName: true,
+  file: {
+    name: 'file.csv',
+    status: UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD,
+  },
+};
+
 const propsInvalidFileFormat = {
   ...defaultProps,
   error: {
@@ -82,6 +100,7 @@ describe('Checks file upload input in edit mode', () => {
     setUp(propsWithDirtyState);
     expect(uploadFileInputContainer.Container).toHaveDirtyInputClass();
   });
+
   test("Component is displayed in edit mode, dirtyInput class isn't applied when isDirty is false", () => {
     setUp(defaultProps);
     expect(downloadButton.Button).not.toBeInTheDocument();
@@ -91,9 +110,10 @@ describe('Checks file upload input in edit mode', () => {
     expect(uploadFileInputContainer.Container).not.toHaveDirtyInputClass();
     expect(fileErrorMessage.Typography).not.toBeInTheDocument();
   });
+
   test('Component is correctly displayed when file is ready to upload', async () => {
     setUp(propsFileReadyToUpload);
-    expect(fileName.Typography).toBeInTheDocument();
+    expect(fileName.Typography).toHaveTextContent('file.csv');
     expect(deleteButton.Button).toBeInTheDocument();
     expect(downloadButton.Button).not.toBeInTheDocument();
     expect(getByDataCy('circular-progress')).not.toBeInTheDocument();
@@ -102,9 +122,10 @@ describe('Checks file upload input in edit mode', () => {
     await deleteButton.click();
     expect(mockOnFileDelete).toHaveBeenCalled();
   });
+
   test('Component is correctly displayed when file is ready to download', async () => {
     setUp(propsFileReadyToDownload);
-    expect(fileName.Typography).toBeInTheDocument();
+    expect(fileName.Typography).toHaveTextContent('file.csv');
     expect(downloadButton.Button).toBeInTheDocument();
     expect(deleteButton.Button).toBeInTheDocument();
     expect(getByDataCy('circular-progress')).not.toBeInTheDocument();
@@ -115,6 +136,19 @@ describe('Checks file upload input in edit mode', () => {
     await deleteButton.click();
     expect(mockOnFileDelete).toHaveBeenCalled();
   });
+
+  test('should hide the name of the file to upload when shouldHideFileName is true', async () => {
+    setUp(propsHiddenFileNameReadyToUpload);
+    expect(fileName.Typography).toHaveTextContent('CSV file');
+    expect(fileName.Typography).not.toHaveTextContent('file.csv');
+  });
+
+  test('should hide the name of the file to download when shouldHideFileName is true', async () => {
+    setUp(propsHiddenFileNameReadyToDownload);
+    expect(fileName.Typography).toHaveTextContent('CSV file');
+    expect(fileName.Typography).not.toHaveTextContent('file.csv');
+  });
+
   test('Component is correctly displayed when a file action is processing', () => {
     setUp(propsFileActionProcessing);
     expect(getByDataCy('circular-progress')).toBeInTheDocument();
@@ -123,6 +157,7 @@ describe('Checks file upload input in edit mode', () => {
     expect(deleteButton.Button).not.toBeInTheDocument();
     expect(fileErrorMessage.Typography).not.toBeInTheDocument();
   });
+
   test('Component is correctly displayed when file format is invalid', async () => {
     setUp(propsInvalidFileFormat);
     expect(fileName.Typography).toBeInTheDocument();

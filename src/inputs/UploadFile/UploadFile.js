@@ -8,6 +8,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import ErrorIcon from '@mui/icons-material/Error';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import { PathUtils } from '@cosmotech/core';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 import { FadingTooltip, TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
@@ -28,6 +29,7 @@ export const UploadFile = (props) => {
     labels,
     tooltipText,
     isDirty,
+    shouldHideFileName,
   } = props;
   if (isFileValid) {
     console.warn('"isFileValid" prop is deprecated in UploadFile. Please use "error" instead.');
@@ -36,18 +38,22 @@ export const UploadFile = (props) => {
   const classes = useStyles();
 
   // TODO: create a generic component to truncate texts in Typography elements
-  const smartFileName = useMemo(() => {
-    const fileNameLength = file?.name?.length ?? 0;
+  const fileNameElement = useMemo(() => {
+    let fullLabel = file?.name;
+    if (shouldHideFileName) {
+      const extension = PathUtils.getExtensionFromFileName(file?.name)?.toUpperCase();
+      fullLabel =
+        labels?.getFileNamePlaceholder !== undefined ? labels.getFileNamePlaceholder(extension) : `${extension} file`;
+    }
+
     const fileName = (
       <Typography data-cy="file-name" noWrap sx={{ maxWidth: '20ch' }}>
-        {file.name}
+        {fullLabel}
       </Typography>
     );
 
-    return (
-      <Stack>{fileNameLength > 20 ? <FadingTooltip title={file.name}>{fileName}</FadingTooltip> : fileName}</Stack>
-    );
-  }, [file.name]);
+    return fullLabel?.length ?? 0 > 20 ? <FadingTooltip title={fullLabel}>{fileName}</FadingTooltip> : fileName;
+  }, [file?.name, labels, shouldHideFileName]);
 
   return (
     <Stack data-cy={`file-upload-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
@@ -92,10 +98,10 @@ export const UploadFile = (props) => {
             sx={{ display: 'inline-flex' }}
           >
             <GetAppIcon />
-            {smartFileName}
+            {fileNameElement}
           </Link>
         )}
-        {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && smartFileName}
+        {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && fileNameElement}
         {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
           file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD ||
           error != null) &&
@@ -188,6 +194,7 @@ UploadFile.propTypes = {
       label: 'string',
       delete: 'string',
       noFileMessage: 'string',
+      getFileNamePlaceholder: 'func',
     }
    </pre>
    */
@@ -197,6 +204,7 @@ UploadFile.propTypes = {
     label: PropTypes.string,
     delete: PropTypes.string,
     noFileMessage: PropTypes.string,
+    getFileNamePlaceholder: PropTypes.func,
   }),
   /**
    * Tooltip text
@@ -206,6 +214,11 @@ UploadFile.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Boolean value that defines whether the file name must be hidden and replaced by a placeholder only stating the
+   * file extension.
+   */
+  shouldHideFileName: PropTypes.bool,
 };
 
 UploadFile.defaultProps = {
@@ -218,4 +231,5 @@ UploadFile.defaultProps = {
     noFileMessage: 'None',
   },
   isDirty: false,
+  shouldHideFileName: false,
 };
