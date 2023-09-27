@@ -203,11 +203,16 @@ export const Table = (props) => {
     };
   }, []);
 
+  const onSelectionChanged = useCallback(() => {
+    setIsRowSelected(gridRef?.current?.api?.getSelectedRows().length > 0);
+  }, [gridRef]);
+
   useEffect(() => {
     // If gridRef is initialized and rows have been changed programmatically (i.e. not through the ag-grid UI), then we
     // have to force the refresh of the table cells for the changes to be re-rendered
     gridRef?.current?.api?.refreshCells();
-  }, [gridRef, rows]);
+    onSelectionChanged();
+  }, [gridRef, rows, onSelectionChanged]);
 
   const errorsPanelElement = useMemo(() => {
     return (
@@ -246,9 +251,6 @@ export const Table = (props) => {
   }, [gridRef, onAddRow]);
 
   const [isRowSelected, setIsRowSelected] = useState(false);
-  const onSelectionChanged = useCallback(() => {
-    setIsRowSelected(gridRef.current.api.getSelectedRows().length > 0);
-  }, [gridRef]);
 
   const tableToolbarElement = useMemo(() => {
     const toolbarLabels = {
