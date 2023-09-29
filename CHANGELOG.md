@@ -1,3 +1,9 @@
+## **5.9.3**&emsp;<sub><sup>2023-09-27 (02139af7bcc149c3d69821b144ee954cdad91794...02139af7bcc149c3d69821b144ee954cdad91794)</sup></sub>
+
+### Bug Fixes
+
+- \[PROD\-12177\] fix last issues of delete rows button ([02139af](https://github.com/Cosmo-Tech/webapp-component-ui/commit/02139af7bcc149c3d69821b144ee954cdad91794))
+
 ## **5.9.2**&emsp;<sub><sup>2023-09-20 (0f59dbcef51b7963406295e237949cedb20ec285...0f59dbcef51b7963406295e237949cedb20ec285)</sup></sub>
 
 ### Bug Fixes
