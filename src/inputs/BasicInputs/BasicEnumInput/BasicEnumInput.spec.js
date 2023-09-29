@@ -56,6 +56,8 @@ describe('Checks enumInput in edit mode', () => {
   test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", async () => {
     setUp(defaultProps);
     expect(enumInputContainer.Container).toBeInTheDocument();
+    expect(enumInputContainer.Container).toHaveTextContent('€');
+    expect(enumInputContainer.Container).not.toHaveTextContent('EUR');
     expect(enumInputContainer.Container).not.toHaveDirtyInputClass();
   });
   test('dirtyInput class is applied when isDirty is true', () => {
