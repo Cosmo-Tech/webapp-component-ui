@@ -4,7 +4,7 @@
 import { MenuItem, Grid, Stack, TextField, Tooltip, Fade, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 import { getCommonInputStyles } from '../../style';
@@ -17,7 +17,7 @@ export const BasicEnumInput = (props) => {
     id,
     label,
     tooltipText,
-    value,
+    value: valueKey, // this "value" prop is actually a key of the objects in enumValues array
     textFieldProps,
     enumValues: selectEnumValues,
     changeEnumField,
@@ -25,7 +25,11 @@ export const BasicEnumInput = (props) => {
     ...otherProps
   } = props;
 
-  const enumValues = Array.isArray(selectEnumValues) ? selectEnumValues : [];
+  const enumValues = useMemo(() => (Array.isArray(selectEnumValues) ? selectEnumValues : []), [selectEnumValues]);
+  const getLabelFromEnumKey = useCallback(
+    (key) => enumValues.find((el) => el.key === key)?.value ?? key ?? '',
+    [enumValues]
+  );
 
   if (textFieldProps?.disabled)
     return (
@@ -33,7 +37,7 @@ export const BasicEnumInput = (props) => {
         id={`enum-input-${id}`}
         label={label}
         tooltipText={tooltipText}
-        value={typeof value === 'string' ? value : ''}
+        value={getLabelFromEnumKey(valueKey)}
         {...otherProps}
       />
     );
@@ -53,9 +57,9 @@ export const BasicEnumInput = (props) => {
           size="small"
           sx={{ flexGrow: 1 }}
           select
-          value={typeof value === 'string' ? value : ''}
+          value={typeof valueKey === 'string' ? valueKey : ''}
           SelectProps={{
-            renderValue: (value) => <Box>{value}</Box>, // Prevent extra padding on selected value
+            renderValue: (key) => <Box>{getLabelFromEnumKey(key)}</Box>, // Prevent extra padding on selected value
             'data-cy': `enum-input-select-${id}`,
             MenuProps: { 'data-cy': `enum-input-menu-${id}` },
           }}
@@ -129,6 +133,7 @@ BasicEnumInput.propTypes = {
    */
   isDirty: PropTypes.bool,
 };
+
 BasicEnumInput.defaultProps = {
   isDirty: false,
 };
