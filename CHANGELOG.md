@@ -1,3 +1,19 @@
+## **5.10.0** <sub><sup>2023-10-02 (e3db76d...487b572)</sup></sub>
+
+### Features
+
+- add option shouldHideFileName in UploadFile component ([e3db76d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e3db76d))
+
+### Bug Fixes
+
+- always show enum values instead of keys in BasicEnumInput ([d81c747](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d81c747))
+
+## **5.9.4**&emsp;<sub><sup>2023-09-30</sup></sub>
+
+### Bug Fixes
+
+- fix missing upgrade of @cosmotech/core package
+
 ## **5.9.3**&emsp;<sub><sup>2023-09-27 (02139af7bcc149c3d69821b144ee954cdad91794...02139af7bcc149c3d69821b144ee954cdad91794)</sup></sub>
 
 ### Bug Fixes
