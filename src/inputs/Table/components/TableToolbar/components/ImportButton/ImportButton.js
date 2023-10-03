@@ -9,8 +9,10 @@ import { FadingTooltip } from '../../../../../../misc';
 
 export const ImportButton = (props) => {
   const { disabled, onImport, label } = props;
+  const spanProps = { style: { display: 'inline-block', height: '100%' } };
+
   return (
-    <FadingTooltip title={label} useSpan={true}>
+    <FadingTooltip title={label} useSpan={true} spanProps={spanProps}>
       <IconButton
         variant="text"
         component="label"

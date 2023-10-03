@@ -9,9 +9,11 @@ import { FadingTooltip } from '../../../../../../misc';
 
 export const DeleteRowButton = (props) => {
   const { onDeleteRow, labels, disabled } = props;
+  const spanProps = { style: { display: 'inline-block', height: '100%' } };
+
   return (
     <>
-      <FadingTooltip title={labels} useSpan={true}>
+      <FadingTooltip title={labels} useSpan={true} spanProps={spanProps}>
         <IconButton
           onClick={onDeleteRow}
           component="label"

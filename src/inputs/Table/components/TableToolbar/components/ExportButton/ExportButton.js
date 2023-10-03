@@ -9,8 +9,10 @@ import { FadingTooltip } from '../../../../../../misc';
 
 export const ExportButton = (props) => {
   const { onExport, disabled, label } = props;
+  const spanProps = { style: { display: 'inline-block', height: '100%' } };
+
   return (
-    <FadingTooltip title={label} useSpan={true}>
+    <FadingTooltip title={label} useSpan={true} spanProps={spanProps}>
       <IconButton onClick={onExport} size="small" color="primary" data-cy="export-button" disabled={disabled}>
         <DownloadIcon fontSize="inherit" />
       </IconButton>

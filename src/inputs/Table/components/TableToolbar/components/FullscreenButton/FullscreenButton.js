@@ -10,9 +10,10 @@ import { FadingTooltip } from '../../../../../../misc';
 
 export const FullscreenButton = (props) => {
   const { isFullscreen, toggleFullscreen, disabled, label } = props;
+  const spanProps = { style: { display: 'inline-block', height: '100%' } };
 
   return (
-    <FadingTooltip title={label} useSpan={true}>
+    <FadingTooltip title={label} useSpan={true} spanProps={spanProps}>
       <IconButton
         onClick={toggleFullscreen}
         size="small"
