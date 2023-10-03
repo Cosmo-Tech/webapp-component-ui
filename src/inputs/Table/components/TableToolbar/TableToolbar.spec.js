@@ -31,8 +31,8 @@ const defaultProps = {
       confirm: 'Delete',
       checkbox: "Don't show this message again",
     },
+    fullscreen: 'fullscreen',
   },
-  fullscreen: 'fullscreen',
 };
 const setUp = (props) => {
   renderInMuiThemeProvider(<TableToolbar {...props} />);
