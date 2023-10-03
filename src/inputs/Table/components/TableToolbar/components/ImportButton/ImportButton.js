@@ -5,7 +5,7 @@ import React from 'react';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
-import { FadingTooltip } from '../../../../misc';
+import { FadingTooltip } from '../../../../../../misc';
 
 export const ImportButton = (props) => {
   const { disabled, onImport, label } = props;

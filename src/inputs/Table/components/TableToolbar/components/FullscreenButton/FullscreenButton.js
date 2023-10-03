@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import { IconButton } from '@mui/material';
-import { FadingTooltip } from '../../../../misc';
+import { FadingTooltip } from '../../../../../../misc';
 
 export const FullscreenButton = (props) => {
   const { isFullscreen, toggleFullscreen, disabled, label } = props;

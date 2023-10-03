@@ -5,7 +5,7 @@ import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
-import { FadingTooltip } from '../../../../misc';
+import { FadingTooltip } from '../../../../../../misc';
 
 export const AddRowButton = (props) => {
   const { onAddRow, label, disabled } = props;
