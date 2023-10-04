@@ -5,7 +5,7 @@ import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
-import { FadingTooltip } from '../../../../misc';
+import { FadingTooltip } from '../../../../../../misc';
 
 export const DeleteRowButton = (props) => {
   const { onDeleteRow, labels, disabled } = props;

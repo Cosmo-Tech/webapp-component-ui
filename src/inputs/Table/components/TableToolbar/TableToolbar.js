@@ -4,7 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useStyles } from './style';
-import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from '..';
+import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from './components';
 import { CircularProgress } from '@mui/material';
 
 export const TableToolbar = (props) => {

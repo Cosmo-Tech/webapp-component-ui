@@ -5,7 +5,7 @@ import React from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
 import { IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
-import { FadingTooltip } from '../../../../misc';
+import { FadingTooltip } from '../../../../../../misc';
 
 export const ExportButton = (props) => {
   const { onExport, disabled, label } = props;
