@@ -97,7 +97,7 @@
     "cytoscape-layers": "^2.2.0",
     "powerbi-client-react": "^1.3.3",
     "react-cytoscapejs": "^2.0.0",
-    "react-lottie-player": "1.4.1",
+    "react-lottie-player": "^1.4.1",
     "react-number-format": "^5.1.3",
     "rfdc": "^1.3.0"
   },
