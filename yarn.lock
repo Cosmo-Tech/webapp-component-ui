@@ -20,17 +20,17 @@
     "@jridgewell/gen-mapping" "^0.3.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@azure/msal-browser@~2.23.0":
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-2.23.0.tgz#24fc58e9d1314833b09d3f52ba4e53f526cfe0de"
-  integrity sha512-qxyWmsP/pf+xJFEhMgiJ0r1v6TjF+x8iMWYU5R63Lb/fjQfKalaNX9f5D6GbJYJS5s9OF3abtdGtB/Lxea15mQ==
+"@azure/msal-browser@~3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@azure/msal-browser/-/msal-browser-3.1.0.tgz#8addaaf67211302c1e64dba4975f3691ad390175"
+  integrity sha512-zQpL/mR6Xif+WltcRMej8wRsBQu+lW8e1/su8SMkF41i+Pnn/a/a/l+VoT4D+cQrBAq3PL5IaLfuUoNVTRUjKw==
   dependencies:
-    "@azure/msal-common" "^6.2.0"
+    "@azure/msal-common" "14.0.3"
 
-"@azure/msal-common@^6.2.0":
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-6.4.0.tgz#434a55be9639cb5c7910c0cc1a46555ff0bc6c39"
-  integrity sha512-WZdgq9f9O8cbxGzdRwLLMM5xjmLJ2mdtuzgXeiGxIRkVVlJ9nZ6sWnDFKa2TX8j72UXD1IfL0p/RYNoTXYoGfg==
+"@azure/msal-common@14.0.3":
+  version "14.0.3"
+  resolved "https://registry.yarnpkg.com/@azure/msal-common/-/msal-common-14.0.3.tgz#4e273c72b7a9dde4e79f84db0e6c51c1665fcd2f"
+  integrity sha512-Vl5SsC3zvQ8913GnO5Typox+35M6CaXmO/2FXi35LfMAV3ZB/HLCsldLxylI01c3CmtOm7pICWpOjp/DlQ9RWA==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.22.13":
   version "7.22.13"
@@ -1028,16 +1028,16 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@cosmotech/azure@^1.1.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-1.3.2.tgz#842387ec83253be84f39e9a0892ff8057c0d2cfb"
-  integrity sha512-Wca8GjSMND5qNLYmBcdWkRM2CbA2EbbW/lYEjf15T0ue2wNWBeMvHcsLG3d/54dGVQg3ZQ6taUjLKtVuBCt99g==
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@cosmotech/azure/-/azure-1.3.3.tgz#895e4bb96787ea8bb69e81feadb1dc14ffbe5205"
+  integrity sha512-+DB4zBxdZ4dibdYXpsHgzORNkEKyWHxQHLO7ttdg6IPzQABWA90h5pPL0sT/VE2ADeDvHUCul3nmYQsEQ4/IFQ==
   dependencies:
-    "@azure/msal-browser" "~2.23.0"
+    "@azure/msal-browser" "~3.1.0"
 
 "@cosmotech/core@^1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.14.0.tgz#f5275f6ad2c7ddb9f26e14ca5471e346011253f5"
-  integrity sha512-OKC4R/RL7EgYJG+mIrwj14KsbBcgr8Ks7oOP0/rTr0vN9PSthq3hKKAraKrM7tFTREqdlRtI1yOlmT1sBoVGjg==
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@cosmotech/core/-/core-1.14.1.tgz#22f30149785373c82fd3bd723c5e81bbedf7d932"
+  integrity sha512-G2B+5nwWqa1VAl/GbqUljlnY7OgRJg0NmTslEmB31yaL1lXRIRXxqsgyJKevsHuHuyYqA1dbxVQcoa+K10+2Eg==
   dependencies:
     csv-string "^4.0.1"
     date-fns "^2.25.0"
