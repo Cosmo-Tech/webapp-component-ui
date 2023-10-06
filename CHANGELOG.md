@@ -1,3 +1,9 @@
+## **5.10.1** <sub><sup>2023-10-06 (df7fdbd...b736a3a)</sup></sub>
+
+### Bug Fixes
+
+- increase clickable area of buttons in table toolbar ([b736a3a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b736a3a))
+
 ## **5.10.0** <sub><sup>2023-10-02 (e3db76d...487b572)</sup></sub>
 
 ### Features
