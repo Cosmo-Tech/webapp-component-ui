@@ -1,3 +1,9 @@
+## **5.10.2** <sub><sup>2023-10-09 (3a8298b...3a8298b)</sup></sub>
+
+### Bug Fixes
+
+- fix error with MSAL login
+
 ## **5.10.1** <sub><sup>2023-10-06 (df7fdbd...b736a3a)</sup></sub>
 
 ### Bug Fixes
