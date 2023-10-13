@@ -13,7 +13,8 @@ import '@nosferatu500/react-sortable-tree/style.css';
 import { ScenarioUtils } from '@cosmotech/core';
 import useStyles from './style';
 import { FadingTooltip } from '../../misc';
-import { ScenarioSortableTree, SearchInput } from './components';
+import { ScenarioSortableTree } from './components';
+import { SearchBar } from '../../inputs';
 
 const initNodesDict = (scenarios, defaultExpanded) => {
   const nodesDict = {};
@@ -150,7 +151,12 @@ export const ScenarioManagerTreeList = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.searchContainer}>
-        <SearchInput label={labels.searchField} className={classes.searchField} onSearchChange={setSearchText} />
+        <SearchBar
+          label={labels.searchField}
+          className={classes.searchField}
+          onSearchChange={setSearchText}
+          id="scenario-manager-search-field"
+        />
         <div className={classes.toolbar}>
           <FadingTooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
             <IconButton className={classes.toolbarPrimaryAction} onClick={collapseAll} size="large">
@@ -230,18 +236,18 @@ ScenarioManagerTreeList.propTypes = {
   buildDatasetInfo: PropTypes.func.isRequired,
   /**
    * DEPRECATED: this prop is deprecated, use 'canUserDeleteScenario' instead
-   * Boolean value to define whether or not scenario delete buttons must be shown in ScenarioNode elements:
+   * Boolean value to define whether scenario delete buttons must be shown in ScenarioNode elements:
    *  - false: delete buttons are always hidden
    *  - true: delete buttons are shown if the user id matches the scenario owner id
    */
   showDeleteIcon: PropTypes.bool,
   /**
-   * Function returning whether or not the current user can delete a given scenario. This function receives as parameter
+   * Function returning whether the current user can delete a given scenario. This function receives as parameter
    * the scenario data and must return a boolean.
    */
   canUserDeleteScenario: PropTypes.func,
   /**
-   * Function returning whether or not the current user can rename a given scenario. This function receives as parameter
+   * Function returning whether the current user can rename a given scenario. This function receives as parameter
    * the scenario data and must return a boolean.
    */
   canUserRenameScenario: PropTypes.func,
@@ -268,7 +274,7 @@ ScenarioManagerTreeList.propTypes = {
     searchField: 'string',
     toolbar : {
       expandAll: 'string',
-      expantTree: 'string'
+      expandTree: 'string'
       collapseAll: 'string',
     }
   }

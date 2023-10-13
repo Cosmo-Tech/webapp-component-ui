@@ -22,6 +22,7 @@ export {
   TABLE_DATA_STATUS,
   RoleEditor,
   SelectWithAction,
+  SearchBar,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
 export {

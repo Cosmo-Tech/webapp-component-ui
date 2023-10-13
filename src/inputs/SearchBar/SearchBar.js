@@ -1,11 +1,11 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import React, { useState, useRef } from 'react';
-import { TextField } from '@mui/material';
+import React, { useRef, useState } from 'react';
+import { TextField, InputAdornment } from '@mui/material';
 import PropTypes from 'prop-types';
 
-export const SearchInput = ({ onSearchChange, className, label }) => {
+export const SearchBar = ({ onSearchChange, className, label, icon, id }) => {
   const [textValue, setTextValue] = useState('');
 
   const timeoutHandle = useRef();
@@ -37,8 +37,8 @@ export const SearchInput = ({ onSearchChange, className, label }) => {
 
   return (
     <TextField
-      data-cy="scenario-manager-search-field"
-      id="standard-search"
+      data-cy={id}
+      id={id}
       label={label}
       type="search"
       className={className}
@@ -46,11 +46,18 @@ export const SearchInput = ({ onSearchChange, className, label }) => {
       onChange={onTextChange}
       onKeyDown={onKeyDown}
       color="primary"
+      InputProps={{
+        endAdornment: <InputAdornment position="end">{icon}</InputAdornment>,
+      }}
     />
   );
 };
 
-SearchInput.propTypes = {
+SearchBar.propTypes = {
+  /**
+   * id of the input
+   */
+  id: PropTypes.string,
   /**
    * callback for change search value
    */
@@ -63,4 +70,8 @@ SearchInput.propTypes = {
    * label of TextField
    */
   label: PropTypes.string,
+  /**
+   * optional icon to be appended in the end of the TextField
+   */
+  icon: PropTypes.node,
 };
