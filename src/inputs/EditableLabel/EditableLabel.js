@@ -179,7 +179,7 @@ EditableLabel.propTypes = {
   typographyProps: PropTypes.object,
 };
 
-EditableLabel.defaultValue = {
+EditableLabel.defaultProps = {
   labels: {
     title: 'Scenario name',
     errors: {
