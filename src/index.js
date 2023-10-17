@@ -23,6 +23,7 @@ export {
   RoleEditor,
   SelectWithAction,
   SearchBar,
+  TagsEditor,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
 export {
