@@ -17,7 +17,7 @@ export class SelectTesting {
   }
 
   get Button() {
-    return getByRole(this.Select, 'button');
+    return getByRole(this.Select, 'combobox');
   }
 
   get Menu() {
