@@ -18,3 +18,4 @@ export { EditableLabel } from './EditableLabel';
 export { RoleEditor } from './RoleEditor';
 export { SelectWithAction } from './SelectWithAction';
 export { SearchBar } from './SearchBar';
+export { TagsEditor } from './TagsEditor';
