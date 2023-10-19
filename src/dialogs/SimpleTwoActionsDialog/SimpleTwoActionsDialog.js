@@ -15,6 +15,7 @@ export const SimpleTwoActionsDialog = ({
   button1Props,
   button2Props,
   closeOnBackdropClick,
+  component,
 }) => {
   const onClose = (event, reason) => {
     if (closeOnBackdropClick || reason !== 'backdropClick') {
@@ -33,7 +34,9 @@ export const SimpleTwoActionsDialog = ({
     >
       <DialogTitle id={id + '-dialog-title'}>{labels.title}</DialogTitle>
       <DialogContent>
-        <Typography variant="body1">{labels.body}</Typography>
+        <Typography variant="body1" component={component}>
+          {labels.body}
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button
@@ -84,7 +87,7 @@ SimpleTwoActionsDialog.propTypes = {
    */
   labels: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
+    body: PropTypes.node.isRequired,
     button1: PropTypes.string.isRequired,
     button2: PropTypes.string.isRequired,
   }),
@@ -117,6 +120,10 @@ SimpleTwoActionsDialog.propTypes = {
    * Close dialog on backdrop click
    */
   closeOnBackdropClick: PropTypes.bool,
+  /**
+   * HTML tag to be rendered as dialog's body, e.g., 'div', 'span', 'p' (default value)
+   */
+  component: PropTypes.string,
 };
 
 SimpleTwoActionsDialog.defaultProps = {
@@ -139,4 +146,5 @@ SimpleTwoActionsDialog.defaultProps = {
   button1Props: {},
   button2Props: {},
   closeOnBackdropClick: false,
+  component: 'p',
 };
