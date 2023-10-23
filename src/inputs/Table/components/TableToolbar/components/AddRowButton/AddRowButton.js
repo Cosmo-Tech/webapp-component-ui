@@ -12,7 +12,7 @@ export const AddRowButton = (props) => {
   const spanProps = { style: { display: 'inline-block', height: '100%' } };
 
   return (
-    <FadingTooltip title={label} useSpan={true} spanProps={spanProps}>
+    <FadingTooltip title={label} useSpan={true} spanProps={spanProps} disableInteractive={true}>
       <IconButton
         onClick={onAddRow}
         component="label"

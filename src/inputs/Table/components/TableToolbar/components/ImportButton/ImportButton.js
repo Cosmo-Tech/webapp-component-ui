@@ -12,7 +12,7 @@ export const ImportButton = (props) => {
   const spanProps = { style: { display: 'inline-block', height: '100%' } };
 
   return (
-    <FadingTooltip title={label} useSpan={true} spanProps={spanProps}>
+    <FadingTooltip title={label} useSpan={true} spanProps={spanProps} disableInteractive={true}>
       <IconButton
         variant="text"
         component="label"

@@ -12,7 +12,7 @@ export const ExportButton = (props) => {
   const spanProps = { style: { display: 'inline-block', height: '100%' } };
 
   return (
-    <FadingTooltip title={label} useSpan={true} spanProps={spanProps}>
+    <FadingTooltip title={label} useSpan={true} spanProps={spanProps} disableInteractive={true}>
       <IconButton onClick={onExport} size="small" color="primary" data-cy="export-button" disabled={disabled}>
         <DownloadIcon fontSize="inherit" />
       </IconButton>

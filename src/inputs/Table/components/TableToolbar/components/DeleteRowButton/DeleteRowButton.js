@@ -13,7 +13,7 @@ export const DeleteRowButton = (props) => {
 
   return (
     <>
-      <FadingTooltip title={labels} useSpan={true} spanProps={spanProps}>
+      <FadingTooltip title={labels} useSpan={true} spanProps={spanProps} disableInteractive={true}>
         <IconButton
           onClick={onDeleteRow}
           component="label"
