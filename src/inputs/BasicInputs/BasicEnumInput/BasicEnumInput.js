@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { MenuItem, Grid, Stack, TextField, Tooltip, Fade, Box } from '@mui/material';
+import { MenuItem, Stack, TextField, Tooltip, Fade, Box } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React, { useCallback, useMemo } from 'react';
@@ -22,6 +22,7 @@ export const BasicEnumInput = (props) => {
     enumValues: selectEnumValues,
     changeEnumField,
     isDirty,
+    size,
     ...otherProps
   } = props;
 
@@ -43,55 +44,53 @@ export const BasicEnumInput = (props) => {
     );
 
   return (
-    <Grid item xs={3}>
-      <Stack
-        data-cy={`enum-input-${id}`}
-        direction="row"
-        spacing={1}
-        alignItems="center"
-        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+    <Stack
+      data-cy={`enum-input-${id}`}
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
+      <TextField
+        variant="outlined"
+        label={label}
+        size={size}
+        sx={{ flexGrow: 1 }}
+        select
+        value={typeof valueKey === 'string' ? valueKey : ''}
+        SelectProps={{
+          renderValue: (key) => <Box>{getLabelFromEnumKey(key)}</Box>, // Prevent extra padding on selected value
+          'data-cy': `enum-input-select-${id}`,
+          MenuProps: { 'data-cy': `enum-input-menu-${id}` },
+        }}
+        onChange={(event) => changeEnumField(event.target.value)}
       >
-        <TextField
-          variant="outlined"
-          label={label}
-          size="small"
-          sx={{ flexGrow: 1 }}
-          select
-          value={typeof valueKey === 'string' ? valueKey : ''}
-          SelectProps={{
-            renderValue: (key) => <Box>{getLabelFromEnumKey(key)}</Box>, // Prevent extra padding on selected value
-            'data-cy': `enum-input-select-${id}`,
-            MenuProps: { 'data-cy': `enum-input-menu-${id}` },
-          }}
-          onChange={(event) => changeEnumField(event.target.value)}
-        >
-          {enumValues.map((option) => (
-            <MenuItem
-              key={option.key}
-              value={option.key}
-              data-cy={option.key}
-              sx={{ p: '0px' }} // Remove default MenuItem padding to increase the hover area for the items tooltips
+        {enumValues.map((option) => (
+          <MenuItem
+            key={option.key}
+            value={option.key}
+            data-cy={option.key}
+            sx={{ p: '0px' }} // Remove default MenuItem padding to increase the hover area for the items tooltips
+          >
+            <Tooltip
+              data-cy={`enum-input-value-tooltip-${option.key}`}
+              title={option.tooltip}
+              placement="right-end"
+              TransitionComponent={Fade}
+              TransitionProps={{ timeout: 600 }}
             >
-              <Tooltip
-                data-cy={`enum-input-value-tooltip-${option.key}`}
-                title={option.tooltip}
-                placement="right-end"
-                TransitionComponent={Fade}
-                TransitionProps={{ timeout: 600 }}
+              <Box
+                // Extra padding on menu items to increase the hover area for the items tooltips
+                sx={{ px: '16px', py: '6px', width: '100%' }}
               >
-                <Box
-                  // Extra padding on menu items to increase the hover area for the items tooltips
-                  sx={{ px: '16px', py: '6px', width: '100%' }}
-                >
-                  {option.value}
-                </Box>
-              </Tooltip>
-            </MenuItem>
-          ))}
-        </TextField>
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
-    </Grid>
+                {option.value}
+              </Box>
+            </Tooltip>
+          </MenuItem>
+        ))}
+      </TextField>
+      <TooltipInfo title={tooltipText} variant="small" />
+    </Stack>
   );
 };
 
@@ -129,11 +128,15 @@ BasicEnumInput.propTypes = {
    */
   enumValues: PropTypes.array.isRequired,
   /**
+   * Size of the textInput: small (default value), medium or large
+   */
+  size: PropTypes.string,
+  /**
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
 };
 
 BasicEnumInput.defaultProps = {
-  isDirty: false,
+  size: 'small',
 };

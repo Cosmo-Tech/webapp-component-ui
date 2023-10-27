@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Grid, Slider, Stack, Typography } from '@mui/material';
+import { Slider, Stack, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
@@ -67,30 +67,31 @@ export const BasicSliderInput = (props) => {
     );
 
   return (
-    <Grid item xs={3}>
-      <Stack data-cy={`slider-input-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
-            {label}
-          </Typography>
-          <TooltipInfo title={tooltipText} variant="small" />
-        </Stack>
-        <Slider
-          value={getValue(value)}
-          sx={sliderStyle}
-          color={color}
-          size="small"
-          onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
-          getAriaValueText={getValueText}
-          valueLabelDisplay={valueLabelDisplay}
-          step={step}
-          marks={getMarks(marks)}
-          min={min}
-          max={max}
-          orientation={orientation}
-        />
+    <Stack
+      data-cy={`slider-input-${id}`}
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
+          {label}
+        </Typography>
+        <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
-    </Grid>
+      <Slider
+        value={getValue(value)}
+        sx={sliderStyle}
+        color={color}
+        size="small"
+        onChange={(event, newValue) => handleSliderValueChange(parseFloat(newValue))}
+        getAriaValueText={getValueText}
+        valueLabelDisplay={valueLabelDisplay}
+        step={step}
+        marks={getMarks(marks)}
+        min={min}
+        max={max}
+        orientation={orientation}
+      />
+    </Stack>
   );
 };
 
@@ -170,5 +171,4 @@ BasicSliderInput.defaultProps = {
   orientation: 'horizontal',
   disabled: true,
   color: 'secondary',
-  isDirty: false,
 };
