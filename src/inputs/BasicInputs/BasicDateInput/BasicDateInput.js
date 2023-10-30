@@ -3,7 +3,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Stack, TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -37,6 +37,7 @@ export const BasicDateInput = (props) => {
     isDirty,
     error,
     reverseTimezoneOffset,
+    size,
     ...otherProps
   } = props;
   const classes = useStyles();
@@ -79,39 +80,37 @@ export const BasicDateInput = (props) => {
     );
 
   return (
-    <Grid item id={dateProps.id} xs={3}>
-      <Stack
-        data-cy={`date-input-${id}`}
-        direction="row"
-        spacing={1}
-        alignItems="center"
-        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
-      >
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DesktopDatePicker
-            label={label}
-            inputFormat={format}
-            minDate={minDate}
-            maxDate={maxDate}
-            renderInput={({ error: _, ...params }) => (
-              <TextField
-                id={`date-text-field-${id}`}
-                variant="outlined"
-                sx={{ flexGrow: 1 }}
-                size="small"
-                error={error?.message?.length > 0}
-                helperText={error?.message ?? ''}
-                {...params}
-              />
-            )}
-            id={`date-input-${id}`}
-            onChange={onChange}
-            value={internalDate ?? new Date(undefined)}
-          />
-        </LocalizationProvider>
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
-    </Grid>
+    <Stack
+      data-cy={`date-input-${id}`}
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DesktopDatePicker
+          label={label}
+          inputFormat={format}
+          minDate={minDate}
+          maxDate={maxDate}
+          renderInput={({ error: _, ...params }) => (
+            <TextField
+              id={`date-text-field-${id}`}
+              variant="outlined"
+              sx={{ flexGrow: 1 }}
+              size={size}
+              error={error?.message?.length > 0}
+              helperText={error?.message ?? ''}
+              {...params}
+            />
+          )}
+          id={`date-input-${id}`}
+          onChange={onChange}
+          value={internalDate ?? new Date(undefined)}
+        />
+      </LocalizationProvider>
+      <TooltipInfo title={tooltipText} variant="small" />
+    </Stack>
   );
 };
 
@@ -153,9 +152,13 @@ BasicDateInput.propTypes = {
    */
   error: PropTypes.object,
   /**
+   * Size of the TextField: small (default value), medium or large
+   */
+  size: PropTypes.string,
+  /**
    * Boolean value that defines whether the component should prevent the date picker component to convert dates in local
    * time by adding a "reverse offset" to the input value and store it in an internal state. If the input of value prop
-   * is an UTC date and you want to work only with UTC dates, then you should set reverseTimezoneOffset to true to have
+   * is a UTC date, and you want to work only with UTC dates, then you should set reverseTimezoneOffset to true to have
    * a consistent behavior in all timezones.
    */
   reverseTimezoneOffset: PropTypes.bool,
@@ -163,6 +166,6 @@ BasicDateInput.propTypes = {
 
 BasicDateInput.defaultProps = {
   format: 'MM/dd/yyyy',
-  isDirty: false,
   reverseTimezoneOffset: false,
+  size: 'small',
 };

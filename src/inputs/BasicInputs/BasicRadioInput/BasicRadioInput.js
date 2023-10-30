@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { Radio, RadioGroup, FormControl, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
+import { Radio, RadioGroup, FormControl, FormControlLabel, Stack, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
@@ -43,38 +43,39 @@ export const BasicRadioInput = (props) => {
   }
 
   return (
-    <Grid item xs={3}>
-      <Stack data-cy={`radio-input-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Typography variant="subtitle2" color="textSecondary" id="slider-input-label">
-            {label}
-          </Typography>
-          <TooltipInfo title={tooltipText} variant="small" />
-        </Stack>
-        <FormControl>
-          <RadioGroup
-            sx={{ ml: 1 }}
-            row={row}
-            data-cy="radio-group"
-            value={value ?? ''}
-            onChange={(event) => changeRadioOption(event.target.value)}
-          >
-            {enumValues.map((option) => {
-              return (
-                <FormControlLabel
-                  key={option.key}
-                  value={option.key}
-                  control={
-                    <Radio data-cy={`radio-button-${option.value}`} style={radioStyle} size="small" color="primary" />
-                  }
-                  label={option.value}
-                />
-              );
-            })}
-          </RadioGroup>
-        </FormControl>
+    <Stack
+      data-cy={`radio-input-${id}`}
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
+      <Stack direction="row" spacing={1} alignItems="center">
+        <Typography variant="subtitle2" color="textSecondary" id="slider-input-label">
+          {label}
+        </Typography>
+        <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
-    </Grid>
+      <FormControl>
+        <RadioGroup
+          sx={{ ml: 1 }}
+          row={row}
+          data-cy="radio-group"
+          value={value ?? ''}
+          onChange={(event) => changeRadioOption(event.target.value)}
+        >
+          {enumValues.map((option) => {
+            return (
+              <FormControlLabel
+                key={option.key}
+                value={option.key}
+                control={
+                  <Radio data-cy={`radio-button-${option.value}`} style={radioStyle} size="small" color="primary" />
+                }
+                label={option.value}
+              />
+            );
+          })}
+        </RadioGroup>
+      </FormControl>
+    </Stack>
   );
 };
 
@@ -129,5 +130,4 @@ BasicRadioInput.propTypes = {
 
 BasicRadioInput.defaultProps = {
   row: true,
-  isDirty: false,
 };

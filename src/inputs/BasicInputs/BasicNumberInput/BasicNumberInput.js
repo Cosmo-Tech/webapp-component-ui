@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, Stack, TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState, useRef } from 'react';
@@ -24,6 +24,7 @@ export const BasicNumberInput = (props) => {
     changeNumberField,
     isDirty,
     error,
+    size,
     ...otherProps
   } = props;
 
@@ -85,34 +86,32 @@ export const BasicNumberInput = (props) => {
   }
 
   return (
-    <Grid item xs={3}>
-      <Stack
-        data-cy={`number-input-${id}`}
-        direction="row"
-        spacing={1}
-        alignItems="center"
-        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
-      >
-        <TextField
-          id={`number-input-${id}`}
-          sx={{ flexGrow: 1 }}
-          variant="outlined"
-          label={label}
-          size="small"
-          value={textInput}
-          onChange={handleChangeEvent}
-          onBlur={handleBlurEvent}
-          onFocus={handleFocusEvent}
-          inputProps={inputProps}
-          InputProps={{
-            inputComponent: NumberFormat,
-          }}
-          error={!!error}
-          helperText={error?.message ?? ''}
-        />
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
-    </Grid>
+    <Stack
+      data-cy={`number-input-${id}`}
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
+      <TextField
+        id={`number-input-${id}`}
+        sx={{ flexGrow: 1 }}
+        variant="outlined"
+        label={label}
+        size={size}
+        value={textInput}
+        onChange={handleChangeEvent}
+        onBlur={handleBlurEvent}
+        onFocus={handleFocusEvent}
+        inputProps={inputProps}
+        InputProps={{
+          inputComponent: NumberFormat,
+        }}
+        error={!!error}
+        helperText={error?.message ?? ''}
+      />
+      <TooltipInfo title={tooltipText} variant="small" />
+    </Stack>
   );
 };
 
@@ -153,8 +152,12 @@ BasicNumberInput.propTypes = {
    * Error object that contains the type of error and its message
    */
   error: PropTypes.object,
+  /**
+   * Size of the TextField: small (default value), medium or large
+   */
+  size: PropTypes.string,
 };
 
 BasicNumberInput.defaultProps = {
-  isDirty: false,
+  size: 'small',
 };

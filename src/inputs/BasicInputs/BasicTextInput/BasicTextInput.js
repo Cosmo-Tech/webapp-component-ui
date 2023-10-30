@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-import { Grid, Stack, TextField } from '@mui/material';
+import { Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,7 +13,8 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const BasicTextInput = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, error, ...otherProps } = props;
+
+  const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, error, size, ...otherProps } = props;
 
   if (textFieldProps?.disabled)
     return (
@@ -27,28 +28,26 @@ export const BasicTextInput = (props) => {
     );
 
   return (
-    <Grid item xs={3}>
-      <Stack
-        data-cy={`text-input-${id}`}
-        direction="row"
-        spacing={1}
-        alignItems="center"
-        className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
-      >
-        <TextField
-          {...textFieldProps}
-          variant="outlined"
-          label={label}
-          size="small"
-          value={value}
-          sx={{ flexGrow: 1 }}
-          onChange={(event) => changeTextField(event.target.value)}
-          error={!!error}
-          helperText={error?.message ?? ''}
-        />
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
-    </Grid>
+    <Stack
+      data-cy={`text-input-${id}`}
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
+      <TextField
+        {...textFieldProps}
+        variant="outlined"
+        label={label}
+        size={size}
+        value={value}
+        sx={{ flexGrow: 1 }}
+        onChange={(event) => changeTextField(event.target.value)}
+        error={!!error}
+        helperText={error?.message ?? ''}
+      />
+      <TooltipInfo title={tooltipText} variant="small" />
+    </Stack>
   );
 };
 
@@ -78,6 +77,10 @@ BasicTextInput.propTypes = {
    */
   textFieldProps: PropTypes.object,
   /**
+   * Size of the TextField: small (default value), medium or large
+   */
+  size: PropTypes.string,
+  /**
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
@@ -87,5 +90,5 @@ BasicTextInput.propTypes = {
   error: PropTypes.object,
 };
 BasicTextInput.defaultProps = {
-  isDirty: false,
+  size: 'small',
 };

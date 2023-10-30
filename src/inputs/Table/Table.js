@@ -367,7 +367,7 @@ export const Table = (props) => {
       id="table-container"
       data-cy="table-input"
       {...otherProps}
-      className={isDirty ? classes.dirtyInput : classes.notDirtyInput}
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
       <div data-cy="label">
         <Stack spacing={1} direction="row" alignItems="center">
@@ -544,5 +544,4 @@ Table.defaultProps = {
   labels: DEFAULT_LABELS,
   onCellChange: () => {},
   maxErrorsCount: 100,
-  isDirty: false,
 };

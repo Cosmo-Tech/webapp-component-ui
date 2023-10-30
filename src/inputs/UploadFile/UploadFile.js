@@ -157,7 +157,7 @@ UploadFile.propTypes = {
   /**
    * Function bound on "download" icon
    */
-  handleDownloadFile: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func,
   /**
    * Uploaded file data:
    * Structure :
