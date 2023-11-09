@@ -14,6 +14,7 @@
   },
   "plugins": ["react", "react-hooks", "prettier", "jest"],
   "rules": {
+    "no-constant-binary-expression": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "semi": [2, "always"],
@@ -25,3 +26,4 @@
     }
   }
 }
+  
