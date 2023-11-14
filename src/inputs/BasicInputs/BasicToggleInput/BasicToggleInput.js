@@ -1,13 +1,12 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Stack, Switch, FormControlLabel, FormHelperText, FormControl } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 import { getCommonInputStyles } from '../../style';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
 const useStyles = makeStyles(getCommonInputStyles);
 

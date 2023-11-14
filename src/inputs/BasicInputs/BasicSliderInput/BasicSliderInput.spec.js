@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { BasicSliderInput } from './BasicSliderInput';
 import { SliderTesting, TypographyTesting, ContainerTesting } from '../../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
+import { BasicSliderInput } from './BasicSliderInput';
 
 const mockOnValueChanged = jest.fn();
 

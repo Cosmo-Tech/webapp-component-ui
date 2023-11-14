@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Collapse, Paper, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import { Button, Collapse, Paper, Typography } from '@mui/material';
 import useStyles from './style';
 
 const DEFAULT_ERROR = {

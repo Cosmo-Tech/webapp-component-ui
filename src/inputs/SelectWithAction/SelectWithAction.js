@@ -1,11 +1,10 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
+import PropTypes from 'prop-types';
+import CheckIcon from '@mui/icons-material/Check';
 import { FormControl, Select, Divider, MenuItem, ListItemText, ListItemIcon } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import CheckIcon from '@mui/icons-material/Check';
-import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   selectWithAction: {

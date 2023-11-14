@@ -1,10 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import DownloadIcon from '@mui/icons-material/Download';
 import { IconButton } from '@mui/material';
-import PropTypes from 'prop-types';
 import { FadingTooltip } from '../../../../../../misc';
 
 export const ExportButton = (props) => {

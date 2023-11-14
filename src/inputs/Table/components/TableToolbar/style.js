@@ -1,6 +1,5 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import makeStyles from '@mui/styles/makeStyles';
 
 export const TABLE_TOOLBAR_HEIGHT = '32px';

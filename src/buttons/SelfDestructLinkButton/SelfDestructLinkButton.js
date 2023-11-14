@@ -1,6 +1,5 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button, CircularProgress } from '@mui/material';

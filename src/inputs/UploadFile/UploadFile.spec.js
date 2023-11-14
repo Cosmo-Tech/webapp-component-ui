@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { UploadFile } from './UploadFile';
-import { getByDataCy, renderInMuiThemeProvider } from '../../../tests/utils';
 import { ContainerTesting, ButtonTesting, TypographyTesting } from '../../../tests/MuiComponentsTesting';
+import { getByDataCy, renderInMuiThemeProvider } from '../../../tests/utils';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
+import { UploadFile } from './UploadFile';
 
 const mockOnFileUpload = jest.fn();
 const mockOnFileDelete = jest.fn();

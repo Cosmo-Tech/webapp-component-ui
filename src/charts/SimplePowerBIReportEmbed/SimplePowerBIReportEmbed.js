@@ -1,15 +1,14 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import * as PropTypes from 'prop-types';
-import { IconButton } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { IconButton } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import DashboardPlaceholder from '../Dashboard/components';
-import { FadingTooltip } from '../../misc';
 import { PowerBIUtils } from '@cosmotech/azure';
+import { FadingTooltip } from '../../misc';
+import DashboardPlaceholder from '../Dashboard/components';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,8 +1,15 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useEffect, useRef, useState } from 'react';
+import CytoscapeComponent from 'react-cytoscapejs';
 import PropTypes from 'prop-types';
+import {
+  ChevronRight as ChevronRightIcon,
+  ChevronLeft as ChevronLeftIcon,
+  Settings as SettingsIcon,
+  AccountTree as AccountTreeIcon,
+  ExpandMore as ExpandMoreIcon,
+} from '@mui/icons-material';
 import {
   CircularProgress,
   Drawer,
@@ -23,20 +30,13 @@ import {
   Switch,
   Autocomplete,
 } from '@mui/material';
-import {
-  ChevronRight as ChevronRightIcon,
-  ChevronLeft as ChevronLeftIcon,
-  Settings as SettingsIcon,
-  AccountTree as AccountTreeIcon,
-  ExpandMore as ExpandMoreIcon,
-} from '@mui/icons-material';
-import CytoscapeComponent from 'react-cytoscapejs';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
-import useStyles from './style';
-import { ElementData, TabPanel, StatsHUD } from './components';
 import { ErrorBanner, FadingTooltip } from '../../misc';
+import { ElementData, TabPanel, StatsHUD } from './components';
+import useStyles from './style';
+
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
 

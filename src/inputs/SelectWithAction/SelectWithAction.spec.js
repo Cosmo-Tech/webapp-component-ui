@@ -1,8 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-
 import { SelectWithAction } from '.';
 import { SelectTesting } from '../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../tests/utils';

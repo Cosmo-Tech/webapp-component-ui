@@ -1,11 +1,10 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from './style';
-import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from './components';
 import { CircularProgress } from '@mui/material';
+import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from './components';
+import { useStyles } from './style';
 
 export const TableToolbar = (props) => {
   const {

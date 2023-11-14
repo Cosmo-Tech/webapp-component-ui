@@ -1,6 +1,5 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
 

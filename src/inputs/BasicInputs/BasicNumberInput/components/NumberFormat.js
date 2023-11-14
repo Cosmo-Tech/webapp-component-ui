@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import PropTypes from 'prop-types';
 import React from 'react';
 import { NumericFormat } from 'react-number-format';
+import PropTypes from 'prop-types';
 
 export const NumberFormat = React.forwardRef(function NumberFormatCustom(props, ref) {
   const { onChange, max, min, ...other } = props;

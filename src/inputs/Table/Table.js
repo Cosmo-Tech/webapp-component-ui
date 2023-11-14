@@ -1,22 +1,21 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
+import { AgGridReact } from 'ag-grid-react';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Stack, Typography, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
+import rfdc from 'rfdc';
 import { DateUtils } from '@cosmotech/core';
-import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
-import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { ErrorsPanel, TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
+import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
+import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { TableToolbar } from './components';
 import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import rfdc from 'rfdc';
 
 const clone = rfdc();
 

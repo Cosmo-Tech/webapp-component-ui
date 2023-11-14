@@ -1,10 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import makeStyles from '@mui/styles/makeStyles';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: ({ width }) => ({

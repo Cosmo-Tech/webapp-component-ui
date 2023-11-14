@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React from 'react';
-import { BasicDateInput } from './BasicDateInput';
-import { renderInMuiThemeProvider } from '../../../../tests/utils';
 import { screen } from '@testing-library/react';
+import React from 'react';
 import { ContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../../tests/utils';
+import { BasicDateInput } from './BasicDateInput';
 
 const mockOnValueChanged = jest.fn();
 

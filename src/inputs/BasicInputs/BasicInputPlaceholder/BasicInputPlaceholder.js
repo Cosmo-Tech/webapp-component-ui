@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licenced under the MIT licence.
-
-import { Stack, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Stack, Typography } from '@mui/material';
 import { TooltipInfo } from '../../../misc';
 
 export const BasicInputPlaceholder = ({ id, label, tooltipText, value, ...otherProps }) => {

@@ -1,12 +1,11 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, IconButton } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
-import { RolesEditionDialog } from './components';
+import { Button, IconButton } from '@mui/material';
 import { FadingTooltip } from '../../misc/FadingTooltip';
+import { RolesEditionDialog } from './components';
 
 export const RolesEditionButton = ({
   labels,

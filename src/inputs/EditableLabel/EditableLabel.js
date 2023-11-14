@@ -1,11 +1,10 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import EditIcon from '@mui/icons-material/Edit';
 import { FormControl, OutlinedInput, FormHelperText, Typography, CircularProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import EditIcon from '@mui/icons-material/Edit';
 
 const useStyles = makeStyles((theme) => ({
   root: {

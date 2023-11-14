@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useRef, useState } from 'react';
-import { TextField, InputAdornment } from '@mui/material';
 import PropTypes from 'prop-types';
+import { TextField, InputAdornment } from '@mui/material';
 
 export const SearchBar = ({ onSearchChange, className, label, icon, id }) => {
   const [textValue, setTextValue] = useState('');

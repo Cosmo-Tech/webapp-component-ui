@@ -1,20 +1,19 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
+import '@nosferatu500/react-sortable-tree/style.css';
 import React, { useEffect, useMemo, useState, useRef, useReducer } from 'react';
 import PropTypes from 'prop-types';
-import { IconButton } from '@mui/material';
 import {
   UnfoldMore as UnfoldMoreIcon,
   UnfoldLess as UnfoldLessIcon,
   AccountTree as AccountTreeIcon,
 } from '@mui/icons-material';
-import '@nosferatu500/react-sortable-tree/style.css';
+import { IconButton } from '@mui/material';
 import { ScenarioUtils } from '@cosmotech/core';
-import useStyles from './style';
+import { SearchBar } from '../../inputs';
 import { FadingTooltip } from '../../misc';
 import { ScenarioSortableTree } from './components';
-import { SearchBar } from '../../inputs';
+import useStyles from './style';
 
 const initNodesDict = (scenarios, defaultExpanded) => {
   const nodesDict = {};

@@ -1,6 +1,5 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Stack, TextField } from '@mui/material';
@@ -9,9 +8,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateUtils } from '@cosmotech/core';
-import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { TooltipInfo } from '../../../misc';
 import { getCommonInputStyles } from '../../style';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
 const useStyles = makeStyles(getCommonInputStyles);
 

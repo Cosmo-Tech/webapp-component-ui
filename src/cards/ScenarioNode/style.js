@@ -1,8 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import makeStyles from '@mui/styles/makeStyles';
-
 import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from './constants';
 
 const useStyles = makeStyles((theme) => ({

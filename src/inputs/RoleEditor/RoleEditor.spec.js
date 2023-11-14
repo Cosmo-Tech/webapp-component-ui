@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { ALL_ROLES, LABELS, SAMPLE_AGENTS } from '../../../tests/samples/RoleEditionSample';
-
-import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
-import { renderInMuiThemeProvider } from '../../../tests/utils';
-
 import { RoleEditor } from '.';
+import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
+import { ALL_ROLES, LABELS, SAMPLE_AGENTS } from '../../../tests/samples/RoleEditionSample';
+import { renderInMuiThemeProvider } from '../../../tests/utils';
 
 const mockOnOptionSelected = jest.fn();
 

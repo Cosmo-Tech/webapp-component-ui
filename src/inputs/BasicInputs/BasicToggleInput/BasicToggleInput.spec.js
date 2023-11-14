@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React from 'react';
-import { BasicToggleInput } from './BasicToggleInput';
-import { renderInMuiThemeProvider } from '../../../../tests/utils';
 import { screen } from '@testing-library/react';
+import React from 'react';
 import { ContainerTesting } from '../../../../tests/MuiComponentsTesting/ContainerTesting';
+import { renderInMuiThemeProvider } from '../../../../tests/utils';
+import { BasicToggleInput } from './BasicToggleInput';
 
 const mockOnValueChanged = jest.fn();
 const toggleInputContainer = new ContainerTesting({ dataCy: 'toggle-form-control-enabled' });

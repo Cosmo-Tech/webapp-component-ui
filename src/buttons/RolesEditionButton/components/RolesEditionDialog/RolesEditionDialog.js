@@ -1,8 +1,10 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
 import {
   Dialog,
   DialogTitle,
@@ -16,12 +18,9 @@ import {
   Autocomplete,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { RoleEditor } from '../../../../inputs';
-import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { RolesAddingDialog } from './components';
 import { getIdentifierFromUserEmail } from '../../../../utils';
+import { RolesAddingDialog } from './components';
 
 const useStyles = makeStyles((theme) => ({
   rolesEditorContainer: {

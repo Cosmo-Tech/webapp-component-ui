@@ -1,9 +1,8 @@
 import React from 'react';
-
-import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
-import { getByDataCy, renderInMuiThemeProvider } from '../../../tests/utils';
 import { SimplePowerBIReportEmbed } from '.';
+import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
 import { LABELS, DEFAULT_SCENARIO, SCENARIO_STATES } from '../../../tests/samples/DashboardSample';
+import { getByDataCy, renderInMuiThemeProvider } from '../../../tests/utils';
 
 const defaultProps = {
   index: 0,
