@@ -24,7 +24,18 @@ const useStyles = makeStyles((theme) => ({
 
 export const TagsEditor = (props) => {
   const classes = useStyles();
-  const { id, values, readOnly, onChange, labels: tmpLabels, chipProps, textFieldProps, editIconProps } = props;
+  const {
+    id,
+    values: tmpValues,
+    readOnly,
+    onChange,
+    labels: tmpLabels,
+    chipProps,
+    textFieldProps,
+    editIconProps,
+  } = props;
+
+  const values = useMemo(() => tmpValues ?? [], [tmpValues]);
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   const [isEditing, setIsEditing] = useState(false);
