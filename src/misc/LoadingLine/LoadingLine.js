@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import PropTypes from 'prop-types';
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
+import PropTypes from 'prop-types';
 import { Grid, Typography } from '@mui/material';
 
 export const LoadingLine = (props) => {

@@ -1,9 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React from 'react';
 import { screen } from '@testing-library/react';
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { RolesEditionDialog } from '.';
+import { AutoCompleteTesting, ButtonTesting, TypographyTesting } from '../../../../../tests/MuiComponentsTesting';
 import {
   ALL_PERMISSIONS,
   ALL_ROLES,
@@ -11,12 +13,7 @@ import {
   RESOURCE_ROLES_PERMISSIONS_MAPPING,
   SAMPLE_AGENTS,
 } from '../../../../../tests/samples/RoleEditionSample';
-
-import { AutoCompleteTesting, ButtonTesting, TypographyTesting } from '../../../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../../../tests/utils';
-
-import { RolesEditionDialog } from '.';
-import { act } from 'react-dom/test-utils';
 
 const mockCloseDialog = jest.fn();
 const mockOnConfirmChanges = jest.fn();

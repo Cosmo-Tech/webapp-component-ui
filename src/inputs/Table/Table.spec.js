@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { Table } from './Table';
-import { renderInMuiThemeProvider } from '../../../tests/utils';
 import { ContainerTesting } from '../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../tests/utils';
+import { Table } from './Table';
 
 const mockOnClearErrors = jest.fn();
 const tableInputContainer = new ContainerTesting({ dataCy: 'table-input' });

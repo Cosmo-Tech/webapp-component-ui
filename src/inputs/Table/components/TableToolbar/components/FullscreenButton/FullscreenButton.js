@@ -1,10 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
 import PropTypes from 'prop-types';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
+import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import { IconButton } from '@mui/material';
 import { FadingTooltip } from '../../../../../../misc';
 

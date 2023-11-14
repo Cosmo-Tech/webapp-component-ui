@@ -1,14 +1,13 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Stack, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState, useRef } from 'react';
-import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
-import { NumberFormat } from './components/NumberFormat';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
 import { getCommonInputStyles } from '../../style';
+import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
+import { NumberFormat } from './components/NumberFormat';
 
 const useStyles = makeStyles(getCommonInputStyles);
 

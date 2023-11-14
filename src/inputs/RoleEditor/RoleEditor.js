@@ -1,13 +1,12 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Typography, Avatar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import PropTypes from 'prop-types';
-import { SelectWithAction } from '../SelectWithAction';
 import { DefaultAvatar } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
+import { SelectWithAction } from '../SelectWithAction';
 
 const useStyles = makeStyles((theme) => ({
   agentGroup: {

@@ -1,10 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, ClickAwayListener, IconButton, Menu, MenuItem } from '@mui/material';
 import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@mui/icons-material';
+import { Box, ClickAwayListener, IconButton, Menu, MenuItem } from '@mui/material';
 import { DefaultAvatar, FadingTooltip } from '../../misc';
 import useStyles from './style';
 

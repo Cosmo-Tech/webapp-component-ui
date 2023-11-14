@@ -1,13 +1,12 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React, { useEffect, useState, useRef } from 'react';
-import { Paper } from '@mui/material';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import SortableTree from '@nosferatu500/react-sortable-tree';
-import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../../../cards/ScenarioNode/constants';
+import React, { useEffect, useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { Paper } from '@mui/material';
+import clsx from 'clsx';
 import { ScenarioNode } from '../../../../cards/ScenarioNode/ScenarioNode';
+import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../../../cards/ScenarioNode/constants';
 
 export const ScenarioSortableTree = ({
   nodesExpandedChildrenRef,

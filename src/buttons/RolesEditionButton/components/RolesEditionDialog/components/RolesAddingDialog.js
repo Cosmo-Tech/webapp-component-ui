@@ -1,7 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import CheckIcon from '@mui/icons-material/Check';
 import {
   DialogContent,
   Grid,
@@ -17,8 +18,6 @@ import {
   Autocomplete,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import PropTypes from 'prop-types';
-import CheckIcon from '@mui/icons-material/Check';
 
 const useStyle = makeStyles((theme) => ({
   chip: {

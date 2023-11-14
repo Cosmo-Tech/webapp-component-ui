@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { BasicRadioInput } from './BasicRadioInput';
-import { renderInMuiThemeProvider } from '../../../../tests/utils';
 import { ContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../../tests/utils';
+import { BasicRadioInput } from './BasicRadioInput';
 
 const mockOnValueChanged = jest.fn();
 const radioInputContainer = new ContainerTesting({ dataCy: 'radio-input-unit' });

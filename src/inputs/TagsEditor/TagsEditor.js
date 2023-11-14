@@ -1,11 +1,10 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import EditIcon from '@mui/icons-material/Edit';
 import { Chip, Grid, TextField, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import EditIcon from '@mui/icons-material/Edit';
 
 const DEFAULT_LABELS = {
   header: 'Tags',

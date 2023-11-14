@@ -1,9 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ScenarioUtils } from '@cosmotech/core';
 import {
   Button,
   Checkbox,
@@ -17,6 +15,7 @@ import {
   Autocomplete,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import { ScenarioUtils } from '@cosmotech/core';
 import { HierarchicalComboBox } from '../../../../inputs';
 
 const useStyles = makeStyles((theme) => ({

@@ -1,8 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {
   Box,
   Button,
@@ -15,9 +15,8 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import useStyles from './style';
 import { FadingTooltip } from '../../misc';
+import useStyles from './style';
 
 export const HelpMenu = (props) => {
   const classes = useStyles();

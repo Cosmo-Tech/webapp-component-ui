@@ -1,10 +1,13 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-
 import { RolesAddingDialog } from '.';
-
+import {
+  AutoCompleteTesting,
+  ButtonTesting,
+  RadioGroupTesting,
+  ChipTesting,
+} from '../../../../../../tests/MuiComponentsTesting';
 import {
   ALL_PERMISSIONS,
   ALL_ROLES,
@@ -12,13 +15,6 @@ import {
   RESOURCE_ROLES_PERMISSIONS_MAPPING,
   SAMPLE_AGENTS,
 } from '../../../../../../tests/samples/RoleEditionSample';
-
-import {
-  AutoCompleteTesting,
-  ButtonTesting,
-  RadioGroupTesting,
-  ChipTesting,
-} from '../../../../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../../../../tests/utils';
 
 const mockOnCancel = jest.fn();

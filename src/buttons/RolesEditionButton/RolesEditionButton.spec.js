@@ -1,7 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
+import { RolesEditionButton } from '..';
+import { ButtonTesting } from '../../../tests/MuiComponentsTesting';
 import {
   ALL_PERMISSIONS,
   ALL_ROLES,
@@ -9,10 +10,8 @@ import {
   RESOURCE_ROLES_PERMISSIONS_MAPPING,
   SAMPLE_AGENTS,
 } from '../../../tests/samples/RoleEditionSample';
-
-import { RolesEditionButton } from '..';
-import { ButtonTesting } from '../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../tests/utils';
+
 let mockRolesAddingDialogProps;
 jest.mock('./components', () => ({
   __esModule: true,

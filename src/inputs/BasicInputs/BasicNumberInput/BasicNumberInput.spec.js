@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React from 'react';
-import { BasicNumberInput } from './BasicNumberInput';
-import { renderInMuiThemeProvider } from '../../../../tests/utils';
 import { screen } from '@testing-library/react';
+import React from 'react';
 import { ContainerTesting, TextFieldTesting } from '../../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../../tests/utils';
+import { BasicNumberInput } from './BasicNumberInput';
 
 const mockOnValueChanged = jest.fn();
 

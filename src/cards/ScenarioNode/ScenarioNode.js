@@ -1,8 +1,15 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  DeleteForever as DeleteForeverIcon,
+  CheckCircle as CheckCircleIcon,
+  Cancel as CancelIcon,
+  ExpandMore as ExpandMoreIcon,
+  Help as HelpIcon,
+  OpenInNew as OpenInNewIcon,
+} from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -13,18 +20,10 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import {
-  DeleteForever as DeleteForeverIcon,
-  CheckCircle as CheckCircleIcon,
-  Cancel as CancelIcon,
-  ExpandMore as ExpandMoreIcon,
-  Help as HelpIcon,
-  OpenInNew as OpenInNewIcon,
-} from '@mui/icons-material';
 import { DatasetUtils } from '@cosmotech/core';
-import { ConfirmDeleteDialog } from './components';
-import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 import { EditableLabel } from '../../inputs/EditableLabel';
+import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
+import { ConfirmDeleteDialog } from './components';
 import useStyles from './style';
 
 export const ScenarioNode = ({

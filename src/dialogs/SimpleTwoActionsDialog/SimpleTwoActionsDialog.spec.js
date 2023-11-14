@@ -1,12 +1,10 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { SimpleTwoActionsDialog } from './SimpleTwoActionsDialog';
-import { renderInMuiThemeProvider } from '../../../tests/utils';
-import { ButtonTesting, DialogTesting } from '../../../tests/MuiComponentsTesting';
-
 import userEvent from '@testing-library/user-event';
+import { ButtonTesting, DialogTesting } from '../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../tests/utils';
+import { SimpleTwoActionsDialog } from './SimpleTwoActionsDialog';
 
 const mockOnButton1Click = jest.fn();
 const mockOnButton2Click = jest.fn();

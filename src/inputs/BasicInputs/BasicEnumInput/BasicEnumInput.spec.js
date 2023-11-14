@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { BasicEnumInput } from './BasicEnumInput';
 import userEvent from '@testing-library/user-event';
-import { getByDataCy, renderInMuiThemeProvider } from '../../../../tests/utils';
 import { SelectTesting, ContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { getByDataCy, renderInMuiThemeProvider } from '../../../../tests/utils';
+import { BasicEnumInput } from './BasicEnumInput';
 
 const mockOnValueChanged = jest.fn();
 const defaultProps = {

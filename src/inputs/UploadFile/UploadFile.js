@@ -1,17 +1,16 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ErrorIcon from '@mui/icons-material/Error';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import ErrorIcon from '@mui/icons-material/Error';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import GetAppIcon from '@mui/icons-material/GetApp';
 import { PathUtils } from '@cosmotech/core';
-import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 import { FadingTooltip, TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
+import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
 const useStyles = makeStyles(getCommonInputStyles);
 

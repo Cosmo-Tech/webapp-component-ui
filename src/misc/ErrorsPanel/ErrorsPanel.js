@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionActions,
@@ -11,8 +13,6 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CancelIcon from '@mui/icons-material/Cancel';
 import useStyles from './style';
 
 export const ErrorsPanel = (props) => {

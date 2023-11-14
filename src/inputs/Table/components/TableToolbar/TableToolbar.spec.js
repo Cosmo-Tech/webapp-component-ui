@@ -1,10 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import React from 'react';
-import { TableToolbar } from './TableToolbar';
-import { renderInMuiThemeProvider } from '../../../../../tests/utils';
 import { ButtonTesting } from '../../../../../tests/MuiComponentsTesting';
+import { renderInMuiThemeProvider } from '../../../../../tests/utils';
+import { TableToolbar } from './TableToolbar';
 
 const FullscreenButtonContainer = new ButtonTesting({ dataCy: 'grid-fullscreen-button' });
 const ImportButtonContainer = new ButtonTesting({ dataCy: 'import-file-button' });

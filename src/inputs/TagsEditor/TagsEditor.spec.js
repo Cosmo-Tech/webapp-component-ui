@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import React from 'react';
 import { queryByTestId } from '@testing-library/react';
+import React from 'react';
 import userEvent from '@testing-library/user-event';
+import { TagsEditor } from '.';
 import { ChipTesting, ContainerTesting, TextFieldTesting } from '../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../tests/utils';
-import { TagsEditor } from '.';
 
 const onChangeMockFunction = jest.fn();
 
