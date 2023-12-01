@@ -1,9 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import { getByRole, queryByText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import { getByDataCy } from '../utils';
 
 export class AutoCompleteTesting {

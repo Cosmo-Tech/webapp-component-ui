@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
-import { getByDataCy, getById } from '../utils';
 import { getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { getByDataCy, getById } from '../utils';
 
 export class TextFieldTesting {
   constructor({ dataCy, id }) {

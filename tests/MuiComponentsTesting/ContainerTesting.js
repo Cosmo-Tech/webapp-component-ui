@@ -1,6 +1,5 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-
 import userEvent from '@testing-library/user-event';
 import { getByDataCy } from '../utils';
 
