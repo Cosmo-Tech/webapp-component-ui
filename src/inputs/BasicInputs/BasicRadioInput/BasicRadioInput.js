@@ -66,7 +66,7 @@ export const BasicRadioInput = (props) => {
                 key={option.key}
                 value={option.key}
                 control={
-                  <Radio data-cy={`radio-button-${option.value}`} style={radioStyle} size="small" color="primary" />
+                  <Radio data-cy={`radio-button-${option.key}`} style={radioStyle} size="small" color="primary" />
                 }
                 label={option.value}
               />
