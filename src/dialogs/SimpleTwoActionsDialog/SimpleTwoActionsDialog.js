@@ -25,6 +25,7 @@ export const SimpleTwoActionsDialog = ({
   return (
     <Dialog
       open={open}
+      data-cy={id + '-dialog'}
       aria-labelledby={id + '-dialog-title'}
       maxWidth={'xs'}
       fullWidth={true}
@@ -33,7 +34,7 @@ export const SimpleTwoActionsDialog = ({
     >
       <DialogTitle id={id + '-dialog-title'}>{labels.title}</DialogTitle>
       <DialogContent>
-        <Typography variant="body1" component={component}>
+        <Typography data-cy={id + '-dialog-body'} variant="body1" component={component}>
           {labels.body}
         </Typography>
       </DialogContent>
