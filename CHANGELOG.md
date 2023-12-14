@@ -1,3 +1,23 @@
+## **6.0.0** <sub><sup>2023-12-14 (9f965d5...ca06cc9)</sup></sub>
+
+### Features
+
+- \[PROD\-12487\] add new component `SearchBar` ([9f965d5](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9f965d5))
+- \[PROD\-12490\] add new component `TagsEditor` ([6d7fcf6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6d7fcf6))
+- add new prop `component` in `SimpleTwoActionsDialog` ([fa3eee0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fa3eee0))
+- `BasicInputs` components using a `TextField` now have a new prop `size` to apply to this text field ([366f497](https://github.com/Cosmo-Tech/webapp-component-ui/commit/366f497))
+
+### Bug Fixes
+
+- fix default props of `EditableLabel` component ([eb75c21](https://github.com/Cosmo-Tech/webapp-component-ui/commit/eb75c21))
+- make `Table` toolbar tooltips disappear when button hovering stops ([6760c6c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6760c6c))
+- replace enum value by key in `data-cy` tag of `BasicRadioInput` ([9974b40](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9974b40))
+
+### BREAKING CHANGES
+
+- `<Grid item>` components have been removed from the root of all `BasicInputs` components, please adapt your web application if you need it for a layout ([366f497](https://github.com/Cosmo-Tech/webapp-component-ui/commit/366f497))
+- in `ScenarioManagerTreeList` component, the colon (:) character must now be included in the dataset label ([ca06cc9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ca06cc9))
+
 ## **5.10.2** <sub><sup>2023-10-09 (3a8298b...3a8298b)</sup></sub>
 
 ### Bug Fixes
