@@ -260,6 +260,10 @@ export const ScenarioNode = ({
       <AccordionDetails className={classes.scenarioDetailsContainer}>
         <div className={classes.scenarioDetailsNameLine}>{getScenarioDetailNameLine(true)}</div>
         {getDetailedStatus()}
+        <Typography className={classes.cardLabel}>{labels.runTemplateLabel ?? 'Run type:'}</Typography>
+        <Typography data-cy="scenario-run-template" className={classes.runTemplateName}>
+          {scenario.runTemplateName}
+        </Typography>
         <Typography className={classes.cardLabel}>{labels.dataset}</Typography>
         <Typography>
           <span data-cy="scenario-datasets" className={classes.datasets}>
