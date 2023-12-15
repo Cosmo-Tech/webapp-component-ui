@@ -1,3 +1,9 @@
+## **6.0.1** <sub><sup>2023-12-15 (7312a39...7312a39)</sup></sub>
+
+### Bug Fixes
+
+- restore run template label accidentally removed from ScenarioNode ([7312a39](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7312a39))
+
 ## **6.0.0** <sub><sup>2023-12-14 (9f965d5...ca06cc9)</sup></sub>
 
 ### Features
