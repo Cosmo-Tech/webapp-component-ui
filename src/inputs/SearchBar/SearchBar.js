@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, InputAdornment } from '@mui/material';
 
-export const SearchBar = ({ onSearchChange, className, label, icon, id }) => {
+export const SearchBar = ({ onSearchChange, className, label, icon, id, ...otherProps }) => {
   const [textValue, setTextValue] = useState('');
 
   const timeoutHandle = useRef();
@@ -48,6 +48,7 @@ export const SearchBar = ({ onSearchChange, className, label, icon, id }) => {
       InputProps={{
         endAdornment: <InputAdornment position="end">{icon}</InputAdornment>,
       }}
+      {...otherProps}
     />
   );
 };
