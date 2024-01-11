@@ -1,3 +1,9 @@
+## **6.0.2** <sub><sup>2024-01-11 (e0c20f6...3f81e0d)</sup></sub>
+
+### Bug Fixes
+
+- allow props forwarding to TextField component inside SearchBar ([e0c20f6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e0c20f6))
+
 ## **6.0.1** <sub><sup>2023-12-15 (7312a39...7312a39)</sup></sub>
 
 ### Bug Fixes
