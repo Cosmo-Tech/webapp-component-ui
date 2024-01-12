@@ -58,14 +58,12 @@ const CreateScenarioDialog = ({
   createScenario,
   workspaceId,
   solution,
-  datasetsFilter,
   dialogLabels,
   errorLabels,
 }) => {
   const classes = useStyles();
 
-  const filteredDatasets = datasetsFilter ? datasets.filter(datasetsFilter) : datasets;
-  const defaultDataset = filteredDatasets.length > 0 ? filteredDatasets[0] : dialogLabels.datasetPlaceholder;
+  const defaultDataset = datasets.length > 0 ? datasets[0] : dialogLabels.datasetPlaceholder;
   const defaultRunTemplate = runTemplates?.[0] || null;
   const currentScenarioSelected = currentScenario.data !== null;
 
@@ -199,7 +197,7 @@ const CreateScenarioDialog = ({
                 ListboxProps={{ 'data-cy': 'create-scenario-dialog-dataset-select-options' }}
                 id="dataset"
                 disableClearable={true}
-                options={filteredDatasets}
+                options={datasets}
                 value={datasetFieldValues}
                 onChange={(event, newDataset) => setDatasetFieldValues(newDataset)}
                 getOptionLabel={(option) => option.name ?? ''}
@@ -274,7 +272,6 @@ CreateScenarioDialog.propTypes = {
   createScenario: PropTypes.func.isRequired,
   workspaceId: PropTypes.string.isRequired,
   solution: PropTypes.object.isRequired,
-  datasetsFilter: PropTypes.func,
   dialogLabels: PropTypes.shape({
     title: PropTypes.string.isRequired,
     scenarioName: PropTypes.string.isRequired,

@@ -19,10 +19,6 @@ export const CreateScenarioButton = ({
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
-  const datasetsFilter = (dataset) => {
-    if (dataset.tags === null) return false;
-    return dataset.tags.includes('dataset');
-  };
 
   return (
     <div>
@@ -49,7 +45,6 @@ export const CreateScenarioButton = ({
         runTemplates={runTemplates}
         scenarios={scenarios}
         user={user}
-        datasetsFilter={datasetsFilter}
         dialogLabels={labels.dialog}
         errorLabels={labels.errors}
       />
