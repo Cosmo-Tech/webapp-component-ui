@@ -174,9 +174,6 @@ export const Table = (props) => {
 
   const dimensions = { height, width };
   const classes = useStyles();
-  const defaultColDef = getDefaultColumnsProperties(onCellChange, classes);
-  const columnTypes = getColumnTypes(dateFormat);
-  const formattedColumns = useMemo(() => _formatColumnsData(clone(columns), dateFormat), [columns, dateFormat]);
   const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const hasErrors = errors && errors.length > 0;
   const isReady = rows.length > 0 && dataStatus === TABLE_DATA_STATUS.READY;
@@ -337,10 +334,10 @@ export const Table = (props) => {
   ]);
 
   const agGridElement = useMemo(() => {
-    const context = {
-      dateFormat,
-      editMode,
-    };
+    const columnTypes = getColumnTypes(dateFormat);
+    const defaultColDef = getDefaultColumnsProperties(onCellChange, classes);
+    const formattedColumns = _formatColumnsData(clone(columns), dateFormat);
+    const context = { dateFormat, editMode };
 
     return (
       <AgGridReact
@@ -359,7 +356,7 @@ export const Table = (props) => {
         onSelectionChanged={onSelectionChanged}
       />
     );
-  }, [gridRef, columnTypes, dateFormat, defaultColDef, editMode, formattedColumns, rows, onSelectionChanged]);
+  }, [onCellChange, classes, columns, gridRef, dateFormat, editMode, rows, onSelectionChanged]);
 
   return (
     <div
