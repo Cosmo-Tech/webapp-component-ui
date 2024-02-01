@@ -1,3 +1,9 @@
+## **6.0.3** <sub><sup>2024-02-01 (a901378...a901378)</sup></sub>
+
+### Bug Fixes
+
+- \[PROD\-12944\] fix Table crash when showing large files in fullscreen ([a901378](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a901378))
+
 ## **6.0.2** <sub><sup>2024-01-11 (e0c20f6...3f81e0d)</sup></sub>
 
 ### Bug Fixes
