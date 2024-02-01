@@ -400,7 +400,7 @@ SimplePowerBIReportEmbed.defaultProps = {
       label: 'You can create a scenario by clicking on the CREATE button',
     },
     noDashboard: {
-      label: "There isn't any dashboard configured for this run template",
+      label: "There isn't any dashboard configured for this run type",
     },
     noRun: {
       label: 'The scenario has not been run yet',
@@ -409,7 +409,7 @@ SimplePowerBIReportEmbed.defaultProps = {
       label: 'Scenario run in progress...',
     },
     dataInTransfer: {
-      label: 'Scenario results transfer in progress...',
+      label: 'Transfer of scenario results in progress...',
     },
     hasErrors: {
       label: 'An error occured during the scenario run',

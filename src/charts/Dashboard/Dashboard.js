@@ -182,7 +182,7 @@ Dashboard.defaultProps = {
     },
     dataInTransfer: {
       title: '',
-      label: 'Scenario results transfer in progress...',
+      label: 'Transfer of scenario results in progress...',
     },
     hasErrors: {
       title: '',
