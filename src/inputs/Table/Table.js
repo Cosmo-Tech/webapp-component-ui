@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     height: '100%',
     width: '100%',
-    zIndex: '2',
+    // z-index for the fullscreen container must be higher than 1200 to hide the app bar and drawers, but lower than
+    // 1300 to still appear under modals & tooltips (see https://mui.com/material-ui/customization/z-index/ for details)
+    zIndex: '1250',
   },
   fullscreenGridBorder: {
     border: theme.spacing(2) + ' solid',
