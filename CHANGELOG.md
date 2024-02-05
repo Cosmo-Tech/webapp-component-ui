@@ -1,3 +1,13 @@
+## **7.0.0** <sub><sup>2024-02-05 (93178e9...93178e9)</sup></sub>
+
+### Bug Fixes
+
+- remove forced datasets filter on tags in CreateScenarioButton ([93178e9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/93178e9))
+
+### BREAKING CHANGES
+
+- the list of datasets provided to the CreateScenarioButton ([93178e9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/93178e9)) component will no longer be filtered, showing the whole list of datasets when creating a new scenario, including the datasets that don't have the tag "dataset"\. If your webapp still needs this behavior, add the filter mechanism before forwarding the list of datasets to the props of CreateScenarioButton\.
+
 ## **6.0.4** <sub><sup>2024-02-05 (a4a7001...a4a7001)</sup></sub>
 
 ### Bug Fixes
