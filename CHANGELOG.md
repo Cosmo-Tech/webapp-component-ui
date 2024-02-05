@@ -1,3 +1,9 @@
+## **6.0.4** <sub><sup>2024-02-05 (a4a7001...a4a7001)</sup></sub>
+
+### Bug Fixes
+
+- \[PROD\-12956\] fix some labels in Dashboards components ([a4a7001](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a4a7001))
+
 ## **6.0.3** <sub><sup>2024-02-01 (a901378...a901378)</sup></sub>
 
 ### Bug Fixes
