@@ -55,7 +55,10 @@ export const UploadFile = (props) => {
   }, [file?.name, labels, shouldHideFileName]);
 
   return (
-    <Stack data-cy={`file-upload-${id}`} className={isDirty ? classes.dirtyInput : classes.notDirtyInput}>
+    <Stack
+      data-cy={`file-upload-${id}`}
+      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+    >
       <Stack spacing={1} direction="row" alignItems="center">
         <Typography
           data-cy="label-disabled-input"
@@ -229,6 +232,5 @@ UploadFile.defaultProps = {
     delete: 'Delete file',
     noFileMessage: 'None',
   },
-  isDirty: false,
   shouldHideFileName: false,
 };
