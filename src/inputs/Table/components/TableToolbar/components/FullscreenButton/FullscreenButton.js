@@ -1,6 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
@@ -11,10 +11,21 @@ export const FullscreenButton = (props) => {
   const { isFullscreen, toggleFullscreen, disabled, label } = props;
   const spanProps = { style: { display: 'inline-block', height: '100%' } };
 
+  const [isTooltipOpen, setTooltipOpen] = useState(false);
+  const onClick = useCallback(
+    (event) => {
+      setTooltipOpen(false);
+      toggleFullscreen(event);
+    },
+    [setTooltipOpen, toggleFullscreen]
+  );
+
   return (
-    <FadingTooltip title={label} useSpan={true} spanProps={spanProps} disableInteractive={true}>
+    <FadingTooltip open={isTooltipOpen} title={label} useSpan={true} spanProps={spanProps} disableInteractive={true}>
       <IconButton
-        onClick={toggleFullscreen}
+        onClick={onClick}
+        onMouseEnter={() => setTooltipOpen(true)}
+        onMouseLeave={() => setTooltipOpen(false)}
         size="small"
         data-cy="grid-fullscreen-button"
         color="primary"
