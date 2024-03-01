@@ -10,30 +10,30 @@ const DEFAULT_ERROR = {
   title: '',
 };
 
-export const ErrorBanner = ({ error, clearErrors, labels }) => {
+export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels }) => {
   const classes = useStyles();
-  const error_ = { ...DEFAULT_ERROR, ...error };
+  const error = { ...DEFAULT_ERROR, ...errorBeforePatch };
   const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {
     navigator.clipboard.writeText(message).then(() => setCopyButtonText(labels.toggledButtonText));
   };
   const errorMessageMaxLength = 200;
-  const errorStatusText = error_.status ? error_.status + ' ' : '';
+  const errorStatusText = error.status ? error.status + ' ' : '';
   return (
-    <Collapse in={error != null}>
+    <Collapse in={errorBeforePatch != null}>
       <Paper square elevation={0} className={classes.errorContainer} data-cy="error-banner">
         <div>
-          <Typography className={classes.errorTitle}>{errorStatusText + error_.title}</Typography>
+          <Typography className={classes.errorTitle}>{errorStatusText + error.title}</Typography>
           <Typography className={classes.errorText} data-cy="error-detail">
-            {error_.detail.length < errorMessageMaxLength ? error_.detail : labels.tooLongErrorMessage}
+            {error.detail.length < errorMessageMaxLength ? error.detail : labels.tooLongErrorMessage}
           </Typography>
           <Typography className={classes.errorText} data-cy="error-comment">
-            {error_.comment}
+            {error.comment}
           </Typography>
         </div>
         <div className={classes.errorText}>
-          {error_.detail.length >= errorMessageMaxLength && (
-            <Button className={classes.errorButton} size="small" onClick={() => copyToClipboard(error_.detail)}>
+          {error.detail.length >= errorMessageMaxLength && (
+            <Button className={classes.errorButton} size="small" onClick={() => copyToClipboard(error.detail)}>
               {copyButtonText}
             </Button>
           )}
