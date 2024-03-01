@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Collapse, Paper, Typography } from '@mui/material';
 import useStyles from './style';
@@ -12,11 +12,17 @@ const DEFAULT_ERROR = {
 
 export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels }) => {
   const classes = useStyles();
-  const error = { ...DEFAULT_ERROR, ...errorBeforePatch };
   const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {
     navigator.clipboard.writeText(message).then(() => setCopyButtonText(labels.toggledButtonText));
   };
+
+  const error = useMemo(() => {
+    if (typeof errorBeforePatch !== 'object' || errorBeforePatch == null) return DEFAULT_ERROR;
+    Object.keys(errorBeforePatch).forEach((key) => errorBeforePatch[key] == null && delete errorBeforePatch[key]);
+    return { ...DEFAULT_ERROR, ...errorBeforePatch };
+  }, [errorBeforePatch]);
+
   const errorMessageMaxLength = 200;
   const errorStatusText = error.status ? error.status + ' ' : '';
   return (
