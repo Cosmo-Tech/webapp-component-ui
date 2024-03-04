@@ -92,6 +92,7 @@ export const SimplePowerBIReportEmbed = ({
   iframeRatio,
   useAAD,
   visibleScenarios,
+  theme,
 }) => {
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
   const hasNavContentPane = settings?.navContentPaneEnabled;
@@ -166,6 +167,12 @@ export const SimplePowerBIReportEmbed = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, scenario, reports.status]);
 
+  useEffect(() => {
+    if (theme) {
+      report?.applyTheme({ themeJson: theme });
+    }
+  }, [theme, report]);
+
   const errorCode = getErrorCode(labels, reports);
   const errorDescription = getErrorDescription(labels, reports);
 
@@ -200,6 +207,9 @@ export const SimplePowerBIReportEmbed = ({
           cssClassName={classes.report}
           embedConfig={embedConfig}
           getEmbeddedComponent={(embedObject) => {
+            if (theme) {
+              embedObject.applyTheme({ themeJson: theme });
+            }
             setReport(embedObject);
           }}
         />
@@ -211,7 +221,7 @@ export const SimplePowerBIReportEmbed = ({
     }
 
     return content;
-  }, [classes.report, embedConfig]);
+  }, [classes.report, embedConfig, theme]);
 
   const placeholder = getPlaceholder();
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
@@ -386,6 +396,10 @@ SimplePowerBIReportEmbed.propTypes = {
       details: PropTypes.string.isRequired,
     }).isRequired,
   }),
+  /**
+   *  Power BI object theme
+   */
+  theme: PropTypes.object,
 };
 
 SimplePowerBIReportEmbed.defaultProps = {
