@@ -1,3 +1,26 @@
+## **8.0.0** <sub><sup>2024-03-07 (a91fd5f...a3f137c)</sup></sub>
+
+### Features
+
+- add optional prop `theme` in `SimplePowerBIReportEmbed` to set & update reports theme ([a3f137c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a3f137c))
+
+### Bug Fixes
+
+- fix z-index of the fullscreen container for Tables ([a91fd5f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a91fd5f))
+- fix upload file component margin issue by removing `isDirty` prop default value ([9c173aa](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9c173aa))
+- fix tooltip not disappearing when toggling fullscreen mode in `Table` ([12c121d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/12c121d))
+- remove nullish keys from error object before patching it ([2a94ef7](https://github.com/Cosmo-Tech/webapp-component-ui/commit/2a94ef7))
+
+### Dependencies
+
+- update ag-grid dependencies from 30.2.1 to 31.0.3
+- update rollup from 3.29.4 to 4.9.6
+- other minor updates of dependencies
+
+### BREAKING CHANGES
+
+- in the component `UploadFile`, the default value of prop `isDirty` has been removed\. ([9c173aa](https://github.com/Cosmo-Tech/webapp-component-ui/commit/9c173aa)). This prop will now accept null and undefined\. These values won't apply margins around the "browse" button.
+
 ## **7.0.0** <sub><sup>2024-02-05 (93178e9...93178e9)</sup></sub>
 
 ### Bug Fixes
