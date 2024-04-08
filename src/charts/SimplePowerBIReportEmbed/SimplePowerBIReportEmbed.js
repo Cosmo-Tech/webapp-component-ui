@@ -160,12 +160,13 @@ export const SimplePowerBIReportEmbed = ({
       tokenType,
       embedUrl: reports.data?.reportsInfo?.[reportId]?.embedUrl,
       accessToken: reports.data?.accessToken,
+      theme: { themeJson: theme },
     };
 
     addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters);
     setEmbedConfig(newConfig);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lang, scenario, reports.status]);
+  }, [lang, scenario, reports.status, theme]);
 
   useEffect(() => {
     if (theme) {
@@ -203,16 +204,7 @@ export const SimplePowerBIReportEmbed = ({
     let content;
     try {
       content = (
-        <PowerBIEmbed
-          cssClassName={classes.report}
-          embedConfig={embedConfig}
-          getEmbeddedComponent={(embedObject) => {
-            if (theme) {
-              embedObject.applyTheme({ themeJson: theme });
-            }
-            setReport(embedObject);
-          }}
-        />
+        <PowerBIEmbed cssClassName={classes.report} embedConfig={embedConfig} getEmbeddedComponent={setReport} />
       );
     } catch (error) {
       console.log('Error when intializing the PowerBIEmbed component.');
@@ -221,7 +213,7 @@ export const SimplePowerBIReportEmbed = ({
     }
 
     return content;
-  }, [classes.report, embedConfig, theme]);
+  }, [classes.report, embedConfig]);
 
   const placeholder = getPlaceholder();
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
