@@ -1,3 +1,9 @@
+## **8.0.1** <sub><sup>2024-04-11 (f0689e4...ec79301)</sup></sub>
+
+### Bug Fixes
+*  fix theme initialization of embedded PowerBI reports ([ec79301](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ec79301))
+
+
 ## **8.0.0** <sub><sup>2024-03-07 (a91fd5f...a3f137c)</sup></sub>
 
 ### Features
