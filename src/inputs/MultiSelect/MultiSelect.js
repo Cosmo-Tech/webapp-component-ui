@@ -12,24 +12,25 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const MultiSelect = (props) => {
   const classes = useStyles();
-  const {
-    id,
-    label,
-    tooltipText,
-    value,
-    multiValuesProps,
-    enumValues: selectEnumValues,
-    changeValues,
-    isDirty,
-  } = props;
-
-  const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-  const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
+  const { id, label, tooltipText, value, disabled, enumValues: selectEnumValues, onChange, isDirty } = props;
   const enumValues = useMemo(() => (Array.isArray(selectEnumValues) ? selectEnumValues : []), [selectEnumValues]);
   const getLabelFromEnumKey = useCallback(
     (key) => enumValues.find((el) => el.key === key)?.value ?? key ?? '',
     [enumValues]
+  );
+
+  const renderOption = useCallback(
+    (props, option, { selected }) => {
+      const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+      const checkedIcon = <CheckBoxIcon fontSize="small" />;
+      return (
+        <li {...props}>
+          <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+          {getLabelFromEnumKey(option.key)}
+        </li>
+      );
+    },
+    [getLabelFromEnumKey]
   );
 
   return (
@@ -42,20 +43,15 @@ export const MultiSelect = (props) => {
     >
       <Autocomplete
         multiple
-        disabled={multiValuesProps?.disabled}
+        disabled={disabled}
         id={id}
         options={enumValues}
         disableCloseOnSelect
         getOptionLabel={(option) => getLabelFromEnumKey(option.key)}
-        renderOption={(props, option, { selected }) => (
-          <li {...props}>
-            <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-            {getLabelFromEnumKey(option.key)}
-          </li>
-        )}
+        renderOption={renderOption}
         isOptionEqualToValue={(option, value) => option.key === value.key}
         value={value}
-        onChange={(event, newValue) => changeValues(newValue)}
+        onChange={(event, newValue) => onChange(newValue)}
         style={{ width: 500 }}
         renderInput={(params) => <TextField {...params} label={label} placeholder={label} />}
         ListboxProps={{ 'data-cy': 'multi-input-listbox' }}
@@ -71,7 +67,7 @@ MultiSelect.propTypes = {
    */
   id: PropTypes.string,
   /**
-   * Values's label
+   * Component label
    */
   label: PropTypes.string,
   /**
@@ -83,13 +79,13 @@ MultiSelect.propTypes = {
    */
   value: PropTypes.array.isRequired,
   /**
-   * Additional props that you can specify for the BasicMultiValues's textField that displays the enum value selected
+   * Whether the component is disabled
    */
-  multiValuesProps: PropTypes.object,
+  disabled: PropTypes.bool,
   /**
    * Function used when the user changes the BasicMultiValues values
    */
-  changeValues: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   /**
    * List of all possible BasicMultiValues values. A value (JS object) has two attributes : **key** and **value**
    *  `{
@@ -102,4 +98,8 @@ MultiSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+};
+
+MultiSelect.defaultProps = {
+  disabled: false,
 };
