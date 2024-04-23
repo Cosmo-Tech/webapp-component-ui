@@ -3,7 +3,7 @@
 import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon, CheckBox as CheckBoxIcon } from '@mui/icons-material';
-import { Stack, Autocomplete, TextField, Checkbox } from '@mui/material';
+import { Chip, Stack, Autocomplete, TextField, Checkbox } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../misc';
 import { getCommonInputStyles } from '../style';
@@ -12,21 +12,22 @@ const useStyles = makeStyles(getCommonInputStyles);
 
 export const MultiSelect = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, value, disabled, enumValues: selectEnumValues, onChange, isDirty } = props;
-  const enumValues = useMemo(() => (Array.isArray(selectEnumValues) ? selectEnumValues : []), [selectEnumValues]);
+  const { id, label, tooltipText, selectedKeys, disabled, options, onChange, isDirty } = props;
+
+  const autocompleteValues = useMemo(() => options?.map((el) => el.key) ?? [], [options]);
   const getLabelFromEnumKey = useCallback(
-    (key) => enumValues.find((el) => el.key === key)?.value ?? key ?? '',
-    [enumValues]
+    (key) => options?.find((el) => el.key === key)?.value ?? key ?? '',
+    [options]
   );
 
   const renderOption = useCallback(
-    (props, option, { selected }) => {
+    (props, optionKey, { selected }) => {
       const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
       const checkedIcon = <CheckBoxIcon fontSize="small" />;
       return (
         <li {...props}>
           <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-          {getLabelFromEnumKey(option.key)}
+          {getLabelFromEnumKey(optionKey)}
         </li>
       );
     },
@@ -45,13 +46,21 @@ export const MultiSelect = (props) => {
         multiple
         disabled={disabled}
         id={id}
-        options={enumValues}
+        options={autocompleteValues}
         disableCloseOnSelect
-        getOptionLabel={(option) => getLabelFromEnumKey(option.key)}
+        renderTags={(values, getTagProps) =>
+          values.map((optionKey, index) => (
+            <Chip
+              key={optionKey}
+              variant="outlined"
+              label={getLabelFromEnumKey(optionKey)}
+              {...getTagProps({ index })}
+            />
+          ))
+        }
         renderOption={renderOption}
-        isOptionEqualToValue={(option, value) => option.key === value.key}
-        value={value}
-        onChange={(event, newValue) => onChange(newValue)}
+        value={selectedKeys}
+        onChange={(event, newValues) => onChange(newValues)}
         style={{ width: 500 }}
         renderInput={(params) => <TextField {...params} label={label} placeholder={label} />}
         ListboxProps={{ 'data-cy': 'multi-input-listbox' }}
@@ -75,9 +84,9 @@ MultiSelect.propTypes = {
    */
   tooltipText: PropTypes.string,
   /**
-   * MultiValues's value
+   * List of keys of the selected elements (from the keys defined in options)
    */
-  value: PropTypes.array.isRequired,
+  selectedKeys: PropTypes.array.isRequired,
   /**
    * Whether the component is disabled
    */
@@ -87,13 +96,10 @@ MultiSelect.propTypes = {
    */
   onChange: PropTypes.func.isRequired,
   /**
-   * List of all possible BasicMultiValues values. A value (JS object) has two attributes : **key** and **value**
-   *  `{
-         key: 'thisIsAKey',
-         value: 'This is a Value'
-       }`
+   * List of all possible options. A value (JS object) has two attributes : **key** and **value**
+   *   `{ key: 'option_key', value: 'My option value' }`
    */
-  enumValues: PropTypes.array.isRequired,
+  options: PropTypes.array.isRequired,
   /**
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
