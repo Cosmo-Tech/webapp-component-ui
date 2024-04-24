@@ -6,13 +6,14 @@ import { CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon, CheckBox as CheckBoxI
 import { Chip, Stack, Autocomplete, TextField, Checkbox } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../misc';
+import { BasicInputPlaceholder } from '../BasicInputs/BasicInputPlaceholder';
 import { getCommonInputStyles } from '../style';
 
 const useStyles = makeStyles(getCommonInputStyles);
 
 export const MultiSelect = (props) => {
   const classes = useStyles();
-  const { id, label, tooltipText, selectedKeys, disabled, options, onChange, isDirty } = props;
+  const { id, labels, tooltipText, selectedKeys, disabled, options, onChange, isDirty } = props;
 
   const autocompleteValues = useMemo(() => options?.map((el) => el.key) ?? [], [options]);
   const getLabelFromEnumKey = useCallback(
@@ -34,6 +35,21 @@ export const MultiSelect = (props) => {
     [getLabelFromEnumKey]
   );
 
+  if (disabled) {
+    const selectedValues =
+      selectedKeys && selectedKeys.length > 0
+        ? selectedKeys.map((key) => getLabelFromEnumKey(key)).join(', ')
+        : labels.noValues;
+    return (
+      <BasicInputPlaceholder
+        id={`multi-input-${id}`}
+        label={labels.label ?? id}
+        tooltipText={tooltipText}
+        value={selectedValues}
+      />
+    );
+  }
+
   return (
     <Stack
       data-cy={`multi-input-${id}`}
@@ -44,7 +60,6 @@ export const MultiSelect = (props) => {
     >
       <Autocomplete
         multiple
-        disabled={disabled}
         id={id}
         options={autocompleteValues}
         disableCloseOnSelect
@@ -62,7 +77,7 @@ export const MultiSelect = (props) => {
         value={selectedKeys}
         onChange={(event, newValues) => onChange(newValues)}
         style={{ width: 500 }}
-        renderInput={(params) => <TextField {...params} label={label} placeholder={label} />}
+        renderInput={(params) => <TextField {...params} label={labels.label ?? id} placeholder={labels.label ?? id} />}
         ListboxProps={{ 'data-cy': 'multi-input-listbox' }}
       />
       <TooltipInfo title={tooltipText} variant="small" />
@@ -76,9 +91,19 @@ MultiSelect.propTypes = {
    */
   id: PropTypes.string,
   /**
-   * Component label
+   * Component's labels:
+   * Structure:
+   * <pre>
+     {
+      label: 'string',
+      noValues: 'string',
+    }
+   </pre>
    */
-  label: PropTypes.string,
+  labels: PropTypes.shape({
+    label: PropTypes.string,
+    noValues: PropTypes.string,
+  }),
   /**
    * Tooltip text
    */
@@ -108,4 +133,8 @@ MultiSelect.propTypes = {
 
 MultiSelect.defaultProps = {
   disabled: false,
+  labels: {
+    label: 'Selection',
+    noValues: 'None',
+  },
 };
