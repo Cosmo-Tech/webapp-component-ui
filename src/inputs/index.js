@@ -15,6 +15,7 @@ export {
   BasicInputPlaceholder,
 } from './BasicInputs';
 export { EditableLabel } from './EditableLabel';
+export { MultiSelect } from './MultiSelect';
 export { RoleEditor } from './RoleEditor';
 export { SelectWithAction } from './SelectWithAction';
 export { SearchBar } from './SearchBar';
