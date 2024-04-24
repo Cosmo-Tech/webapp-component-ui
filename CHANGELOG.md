@@ -1,3 +1,13 @@
+## **8.1.0** <sub><sup>2024-04-24 (38343ce...a749a88)</sup></sub>
+
+### Features
+*  \[PROD\-13271\] implement multi select component ([052ee8a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/052ee8a))
+
+
+### Bug Fixes
+*  fix RolesEditionButton ignoring disabled option when using icon button ([38343ce](https://github.com/Cosmo-Tech/webapp-component-ui/commit/38343ce))
+
+
 ## **8.0.1** <sub><sup>2024-04-11 (f0689e4...ec79301)</sup></sub>
 
 ### Bug Fixes
