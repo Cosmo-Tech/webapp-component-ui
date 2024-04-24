@@ -1,18 +1,24 @@
+## **8.1.1** <sub><sup>2024-04-24 (19862d8...19862d8)</sup></sub>
+
+### Bug Fixes
+
+- fix MultiSelect 'labels' prop and disabled behavior ([19862d8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/19862d8))
+
 ## **8.1.0** <sub><sup>2024-04-24 (38343ce...a749a88)</sup></sub>
 
 ### Features
-*  \[PROD\-13271\] implement multi select component ([052ee8a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/052ee8a))
 
+- \[PROD\-13271\] implement multi select component ([052ee8a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/052ee8a))
 
 ### Bug Fixes
-*  fix RolesEditionButton ignoring disabled option when using icon button ([38343ce](https://github.com/Cosmo-Tech/webapp-component-ui/commit/38343ce))
 
+- fix RolesEditionButton ignoring disabled option when using icon button ([38343ce](https://github.com/Cosmo-Tech/webapp-component-ui/commit/38343ce))
 
 ## **8.0.1** <sub><sup>2024-04-11 (f0689e4...ec79301)</sup></sub>
 
 ### Bug Fixes
-*  fix theme initialization of embedded PowerBI reports ([ec79301](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ec79301))
 
+- fix theme initialization of embedded PowerBI reports ([ec79301](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ec79301))
 
 ## **8.0.0** <sub><sup>2024-03-07 (a91fd5f...a3f137c)</sup></sub>
 
