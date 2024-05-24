@@ -58,7 +58,9 @@ export const BasicEnumInput = (props) => {
         select
         value={typeof valueKey === 'string' ? valueKey : ''}
         SelectProps={{
-          renderValue: (key) => <Box>{getLabelFromEnumKey(key)}</Box>, // Prevent extra padding on selected value
+          renderValue: (key) => (
+            <Box style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{getLabelFromEnumKey(key)}</Box>
+          ), // Prevent extra padding on selected value
           'data-cy': `enum-input-select-${id}`,
           MenuProps: { 'data-cy': `enum-input-menu-${id}` },
         }}
