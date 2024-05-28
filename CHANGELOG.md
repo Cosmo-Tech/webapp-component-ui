@@ -1,3 +1,11 @@
+## **8.1.2**&emsp;<sub><sup>2024-05-24 (85a661911703695158106a3d1395002be0825bbb...85a661911703695158106a3d1395002be0825bbb)</sup></sub>
+
+### Bug Fixes
+
+- add ellipsis for too long string in basic enum ([85a6619](https://github.com/Cosmo-Tech/webapp-component-ui/commit/85a661911703695158106a3d1395002be0825bbb))
+
+<br>
+
 ## **8.1.1** <sub><sup>2024-04-24 (19862d8...19862d8)</sup></sub>
 
 ### Bug Fixes
