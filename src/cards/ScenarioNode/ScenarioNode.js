@@ -1,6 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   DeleteForever as DeleteForeverIcon,
@@ -155,7 +155,7 @@ export const ScenarioNode = ({
       <EditableLink
         value={scenario.name}
         checkValue={checkScenarioNameValue}
-        onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+        onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName, scenario.runTemplateId)}
         onClick={() => onScenarioRedirect(scenario.id)}
         labels={labels.scenarioRename}
         typographyProps={{ variant: 'h6', flexGrow: 1 }}
@@ -204,13 +204,6 @@ export const ScenarioNode = ({
     );
   };
 
-  const handleScenarioUpdate = useCallback(
-    (scenarioId, newScenarioData) => {
-      onScenarioUpdate(scenarioId, newScenarioData);
-    },
-    [onScenarioUpdate]
-  );
-
   const getAccordionSummary = () => {
     return (
       <AccordionSummary
@@ -242,7 +235,7 @@ export const ScenarioNode = ({
           labels={labels.description}
           value={scenario.description}
           scenarioId={scenario.id}
-          onChange={(value) => handleScenarioUpdate(scenario.id, { description: value })}
+          onChange={(value) => onScenarioUpdate(scenario.id, { description: value }, scenario.runTemplateId)}
           readOnly={!canUpdateScenario}
         />
         <TagsEditor
@@ -250,7 +243,7 @@ export const ScenarioNode = ({
           labels={labels.tags}
           values={scenario.tags}
           readOnly={!canUpdateScenario}
-          onChange={(value) => handleScenarioUpdate(scenario.id, { tags: value })}
+          onChange={(value) => onScenarioUpdate(scenario.id, { tags: value }, scenario.runTemplateId)}
           headerStyle={{ color: 'unset', fontWeight: '700' }}
         />
         {getDetailedStatus()}
