@@ -155,7 +155,7 @@ export const ScenarioNode = ({
         <EditableLink
           value={scenario.name}
           checkValue={checkScenarioNameValue}
-          onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+          onNewValue={(newScenarioName) => onScenarioRename(scenario.id, scenario.runTemplateId, newScenarioName)}
           onClick={() => onScenarioRedirect(scenario.id)}
           isEditing={isEditing}
           setEditing={setEditing}
