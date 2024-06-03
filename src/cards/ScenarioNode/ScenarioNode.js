@@ -155,7 +155,7 @@ export const ScenarioNode = ({
         <EditableLabel
           value={scenario.name}
           checkValue={checkScenarioNameValue}
-          onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+          onNewValue={(newScenarioName) => onScenarioRename(scenario.id, scenario.runTemplateId, newScenarioName)}
           labels={labels.scenarioRename}
           typographyProps={{ variant: 'h6', flexGrow: 1 }}
         />
