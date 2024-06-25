@@ -8,7 +8,7 @@ import {
   Cancel as CancelIcon,
   ExpandMore as ExpandMoreIcon,
   Help as HelpIcon,
-  OpenInNew as OpenInNewIcon,
+  Edit as EditIcon,
 } from '@mui/icons-material';
 import {
   Accordion,
@@ -21,9 +21,8 @@ import {
   Typography,
 } from '@mui/material';
 import { DatasetUtils } from '@cosmotech/core';
-import { EditableLabel } from '../../inputs/EditableLabel';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
-import { ConfirmDeleteDialog } from './components';
+import { ConfirmDeleteDialog, EditableLink } from './components';
 import useStyles from './style';
 
 export const ScenarioNode = ({
@@ -41,6 +40,7 @@ export const ScenarioNode = ({
   buildScenarioNameToDelete,
 }) => {
   const classes = useStyles();
+  const [isEditing, setEditing] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
 
@@ -149,30 +149,21 @@ export const ScenarioNode = ({
     );
   };
 
-  const getEditableScenarioName = () => {
+  const getScenarioName = () => {
     return (
       <FadingTooltip key="scenario-name-tooltip" title={scenario.name}>
-        <EditableLabel
+        <EditableLink
           value={scenario.name}
           checkValue={checkScenarioNameValue}
           onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+          onClick={() => onScenarioRedirect(scenario.id)}
+          isEditing={isEditing}
+          setEditing={setEditing}
           labels={labels.scenarioRename}
           typographyProps={{ variant: 'h6', flexGrow: 1 }}
         />
       </FadingTooltip>
     );
-  };
-  const getNonEditableScenarioName = () => {
-    return (
-      <FadingTooltip key="scenario-name-tooltip" title={scenario.name}>
-        <Typography key="scenario-name" className={classes.scenarioTitle} variant="h6">
-          {scenario.name}
-        </Typography>
-      </FadingTooltip>
-    );
-  };
-  const getScenarioName = () => {
-    return canRenameScenario ? getEditableScenarioName() : getNonEditableScenarioName();
   };
 
   const getDetailedStatus = () => {
@@ -215,9 +206,10 @@ export const ScenarioNode = ({
     );
   };
 
-  const redirectToScenarioView = (event) => {
+  const startEdition = (event) => {
     event.stopPropagation();
-    onScenarioRedirect(scenario.id);
+    event.preventDefault();
+    setEditing(true);
   };
 
   const getAccordionSummary = () => {
@@ -227,6 +219,18 @@ export const ScenarioNode = ({
         expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}
       >
         {getScenarioHeader()}
+        {canRenameScenario && (
+          <FadingTooltip title={labels.edit}>
+            <IconButton
+              data-cy="rename-scenario-button"
+              aria-label="rename scenario"
+              size="small"
+              onClick={startEdition}
+            >
+              <EditIcon fontSize="small" color="primary" />
+            </IconButton>
+          </FadingTooltip>
+        )}
         {showDeleteIcon && (
           <FadingTooltip title={labels.delete || 'Delete file'}>
             <IconButton
@@ -240,17 +244,6 @@ export const ScenarioNode = ({
             </IconButton>
           </FadingTooltip>
         )}
-        <FadingTooltip title={labels.redirect}>
-          <IconButton
-            className={classes.scenarioDeleteButton}
-            data-cy="scenario-view-redirect"
-            aria-label="redirect to scenario view"
-            size="small"
-            onClick={redirectToScenarioView}
-          >
-            <OpenInNewIcon fontSize="small" color="primary" />
-          </IconButton>
-        </FadingTooltip>
       </AccordionSummary>
     );
   };
@@ -346,7 +339,7 @@ ScenarioNode.propTypes = {
         failed: 'string',
         created: 'string',
         delete: 'string',
-        redirect: 'string',
+        edit: 'string',
         scenarioRename: {
           title: 'string'
           errors: {
@@ -376,7 +369,7 @@ ScenarioNode.propTypes = {
     failed: PropTypes.string.isRequired,
     created: PropTypes.string.isRequired,
     delete: PropTypes.string.isRequired,
-    redirect: PropTypes.string.isRequired,
+    edit: PropTypes.string.isRequired,
     scenarioRename: PropTypes.shape({
       title: PropTypes.string,
       errors: PropTypes.shape({
@@ -415,7 +408,7 @@ ScenarioNode.defaultProps = {
     failed: 'Failed',
     created: 'Created',
     delete: 'Delete this scenario',
-    redirect: 'Redirect to scenario view',
+    edit: 'Edit scenario name',
     scenarioRename: {
       title: 'Scenario name',
       errors: {
