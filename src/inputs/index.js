@@ -14,7 +14,6 @@ export {
   BasicSliderInput,
   BasicInputPlaceholder,
 } from './BasicInputs';
-export { EditableLabel } from './EditableLabel';
 export { MultiSelect } from './MultiSelect';
 export { RoleEditor } from './RoleEditor';
 export { SelectWithAction } from './SelectWithAction';
