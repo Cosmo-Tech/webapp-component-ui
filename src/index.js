@@ -14,6 +14,7 @@ export {
   BasicTextInput,
   BasicEnumInput,
   MultiSelect,
+  SingleSelect,
   BasicRadioInput,
   BasicInputPlaceholder,
   UploadFile,
