@@ -14,6 +14,7 @@ export {
   BasicTextInput,
   BasicEnumInput,
   MultiSelect,
+  Select,
   BasicRadioInput,
   BasicInputPlaceholder,
   EditableLabel,
