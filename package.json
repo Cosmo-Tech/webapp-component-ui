@@ -1,6 +1,5 @@
 {
   "name": "@cosmotech/ui",
-  "private": false,
   "version": "9.0.0",
   "description": "",
   "main": "dist/index.cjs.js",
@@ -105,5 +104,6 @@
   "resolutions": {
     "get-pkg-repo": "4.1.1",
     "hosted-git-info": "^2.1.4"
-  }
+  },
+  "packageManager": "yarn@4.3.1"
 }
