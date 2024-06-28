@@ -261,7 +261,7 @@ ScenarioManagerTreeList.propTypes = {
     failed: 'string',
     created: 'string',
     delete: 'string',
-    redirect: 'string',
+    edit: 'string',
     scenarioRename: {
       title: 'string'
       errors: {
@@ -297,7 +297,7 @@ ScenarioManagerTreeList.defaultProps = {
     failed: 'Failed',
     created: 'Created',
     delete: 'Delete this scenario',
-    redirect: 'Redirect to scenario view',
+    edit: 'Edit scenario name',
     scenarioRename: {
       title: 'Scenario name',
       errors: {

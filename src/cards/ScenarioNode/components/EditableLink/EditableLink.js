@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import EditIcon from '@mui/icons-material/Edit';
-import { FormControl, OutlinedInput, FormHelperText, Typography, CircularProgress } from '@mui/material';
+import { FormControl, OutlinedInput, FormHelperText, Link, CircularProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,21 +41,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const EditableLabel = (props) => {
-  const { value, onNewValue, checkValue, labels, typographyProps } = props;
+export const EditableLink = (props) => {
+  const { value, onNewValue, onClick, checkValue, isEditing, setEditing, labels, typographyProps } = props;
 
   const classes = useStyles();
 
-  const [isEditing, setEditing] = useState(false);
   const [error, setError] = useState(null);
-  const [isHovered, setHovered] = useState(false);
   const [textFieldValue, setTextFieldValue] = useState(value);
-
-  const startEdition = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setEditing(true);
-  };
 
   const checkNewValueOnChange = (event) => {
     const newValue = event.target.value.trimEnd();
@@ -74,24 +65,22 @@ export const EditableLabel = (props) => {
       }
     }
     setEditing(false);
-    setHovered(false);
     setError(null);
   };
 
-  const getLabelDisplay = () => {
+  const getLinkDisplay = () => {
     if (value === textFieldValue) {
       return (
-        <div
-          className={classes.labelDisplayContainer}
-          onMouseLeave={() => setHovered(false)}
-          onMouseOver={() => setHovered(true)}
-          onClick={startEdition}
+        <Link
+          data-cy="scenario-view-redirect"
+          component="button"
+          underline="hover"
+          className={classes.label}
+          {...typographyProps}
+          onClick={onClick}
         >
-          {isHovered && <EditIcon className={classes.editIcon} />}
-          <Typography className={classes.label} {...typographyProps}>
-            {value}
-          </Typography>
-        </div>
+          {value}
+        </Link>
       );
     } else {
       return <CircularProgress size={25} color="primary" />;
@@ -99,9 +88,9 @@ export const EditableLabel = (props) => {
   };
 
   return (
-    <div data-cy="editable-label">
+    <div data-cy="editable-link">
       {isEditing ? (
-        <FormControl data-cy="editable-label-in-edition-mode">
+        <FormControl data-cy="editable-link-in-edition-mode">
           <OutlinedInput
             className={classes.outlinedInput}
             autoFocus
@@ -109,34 +98,24 @@ export const EditableLabel = (props) => {
             error={error != null}
             placeholder={labels.title}
             onChange={checkNewValueOnChange}
-            onBlur={(event) => {
-              stopEdition(event);
-            }}
+            onBlur={(event) => stopEdition(event)}
             onClick={(event) => event.stopPropagation()}
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                stopEdition(event);
-              }
-            }}
             onKeyDown={(event) => {
-              if (event.key === 'Escape') {
-                setEditing(false);
-              }
+              if (event.key === 'Escape') setEditing(false);
+              else if (event.key === 'Enter') stopEdition(event);
             }}
-            onFocus={(event) => {
-              event.stopPropagation();
-            }}
+            onFocus={(event) => event.stopPropagation()}
           />
           <FormHelperText error>{error}</FormHelperText>
         </FormControl>
       ) : (
-        getLabelDisplay()
+        getLinkDisplay()
       )}
     </div>
   );
 };
 
-EditableLabel.propTypes = {
+EditableLink.propTypes = {
   /**
    * String value displayed in label
    */
@@ -146,11 +125,23 @@ EditableLabel.propTypes = {
    */
   onNewValue: PropTypes.func.isRequired,
   /**
+   * Function called when the link is clicked
+   */
+  onClick: PropTypes.func.isRequired,
+  /**
    * Function to check if new value is valid.
    * If the value is valid, this function must return null.
    * If the value is invalid, the function must return a string message describing why it is invalid
    */
   checkValue: PropTypes.func,
+  /**
+   * Boolean value indicating if the label is in edition mode
+   */
+  isEditing: PropTypes.bool.isRequired,
+  /**
+   * Function to set the edition mode
+   */
+  setEditing: PropTypes.func.isRequired,
   /**
    * Text field Labels
    *
@@ -173,12 +164,12 @@ EditableLabel.propTypes = {
     }),
   }),
   /**
-   * Props to forwrad to the Typography component
+   * Props to forward to the Typography component
    */
   typographyProps: PropTypes.object,
 };
 
-EditableLabel.defaultProps = {
+EditableLink.defaultProps = {
   labels: {
     title: 'Scenario name',
     errors: {

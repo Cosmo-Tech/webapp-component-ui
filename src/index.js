@@ -16,7 +16,6 @@ export {
   MultiSelect,
   BasicRadioInput,
   BasicInputPlaceholder,
-  EditableLabel,
   UploadFile,
   UPLOAD_FILE_STATUS_KEY,
   Table,
