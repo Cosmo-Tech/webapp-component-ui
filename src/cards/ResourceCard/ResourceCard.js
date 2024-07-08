@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Button, Card, CardHeader, CardContent, CardActions, Tooltip, Fade } from '@mui/material';
+import { Typography, Button, Card, CardHeader, CardContent, CardActions } from '@mui/material';
 import { DefaultAvatar } from '../../misc';
 import useStyles from './style';
 
@@ -26,18 +26,11 @@ export const ResourceCard = ({ id, name, description, action, style }) => {
         title={name}
       />
       <CardContent data-cy={'resource-content'}>
-        <Tooltip
-          TransitionComponent={Fade}
-          TransitionProps={{ timeout: 600 }}
-          key="resource-description-tooltip"
-          title={description ?? ''}
-        >
-          <div className={classes.description}>
-            <Typography noWrap={true} color="textSecondary" variant="body2">
-              {description}
-            </Typography>
-          </div>
-        </Tooltip>
+        <div className={classes.description}>
+          <Typography color="textSecondary" variant="body2">
+            {description}
+          </Typography>
+        </div>
       </CardContent>
       {actionButton}
     </Card>

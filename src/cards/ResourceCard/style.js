@@ -10,6 +10,10 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  description: {
+    height: '70px',
+    overflow: 'auto',
+  },
 }));
 
 export default useStyles;
