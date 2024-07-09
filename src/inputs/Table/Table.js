@@ -167,6 +167,7 @@ export const Table = (props) => {
     onExport,
     onAddRow,
     onDeleteRow,
+    onRevert,
     customToolbarActions,
     ...otherProps
   } = props;
@@ -258,6 +259,7 @@ export const Table = (props) => {
       addRow: labels.addRow,
       deleteRows: labels.deleteRows,
       loading: labels.loading,
+      revert: labels.revert,
     };
 
     return (
@@ -271,6 +273,7 @@ export const Table = (props) => {
         isRowSelected={isRowSelected}
         onAddRow={onAddRow ? addRows : undefined}
         onDeleteRow={onDeleteRow ? deleteRows : undefined}
+        onRevert={onRevert}
         editMode={editMode}
         customToolbarActions={customToolbarActions}
         labels={toolbarLabels}
@@ -283,6 +286,7 @@ export const Table = (props) => {
     labels.addRow,
     labels.deleteRows,
     labels.loading,
+    labels.revert,
     isFullscreen,
     toggleFullscreen,
     isReady,
@@ -294,6 +298,7 @@ export const Table = (props) => {
     isRowSelected,
     addRows,
     deleteRows,
+    onRevert,
     editMode,
     customToolbarActions,
   ]);
@@ -448,6 +453,7 @@ Table.propTypes = {
       addRow: 'string',
       deleteRows: 'string',
       fullscreen: 'string',
+      revert: 'string',
     }
    </pre>
    */
@@ -463,6 +469,7 @@ Table.propTypes = {
     addRow: PropTypes.string,
     deleteRows: PropTypes.string,
     fullscreen: PropTypes.string,
+    revert: PropTypes.string,
   }),
   /**
    * Tooltip text
@@ -517,6 +524,11 @@ Table.propTypes = {
    * If not defined, this button will not be rendered.
    */
   onDeleteRow: PropTypes.func,
+  /*
+   * Callback function that will be called when user clicks on revert button.
+   * If not defined, this button will not be rendered.
+   */
+  onRevert: PropTypes.func,
 };
 
 const DEFAULT_LABELS = {
@@ -531,6 +543,7 @@ const DEFAULT_LABELS = {
   addRow: 'Add a new row',
   deleteRows: 'Remove selected rows',
   fullscreen: 'Fullscreen',
+  revert: 'Revert',
 };
 
 Table.defaultProps = {

@@ -6,3 +6,4 @@ export { ImportButton } from './ImportButton';
 export { ExportButton } from './ExportButton';
 export { AddRowButton } from './AddRowButton';
 export { DeleteRowButton } from './DeleteRowButton';
+export { RevertDataButton } from './RevertDataButton';

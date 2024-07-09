@@ -3,7 +3,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress } from '@mui/material';
-import { FullscreenButton, ImportButton, ExportButton, AddRowButton, DeleteRowButton } from './components';
+import {
+  FullscreenButton,
+  ImportButton,
+  ExportButton,
+  AddRowButton,
+  DeleteRowButton,
+  RevertDataButton,
+} from './components';
 import { useStyles } from './style';
 
 export const TableToolbar = (props) => {
@@ -17,6 +24,7 @@ export const TableToolbar = (props) => {
     isRowSelected,
     onAddRow,
     onDeleteRow,
+    onRevert,
     editMode,
     customToolbarActions,
     labels,
@@ -41,6 +49,7 @@ export const TableToolbar = (props) => {
           disabled={!editMode || !isReady || isLoading || !(isRowSelected ?? true)}
         />
       )}
+      {onRevert && <RevertDataButton onRevert={onRevert} label={labels.revert} disabled={!editMode || isLoading} />}
       {isLoading ? (
         <span className={classes.tableLoading}>
           {labels.loading}
@@ -83,6 +92,11 @@ TableToolbar.propTypes = {
    */
   onExport: PropTypes.func,
   /*
+   *  Function used to revert table with data fetched from scenario's dataset.
+   * If undefined, revert button is not displayed
+   */
+  onRevert: PropTypes.func,
+  /*
    * Boolean value that defines if a row is selected or not
    */
   isRowSelected: PropTypes.bool,
@@ -109,6 +123,7 @@ TableToolbar.propTypes = {
       addRow: 'string',
       deleteRows: 'string',
       fullscreen: 'string',
+      revert: 'string'
     }
    </pre>
    */
@@ -119,5 +134,6 @@ TableToolbar.propTypes = {
     addRow: PropTypes.string,
     deleteRows: PropTypes.string,
     fullscreen: PropTypes.string,
+    revert: PropTypes.string,
   }).isRequired,
 };
