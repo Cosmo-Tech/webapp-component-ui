@@ -1,3 +1,18 @@
+## **9.0.0** <sub><sup>2024-07-12 (691f9a2...81dd71b)</sup></sub>
+
+### Features
+*  \[SDCOSMO\-1274\] in scenario manager, redirect to scenario view directly by clicking on scenario name ([d2b3661](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d2b3661))
+*  add revertData button in table toolbar ([760019e](https://github.com/Cosmo-Tech/webapp-component-ui/commit/760019e))
+*  \[SDCOSMO\-1974\] add scenario selector component in scenario parameters ([81dd71b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/81dd71b))
+
+
+### Bug Fixes
+*  fix resource card description height ([f3321e8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f3321e8))
+
+
+### BREAKING CHANGES
+*  component EditableLabel is removed and replaced by EditableLink ([d2b3661](https://github.com/Cosmo-Tech/webapp-component-ui/commit/d2b3661))<br>In scenarioNode, the prop redirect is removed and replaced by the prop edit
+
 ## **8.1.2**&emsp;<sub><sup>2024-05-24 (85a661911703695158106a3d1395002be0825bbb...85a661911703695158106a3d1395002be0825bbb)</sup></sub>
 
 ### Bug Fixes
