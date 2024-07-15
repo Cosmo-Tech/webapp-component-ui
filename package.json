@@ -1,6 +1,6 @@
 {
   "name": "@cosmotech/ui",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
