@@ -51,7 +51,7 @@ export const UploadFile = (props) => {
       </Typography>
     );
 
-    return fullLabel?.length ?? 0 > 20 ? <FadingTooltip title={fullLabel}>{fileName}</FadingTooltip> : fileName;
+    return (fullLabel?.length ?? 0 > 20) ? <FadingTooltip title={fullLabel}>{fileName}</FadingTooltip> : fileName;
   }, [file?.name, labels, shouldHideFileName]);
 
   return (
