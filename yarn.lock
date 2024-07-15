@@ -29,19 +29,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/msal-browser@npm:~2.23.0":
-  version: 2.23.0
-  resolution: "@azure/msal-browser@npm:2.23.0"
+"@azure/msal-browser@npm:~3.19.0":
+  version: 3.19.0
+  resolution: "@azure/msal-browser@npm:3.19.0"
   dependencies:
-    "@azure/msal-common": "npm:^6.2.0"
-  checksum: 10c0/24e58bd853c505ca7a44a384b52dd332afdaf45dcf08c17e417eb0fb89c6d237a561c5e7824e1e5fec7e2afc2ae25dfb1a5e513f2eb6dd2efbfb3532d824eef7
+    "@azure/msal-common": "npm:14.13.0"
+  checksum: 10c0/8cbec7f40f68d66e37e28bd0dd1fbfcc437712d30f631d61f40d9ce71219eed1ad46f819cef0b31e33e8d6bda6d7d18dc1d26d4734bc5386265c9f5d6eda8414
   languageName: node
   linkType: hard
 
-"@azure/msal-common@npm:^6.2.0":
-  version: 6.4.0
-  resolution: "@azure/msal-common@npm:6.4.0"
-  checksum: 10c0/f1505b5e0d9892fa66d18178f219158517ad3a3651f89d2f7f8c88d3a7cb1607a5b2bb21a9956f6de190a3f5c742ea6825d93142788da8723c6d7cb72b7f7d90
+"@azure/msal-common@npm:14.13.0":
+  version: 14.13.0
+  resolution: "@azure/msal-common@npm:14.13.0"
+  checksum: 10c0/7af1eb35aea5c5544007c8380c1bccd420336cff2268de31adc14d3cbb5657500a14c84bb223641e419c588449567eee651af81e2821d3fd46e39f2431c496d1
   languageName: node
   linkType: hard
 
@@ -1898,26 +1898,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmotech/azure@npm:^1.3.5":
-  version: 1.3.5
-  resolution: "@cosmotech/azure@npm:1.3.5"
+"@cosmotech/azure@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@cosmotech/azure@npm:2.0.0"
   dependencies:
-    "@azure/msal-browser": "npm:~2.23.0"
-  checksum: 10c0/747b1f001e2bc400655bbe28d50bbc36d1eef585042ed7210dba40b2f2021f9e6b898fcaa9f06ca8d02cccd661eef147a87a84ca518e0c735177764c9cd7652d
+    "@azure/msal-browser": "npm:~3.19.0"
+  checksum: 10c0/66ebf37c797f18ad7baf2101ec164d004d3cb2dde9c45527ab10481da74535ede692460cad263e154d21644924e05d137481a08f5b00b271c6c396192816c590
   languageName: node
   linkType: hard
 
-"@cosmotech/core@npm:^1.16.0":
-  version: 1.16.0
-  resolution: "@cosmotech/core@npm:1.16.0"
+"@cosmotech/core@npm:^1.16.1":
+  version: 1.16.1
+  resolution: "@cosmotech/core@npm:1.16.1"
   dependencies:
-    csv-string: "npm:^4.0.1"
-    date-fns: "npm:^2.25.0"
+    csv-string: "npm:^4.1.1"
+    date-fns: "npm:^2.30.0"
     js-file-download: "npm:^0.4.12"
-    rfdc: "npm:^1.3.0"
-    validator: "npm:^13.7.0"
-    xlsx: "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
-  checksum: 10c0/866b3471a1d1a4e47fecc3eac815655882e60d9c0c8771c0acc978ef4dd994d6ac3c14610290d6f3ebd3369940bc40f3ad11d02cc69d1e0ae0491f93ef5e8648
+    rfdc: "npm:^1.4.1"
+    validator: "npm:^13.12.0"
+    xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
+  checksum: 10c0/bb277e10b201caf4e47d757ca26203d2f79e0d1fac8bcd14238d86918f1b6d594802f32357bb5db97c036c8c40cc689ca91834bb90209d13a3670003498e296e
   languageName: node
   linkType: hard
 
@@ -1928,8 +1928,8 @@ __metadata:
     "@babel/core": "npm:^7.24.9"
     "@babel/preset-env": "npm:^7.24.8"
     "@babel/preset-react": "npm:^7.24.7"
-    "@cosmotech/azure": "npm:^1.3.5"
-    "@cosmotech/core": "npm:^1.16.0"
+    "@cosmotech/azure": "npm:^2.0.0"
+    "@cosmotech/core": "npm:^1.16.1"
     "@emotion/react": "npm:^11.11.4"
     "@emotion/styled": "npm:^11.11.5"
     "@mui/icons-material": "npm:^5.16.1"
@@ -4867,7 +4867,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csv-string@npm:^4.0.1":
+"csv-string@npm:^4.1.1":
   version: 4.1.1
   resolution: "csv-string@npm:4.1.1"
   checksum: 10c0/f8a55fb64047d0e20c6257ad664b8fedc975a0cb6b301732386e8d97bffd3d92214522fc7e32fab8147fe78ec41c6ba49cbf1e3a4bbe2ecc1268afc2d74a4c7d
@@ -4975,7 +4975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.25.0":
+"date-fns@npm:^2.30.0":
   version: 2.30.0
   resolution: "date-fns@npm:2.30.0"
   dependencies:
@@ -10831,10 +10831,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.7.0":
-  version: 13.11.0
-  resolution: "validator@npm:13.11.0"
-  checksum: 10c0/0107da3add5a4ebc6391dac103c55f6d8ed055bbcc29a4c9cbf89eacfc39ba102a5618c470bdc33c6487d30847771a892134a8c791f06ef0962dd4b7a60ae0f5
+"validator@npm:^13.12.0":
+  version: 13.12.0
+  resolution: "validator@npm:13.12.0"
+  checksum: 10c0/21d48a7947c9e8498790550f56cd7971e0e3d724c73388226b109c1bac2728f4f88caddfc2f7ed4b076f9b0d004316263ac786a17e9c4edf075741200718cd32
   languageName: node
   linkType: hard
 
@@ -11039,12 +11039,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xlsx@https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz":
-  version: 0.20.0
-  resolution: "xlsx@https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz"
+"xlsx@https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz":
+  version: 0.20.2
+  resolution: "xlsx@https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   bin:
     xlsx: ./bin/xlsx.njs
-  checksum: 10c0/0037e0dba8457a279b1920a93d70bae5a5d4c17ef87dd8eacb75bf5300d7299fcc18b2bafc0d424323f5cc02d2698a31475cfbcbdb980e31534b14bf30f6a72c
+  checksum: 10c0/664dff22e5ecd83d595f34e00ac90ee852d16e45b72385ada54291551b808c6848b166fb395f5e35249ca976a5b5d514e793ccbcc0a611b87a600ae4024d605a
   languageName: node
   linkType: hard
 
