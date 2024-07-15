@@ -1,6 +1,9 @@
 ## **9.0.1** <sub><sup>2024-07-15 (19167c3...f3c7fd3)</sup></sub>
 
-- update dependencies
+- bump yarn to v4
+- bump ag-grid-react & ag-grid-community to major version 32.0
+- bump @rollup/plugin-commonjs to major version 26.0
+- other minor updates of dependencies
 
 ## **9.0.0** <sub><sup>2024-07-12 (691f9a2...81dd71b)</sup></sub>
 
