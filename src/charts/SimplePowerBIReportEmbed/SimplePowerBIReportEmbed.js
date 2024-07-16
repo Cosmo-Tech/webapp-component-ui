@@ -119,6 +119,7 @@ export const SimplePowerBIReportEmbed = ({
     () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
     [dynamicFilters, scenarioDTO]
   );
+  const resultsDisplayDisabled = reports?.status === 'DISABLED';
   const noScenario = scenario === null;
   const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
   const noRun = scenarioState === 'Created' || scenarioState === null;
@@ -127,7 +128,6 @@ export const SimplePowerBIReportEmbed = ({
   const hasError = scenarioState === 'Failed';
   const hasUnknownStatus = scenarioState === 'Unknown';
   const noDashboardConfigured = reportConfiguration[index] === undefined;
-
   const getPlaceholder = () => {
     if (alwaysShowReports) return null;
     if (noScenario) return <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />;
@@ -149,6 +149,7 @@ export const SimplePowerBIReportEmbed = ({
         />
       );
     if (hasUnknownStatus) return <DashboardPlaceholder label={labels.hasUnknownStatus.label} />;
+    if (resultsDisplayDisabled) return <DashboardPlaceholder label={labels.resultsDisplayDisabled} />;
     if (noDashboardConfigured) return <DashboardPlaceholder label={labels.noDashboard.label} />;
     return null;
   };
@@ -381,6 +382,7 @@ SimplePowerBIReportEmbed.propTypes = {
       title: PropTypes.string,
       label: PropTypes.string,
     }),
+    resultsDisplayDisabled: PropTypes.string,
     downloadButton: PropTypes.string.isRequired,
     refreshTooltip: PropTypes.string.isRequired,
     errors: PropTypes.shape({
@@ -423,6 +425,7 @@ SimplePowerBIReportEmbed.defaultProps = {
     hasUnknownStatus: {
       label: 'This scenario has an unknown state, if the problem persists, please, contact your administrator',
     },
+    resultsDisplayDisabled: 'Display of results is disabled',
     downloadButton: 'Download logs',
     refreshTooltip: 'Refresh',
     errors: {
