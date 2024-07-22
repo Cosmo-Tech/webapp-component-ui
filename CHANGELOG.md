@@ -1,3 +1,9 @@
+## **9.1.0** <sub><sup>2024-07-22 (022951d...022951d)</sup></sub>
+
+### Features
+*  \[PROD\-13567\] add placeholder when display of results is disabled ([022951d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/022951d))
+
+
 ## **9.0.1** <sub><sup>2024-07-15 (19167c3...f3c7fd3)</sup></sub>
 
 - bump yarn to v4
