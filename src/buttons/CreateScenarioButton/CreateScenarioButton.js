@@ -9,6 +9,7 @@ export const CreateScenarioButton = ({
   datasets,
   scenarios,
   runTemplates,
+  defaultRunTemplateDataset,
   user,
   createScenario,
   workspaceId,
@@ -43,6 +44,7 @@ export const CreateScenarioButton = ({
         datasets={datasets}
         closeDialog={closeDialog}
         runTemplates={runTemplates}
+        defaultRunTemplateDataset={defaultRunTemplateDataset}
         scenarios={scenarios}
         user={user}
         dialogLabels={labels.dialog}
@@ -69,6 +71,12 @@ CreateScenarioButton.propTypes = {
    * List of available scenario types
    */
   runTemplates: PropTypes.array.isRequired,
+  /**
+   * Optional dict of default dataset by run templates:
+   *   - key: run template id
+   *   - value: dataset id
+   */
+  defaultRunTemplateDataset: PropTypes.object,
   /**
    * User information (will be sent for scenario creation)
    */

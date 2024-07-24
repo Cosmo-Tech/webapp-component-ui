@@ -1,6 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -54,6 +54,7 @@ const CreateScenarioDialog = ({
   currentScenario,
   datasets,
   runTemplates,
+  defaultRunTemplateDataset,
   user,
   createScenario,
   workspaceId,
@@ -63,21 +64,31 @@ const CreateScenarioDialog = ({
 }) => {
   const classes = useStyles();
 
-  const defaultDataset = datasets.length > 0 ? datasets[0] : dialogLabels.datasetPlaceholder;
   const defaultRunTemplate = runTemplates?.[0] || null;
   const currentScenarioSelected = currentScenario.data !== null;
 
   const [scenarioName, setScenarioName] = useState('');
   const [scenarioNameFieldError, setScenarioNameFieldError] = useState(null);
   const [isMaster, setMaster] = useState(false);
-  const [datasetFieldValues, setDatasetFieldValues] = useState(defaultDataset);
   const [parentScenarioFieldValues, setParentScenarioFieldValues] = useState({});
   const [selectedRunTemplate, setSelectedRunTemplate] = useState(defaultRunTemplate);
+
+  const getDefaultDataset = useCallback(
+    () =>
+      datasets.find((dataset) => dataset.id && dataset.id === defaultRunTemplateDataset[selectedRunTemplate.id]) ??
+      (datasets.length > 0 ? datasets[0] : dialogLabels.datasetPlaceholder),
+    [datasets, defaultRunTemplateDataset, dialogLabels.datasetPlaceholder, selectedRunTemplate]
+  );
+
+  const [datasetFieldValues, setDatasetFieldValues] = useState(getDefaultDataset());
+
+  useEffect(() => {
+    setDatasetFieldValues(getDefaultDataset());
+  }, [selectedRunTemplate, getDefaultDataset]);
 
   useEffect(() => {
     if (!open) return; // Prevent changes if dialog is closed
     setScenarioName('');
-    setDatasetFieldValues(defaultDataset);
     setScenarioNameFieldError(null);
     setSelectedRunTemplate(defaultRunTemplate);
     setMaster(!currentScenarioSelected);
@@ -268,6 +279,7 @@ CreateScenarioDialog.propTypes = {
   currentScenario: PropTypes.object.isRequired,
   datasets: PropTypes.array.isRequired,
   runTemplates: PropTypes.array.isRequired,
+  defaultRunTemplateDataset: PropTypes.object,
   user: PropTypes.object.isRequired,
   createScenario: PropTypes.func.isRequired,
   workspaceId: PropTypes.string.isRequired,
