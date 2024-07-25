@@ -74,33 +74,40 @@ const CreateScenarioDialog = ({
   const [selectedRunTemplate, setSelectedRunTemplate] = useState(defaultRunTemplate);
 
   const getDefaultDataset = useCallback(
-    () =>
-      datasets.find((dataset) => dataset.id && dataset.id === defaultRunTemplateDataset[selectedRunTemplate.id]) ??
-      (datasets.length > 0 ? datasets[0] : dialogLabels.datasetPlaceholder),
-    [datasets, defaultRunTemplateDataset, dialogLabels.datasetPlaceholder, selectedRunTemplate]
+    (targetRunTemplate, previousDataset) =>
+      datasets.find((dataset) => dataset.id && dataset.id === defaultRunTemplateDataset[targetRunTemplate?.id]) ??
+      previousDataset ??
+      datasets?.[0] ??
+      dialogLabels.datasetPlaceholder,
+    [datasets, defaultRunTemplateDataset, dialogLabels.datasetPlaceholder]
   );
 
-  const [datasetFieldValues, setDatasetFieldValues] = useState(getDefaultDataset());
+  const [datasetFieldValues, setDatasetFieldValues] = useState(
+    getDefaultDataset(getCurrentScenarioRunTemplate(currentScenario.data, runTemplates) ?? defaultRunTemplate)
+  );
 
   useEffect(() => {
-    setDatasetFieldValues(getDefaultDataset());
-  }, [selectedRunTemplate, getDefaultDataset]);
+    setDatasetFieldValues(getDefaultDataset(selectedRunTemplate, datasetFieldValues));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRunTemplate, getDefaultDataset]); // Do not trigger on 'datasetFieldValues' change
 
   useEffect(() => {
     if (!open) return; // Prevent changes if dialog is closed
     setScenarioName('');
     setScenarioNameFieldError(null);
-    setSelectedRunTemplate(defaultRunTemplate);
     setMaster(!currentScenarioSelected);
 
     if (currentScenarioSelected) {
       setParentScenarioFieldValues(currentScenario.data);
       const currentRunTemplate = getCurrentScenarioRunTemplate(currentScenario.data, runTemplates);
       setSelectedRunTemplate(currentRunTemplate);
+      setDatasetFieldValues(getDefaultDataset(currentRunTemplate));
     } else {
       setParentScenarioFieldValues({});
+      setSelectedRunTemplate(defaultRunTemplate);
+      setDatasetFieldValues(getDefaultDataset(defaultRunTemplate));
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleChangeScenarioName = (event) => {
@@ -202,6 +209,26 @@ const CreateScenarioDialog = ({
             <FormControlLabel control={getMasterScenarioCheckBox()} label={dialogLabels.scenarioMaster} />
           </Grid>
           <Grid item xs={12}>
+            <Autocomplete
+              data-cy="create-scenario-dialog-type-select"
+              ListboxProps={{ 'data-cy': 'create-scenario-dialog-type-select-options' }}
+              id="scenarioType"
+              disableClearable={true}
+              value={selectedRunTemplate}
+              options={runTemplates}
+              onChange={(event, newScenarioType) => setSelectedRunTemplate(newScenarioType)}
+              getOptionLabel={(option) => option.name ?? ''}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder={dialogLabels.scenarioTypePlaceholder}
+                  label={dialogLabels.scenarioType}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
             {isMaster || !currentScenarioSelected ? (
               <Autocomplete
                 data-cy="create-scenario-dialog-dataset-select"
@@ -230,26 +257,6 @@ const CreateScenarioDialog = ({
                 handleChange={(event, newParentScenario) => setParentScenarioFieldValues(newParentScenario)}
               />
             )}
-          </Grid>
-          <Grid item xs={12}>
-            <Autocomplete
-              data-cy="create-scenario-dialog-type-select"
-              ListboxProps={{ 'data-cy': 'create-scenario-dialog-type-select-options' }}
-              id="scenarioType"
-              disableClearable={true}
-              value={selectedRunTemplate}
-              options={runTemplates}
-              onChange={(event, newScenarioType) => setSelectedRunTemplate(newScenarioType)}
-              getOptionLabel={(option) => option.name ?? ''}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder={dialogLabels.scenarioTypePlaceholder}
-                  label={dialogLabels.scenarioType}
-                />
-              )}
-            />
           </Grid>
         </Grid>
       </DialogContent>
