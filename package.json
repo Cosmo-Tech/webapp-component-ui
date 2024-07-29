@@ -29,7 +29,7 @@
     "@babel/preset-env": "^7.24.8",
     "@babel/preset-react": "^7.24.7",
     "@cosmotech/azure": "^2.0.0",
-    "@cosmotech/core": "^1.16.1",
+    "@cosmotech/core": "^1.17.0",
     "@mui/icons-material": "^5.16.1",
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.16.1",
