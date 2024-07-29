@@ -1,6 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -54,6 +54,7 @@ const CreateScenarioDialog = ({
   currentScenario,
   datasets,
   runTemplates,
+  defaultRunTemplateDataset,
   user,
   createScenario,
   workspaceId,
@@ -63,33 +64,50 @@ const CreateScenarioDialog = ({
 }) => {
   const classes = useStyles();
 
-  const defaultDataset = datasets.length > 0 ? datasets[0] : dialogLabels.datasetPlaceholder;
   const defaultRunTemplate = runTemplates?.[0] || null;
   const currentScenarioSelected = currentScenario.data !== null;
 
   const [scenarioName, setScenarioName] = useState('');
   const [scenarioNameFieldError, setScenarioNameFieldError] = useState(null);
   const [isMaster, setMaster] = useState(false);
-  const [datasetFieldValues, setDatasetFieldValues] = useState(defaultDataset);
   const [parentScenarioFieldValues, setParentScenarioFieldValues] = useState({});
   const [selectedRunTemplate, setSelectedRunTemplate] = useState(defaultRunTemplate);
+
+  const getDefaultDataset = useCallback(
+    (targetRunTemplate, previousDataset) =>
+      datasets.find((dataset) => dataset.id && dataset.id === defaultRunTemplateDataset[targetRunTemplate?.id]) ??
+      previousDataset ??
+      datasets?.[0] ??
+      dialogLabels.datasetPlaceholder,
+    [datasets, defaultRunTemplateDataset, dialogLabels.datasetPlaceholder]
+  );
+
+  const [datasetFieldValues, setDatasetFieldValues] = useState(
+    getDefaultDataset(getCurrentScenarioRunTemplate(currentScenario.data, runTemplates) ?? defaultRunTemplate)
+  );
+
+  useEffect(() => {
+    setDatasetFieldValues(getDefaultDataset(selectedRunTemplate, datasetFieldValues));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRunTemplate, getDefaultDataset]); // Do not trigger on 'datasetFieldValues' change
 
   useEffect(() => {
     if (!open) return; // Prevent changes if dialog is closed
     setScenarioName('');
-    setDatasetFieldValues(defaultDataset);
     setScenarioNameFieldError(null);
-    setSelectedRunTemplate(defaultRunTemplate);
     setMaster(!currentScenarioSelected);
 
     if (currentScenarioSelected) {
       setParentScenarioFieldValues(currentScenario.data);
       const currentRunTemplate = getCurrentScenarioRunTemplate(currentScenario.data, runTemplates);
       setSelectedRunTemplate(currentRunTemplate);
+      setDatasetFieldValues(getDefaultDataset(currentRunTemplate));
     } else {
       setParentScenarioFieldValues({});
+      setSelectedRunTemplate(defaultRunTemplate);
+      setDatasetFieldValues(getDefaultDataset(defaultRunTemplate));
     }
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   const handleChangeScenarioName = (event) => {
@@ -191,6 +209,26 @@ const CreateScenarioDialog = ({
             <FormControlLabel control={getMasterScenarioCheckBox()} label={dialogLabels.scenarioMaster} />
           </Grid>
           <Grid item xs={12}>
+            <Autocomplete
+              data-cy="create-scenario-dialog-type-select"
+              ListboxProps={{ 'data-cy': 'create-scenario-dialog-type-select-options' }}
+              id="scenarioType"
+              disableClearable={true}
+              value={selectedRunTemplate}
+              options={runTemplates}
+              onChange={(event, newScenarioType) => setSelectedRunTemplate(newScenarioType)}
+              getOptionLabel={(option) => option.name ?? ''}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder={dialogLabels.scenarioTypePlaceholder}
+                  label={dialogLabels.scenarioType}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
             {isMaster || !currentScenarioSelected ? (
               <Autocomplete
                 data-cy="create-scenario-dialog-dataset-select"
@@ -220,26 +258,6 @@ const CreateScenarioDialog = ({
               />
             )}
           </Grid>
-          <Grid item xs={12}>
-            <Autocomplete
-              data-cy="create-scenario-dialog-type-select"
-              ListboxProps={{ 'data-cy': 'create-scenario-dialog-type-select-options' }}
-              id="scenarioType"
-              disableClearable={true}
-              value={selectedRunTemplate}
-              options={runTemplates}
-              onChange={(event, newScenarioType) => setSelectedRunTemplate(newScenarioType)}
-              getOptionLabel={(option) => option.name ?? ''}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder={dialogLabels.scenarioTypePlaceholder}
-                  label={dialogLabels.scenarioType}
-                />
-              )}
-            />
-          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
@@ -268,6 +286,7 @@ CreateScenarioDialog.propTypes = {
   currentScenario: PropTypes.object.isRequired,
   datasets: PropTypes.array.isRequired,
   runTemplates: PropTypes.array.isRequired,
+  defaultRunTemplateDataset: PropTypes.object,
   user: PropTypes.object.isRequired,
   createScenario: PropTypes.func.isRequired,
   workspaceId: PropTypes.string.isRequired,
