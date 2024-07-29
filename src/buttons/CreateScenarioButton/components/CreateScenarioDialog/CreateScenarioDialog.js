@@ -75,7 +75,7 @@ const CreateScenarioDialog = ({
 
   const getDefaultDataset = useCallback(
     (targetRunTemplate, previousDataset) =>
-      datasets.find((dataset) => dataset.id && dataset.id === defaultRunTemplateDataset[targetRunTemplate?.id]) ??
+      datasets.find((dataset) => dataset.id && dataset.id === defaultRunTemplateDataset?.[targetRunTemplate?.id]) ??
       previousDataset ??
       datasets?.[0] ??
       dialogLabels.datasetPlaceholder,
