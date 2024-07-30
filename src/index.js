@@ -25,6 +25,7 @@ export {
   SelectWithAction,
   SearchBar,
   TagsEditor,
+  DescriptionEditor,
 } from './inputs';
 export { UserInfo, HelpMenu } from './menus';
 export {
