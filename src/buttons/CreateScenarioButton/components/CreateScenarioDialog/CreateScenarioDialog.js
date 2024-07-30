@@ -13,10 +13,11 @@ import {
   Grid,
   TextField,
   Autocomplete,
+  Chip,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { ScenarioUtils } from '@cosmotech/core';
-import { HierarchicalComboBox } from '../../../../inputs';
+import { BasicTextInput, HierarchicalComboBox } from '../../../../inputs';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +69,8 @@ const CreateScenarioDialog = ({
   const currentScenarioSelected = currentScenario.data !== null;
 
   const [scenarioName, setScenarioName] = useState('');
+  const [scenarioDescription, setScenarioDescription] = useState('');
+  const [scenarioTags, setScenarioTags] = useState([]);
   const [scenarioNameFieldError, setScenarioNameFieldError] = useState(null);
   const [isMaster, setMaster] = useState(false);
   const [parentScenarioFieldValues, setParentScenarioFieldValues] = useState({});
@@ -94,6 +97,8 @@ const CreateScenarioDialog = ({
   useEffect(() => {
     if (!open) return; // Prevent changes if dialog is closed
     setScenarioName('');
+    setScenarioDescription('');
+    setScenarioTags([]);
     setScenarioNameFieldError(null);
     setMaster(!currentScenarioSelected);
 
@@ -128,6 +133,8 @@ const CreateScenarioDialog = ({
   function createScenarioData() {
     const scenarioData = {
       name: scenarioName,
+      description: scenarioDescription || null,
+      tags: scenarioTags.length > 0 ? scenarioTags : null,
       ownerId: user.userId.toString(),
       ownerName: user.userName,
       solutionId: solution.data.id,
@@ -203,6 +210,42 @@ const CreateScenarioDialog = ({
               label={dialogLabels.scenarioName}
               helperText={scenarioNameFieldError}
               fullWidth
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <BasicTextInput
+              id="new-scenario-description"
+              label={dialogLabels.scenarioDescription ?? 'Description'}
+              value={scenarioDescription}
+              changeTextField={(newValue) => setScenarioDescription(newValue)}
+              size="medium"
+              textFieldProps={{
+                multiline: true,
+                rows: 3,
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Autocomplete
+              id="new-scenario-tags"
+              freeSolo
+              multiple
+              disableClearable
+              options={[]}
+              value={scenarioTags}
+              renderTags={(value, getTagProps) =>
+                value.map((tagText, index) => (
+                  <Chip
+                    key={index}
+                    label={tagText}
+                    data-cy={`new-scenario-tags-tag-${index}`}
+                    color="primary"
+                    {...getTagProps({ index })}
+                  />
+                ))
+              }
+              renderInput={(params) => <TextField {...params} label={dialogLabels.scenarioTags ?? 'Tags'} />}
+              onChange={(event, values) => setScenarioTags(values)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -294,6 +337,8 @@ CreateScenarioDialog.propTypes = {
   dialogLabels: PropTypes.shape({
     title: PropTypes.string.isRequired,
     scenarioName: PropTypes.string.isRequired,
+    scenarioDescription: PropTypes.string,
+    scenarioTags: PropTypes.string,
     scenarioMaster: PropTypes.string.isRequired,
     scenarioParent: PropTypes.string.isRequired,
     scenarioTypePlaceholder: PropTypes.string.isRequired,
