@@ -52,6 +52,8 @@ export const ScenarioManagerTreeList = (props) => {
     showDeleteIcon,
     canUserDeleteScenario,
     canUserRenameScenario,
+    canUpdateScenario,
+    onScenarioUpdate,
   } = props;
   if (buildSearchInfo) {
     console.warn(
@@ -89,7 +91,9 @@ export const ScenarioManagerTreeList = (props) => {
           deleteScenario,
           checkScenarioNameValue,
           canRenameScenario: canUserRenameScenario(scenario),
+          canUpdateScenario: canUpdateScenario(scenario),
           onScenarioRename,
+          onScenarioUpdate,
           labels,
           buildScenarioNameToDelete,
         },
@@ -251,6 +255,11 @@ ScenarioManagerTreeList.propTypes = {
    */
   canUserRenameScenario: PropTypes.func,
   /**
+   * Function returning whether the current user can edit scenario's metadata. This function receives as parameter
+   * the scenario data and must return a boolean.
+   */
+  canUpdateScenario: PropTypes.func,
+  /**
    * Structure
    * <pre>
    {
@@ -284,6 +293,10 @@ ScenarioManagerTreeList.propTypes = {
    * Function to store the scenario's name selected for delete, used in confirmation dialog
    */
   buildScenarioNameToDelete: PropTypes.func.isRequired,
+  /**
+   * Function to handle the update of scenario metadata
+   */
+  onScenarioUpdate: PropTypes.func,
 };
 
 ScenarioManagerTreeList.defaultProps = {
@@ -329,4 +342,5 @@ ScenarioManagerTreeList.defaultProps = {
   },
   checkScenarioNameValue: () => null,
   canUserRenameScenario: () => true,
+  onScenarioUpdate: () => null,
 };

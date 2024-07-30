@@ -2,8 +2,10 @@
 // Licensed under the MIT license.
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormControl, OutlinedInput, FormHelperText, Link, CircularProgress } from '@mui/material';
+import { Edit as EditIcon } from '@mui/icons-material';
+import { FormControl, OutlinedInput, FormHelperText, Link, CircularProgress, IconButton, Grid } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import { FadingTooltip } from '../../../../misc';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,10 +18,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'stretch',
   },
   label: {
-    maxWidth: '500px',
+    maxWidth: 'max-content',
     color: theme.palette.primary.main,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    textAlign: 'left',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
   },
   outlinedInput: {
     display: 'flex',
@@ -42,17 +48,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const EditableLink = (props) => {
-  const { value, onNewValue, onClick, checkValue, isEditing, setEditing, labels, typographyProps } = props;
+  const { value, onNewValue, onClick, checkValue, labels, typographyProps, canRenameScenario } = props;
 
   const classes = useStyles();
 
   const [error, setError] = useState(null);
   const [textFieldValue, setTextFieldValue] = useState(value);
+  const [isEditing, setEditing] = useState(false);
 
   const checkNewValueOnChange = (event) => {
     const newValue = event.target.value.trimEnd();
     const error = newValue !== value ? checkValue(newValue) : null;
     setError(error);
+  };
+  const startEdition = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setEditing(true);
   };
 
   const stopEdition = (event) => {
@@ -71,16 +83,40 @@ export const EditableLink = (props) => {
   const getLinkDisplay = () => {
     if (value === textFieldValue) {
       return (
-        <Link
-          data-cy="scenario-view-redirect"
-          component="button"
-          underline="hover"
-          className={classes.label}
-          {...typographyProps}
-          onClick={onClick}
+        <Grid
+          container
+          sx={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            flexWrap: 'nowrap',
+          }}
         >
-          {value}
-        </Link>
+          <FadingTooltip key="scenario-name-tooltip" title={value}>
+            <Link
+              data-cy="scenario-view-redirect"
+              component="button"
+              underline="hover"
+              className={classes.label}
+              {...typographyProps}
+              onClick={onClick}
+            >
+              {value}
+            </Link>
+          </FadingTooltip>
+          {canRenameScenario && (
+            <FadingTooltip title={labels.edit}>
+              <IconButton
+                data-cy="rename-scenario-button"
+                aria-label="rename scenario"
+                size="small"
+                onClick={startEdition}
+              >
+                <EditIcon fontSize="small" color="primary" />
+              </IconButton>
+            </FadingTooltip>
+          )}
+        </Grid>
       );
     } else {
       return <CircularProgress size={25} color="primary" />;
@@ -135,13 +171,9 @@ EditableLink.propTypes = {
    */
   checkValue: PropTypes.func,
   /**
-   * Boolean value indicating if the label is in edition mode
+   * Boolean value defining whether user can rename scenario
    */
-  isEditing: PropTypes.bool.isRequired,
-  /**
-   * Function to set the edition mode
-   */
-  setEditing: PropTypes.func.isRequired,
+  canRenameScenario: PropTypes.bool,
   /**
    * Text field Labels
    *
@@ -158,6 +190,7 @@ EditableLink.propTypes = {
    */
   labels: PropTypes.shape({
     title: PropTypes.string,
+    edit: PropTypes.string,
     errors: PropTypes.shape({
       emptyValueName: PropTypes.string,
       forbiddenCharsInValue: PropTypes.string,
@@ -172,6 +205,7 @@ EditableLink.propTypes = {
 EditableLink.defaultProps = {
   labels: {
     title: 'Scenario name',
+    edit: 'Edit',
     errors: {
       emptyValueName: 'Value cannot be empty',
       forbiddenCharsInValue: 'Value is invalid',
