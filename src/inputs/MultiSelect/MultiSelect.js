@@ -77,7 +77,7 @@ export const MultiSelect = (props) => {
         value={selectedKeys}
         onChange={(event, newValues) => onChange(newValues)}
         style={{ width: 500 }}
-        renderInput={(params) => <TextField {...params} label={labels.label ?? id} placeholder={labels.label ?? id} />}
+        renderInput={(params) => <TextField {...params} label={labels.label ?? id} />}
         ListboxProps={{ 'data-cy': 'multi-input-listbox' }}
       />
       <TooltipInfo title={tooltipText} variant="small" />
