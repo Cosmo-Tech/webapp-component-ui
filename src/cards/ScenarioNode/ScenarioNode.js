@@ -1,6 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   DeleteForever as DeleteForeverIcon,
@@ -8,7 +8,6 @@ import {
   Cancel as CancelIcon,
   ExpandMore as ExpandMoreIcon,
   Help as HelpIcon,
-  Edit as EditIcon,
 } from '@mui/icons-material';
 import {
   Accordion,
@@ -21,6 +20,7 @@ import {
   Typography,
 } from '@mui/material';
 import { DatasetUtils } from '@cosmotech/core';
+import { DescriptionEditor, TagsEditor } from '../../inputs';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 import { ConfirmDeleteDialog, EditableLink } from './components';
 import useStyles from './style';
@@ -35,12 +35,13 @@ export const ScenarioNode = ({
   deleteScenario,
   checkScenarioNameValue,
   canRenameScenario,
+  canUpdateScenario,
   onScenarioRename,
   labels,
   buildScenarioNameToDelete,
+  onScenarioUpdate,
 }) => {
   const classes = useStyles();
-  const [isEditing, setEditing] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
 
@@ -151,18 +152,15 @@ export const ScenarioNode = ({
 
   const getScenarioName = () => {
     return (
-      <FadingTooltip key="scenario-name-tooltip" title={scenario.name}>
-        <EditableLink
-          value={scenario.name}
-          checkValue={checkScenarioNameValue}
-          onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
-          onClick={() => onScenarioRedirect(scenario.id)}
-          isEditing={isEditing}
-          setEditing={setEditing}
-          labels={labels.scenarioRename}
-          typographyProps={{ variant: 'h6', flexGrow: 1 }}
-        />
-      </FadingTooltip>
+      <EditableLink
+        value={scenario.name}
+        checkValue={checkScenarioNameValue}
+        onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName)}
+        onClick={() => onScenarioRedirect(scenario.id)}
+        labels={labels.scenarioRename}
+        typographyProps={{ variant: 'h6', flexGrow: 1 }}
+        canRenameScenario={canRenameScenario}
+      />
     );
   };
 
@@ -206,11 +204,12 @@ export const ScenarioNode = ({
     );
   };
 
-  const startEdition = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    setEditing(true);
-  };
+  const handleScenarioUpdate = useCallback(
+    (scenarioId, newScenarioData) => {
+      onScenarioUpdate(scenarioId, newScenarioData);
+    },
+    [onScenarioUpdate]
+  );
 
   const getAccordionSummary = () => {
     return (
@@ -219,18 +218,6 @@ export const ScenarioNode = ({
         expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}
       >
         {getScenarioHeader()}
-        {canRenameScenario && (
-          <FadingTooltip title={labels.edit}>
-            <IconButton
-              data-cy="rename-scenario-button"
-              aria-label="rename scenario"
-              size="small"
-              onClick={startEdition}
-            >
-              <EditIcon fontSize="small" color="primary" />
-            </IconButton>
-          </FadingTooltip>
-        )}
         {showDeleteIcon && (
           <FadingTooltip title={labels.delete || 'Delete file'}>
             <IconButton
@@ -247,11 +234,25 @@ export const ScenarioNode = ({
       </AccordionSummary>
     );
   };
-
   const getAccordionDetails = () => {
     return (
-      <AccordionDetails className={classes.scenarioDetailsContainer}>
+      <AccordionDetails className={classes.scenarioDetailsContainer} sx={{ gap: 1 }}>
         <div className={classes.scenarioDetailsNameLine}>{getScenarioDetailNameLine(true)}</div>
+        <DescriptionEditor
+          labels={labels.description}
+          value={scenario.description}
+          scenarioId={scenario.id}
+          onChange={(value) => handleScenarioUpdate(scenario.id, { description: value })}
+          readOnly={!canUpdateScenario}
+        />
+        <TagsEditor
+          id="scenario-tags"
+          labels={labels.tags}
+          values={scenario.tags}
+          readOnly={!canUpdateScenario}
+          onChange={(value) => handleScenarioUpdate(scenario.id, { tags: value })}
+          headerStyle={{ color: 'unset', fontWeight: '700' }}
+        />
         {getDetailedStatus()}
         <Typography className={classes.cardLabel}>{labels.runTemplateLabel ?? 'Run type:'}</Typography>
         <Typography data-cy="scenario-run-template" className={classes.runTemplateName}>
@@ -316,13 +317,21 @@ ScenarioNode.propTypes = {
    */
   deleteScenario: PropTypes.func.isRequired,
   /**
-   * Boolean value defining whether or not scenario edition is allowed in the ScenarioNode card
+   * Boolean value defining whether scenario edition is allowed in the ScenarioNode card
    */
   canRenameScenario: PropTypes.bool,
+  /**
+   * Boolean value defining whether scenario edition is allowed in the ScenarioNode card
+   */
+  canUpdateScenario: PropTypes.bool,
   /**
    * Function to handle scenario renaming
    */
   onScenarioRename: PropTypes.func.isRequired,
+  /**
+   * Function to handle the update of scenario metadata
+   */
+  onScenarioUpdate: PropTypes.func,
   /**
    * Function to check potential errors in scenario new name
    */
@@ -389,6 +398,14 @@ ScenarioNode.propTypes = {
       rejected: PropTypes.string.isRequired,
       validated: PropTypes.string.isRequired,
     }).isRequired,
+    description: PropTypes.shape({
+      label: PropTypes.string,
+      placeholder: PropTypes.string,
+    }),
+    tags: PropTypes.shape({
+      header: PropTypes.string,
+      placeholder: PropTypes.string,
+    }),
   }),
   /**
    * Function to store the scenario's name selected for delete, used in confirmation dialog
@@ -431,6 +448,12 @@ ScenarioNode.defaultProps = {
       rejected: 'Rejected',
       validated: 'Validated',
     },
+    description: { label: 'Description', placeholder: 'Description of your scenario' },
+    tags: {
+      header: 'Tags',
+      placeholder: 'Enter a new tag',
+    },
   },
   checkScenarioNameValue: () => null,
+  onScenarioUpdate: () => null,
 };

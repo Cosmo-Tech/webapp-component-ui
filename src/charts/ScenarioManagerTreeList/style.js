@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
     '& .rst__nodeContent': {
       flexGrow: '1',
       position: 'sticky',
+      width: 'min-content',
+    },
+    '& .rst__row': {
+      display: 'block',
+      whiteSpace: 'normal',
     },
   },
   rootScenarioHiddenLineBlock: {

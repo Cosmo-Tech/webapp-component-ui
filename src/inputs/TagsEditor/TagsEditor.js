@@ -12,9 +12,6 @@ const DEFAULT_LABELS = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  label: {
-    color: theme.palette.text.secondary,
-  },
   addTagIcon: {
     width: '16px',
     height: '16px',
@@ -22,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const TagsEditor = (props) => {
-  const classes = useStyles();
   const {
     id,
     values: tmpValues,
@@ -32,7 +28,9 @@ export const TagsEditor = (props) => {
     chipProps,
     textFieldProps,
     editIconProps,
+    headerStyle,
   } = props;
+  const classes = useStyles();
 
   const values = useMemo(() => tmpValues ?? [], [tmpValues]);
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
@@ -118,9 +116,7 @@ export const TagsEditor = (props) => {
           container
           sx={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', flexWrap: 'nowrap' }}
         >
-          <Typography variant="body1" className={classes.label} sx={{ pr: 1 }}>
-            {labels.header}:
-          </Typography>
+          <Typography sx={{ pr: 1, color: 'text.secondary', ...headerStyle }}>{labels.header}:</Typography>
           {values.length === 0 ? addTagIcon : null}
         </Grid>
       </Grid>
@@ -194,6 +190,10 @@ TagsEditor.propTypes = {
    * Props to add to the Icon component used to start the creation of a new tag
    */
   editIconProps: PropTypes.object,
+  /**
+   * Props to override header style
+   */
+  headerStyle: PropTypes.object,
 };
 
 TagsEditor.defaultProps = {
@@ -204,4 +204,9 @@ TagsEditor.defaultProps = {
   chipProps: {},
   textFieldProps: {},
   editIconProps: {},
+  headerStyle: {},
+  labels: {
+    header: 'Tags',
+    placeholder: 'Edit your tags',
+  },
 };
