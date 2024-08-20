@@ -34,7 +34,12 @@ const filterMatchesRunStatus = (labels, scenario, searchStr) => {
   const runStatusLabel = labels?.[scenario.state.toLowerCase()]?.toLowerCase();
   return runStatusLabel && runStatusLabel.indexOf(searchStr.toLowerCase()) !== -1;
 };
-
+const filterMatchesDescription = (scenario, searchString) =>
+  scenario.description?.toLowerCase().includes(searchString.toLowerCase());
+const filterMatchesTag = (scenario, searchString) =>
+  scenario.tags?.join(' ').toLowerCase().includes(searchString.toLowerCase());
+const filterMatchesOwner = (scenario, searchString) =>
+  scenario.ownerName?.toLowerCase().includes(searchString.toLowerCase());
 export const ScenarioManagerTreeList = (props) => {
   const classes = useStyles();
   const {
@@ -145,7 +150,10 @@ export const ScenarioManagerTreeList = (props) => {
       (scenario) =>
         filterMatchesName(scenario, searchStr) ||
         filterMatchesValidationStatus(labels, scenario, searchStr) ||
-        filterMatchesRunStatus(labels, scenario, searchStr)
+        filterMatchesRunStatus(labels, scenario, searchStr) ||
+        filterMatchesDescription(scenario, searchStr) ||
+        filterMatchesTag(scenario, searchStr) ||
+        filterMatchesOwner(scenario, searchStr)
     );
     // Format list and set as tree data
     setScenariosTree(formatScenariosToScenariosTree(filtered));
