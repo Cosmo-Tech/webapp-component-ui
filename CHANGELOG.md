@@ -1,3 +1,15 @@
+## **9.3.0** <sub><sup>2024-08-21 (996e1a5...a8aaa91)</sup></sub>
+
+### Features
+*  add description and tags fields in createScenarioDialog ([c59e73a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c59e73a))
+*  add description and tags fields in scenarioManager ([6e942ea](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6e942ea))
+*  extend search to tags, description and owner in scenario manager ([a8aaa91](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a8aaa91))
+
+
+### Bug Fixes
+*  remove undesired persistent placeholder in MultiSelect component ([adbec0c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/adbec0c))
+
+
 ## **9.2.1** <sub><sup>2024-07-29 (a3ada1a...8f32e3a)</sup></sub>
 
 ### Bug Fixes
