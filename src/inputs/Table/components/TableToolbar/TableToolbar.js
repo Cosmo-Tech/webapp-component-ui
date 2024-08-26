@@ -28,28 +28,39 @@ export const TableToolbar = (props) => {
     editMode,
     customToolbarActions,
     labels,
+    visibilityOptions,
   } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.tableToolbar} style={isReady ? { borderBottom: 'none' } : null} data-cy="table-toolbar">
-      <FullscreenButton
-        isFullscreen={isFullscreen}
-        toggleFullscreen={toggleFullscreen}
-        disabled={isLoading}
-        label={labels.fullscreen}
-      />
-      {onImport && <ImportButton onImport={onImport} label={labels.import} disabled={!editMode || isLoading} />}
-      {onExport && <ExportButton onExport={onExport} label={labels.export} disabled={isLoading} />}
-      {onAddRow && <AddRowButton onAddRow={onAddRow} label={labels.addRow} disabled={!editMode || isLoading} />}
-      {onDeleteRow && (
+      {visibilityOptions?.fullscreen !== false && (
+        <FullscreenButton
+          isFullscreen={isFullscreen}
+          toggleFullscreen={toggleFullscreen}
+          disabled={isLoading}
+          label={labels.fullscreen}
+        />
+      )}
+      {onImport && visibilityOptions?.import !== false && (
+        <ImportButton onImport={onImport} label={labels.import} disabled={!editMode || isLoading} />
+      )}
+      {onExport && visibilityOptions?.export !== false && (
+        <ExportButton onExport={onExport} label={labels.export} disabled={isLoading} />
+      )}
+      {onAddRow && visibilityOptions?.addRow !== false && (
+        <AddRowButton onAddRow={onAddRow} label={labels.addRow} disabled={!editMode || isLoading} />
+      )}
+      {onDeleteRow && visibilityOptions?.deleteRow !== false && (
         <DeleteRowButton
           onDeleteRow={onDeleteRow}
           labels={labels.deleteRows}
           disabled={!editMode || !isReady || isLoading || !(isRowSelected ?? true)}
         />
       )}
-      {onRevert && <RevertDataButton onRevert={onRevert} label={labels.revert} disabled={!editMode || isLoading} />}
+      {onRevert && visibilityOptions?.revert !== false && (
+        <RevertDataButton onRevert={onRevert} label={labels.revert} disabled={!editMode || isLoading} />
+      )}
       {isLoading ? (
         <span className={classes.tableLoading}>
           {labels.loading}
@@ -136,4 +147,12 @@ TableToolbar.propTypes = {
     fullscreen: PropTypes.string,
     revert: PropTypes.string,
   }).isRequired,
+  visibilityOptions: PropTypes.shape({
+    fullscreen: PropTypes.bool,
+    import: PropTypes.bool,
+    export: PropTypes.bool,
+    addRow: PropTypes.bool,
+    deleteRow: PropTypes.bool,
+    revert: PropTypes.bool,
+  }),
 };

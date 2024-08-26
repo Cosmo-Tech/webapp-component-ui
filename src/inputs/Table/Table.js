@@ -169,6 +169,7 @@ export const Table = (props) => {
     onDeleteRow,
     onRevert,
     customToolbarActions,
+    visibilityOptions,
     ...otherProps
   } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
@@ -277,6 +278,7 @@ export const Table = (props) => {
         editMode={editMode}
         customToolbarActions={customToolbarActions}
         labels={toolbarLabels}
+        visibilityOptions={visibilityOptions}
       />
     );
   }, [
@@ -301,6 +303,7 @@ export const Table = (props) => {
     onRevert,
     editMode,
     customToolbarActions,
+    visibilityOptions,
   ]);
 
   const emptyTablePlaceholder = useMemo(() => {
@@ -312,7 +315,7 @@ export const Table = (props) => {
         <Typography variant="body1" className={classes.emptyTablePlaceholderBody}>
           {labels.placeholderBody}
         </Typography>
-        {onImport ? (
+        {onImport && visibilityOptions?.import !== false ? (
           <Button
             key="import-file-button"
             disabled={!editMode || isLoading}
@@ -338,6 +341,7 @@ export const Table = (props) => {
     labels.placeholderBody,
     labels.placeholderTitle,
     onImport,
+    visibilityOptions?.import,
   ]);
 
   const agGridElement = useMemo(() => {
@@ -373,12 +377,14 @@ export const Table = (props) => {
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
       <div data-cy="label">
-        <Stack spacing={1} direction="row" alignItems="center">
-          <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
-            {labels.label}
-          </Typography>
-          <TooltipInfo title={tooltipText} variant="small" />
-        </Stack>
+        {visibilityOptions?.label !== false && (
+          <Stack spacing={1} direction="row" alignItems="center">
+            <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
+              {labels.label}
+            </Typography>
+            <TooltipInfo title={tooltipText} variant="small" />
+          </Stack>
+        )}
       </div>
       {extraToolbarActions ? <div className={classes.toolBar}>{extraToolbarActions}</div> : null}
       <div
@@ -529,6 +535,29 @@ Table.propTypes = {
    * If not defined, this button will not be rendered.
    */
   onRevert: PropTypes.func,
+  /**
+   * visibilityOptions is an array of bool values to hide some elements of the component. When a value is set to false,
+   * the associated element will not be shown.
+   * Structure:
+   * {
+   *   label: 'bool',
+   *   fullscreen: 'bool',
+   *   import: 'bool',
+   *   export: 'bool',
+   *   addRow: 'bool',
+   *   deleteRow: 'bool',
+   *   revert: 'bool',
+   * }
+   */
+  visibilityOptions: PropTypes.shape({
+    label: PropTypes.bool,
+    fullscreen: PropTypes.bool,
+    import: PropTypes.bool,
+    export: PropTypes.bool,
+    addRow: PropTypes.bool,
+    deleteRow: PropTypes.bool,
+    revert: PropTypes.bool,
+  }),
 };
 
 const DEFAULT_LABELS = {
