@@ -1,6 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   DeleteForever as DeleteForeverIcon,
@@ -17,6 +17,7 @@ import {
   CircularProgress,
   IconButton,
   Paper,
+  Stack,
   Typography,
 } from '@mui/material';
 import { DatasetUtils } from '@cosmotech/core';
@@ -173,12 +174,51 @@ export const ScenarioNode = ({
     );
   };
 
+  const datasetNames = useMemo(() => {
+    if (!scenario.datasetList || scenario.datasetList.length === 0) return labels.noDataset ?? 'None';
+    return DatasetUtils.getDatasetNames(datasets, scenario.datasetList) || (labels.datasetNotFound ?? 'Not found');
+  }, [datasets, labels.datasetNotFound, labels.noDataset, scenario.datasetList]);
+
   const getScenarioDetailNameLine = (isExpanded = false) => {
     return (
       <>
         <Box sx={{ alignContent: 'flex-start' }}>
           {getScenarioName()}
-          {!isExpanded && <Typography variant="subtitle2">{scenario.runTemplateName}</Typography>}
+          {!isExpanded && (
+            <Stack direction="row">
+              <FadingTooltip title={labels.runTemplateLabel + ' ' + scenario.runTemplateName}>
+                <Typography
+                  variant="subtitle2"
+                  component="span"
+                  sx={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 1,
+                    overflow: 'hidden',
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  {labels.runTemplateLabel}&nbsp;{scenario.runTemplateName}
+                </Typography>
+              </FadingTooltip>
+              <FadingTooltip title={labels.dataset + ' ' + datasetNames}>
+                <Typography
+                  variant="subtitle2"
+                  component="span"
+                  sx={{
+                    display: '-webkit-box',
+                    WebkitBoxOrient: 'vertical',
+                    WebkitLineClamp: 1,
+                    overflow: 'hidden',
+                    wordBreak: 'break-all',
+                  }}
+                >
+                  &nbsp;|&nbsp;{labels.dataset}&nbsp;
+                  {datasetNames}
+                </Typography>
+              </FadingTooltip>
+            </Stack>
+          )}
         </Box>
         {getValidationStatus(isExpanded)}
       </>
@@ -254,7 +294,7 @@ export const ScenarioNode = ({
         <Typography className={classes.cardLabel}>{labels.dataset}</Typography>
         <Typography>
           <span data-cy="scenario-datasets" className={classes.datasets}>
-            {DatasetUtils.getDatasetNames(datasets, scenario.datasetList)}
+            {datasetNames}
           </span>
         </Typography>
       </AccordionDetails>
@@ -351,6 +391,8 @@ ScenarioNode.propTypes = {
         },
         running: 'string',
         dataset: 'string',
+        noDataset: 'string',
+        datasetNotFound: 'string'
         deleteDialog : {
           title: 'string',
           description: 'string',
@@ -381,6 +423,8 @@ ScenarioNode.propTypes = {
     }),
     running: PropTypes.string.isRequired,
     dataset: PropTypes.string.isRequired,
+    noDataset: PropTypes.string,
+    datasetNotFound: PropTypes.string,
     deleteDialog: PropTypes.shape({
       title: PropTypes.string,
       description: PropTypes.string.isRequired,
@@ -437,6 +481,8 @@ ScenarioNode.defaultProps = {
       confirm: 'Confirm',
     },
     dataset: 'Datasets:',
+    noDataset: 'None',
+    datasetNotFound: 'Not Found',
     validationStatus: {
       rejected: 'Rejected',
       validated: 'Validated',

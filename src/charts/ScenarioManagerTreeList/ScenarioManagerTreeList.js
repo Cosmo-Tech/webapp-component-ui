@@ -287,6 +287,8 @@ ScenarioManagerTreeList.propTypes = {
       },
     },
     dataset: 'string',
+   noDataset: 'string',
+   datasetNotFound: 'string'
     searchField: 'string',
     toolbar : {
       expandAll: 'string',
@@ -337,6 +339,8 @@ ScenarioManagerTreeList.defaultProps = {
       confirm: 'Confirm',
     },
     dataset: 'Dataset:',
+    noDataset: 'None',
+    datasetNotFound: 'Not Found',
     searchField: 'Filter',
     toolbar: {
       expandAll: 'Expand all',
