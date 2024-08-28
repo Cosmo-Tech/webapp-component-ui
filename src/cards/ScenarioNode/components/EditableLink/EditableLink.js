@@ -3,7 +3,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Edit as EditIcon } from '@mui/icons-material';
-import { FormControl, OutlinedInput, FormHelperText, Link, CircularProgress, IconButton, Grid } from '@mui/material';
+import {
+  FormControl,
+  OutlinedInput,
+  FormHelperText,
+  Link,
+  CircularProgress,
+  IconButton,
+  Grid,
+  Typography,
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { FadingTooltip } from '../../../../misc';
 
@@ -93,15 +102,10 @@ export const EditableLink = (props) => {
           }}
         >
           <FadingTooltip key="scenario-name-tooltip" title={value}>
-            <Link
-              data-cy="scenario-view-redirect"
-              component="button"
-              underline="hover"
-              className={classes.label}
-              {...typographyProps}
-              onClick={onClick}
-            >
-              {value}
+            <Link data-cy="scenario-view-redirect" component="button" underline="hover" onClick={onClick}>
+              <Typography className={classes.label} {...typographyProps}>
+                {value}
+              </Typography>
             </Link>
           </FadingTooltip>
           {canRenameScenario && (
