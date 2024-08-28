@@ -1,3 +1,15 @@
+## **9.4.0** <sub><sup>2024-08-28 (b5750f9...41934f6)</sup></sub>
+
+### Features
+*  add optional param runTemplateId to update & rename callbacks in ScenarioNode ([b5750f9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b5750f9))
+*  add visibilityOptions prop in Table component ([996fb0f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/996fb0f))
+*  add dataset name in folded accordion in scenario manager ([042662e](https://github.com/Cosmo-Tech/webapp-component-ui/commit/042662e))
+
+
+### Bug Fixes
+*  fix overflow in firefox when a scenario has a very long name ([eaedd1f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/eaedd1f))
+
+
 ## **9.3.0** <sub><sup>2024-08-21 (996e1a5...a8aaa91)</sup></sub>
 
 ### Features
