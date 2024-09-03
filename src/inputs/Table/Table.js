@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
     right: 'auto',
     bottom: 'auto',
     position: 'fixed',
-    height: '100%',
     width: '100%',
     // z-index for the fullscreen container must be higher than 1200 to hide the app bar and drawers, but lower than
     // 1300 to still appear under modals & tooltips (see https://mui.com/material-ui/customization/z-index/ for details)
@@ -65,25 +64,24 @@ const useStyles = makeStyles((theme) => ({
     border: theme.spacing(2) + ' solid',
     borderColor: 'var(--ag-odd-row-background-color)',
     backgroundColor: 'var(--ag-odd-row-background-color)',
-    height: '100%',
     overflow: 'scroll',
   },
-  emptyTablePlaceholderDiv: {
-    textAlign: 'center',
-    maxHeight: '200px',
-    maxWidth: '390px',
-    margin: '0px',
-    position: 'relative',
-    top: '50%',
-    left: '50%',
-    msTransform: 'translate(-50%, -50%)',
-    transform: 'translate(-50%, -50%)',
+  tablePlaceholderWrapper: {
+    height: '100%',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  emptyTablePlaceholderTitle: {
+  tablePlaceholderDiv: {
+    textAlign: 'center',
+    margin: theme.spacing(2),
+  },
+  tablePlaceholderTitle: {
     marginBottom: theme.spacing(1),
     whiteSpace: 'pre-line',
   },
-  emptyTablePlaceholderBody: {
+  tablePlaceholderBody: {
     marginBottom: theme.spacing(1),
   },
   errorsPanelFullscreen: {
@@ -176,7 +174,6 @@ export const Table = (props) => {
   const fallbackRef = useRef(null);
   const gridRef = optionalGridRef || fallbackRef;
 
-  const dimensions = { height, width };
   const classes = useStyles();
   const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const hasErrors = errors && errors.length > 0;
@@ -306,35 +303,38 @@ export const Table = (props) => {
     visibilityOptions,
   ]);
 
-  const emptyTablePlaceholder = useMemo(() => {
+  const tablePlaceholder = useMemo(() => {
     return (
-      <div className={classes.emptyTablePlaceholderDiv} data-cy="empty-table-placeholder">
-        <Typography variant="h5" className={classes.emptyTablePlaceholderTitle}>
-          {labels.placeholderTitle}
-        </Typography>
-        <Typography variant="body1" className={classes.emptyTablePlaceholderBody}>
-          {labels.placeholderBody}
-        </Typography>
-        {onImport && visibilityOptions?.import !== false ? (
-          <Button
-            key="import-file-button"
-            disabled={!editMode || isLoading}
-            color="primary"
-            variant="contained"
-            startIcon={<UploadFileIcon />}
-            component="label"
-            onChange={onImport}
-          >
-            {labels.import}
-            <input type="file" accept=".csv, .xlsx" hidden />
-          </Button>
-        ) : null}
+      <div className={classes.tablePlaceholderWrapper}>
+        <div className={classes.tablePlaceholderDiv} data-cy="empty-table-placeholder">
+          <Typography variant="h5" className={classes.tablePlaceholderTitle}>
+            {labels.placeholderTitle}
+          </Typography>
+          <Typography variant="body1" className={classes.tablePlaceholderBody}>
+            {labels.placeholderBody}
+          </Typography>
+          {onImport && visibilityOptions?.import !== false ? (
+            <Button
+              key="import-file-button"
+              disabled={!editMode || isLoading}
+              color="primary"
+              variant="contained"
+              startIcon={<UploadFileIcon />}
+              component="label"
+              onChange={onImport}
+            >
+              {labels.import}
+              <input type="file" accept=".csv, .xlsx" hidden />
+            </Button>
+          ) : null}
+        </div>
       </div>
     );
   }, [
-    classes.emptyTablePlaceholderBody,
-    classes.emptyTablePlaceholderDiv,
-    classes.emptyTablePlaceholderTitle,
+    classes.tablePlaceholderBody,
+    classes.tablePlaceholderDiv,
+    classes.tablePlaceholderTitle,
+    classes.tablePlaceholderWrapper,
     editMode,
     isLoading,
     labels.import,
@@ -374,6 +374,7 @@ export const Table = (props) => {
       id="table-container"
       data-cy="table-input"
       {...otherProps}
+      style={{ height }}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
       <div data-cy="label">
@@ -390,13 +391,22 @@ export const Table = (props) => {
       <div
         data-cy="grid"
         id="grid-container"
+        style={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}
         className={`${agTheme} ${isFullscreen && classes.fullscreenGridContainer}`}
       >
-        <div className={isFullscreen ? classes.fullscreenGridBorder : null}>
+        <div
+          style={{
+            minHeight: '168px',
+            height: '100%',
+            display: 'flex',
+            flexFlow: 'column nowrap',
+          }}
+          className={isFullscreen ? classes.fullscreenGridBorder : null}
+        >
           {errorsPanelElement}
           {tableToolbarElement}
-          <Box sx={isFullscreen ? { height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})`, width: '100%' } : dimensions}>
-            {isReady && !isLoading ? agGridElement : emptyTablePlaceholder}
+          <Box style={{ flex: '1 0 0', overflow: 'auto' }} sx={{ width: width ?? '100%' }}>
+            {isReady && !isLoading ? agGridElement : tablePlaceholder}
           </Box>
         </div>
       </div>
@@ -578,7 +588,7 @@ const DEFAULT_LABELS = {
 Table.defaultProps = {
   dateFormat: 'dd/MM/yyyy',
   dataStatus: TABLE_DATA_STATUS.EMPTY,
-  height: '200px',
+  height: `calc(200px + ${TABLE_TOOLBAR_HEIGHT})`, // Legacy default height
   width: '100%',
   agTheme: 'ag-theme-balham',
   labels: DEFAULT_LABELS,
