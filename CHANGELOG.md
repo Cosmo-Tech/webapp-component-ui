@@ -1,26 +1,32 @@
+## **9.4.1** <sub><sup>2024-09-04 (4e2d243...4e2d243)</sup></sub>
+
+### Bug Fixes
+
+- fix possible issues with default & max height of Table component ([4e2d243](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e2d243))
+
 ## **9.4.0** <sub><sup>2024-08-28 (b5750f9...41934f6)</sup></sub>
 
 ### Features
-*  add optional param runTemplateId to update & rename callbacks in ScenarioNode ([b5750f9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b5750f9))
-*  add visibilityOptions prop in Table component ([996fb0f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/996fb0f))
-*  add dataset name in folded accordion in scenario manager ([042662e](https://github.com/Cosmo-Tech/webapp-component-ui/commit/042662e))
 
+- add optional param runTemplateId to update & rename callbacks in ScenarioNode ([b5750f9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b5750f9))
+- add visibilityOptions prop in Table component ([996fb0f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/996fb0f))
+- add dataset name in folded accordion in scenario manager ([042662e](https://github.com/Cosmo-Tech/webapp-component-ui/commit/042662e))
 
 ### Bug Fixes
-*  fix overflow in firefox when a scenario has a very long name ([eaedd1f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/eaedd1f))
 
+- fix overflow in firefox when a scenario has a very long name ([eaedd1f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/eaedd1f))
 
 ## **9.3.0** <sub><sup>2024-08-21 (996e1a5...a8aaa91)</sup></sub>
 
 ### Features
-*  add description and tags fields in createScenarioDialog ([c59e73a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c59e73a))
-*  add description and tags fields in scenarioManager ([6e942ea](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6e942ea))
-*  extend search to tags, description and owner in scenario manager ([a8aaa91](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a8aaa91))
 
+- add description and tags fields in createScenarioDialog ([c59e73a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c59e73a))
+- add description and tags fields in scenarioManager ([6e942ea](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6e942ea))
+- extend search to tags, description and owner in scenario manager ([a8aaa91](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a8aaa91))
 
 ### Bug Fixes
-*  remove undesired persistent placeholder in MultiSelect component ([adbec0c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/adbec0c))
 
+- remove undesired persistent placeholder in MultiSelect component ([adbec0c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/adbec0c))
 
 ## **9.2.1** <sub><sup>2024-07-29 (a3ada1a...8f32e3a)</sup></sub>
 
