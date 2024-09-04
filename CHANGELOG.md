@@ -1,7 +1,8 @@
-## **9.4.1** <sub><sup>2024-09-04 (4e2d243...4e2d243)</sup></sub>
+## **9.4.1** <sub><sup>2024-09-04 (4e2d243...084b056)</sup></sub>
 
 ### Bug Fixes
 
+- change style of dataset and runTemplate labels in scenario node ([084b056](https://github.com/Cosmo-Tech/webapp-component-ui/commit/084b056))
 - fix possible issues with default & max height of Table component ([4e2d243](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e2d243))
 
 ## **9.4.0** <sub><sup>2024-08-28 (b5750f9...41934f6)</sup></sub>
