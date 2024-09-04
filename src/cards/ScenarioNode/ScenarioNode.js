@@ -191,6 +191,7 @@ export const ScenarioNode = ({
                   variant="subtitle2"
                   component="span"
                   sx={{
+                    fontWeight: '700',
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
                     WebkitLineClamp: 1,
@@ -198,7 +199,10 @@ export const ScenarioNode = ({
                     wordBreak: 'break-all',
                   }}
                 >
-                  {labels.runTemplateLabel}&nbsp;{scenario.runTemplateName}
+                  {labels.runTemplateLabel}
+                  <Typography variant="subtitle2" component="span" sx={{ fontWeight: 'normal' }}>
+                    &nbsp;{scenario.runTemplateName}&nbsp;|&nbsp;
+                  </Typography>
                 </Typography>
               </FadingTooltip>
               <FadingTooltip title={labels.dataset + ' ' + datasetNames}>
@@ -206,6 +210,7 @@ export const ScenarioNode = ({
                   variant="subtitle2"
                   component="span"
                   sx={{
+                    fontWeight: '700',
                     display: '-webkit-box',
                     WebkitBoxOrient: 'vertical',
                     WebkitLineClamp: 1,
@@ -213,8 +218,10 @@ export const ScenarioNode = ({
                     wordBreak: 'break-all',
                   }}
                 >
-                  &nbsp;|&nbsp;{labels.dataset}&nbsp;
-                  {datasetNames}
+                  {labels.dataset}&nbsp;
+                  <Typography variant="subtitle2" component="span" sx={{ fontWeight: 'normal' }}>
+                    {datasetNames}
+                  </Typography>
                 </Typography>
               </FadingTooltip>
             </Stack>
