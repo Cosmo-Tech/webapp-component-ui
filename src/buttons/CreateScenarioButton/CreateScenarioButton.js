@@ -41,7 +41,7 @@ export const CreateScenarioButton = ({
   );
   return (
     <div>
-      <FadingTooltip arrow title={labels.button.tooltip}>
+      <FadingTooltip arrow title={labels.button.tooltip} disableHoverListener={!isIconButton && !disabled}>
         {buttonContent}
       </FadingTooltip>
       <CreateScenarioDialog
