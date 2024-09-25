@@ -51,7 +51,9 @@ export const RolesEditionButton = ({
   );
   return (
     <div>
-      <FadingTooltip title={labels.button?.tooltip ?? 'Modify access'}>{buttonContent}</FadingTooltip>
+      <FadingTooltip title={labels.button?.tooltip ?? 'Share'} disableHoverListener={!isIconButton && !disabled}>
+        {buttonContent}
+      </FadingTooltip>
       <RolesEditionDialog
         open={open}
         resourceRolesPermissionsMapping={resourceRolesPermissionsMapping}
