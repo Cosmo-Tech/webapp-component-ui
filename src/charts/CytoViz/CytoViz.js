@@ -366,10 +366,10 @@ export const CytoViz = (props) => {
         classes={{
           paper: classes.drawerPaper,
         }}
-        BackdropProps={{ style: { position: 'absolute' } }}
+        hideBackdrop={true}
         ModalProps={{
           container: document.getElementById('cytoviz-root'),
-          style: { position: 'absolute' },
+          style: { position: 'static' },
         }}
       >
         <div className={classes.drawerHeader}>
