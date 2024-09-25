@@ -1,3 +1,14 @@
+## **9.5.0** <sub><sup>2024-09-25 (3e9973a...af47550)</sup></sub>
+
+### Features
+*  add iconButton option to Create scenario button ([c6501d8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c6501d8))
+
+
+### Bug Fixes
+*  delete backdrop in flowchart view when the menu drawer is open ([3e9973a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3e9973a))
+*  disable tooltip on contained Share and Create buttons ([ac84379](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ac84379))
+
+
 ## **9.4.1** <sub><sup>2024-09-04 (4e2d243...084b056)</sup></sub>
 
 ### Bug Fixes
