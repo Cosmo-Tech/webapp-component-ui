@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@mui/material';
-import { FadingTooltip } from '../../misc/FadingTooltip';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Button, IconButton } from '@mui/material';
+import { FadingTooltip } from '../../misc';
 import CreateScenarioDialog from './components';
 
 export const CreateScenarioButton = ({
@@ -16,24 +17,32 @@ export const CreateScenarioButton = ({
   solution,
   disabled,
   labels,
+  isIconButton,
 }) => {
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
 
+  const buttonContent = isIconButton ? (
+    <IconButton data-cy="create-scenario-button" size="medium" onClick={openDialog} color="primary" disabled={disabled}>
+      <AddCircleIcon />
+    </IconButton>
+  ) : (
+    <Button
+      data-cy="create-scenario-button"
+      size="medium"
+      variant="contained"
+      onClick={openDialog}
+      color="primary"
+      disabled={disabled}
+    >
+      {labels.button.title}
+    </Button>
+  );
   return (
     <div>
       <FadingTooltip arrow title={labels.button.tooltip}>
-        <Button
-          data-cy="create-scenario-button"
-          size="medium"
-          variant="contained"
-          onClick={openDialog}
-          color="primary"
-          disabled={disabled}
-        >
-          {labels.button.title}
-        </Button>
+        {buttonContent}
       </FadingTooltip>
       <CreateScenarioDialog
         createScenario={createScenario}
@@ -139,6 +148,12 @@ CreateScenarioButton.propTypes = {
       forbiddenCharsInScenarioName: PropTypes.string.isRequired,
     }).isRequired,
   }),
+  /**
+   *  Defines the CreateScenarioButton's form:
+   *  - true : the button is round shaped and has an Add icon instead of title
+   *  - false (default value): the button is contained and has a title
+   */
+  isIconButton: PropTypes.bool,
 };
 
 CreateScenarioButton.defaultProps = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chip, CircularProgress } from '@mui/material';
+import { Box, Chip, CircularProgress } from '@mui/material';
 
 export const ScenarioValidationStatusChip = (props) => {
   const { labels, status, onDelete, className } = props;
@@ -17,26 +17,30 @@ export const ScenarioValidationStatusChip = (props) => {
 
   if (lowerCaseStatus === 'loading') {
     return (
-      <CircularProgress
-        className={className}
-        color="inherit"
-        data-cy="scenario-validation-status-loading-spinner"
-        size="15px"
-      />
+      <Box mx={2}>
+        <CircularProgress
+          className={className}
+          color="inherit"
+          data-cy="scenario-validation-status-loading-spinner"
+          size="15px"
+        />
+      </Box>
     );
   }
 
   const colorProp = lowerCaseStatus === 'validated' ? 'success' : 'error';
 
   return lowerCaseStatus === 'rejected' || lowerCaseStatus === 'validated' ? (
-    <Chip
-      clickable={false}
-      data-cy="scenario-validation-status"
-      label={getLabel()}
-      onDelete={onDelete}
-      color={colorProp}
-      className={className}
-    />
+    <Box mx={1}>
+      <Chip
+        clickable={false}
+        data-cy="scenario-validation-status"
+        label={getLabel()}
+        onDelete={onDelete}
+        color={colorProp}
+        className={className}
+      />
+    </Box>
   ) : null;
 };
 
