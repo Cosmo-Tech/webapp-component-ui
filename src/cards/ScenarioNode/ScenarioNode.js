@@ -201,10 +201,13 @@ export const ScenarioNode = ({
                 >
                   {labels.runTemplateLabel}
                   <Typography variant="subtitle2" component="span" sx={{ fontWeight: 'normal' }}>
-                    &nbsp;{scenario.runTemplateName}&nbsp;|&nbsp;
+                    &nbsp;{scenario.runTemplateName}
                   </Typography>
                 </Typography>
               </FadingTooltip>
+              <Typography variant="subtitle2" component="span" mx={0.5}>
+                |
+              </Typography>
               <FadingTooltip title={labels.dataset + ' ' + datasetNames}>
                 <Typography
                   variant="subtitle2"
