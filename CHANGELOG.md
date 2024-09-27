@@ -1,3 +1,10 @@
+## **9.5.1** <sub><sup>2024-09-27 (fb76924...4e5eeaf)</sup></sub>
+
+### Bug Fixes
+*  fix pipe not displayed in scenario manager card if run template name is too long ([fb76924](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb76924))
+*  delete unnecessary margins in ScenarioValidationChip ([4e5eeaf](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e5eeaf))
+
+
 ## **9.5.0** <sub><sup>2024-09-25 (3e9973a...af47550)</sup></sub>
 
 ### Features
