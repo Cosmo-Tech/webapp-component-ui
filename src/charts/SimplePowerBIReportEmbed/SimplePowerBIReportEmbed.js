@@ -205,7 +205,7 @@ export const SimplePowerBIReportEmbed = ({
     let content;
     try {
       content = (
-        <PowerBIEmbed cssClassName={classes.report} embedConfig={embedConfig} getEmbeddedComponent={setReport} />
+        <PowerBIEmbed cssClassName={classes.report} embedConfig={embedConfig} getEmbeddedComponent={() => setReport} />
       );
     } catch (error) {
       console.log('Error when intializing the PowerBIEmbed component.');
