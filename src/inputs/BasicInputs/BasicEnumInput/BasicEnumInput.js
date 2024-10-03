@@ -21,7 +21,7 @@ export const BasicEnumInput = (props) => {
     enumValues: selectEnumValues,
     changeEnumField,
     isDirty,
-    size,
+    size = 'small',
     ...otherProps
   } = props;
 
@@ -136,8 +136,4 @@ BasicEnumInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
-};
-
-BasicEnumInput.defaultProps = {
-  size: 'small',
 };

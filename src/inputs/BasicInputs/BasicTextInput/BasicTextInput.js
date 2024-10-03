@@ -13,7 +13,18 @@ const useStyles = makeStyles(getCommonInputStyles);
 export const BasicTextInput = (props) => {
   const classes = useStyles();
 
-  const { id, label, tooltipText, value, textFieldProps, changeTextField, isDirty, error, size, ...otherProps } = props;
+  const {
+    id,
+    label,
+    tooltipText,
+    value,
+    textFieldProps,
+    changeTextField,
+    isDirty,
+    error,
+    size = 'small',
+    ...otherProps
+  } = props;
 
   if (textFieldProps?.disabled)
     return (
@@ -87,7 +98,4 @@ BasicTextInput.propTypes = {
    * Error object that contains the type of error and its message
    */
   error: PropTypes.object,
-};
-BasicTextInput.defaultProps = {
-  size: 'small',
 };

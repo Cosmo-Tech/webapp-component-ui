@@ -22,15 +22,15 @@ export const BasicSliderInput = (props) => {
     tooltipText,
     value,
     handleSliderValueChange,
-    valueLabelDisplay,
-    step,
+    valueLabelDisplay = 'auto',
+    step = 1,
     marks,
-    min: minValue,
-    max: maxValue,
-    orientation,
-    disabled,
+    min: minValue = 0,
+    max: maxValue = 100,
+    orientation = 'horizontal',
+    disabled = true,
     sliderStyle,
-    color,
+    color = 'secondary',
     isDirty,
     ...otherProps
   } = props;
@@ -160,14 +160,4 @@ BasicSliderInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
-};
-
-BasicSliderInput.defaultProps = {
-  valueLabelDisplay: 'auto',
-  step: 1,
-  min: 0,
-  max: 100,
-  orientation: 'horizontal',
-  disabled: true,
-  color: 'secondary',
 };

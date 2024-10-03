@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardPlaceholder = (props) => {
   const classes = useStyles();
-  const { title, label, icon, downloadLogsFile, downloadLabel, inProgress } = props;
+  const { title = null, label, icon, downloadLogsFile, downloadLabel, inProgress = false } = props;
 
   return (
     <Grid
@@ -63,11 +63,6 @@ DashboardPlaceholder.propTypes = {
   downloadLogsFile: PropTypes.func,
   downloadLabel: PropTypes.string,
   inProgress: PropTypes.bool,
-};
-
-DashboardPlaceholder.defaultProps = {
-  title: null,
-  inProgress: false,
 };
 
 export default DashboardPlaceholder;

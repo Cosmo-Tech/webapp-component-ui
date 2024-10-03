@@ -10,11 +10,14 @@ import { BasicInputPlaceholder } from '../BasicInputs/BasicInputPlaceholder';
 import { getCommonInputStyles } from '../style';
 
 const useStyles = makeStyles(getCommonInputStyles);
-
+const DEFAULT_LABELS = {
+  label: 'Selection',
+  noValues: 'None',
+};
 export const MultiSelect = (props) => {
   const classes = useStyles();
-  const { id, labels, tooltipText, selectedKeys, disabled, options, onChange, isDirty } = props;
-
+  const { id, labels: tmpLabels, tooltipText, selectedKeys, disabled = false, options, onChange, isDirty } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const autocompleteValues = useMemo(() => options?.map((el) => el.key) ?? [], [options]);
   const getLabelFromEnumKey = useCallback(
     (key) => options?.find((el) => el.key === key)?.value ?? key ?? '',
@@ -129,12 +132,4 @@ MultiSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
-};
-
-MultiSelect.defaultProps = {
-  disabled: false,
-  labels: {
-    label: 'Selection',
-    noValues: 'None',
-  },
 };

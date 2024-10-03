@@ -15,9 +15,15 @@ import {
 } from '@mui/material';
 import useStyles from './style';
 
+const DEFAULT_LABELS = {
+  clear: 'Clear',
+  errorsCountLabel: 'Errors:',
+};
+
 export const ErrorsPanel = (props) => {
   const classes = useStyles();
-  const { errors, maxErrorsCount, labels, onClear, buildErrorsCountLabel, className } = props;
+  const { errors, maxErrorsCount = 100, labels: tmpLabels, onClear, buildErrorsCountLabel, className } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   let errorsCountLabel = labels.errorsCountLabel;
   if (buildErrorsCountLabel) {
@@ -125,12 +131,4 @@ ErrorsPanel.propTypes = {
    */
   buildErrorsCountLabel: PropTypes.func,
   className: PropTypes.string,
-};
-
-ErrorsPanel.defaultProps = {
-  labels: {
-    clear: 'Clear',
-    errorsCountLabel: 'Errors:',
-  },
-  maxErrorsCount: 100,
 };

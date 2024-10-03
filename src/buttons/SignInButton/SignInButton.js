@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export const SignInButton = (props) => {
   const classes = useStyles();
 
-  const { id, label, logo, onClick } = props;
+  const { id, label = 'Sign in', logo = '../../assets/microsoft_logo.png', onClick } = props;
 
   return (
     <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
@@ -70,9 +70,4 @@ SignInButton.propTypes = {
    * - Custom one: to do this, use the **Auth.js** file (defined in @cosmotech/core package) as pattern
    */
   onClick: PropTypes.func.isRequired,
-};
-
-SignInButton.defaultProps = {
-  logo: '../../assets/microsoft_logo.png',
-  label: 'Sign in',
 };

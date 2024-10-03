@@ -4,18 +4,34 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
+const DEFAULT_LABELS = {
+  title: 'What A Wonderful Dialog',
+  body: `
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Vivamus quis efficitur odio, sit amet auctor nunc.
+              Curabitur et ante a nulla dapibus ultricies.
+              Proin porttitor tempor libero euismod convallis.
+              Etiam quis sollicitudin mauris. Curabitur hendrerit felis quis ligula volutpat posuere.
+              Sed gravida arcu in porttitor ornare.
+              Nulla ac rhoncus dui.
+          `,
+  button1: 'Cancel',
+  button2: 'Validate',
+};
+
 export const SimpleTwoActionsDialog = ({
   id,
-  open,
-  labels,
+  open = false,
+  labels: tmpLabels,
   handleClickOnButton1,
   handleClickOnButton2,
-  dialogProps,
-  button1Props,
-  button2Props,
-  closeOnBackdropClick,
-  component,
+  dialogProps = {},
+  button1Props = {},
+  button2Props = {},
+  closeOnBackdropClick = false,
+  component = 'p',
 }) => {
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const onClose = (event, reason) => {
     if (closeOnBackdropClick || reason !== 'backdropClick') {
       handleClickOnButton1();
@@ -124,27 +140,4 @@ SimpleTwoActionsDialog.propTypes = {
    * HTML tag to be rendered as dialog's body, e.g., 'div', 'span', 'p' (default value)
    */
   component: PropTypes.string,
-};
-
-SimpleTwoActionsDialog.defaultProps = {
-  open: false,
-  labels: {
-    title: 'What A Wonderful Dialog',
-    body: `
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Vivamus quis efficitur odio, sit amet auctor nunc.
-              Curabitur et ante a nulla dapibus ultricies.
-              Proin porttitor tempor libero euismod convallis.
-              Etiam quis sollicitudin mauris. Curabitur hendrerit felis quis ligula volutpat posuere.
-              Sed gravida arcu in porttitor ornare.
-              Nulla ac rhoncus dui.
-          `,
-    button1: 'Cancel',
-    button2: 'Validate',
-  },
-  dialogProps: {},
-  button1Props: {},
-  button2Props: {},
-  closeOnBackdropClick: false,
-  component: 'p',
 };

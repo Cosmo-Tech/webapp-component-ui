@@ -20,7 +20,7 @@ export const BasicRadioInput = (props) => {
     textFieldProps,
     changeRadioOption,
     enumValues: radioEnumValues,
-    row,
+    row = true,
     radioStyle,
     isDirty,
     ...otherProps
@@ -125,8 +125,4 @@ BasicRadioInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
-};
-
-BasicRadioInput.defaultProps = {
-  row: true,
 };
