@@ -5,8 +5,13 @@ import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
 import PropTypes from 'prop-types';
 import { Grid, Typography } from '@mui/material';
 
+const DEFAULT_STYLE = {
+  height: 100,
+  width: 120,
+  variant: 'h2',
+};
 export const LoadingLine = (props) => {
-  const { title, isLoading, hasError, animations, style } = props;
+  const { title, isLoading, hasError, animations, style = DEFAULT_STYLE } = props;
 
   const spinnerStyle = {
     height: style.height,
@@ -42,12 +47,4 @@ LoadingLine.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   hasError: PropTypes.bool.isRequired,
   animations: PropTypes.object.isRequired,
-};
-
-LoadingLine.defaultProps = {
-  style: {
-    height: 100,
-    width: 120,
-    variant: 'h2',
-  },
 };

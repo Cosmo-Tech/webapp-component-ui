@@ -78,22 +78,55 @@ function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters
   }
 }
 
+const DEFAULT_LABELS = {
+  noScenario: {
+    title: 'No scenario yet',
+    label: 'You can create a scenario by clicking on the CREATE button',
+  },
+  noDashboard: {
+    label: "There isn't any dashboard configured for this run type",
+  },
+  noRun: {
+    label: 'The scenario has not been run yet',
+  },
+  inProgress: {
+    label: 'Scenario run in progress...',
+  },
+  dataInTransfer: {
+    label: 'Transfer of scenario results in progress...',
+  },
+  hasErrors: {
+    label: 'An error occured during the scenario run',
+  },
+  hasUnknownStatus: {
+    label: 'This scenario has an unknown state, if the problem persists, please, contact your administrator',
+  },
+  resultsDisplayDisabled: 'Display of results is disabled',
+  downloadButton: 'Download logs',
+  refreshTooltip: 'Refresh',
+  errors: {
+    unknown: 'Unknown error',
+    details: 'Something went wrong when fetching PowerBI reports info',
+  },
+};
+
 export const SimplePowerBIReportEmbed = ({
-  index,
+  index = 0,
   reports,
   reportConfiguration,
   scenario,
-  alwaysShowReports,
+  alwaysShowReports = false,
   lang,
   downloadLogsFile,
-  refreshable,
-  refreshTimeout,
-  labels,
+  refreshable = true,
+  refreshTimeout = 15000,
+  labels: tmpLabels,
   iframeRatio,
-  useAAD,
-  visibleScenarios,
+  useAAD = false,
+  visibleScenarios = [],
   theme,
 }) => {
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
   const hasNavContentPane = settings?.navContentPaneEnabled;
   const classes = useStyles({ hasNavContentPane });
@@ -394,44 +427,4 @@ SimplePowerBIReportEmbed.propTypes = {
    *  Power BI object theme
    */
   theme: PropTypes.object,
-};
-
-SimplePowerBIReportEmbed.defaultProps = {
-  index: 0,
-  alwaysShowReports: false,
-  refreshable: true,
-  refreshTimeout: 15000,
-  useAAD: false,
-  visibleScenarios: [],
-  labels: {
-    noScenario: {
-      title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on the CREATE button',
-    },
-    noDashboard: {
-      label: "There isn't any dashboard configured for this run type",
-    },
-    noRun: {
-      label: 'The scenario has not been run yet',
-    },
-    inProgress: {
-      label: 'Scenario run in progress...',
-    },
-    dataInTransfer: {
-      label: 'Transfer of scenario results in progress...',
-    },
-    hasErrors: {
-      label: 'An error occured during the scenario run',
-    },
-    hasUnknownStatus: {
-      label: 'This scenario has an unknown state, if the problem persists, please, contact your administrator',
-    },
-    resultsDisplayDisabled: 'Display of results is disabled',
-    downloadButton: 'Download logs',
-    refreshTooltip: 'Refresh',
-    errors: {
-      unknown: 'Unknown error',
-      details: 'Something went wrong when fetching PowerBI reports info',
-    },
-  },
 };

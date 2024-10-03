@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 export const RoleEditor = ({
   agentName,
-  agentAccess,
+  agentAccess = null,
   allRoles,
   icon,
   onOptionSelected,
-  isReadOnly,
-  actions,
-  helperText,
+  isReadOnly = false,
+  actions = [],
+  helperText = null,
 }) => {
   const classes = useStyles();
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
@@ -102,11 +102,4 @@ RoleEditor.propTypes = {
    *  List of detailed description of each role to display when changing access
    */
   helperText: PropTypes.object,
-};
-
-RoleEditor.defaultProps = {
-  actions: [],
-  isReadOnly: false,
-  agentAccess: null,
-  helperText: null,
 };

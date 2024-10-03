@@ -69,9 +69,17 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
   }
 };
 
+const DEFAULT_LABELS = {
+  attributes: {},
+  dictKey: 'Key',
+  dictValue: 'Value',
+  noData: 'No data to display for this element.',
+};
+
 const ElementData = (props) => {
   const classes = useStyles();
-  const { data, labels } = props;
+  const { data = {}, labels: tmpLabels } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   if (!data) {
     return labels.noData;
   }
@@ -89,16 +97,6 @@ const ElementData = (props) => {
 ElementData.propTypes = {
   data: PropTypes.object,
   labels: PropTypes.object,
-};
-
-ElementData.defaultProps = {
-  data: PropTypes.object,
-  labels: {
-    attributes: {},
-    dictKey: 'Key',
-    dictValue: 'Value',
-    noData: 'No data to display for this element.',
-  },
 };
 
 export default ElementData;

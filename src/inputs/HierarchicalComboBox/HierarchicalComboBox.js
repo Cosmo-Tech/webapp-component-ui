@@ -16,16 +16,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DEFAULT_LABELS = {
+  label: 'Scenario',
+  validationStatus: {
+    rejected: 'Rejected',
+    validated: 'Validated',
+  },
+};
+
 export const HierarchicalComboBox = ({
   values,
   label,
-  labels,
-  disabled,
+  labels: tmpLabels,
+  disabled = false,
   handleChange,
-  renderInputToolType,
+  renderInputToolType = '',
   ...props
 }) => {
   const classes = useStyles();
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
+
   // 'label' prop is deprecated but is still used as main source of data if provided, otherwise we fallback to the new
   // prop labels.label
   const mainLabel = label || labels.label;
@@ -109,16 +119,4 @@ HierarchicalComboBox.propTypes = {
    * Tooltip on HierarchicalComboBox
    */
   renderInputToolType: PropTypes.string,
-};
-
-HierarchicalComboBox.defaultProps = {
-  disabled: false,
-  renderInputToolType: '',
-  labels: {
-    label: 'Scenario',
-    validationStatus: {
-      rejected: 'Rejected',
-      validated: 'Validated',
-    },
-  },
 };

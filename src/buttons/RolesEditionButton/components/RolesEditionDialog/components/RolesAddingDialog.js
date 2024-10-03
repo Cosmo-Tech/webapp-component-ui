@@ -35,9 +35,19 @@ const _sortGrantedPermissionsForRole = (rolesPermissionsMapping, allPermissions,
   return permissions;
 };
 
+const DEFAULT_LABELS = {
+  cancel: 'Cancel',
+  deniedPermissions: 'Permissions not granted',
+  done: 'Done',
+  grantedPermissions: 'Permissions granted',
+  rolesTitle: 'Roles',
+  userSelected: 'User selected',
+  rolesHelperText: 'Select one role',
+};
+
 export const RolesAddingDialog = ({
   selectedAgent,
-  labels,
+  labels: tmpLabels,
   allRoles,
   allPermissions,
   defaultRole,
@@ -46,6 +56,7 @@ export const RolesAddingDialog = ({
   onConfirm,
 }) => {
   const classes = useStyle();
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [selectedRole, setSelectedRole] = useState(defaultRole);
   const sortedPermissions = _sortGrantedPermissionsForRole(rolesPermissionsMapping, allPermissions, selectedRole);
   return (
@@ -187,15 +198,4 @@ RolesAddingDialog.propTypes = {
   rolesPermissionsMapping: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-};
-RolesAddingDialog.defaultProps = {
-  labels: {
-    cancel: 'Cancel',
-    deniedPermissions: 'Permissions not granted',
-    done: 'Done',
-    grantedPermissions: 'Permissions granted',
-    rolesTitle: 'Roles',
-    userSelected: 'User selected',
-    rolesHelperText: 'Select one role',
-  },
 };

@@ -29,14 +29,14 @@ export const BasicDateInput = (props) => {
     id,
     label,
     tooltipText,
-    format,
+    format = 'MM/dd/yyyy',
     value,
     dateProps,
     changeSelectedDate,
     isDirty,
     error,
-    reverseTimezoneOffset,
-    size,
+    reverseTimezoneOffset = false,
+    size = 'small',
     ...otherProps
   } = props;
   const classes = useStyles();
@@ -161,10 +161,4 @@ BasicDateInput.propTypes = {
    * a consistent behavior in all timezones.
    */
   reverseTimezoneOffset: PropTypes.bool,
-};
-
-BasicDateInput.defaultProps = {
-  format: 'MM/dd/yyyy',
-  reverseTimezoneOffset: false,
-  size: 'small',
 };
