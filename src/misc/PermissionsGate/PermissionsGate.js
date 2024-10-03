@@ -20,11 +20,11 @@ const hasUserAllNecessaryPermissions = (userPermissions, necessaryPermissions) =
 
 export const PermissionsGate = ({
   children,
-  RenderNoPermissionComponent,
-  noPermissionProps,
-  necessaryPermissions,
-  sufficientPermissions,
-  userPermissions,
+  RenderNoPermissionComponent = () => <></>,
+  noPermissionProps = null,
+  necessaryPermissions = [],
+  sufficientPermissions = [],
+  userPermissions = [],
 }) => {
   const permissionGranted =
     hasGateNoNecessaryPermissions(necessaryPermissions) ||
@@ -68,12 +68,4 @@ PermissionsGate.propTypes = {
    * List of permissions granted to the current user
    */
   userPermissions: PropTypes.array,
-};
-
-PermissionsGate.defaultProps = {
-  RenderNoPermissionComponent: () => <></>,
-  noPermissionProps: null,
-  necessaryPermissions: [],
-  sufficientPermissions: [],
-  userPermissions: [],
 };

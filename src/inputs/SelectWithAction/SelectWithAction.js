@@ -15,7 +15,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SelectWithAction = ({ options, selectedOption, onOptionSelected, isReadOnly, actions }) => {
+export const SelectWithAction = ({
+  options,
+  selectedOption = null,
+  onOptionSelected = () => null,
+  isReadOnly = false,
+  actions = [],
+}) => {
   const classes = useStyles();
 
   return (
@@ -103,11 +109,4 @@ SelectWithAction.propTypes = {
    *  - classes with additional css
    */
   actions: PropTypes.array,
-};
-SelectWithAction.defaultProps = {
-  selectedOption: null,
-  actions: [],
-  onOptionSelected: () => null,
-  isReadOnly: false,
-  labels: {},
 };

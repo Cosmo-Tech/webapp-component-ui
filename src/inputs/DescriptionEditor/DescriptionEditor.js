@@ -5,9 +5,14 @@ import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Stack, TextField, Typography } from '@mui/material';
 
+const DEFAULT_LABELS = {
+  label: 'Description',
+  placeholder: 'Description of you scenario',
+};
 export const DescriptionEditor = (props) => {
-  const { onChange, readOnly, value, labels } = props;
+  const { onChange, readOnly = false, value = '', labels: tmpLabels } = props;
 
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [isEditing, setIsEditing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [descriptionText, setDescriptionText] = useState(value);
@@ -136,13 +141,4 @@ DescriptionEditor.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
   }),
-};
-
-DescriptionEditor.defaultProps = {
-  readOnly: false,
-  value: '',
-  labels: {
-    label: 'Description',
-    placeholder: 'Description of you scenario',
-  },
 };

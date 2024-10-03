@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Chip, CircularProgress } from '@mui/material';
 
+const DEFAULT_LABELS = {
+  rejected: 'Rejected',
+  validated: 'Validated',
+};
 export const ScenarioValidationStatusChip = (props) => {
-  const { labels, status, onDelete, className } = props;
+  const { labels: tmpLabels, status, onDelete, className } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const lowerCaseStatus = status?.toLowerCase() || 'unknown';
 
   const getLabel = () => {
@@ -68,11 +73,4 @@ ScenarioValidationStatusChip.propTypes = {
    * Scenario status. Must be one of these values: 'Draft', 'Loading', 'Rejected', 'Validated' or 'Unknown'.
    */
   status: PropTypes.oneOf(['Draft', 'Loading', 'Rejected', 'Validated', 'Unknown']).isRequired,
-};
-
-ScenarioValidationStatusChip.defaultProps = {
-  labels: {
-    rejected: 'Rejected',
-    validated: 'Validated',
-  },
 };

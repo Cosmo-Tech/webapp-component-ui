@@ -13,7 +13,24 @@ import {
   FormControlLabel,
 } from '@mui/material';
 
-export const DontAskAgainDialog = ({ id, open, onClose, labels, onConfirm, confirmButtonProps, cancelButtonProps }) => {
+const DEFAULT_LABELS = {
+  title: 'Do not ask again dialog',
+  body: `Are you sure ?`,
+  cancel: 'Cancel',
+  confirm: 'Confirm',
+  checkbox: 'Do not ask again',
+};
+
+export const DontAskAgainDialog = ({
+  id = 'dontAskAgain',
+  open = false,
+  onClose,
+  labels: tmpLabels,
+  onConfirm,
+  confirmButtonProps,
+  cancelButtonProps,
+}) => {
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [isChecked, setIsChecked] = useState(false);
 
   const confirm = () => {
@@ -105,16 +122,4 @@ DontAskAgainDialog.propTypes = {
   }),
   confirmButtonProps: PropTypes.object,
   cancelButtonProps: PropTypes.object,
-};
-
-DontAskAgainDialog.defaultProps = {
-  id: 'dontAskAgain',
-  open: false,
-  labels: {
-    title: 'Do not ask again dialog',
-    body: `Are you sure ?`,
-    cancel: 'Cancel',
-    confirm: 'Confirm',
-    checkbox: 'Do not ask again',
-  },
 };

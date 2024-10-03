@@ -10,11 +10,14 @@ const STATUS = {
   GENERATING: 'GENERATING',
   READY: 'READY',
 };
-
+const DEFAULT_LABELS = {
+  generateLink: 'Generate link',
+  download: 'Download',
+};
 export const SelfDestructLinkButton = (props) => {
   const classes = useStyles();
-  const { generate, height, width, labels, timeout } = props;
-
+  const { generate, height = '40px', width = '143px', labels: tmpLabels, timeout = 15 } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [status, setStatus] = useState(STATUS.IDLE);
   const [downloadLink, setDownloadLink] = useState(null);
   const timeoutRef = useRef(null);
@@ -105,14 +108,4 @@ SelfDestructLinkButton.propTypes = {
    * Timeout before download link is unavailable
    */
   timeout: PropTypes.number, // Expressed in seconds
-};
-
-SelfDestructLinkButton.defaultProps = {
-  height: '40px',
-  width: '143px',
-  labels: {
-    generateLink: 'Generate link',
-    download: 'Download',
-  },
-  timeout: 15, // Expressed in seconds
 };

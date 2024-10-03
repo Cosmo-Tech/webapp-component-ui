@@ -32,18 +32,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DEFAULT_LABELS = {
+  title: 'Share ',
+  readOnlyTitle: 'Permissions for ',
+  addPeople: 'Add people',
+  cancel: 'Cancel',
+  close: 'Close',
+  share: 'Share',
+  noAdminError: 'The scenario must have at least one administrator',
+  userSelected: 'Selected user',
+  usersAccess: 'Users access',
+  generalAccess: 'General access',
+  removeAccess: 'Remove access',
+  editor: {
+    helperText: null,
+  },
+};
+
 const ADMIN_ROLE = 'admin';
 const sortById = (agentA, agentB) => (agentA.id < agentB.id ? -1 : 1);
 
 export const RolesEditionDialog = ({
-  labels: labelsBeforeDefaultValuesPatch,
-  isReadOnly,
+  labels: tmpLabels,
+  isReadOnly = false,
   resourceRolesPermissionsMapping,
-  preventNoneRoleForAgents,
+  preventNoneRoleForAgents = false,
   onConfirmChanges,
   agents,
   accessControlList,
-  defaultRole,
+  defaultRole = '',
   open,
   closeDialog,
   allRoles,
@@ -56,7 +73,7 @@ export const RolesEditionDialog = ({
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
 
-  const labels = { ...DEFAULT_LABELS, ...labelsBeforeDefaultValuesPatch };
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   useEffect(() => {
     if (open) {
@@ -288,28 +305,4 @@ RolesEditionDialog.propTypes = {
     }).isRequired
   ),
   defaultAccessScope: PropTypes.string.isRequired,
-};
-
-const DEFAULT_LABELS = {
-  title: 'Share ',
-  readOnlyTitle: 'Permissions for ',
-  addPeople: 'Add people',
-  cancel: 'Cancel',
-  close: 'Close',
-  share: 'Share',
-  noAdminError: 'The scenario must have at least one administrator',
-  userSelected: 'Selected user',
-  usersAccess: 'Users access',
-  generalAccess: 'General access',
-  removeAccess: 'Remove access',
-  editor: {
-    helperText: null,
-  },
-};
-
-RolesEditionDialog.defaultProps = {
-  labels: DEFAULT_LABELS,
-  isReadOnly: false,
-  preventNoneRoleForAgents: false,
-  defaultRole: '',
 };

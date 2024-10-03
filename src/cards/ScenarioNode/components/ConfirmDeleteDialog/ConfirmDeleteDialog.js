@@ -18,8 +18,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels }) => {
+const DEFAULT_LABELS = {
+  title: 'Confirm delete?',
+  description:
+    'The scenario will be deleted. If this scenario has children, ' +
+    'then its parent will become the new parent of all these scenarios.',
+  cancel: 'Cancel',
+  confirm: 'Confirm',
+};
+
+export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels: tmpLabels }) => {
   const classes = useStyles();
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   return (
     <Dialog
@@ -56,15 +66,4 @@ ConfirmDeleteDialog.propTypes = {
     cancel: PropTypes.string.isRequired,
     confirm: PropTypes.string.isRequired,
   }),
-};
-
-ConfirmDeleteDialog.defaultProps = {
-  labels: {
-    title: 'Confirm delete?',
-    description:
-      'The scenario will be deleted. If this scenario has children, ' +
-      'then its parent will become the new parent of all these scenarios.',
-    cancel: 'Cancel',
-    confirm: 'Confirm',
-  },
 };

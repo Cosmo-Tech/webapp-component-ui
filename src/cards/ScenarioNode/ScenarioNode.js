@@ -26,23 +26,64 @@ import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 import { ConfirmDeleteDialog, EditableLink } from './components';
 import useStyles from './style';
 
+const DEFAULT_LABELS = {
+  status: 'Run status:',
+  runTemplateLabel: 'Run type:',
+  successful: 'Successful',
+  running: 'Running',
+  failed: 'Failed',
+  created: 'Created',
+  delete: 'Delete this scenario',
+  edit: 'Edit scenario name',
+  scenarioRename: {
+    title: 'Scenario name',
+    errors: {
+      emptyScenarioName: 'Scenario name cannot be empty',
+      forbiddenCharsInScenarioName:
+        'Scenario name has to start with a letter, and can only contain ' +
+        'letters, digits, spaces, underscores, hyphens and dots.',
+    },
+  },
+  deleteDialog: {
+    description:
+      'This operation is irreversible. Dataset(s) will not be removed, but the scenario parameters will be lost. ' +
+      'If this scenario has children, they will be moved to a new parent. ' +
+      'The new parent will be the parent of the deleted scenario.',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+  },
+  dataset: 'Datasets:',
+  noDataset: 'None',
+  datasetNotFound: 'Not Found',
+  validationStatus: {
+    rejected: 'Rejected',
+    validated: 'Validated',
+  },
+  description: { label: 'Description', placeholder: 'Description of your scenario' },
+  tags: {
+    header: 'Tags',
+    placeholder: 'Enter a new tag',
+  },
+};
+
 export const ScenarioNode = ({
   datasets,
   isExpanded,
   setIsExpanded,
   scenario,
-  showDeleteIcon,
-  onScenarioRedirect,
+  showDeleteIcon = false,
+  onScenarioRedirect = null,
   deleteScenario,
-  checkScenarioNameValue,
-  canRenameScenario,
+  checkScenarioNameValue = () => null,
+  canRenameScenario = true,
   canUpdateScenario,
   onScenarioRename,
-  labels,
+  labels: tmpLabels,
   buildScenarioNameToDelete,
-  onScenarioUpdate,
+  onScenarioUpdate = () => null,
 }) => {
   const classes = useStyles();
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
 
@@ -458,51 +499,4 @@ ScenarioNode.propTypes = {
    * Function to store the scenario's name selected for delete, used in confirmation dialog
    */
   buildScenarioNameToDelete: PropTypes.func.isRequired,
-};
-
-ScenarioNode.defaultProps = {
-  onScenarioRedirect: null,
-  canRenameScenario: true,
-  showDeleteIcon: false,
-  labels: {
-    status: 'Run status:',
-    runTemplateLabel: 'Run type:',
-    successful: 'Successful',
-    running: 'Running',
-    failed: 'Failed',
-    created: 'Created',
-    delete: 'Delete this scenario',
-    edit: 'Edit scenario name',
-    scenarioRename: {
-      title: 'Scenario name',
-      errors: {
-        emptyScenarioName: 'Scenario name cannot be empty',
-        forbiddenCharsInScenarioName:
-          'Scenario name has to start with a letter, and can only contain ' +
-          'letters, digits, spaces, underscores, hyphens and dots.',
-      },
-    },
-    deleteDialog: {
-      description:
-        'This operation is irreversible. Dataset(s) will not be removed, but the scenario parameters will be lost. ' +
-        'If this scenario has children, they will be moved to a new parent. ' +
-        'The new parent will be the parent of the deleted scenario.',
-      cancel: 'Cancel',
-      confirm: 'Confirm',
-    },
-    dataset: 'Datasets:',
-    noDataset: 'None',
-    datasetNotFound: 'Not Found',
-    validationStatus: {
-      rejected: 'Rejected',
-      validated: 'Validated',
-    },
-    description: { label: 'Description', placeholder: 'Description of your scenario' },
-    tags: {
-      header: 'Tags',
-      placeholder: 'Enter a new tag',
-    },
-  },
-  checkScenarioNameValue: () => null,
-  onScenarioUpdate: () => null,
 };
