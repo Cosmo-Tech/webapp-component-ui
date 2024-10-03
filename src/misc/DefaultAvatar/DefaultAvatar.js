@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const DefaultAvatar = ({ userName, size, variant }) => {
+export const DefaultAvatar = ({ userName, size = 24, variant = 'circular' }) => {
   const avatarBackgroundColor = stringToColor(userName);
   const letter = userName.charAt(0).toUpperCase();
 
@@ -56,9 +56,4 @@ DefaultAvatar.propTypes = {
    * See the Material UI documentation for the available variants : https://mui.com/material-ui/api/avatar/
    */
   variant: PropTypes.string,
-};
-
-DefaultAvatar.defaultProps = {
-  size: 24,
-  variant: 'circular',
 };

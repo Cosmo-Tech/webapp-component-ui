@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 import { queryByTestId } from '@testing-library/react';

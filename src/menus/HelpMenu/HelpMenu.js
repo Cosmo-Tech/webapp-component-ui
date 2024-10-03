@@ -18,6 +18,14 @@ import {
 import { FadingTooltip } from '../../misc';
 import useStyles from './style';
 
+const DEFAULT_LABELS = {
+  documentation: 'Documentation',
+  support: 'Contact support',
+  aboutTitle: 'About',
+  technicalInfoTitle: 'Technical information',
+  close: 'Close',
+  title: 'Help',
+};
 export const HelpMenu = (props) => {
   const classes = useStyles();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -46,7 +54,8 @@ export const HelpMenu = (props) => {
     setMenuOpen(!isMenuOpen);
   };
 
-  const { documentationUrl, supportUrl, about, technicalInfo, labels } = props;
+  const { documentationUrl, supportUrl, about = null, technicalInfo, labels: tmpLabels } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -182,16 +191,4 @@ HelpMenu.propTypes = {
     close: PropTypes.string,
     title: PropTypes.string,
   }),
-};
-
-HelpMenu.defaultProps = {
-  labels: {
-    documentation: 'Documentation',
-    support: 'Contact support',
-    aboutTitle: 'About',
-    technicalInfoTitle: 'Technical information',
-    close: 'Close',
-    title: 'Help',
-  },
-  about: null,
 };

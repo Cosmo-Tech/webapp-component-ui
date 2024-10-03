@@ -141,25 +141,40 @@ const _formatColumnsData = (columns, dateFormat) =>
     return col;
   });
 
+const DEFAULT_LABELS = {
+  clearErrors: 'Clear',
+  label: 'Table',
+  loading: 'Loading...',
+  errorsPanelMainError: 'File load failed.',
+  placeholderTitle: 'Import your first data',
+  placeholderBody: 'After importing a valid csv or xlsx file, your data will be displayed in an interactive table.',
+  import: 'Import',
+  export: 'Export',
+  addRow: 'Add a new row',
+  deleteRows: 'Remove selected rows',
+  fullscreen: 'Fullscreen',
+  revert: 'Revert',
+};
+
 export const Table = (props) => {
   const {
     gridRef: optionalGridRef,
-    dateFormat,
+    dateFormat = 'dd/MM/yyyy',
     editMode,
-    dataStatus,
+    dataStatus = TABLE_DATA_STATUS.EMPTY,
     errors,
-    maxErrorsCount,
-    height,
-    width,
+    maxErrorsCount = 100,
+    height = `calc(200px + ${TABLE_TOOLBAR_HEIGHT})`, // Legacy default height,
+    width = '100%',
     columns,
     rows,
     labels: tmpLabels,
     tooltipText,
     extraToolbarActions,
-    onCellChange,
+    onCellChange = () => {},
     onClearErrors,
     buildErrorsPanelTitle,
-    agTheme,
+    agTheme = 'ag-theme-balham',
     isDirty,
     onImport,
     onExport,
@@ -568,30 +583,4 @@ Table.propTypes = {
     deleteRow: PropTypes.bool,
     revert: PropTypes.bool,
   }),
-};
-
-const DEFAULT_LABELS = {
-  clearErrors: 'Clear',
-  label: 'Table',
-  loading: 'Loading...',
-  errorsPanelMainError: 'File load failed.',
-  placeholderTitle: 'Import your first data',
-  placeholderBody: 'After importing a valid csv or xlsx file, your data will be displayed in an interactive table.',
-  import: 'Import',
-  export: 'Export',
-  addRow: 'Add a new row',
-  deleteRows: 'Remove selected rows',
-  fullscreen: 'Fullscreen',
-  revert: 'Revert',
-};
-
-Table.defaultProps = {
-  dateFormat: 'dd/MM/yyyy',
-  dataStatus: TABLE_DATA_STATUS.EMPTY,
-  height: `calc(200px + ${TABLE_TOOLBAR_HEIGHT})`, // Legacy default height
-  width: '100%',
-  agTheme: 'ag-theme-balham',
-  labels: DEFAULT_LABELS,
-  onCellChange: () => {},
-  maxErrorsCount: 100,
 };
