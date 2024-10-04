@@ -89,8 +89,8 @@ export const BasicNumberInput = (props) => {
       data-cy={`number-input-${id}`}
       direction="row"
       spacing={1}
-      alignItems="center"
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{ alignItems: 'center' }}
     >
       <TextField
         id={`number-input-${id}`}
@@ -102,12 +102,12 @@ export const BasicNumberInput = (props) => {
         onChange={handleChangeEvent}
         onBlur={handleBlurEvent}
         onFocus={handleFocusEvent}
-        inputProps={inputProps}
-        InputProps={{
-          inputComponent: NumberFormat,
-        }}
         error={!!error}
         helperText={error?.message ?? ''}
+        slotProps={{
+          input: { inputComponent: NumberFormat },
+          htmlInput: inputProps,
+        }}
       />
       <TooltipInfo title={tooltipText} variant="small" />
     </Stack>

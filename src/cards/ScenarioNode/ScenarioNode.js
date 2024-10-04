@@ -246,7 +246,7 @@ export const ScenarioNode = ({
                   </Typography>
                 </Typography>
               </FadingTooltip>
-              <Typography variant="subtitle2" component="span" mx={0.5}>
+              <Typography variant="subtitle2" component="span" sx={{ mx: 0.5 }}>
                 |
               </Typography>
               <FadingTooltip title={labels.dataset + ' ' + datasetNames}>
@@ -289,7 +289,7 @@ export const ScenarioNode = ({
 
   const getScenarioHeader = () => {
     return (
-      <Box className={classes.scenarioHeader} flexGrow={1}>
+      <Box className={classes.scenarioHeader} sx={{ flexGrow: 1 }}>
         {isExpanded ? getScenarioCreationData() : getScenarioDetailNameLine(false)}
       </Box>
     );

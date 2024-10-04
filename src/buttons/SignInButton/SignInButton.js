@@ -36,7 +36,7 @@ export const SignInButton = (props) => {
 
   return (
     <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
-      <Grid container spacing={0} direction="row" alignItems="center" justifyContent="flex-start">
+      <Grid container spacing={0} direction="row" sx={{ alignItems: 'center', justifyContent: 'flex-start' }}>
         <Grid item>
           <Avatar className={classes.logo} variant="square" src={logo} />
         </Grid>

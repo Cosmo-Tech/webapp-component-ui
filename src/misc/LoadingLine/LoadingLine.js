@@ -20,7 +20,7 @@ export const LoadingLine = (props) => {
 
   return (
     <>
-      <Grid container direction="row" alignItems={'center'}>
+      <Grid container direction="row" sx={{ alignItems: 'center' }}>
         <Grid item>
           <Typography variant={style.variant}>{title}</Typography>
         </Grid>

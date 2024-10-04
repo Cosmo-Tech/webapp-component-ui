@@ -30,17 +30,19 @@ const DashboardPlaceholder = (props) => {
     <Grid
       container
       direction="column"
-      justifyContent="center"
       wrap="nowrap"
-      alignItems="center"
       className={classes.gridContainer}
+      sx={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
       <Grid>
         <Typography variant="h3">{title}</Typography>
       </Grid>
       <Grid item>
         {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
-        <Typography data-cy="dashboard-placeholder" color="textSecondary" variant="body1" className={classes.label}>
+        <Typography data-cy="dashboard-placeholder" variant="body1" className={classes.label} color="textSecondary">
           {label}
         </Typography>
         {inProgress && <LinearProgress data-cy="dashboard-in-progress" className={classes.linearProgress} />}
