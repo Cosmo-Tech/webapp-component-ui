@@ -70,8 +70,8 @@ export const BasicSliderInput = (props) => {
       data-cy={`slider-input-${id}`}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary" id="slider-input-label">
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+        <Typography variant="subtitle2" id="slider-input-label" color="textSecondary" sx={{ fontWeight: 'bold' }}>
           {label}
         </Typography>
         <TooltipInfo title={tooltipText} variant="small" />

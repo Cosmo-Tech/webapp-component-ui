@@ -36,12 +36,12 @@ export const ErrorsPanel = (props) => {
               aria-controls="errors-panel-content"
               id="errors-panel-header"
             >
-              <Box justifyContent="flex-start">
+              <Box sx={{ justifyContent: 'flex-start' }}>
                 <Typography className={classes.errorSummary}>
                   <CancelIcon className={classes.cancelIcon} />
                 </Typography>
               </Box>
-              <Box flexGrow={1}>
+              <Box sx={{ flexGrow: 1 }}>
                 <Typography className={classes.errorSummary} data-cy={'error-summary'}>
                   {error.summary}
                 </Typography>

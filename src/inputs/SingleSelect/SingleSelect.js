@@ -35,8 +35,8 @@ export const SingleSelect = (props) => {
       data-cy={`single-select-${id}`}
       direction="row"
       spacing={1}
-      alignItems="center"
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{ alignItems: 'center' }}
     >
       <Autocomplete
         id={id}

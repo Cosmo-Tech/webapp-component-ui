@@ -55,8 +55,8 @@ export const MultiSelect = (props) => {
       data-cy={`multi-input-${id}`}
       direction="row"
       spacing={1}
-      alignItems="center"
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{ alignItems: 'center' }}
     >
       <Autocomplete
         multiple
