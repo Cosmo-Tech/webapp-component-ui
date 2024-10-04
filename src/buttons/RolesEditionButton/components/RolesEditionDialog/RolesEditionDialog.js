@@ -171,7 +171,14 @@ export const RolesEditionDialog = ({
           </Grid>
           <Grid container>
             {hasNoAdmin && (
-              <Typography data-cy="no-admin-error-message" variant="caption" color="error" paragraph={true}>
+              <Typography
+                data-cy="no-admin-error-message"
+                variant="caption"
+                sx={{
+                  color: 'error',
+                  marginBottom: '16px',
+                }}
+              >
                 {labels.noAdminError}
               </Typography>
             )}
