@@ -45,10 +45,12 @@ export const SearchBar = ({ onSearchChange, className, label, icon, id, ...other
       onChange={onTextChange}
       onKeyDown={onKeyDown}
       color="primary"
-      InputProps={{
-        endAdornment: <InputAdornment position="end">{icon}</InputAdornment>,
-      }}
       {...otherProps}
+      slotProps={{
+        input: {
+          endAdornment: <InputAdornment position="end">{icon}</InputAdornment>,
+        },
+      }}
     />
   );
 };

@@ -59,19 +59,39 @@ export const UploadFile = (props) => {
       data-cy={`file-upload-${id}`}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
-      <Stack spacing={1} direction="row" alignItems="center">
+      <Stack
+        spacing={1}
+        direction="row"
+        sx={{
+          alignItems: 'center',
+        }}
+      >
         <Typography
           data-cy="label-disabled-input"
           variant="subtitle2"
-          color={error != null ? 'error' : 'textSecondary'}
+          sx={{
+            color: error != null ? 'error' : 'textSecondary',
+          }}
         >
           {labels.label}
         </Typography>
         <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
-      <Stack direction="row" alignItems="center" spacing={1}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{
+          alignItems: 'center',
+        }}
+      >
         {!editMode && (file.status === UPLOAD_FILE_STATUS_KEY.EMPTY || Object.keys(file).length === 0) && (
-          <Typography sx={{ fontStyle: 'italic', ml: 1 }} color="textSecondary">
+          <Typography
+            sx={{
+              color: 'textSecondary',
+              fontStyle: 'italic',
+              ml: 1,
+            }}
+          >
             {labels.noFileMessage}
           </Typography>
         )}
@@ -131,7 +151,14 @@ export const UploadFile = (props) => {
           file.status === UPLOAD_FILE_STATUS_KEY.DELETING) && <CircularProgress data-cy="circular-progress" />}
       </Stack>
       {error != null && (
-        <Typography data-cy="file-error-message" color="error" fontSize="small" sx={{ ml: 1 }}>
+        <Typography
+          data-cy="file-error-message"
+          sx={{
+            color: 'error',
+            fontSize: 'small',
+            ml: 1,
+          }}
+        >
           {error?.message}
         </Typography>
       )}

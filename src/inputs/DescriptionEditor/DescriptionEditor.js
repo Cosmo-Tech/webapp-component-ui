@@ -92,7 +92,9 @@ export const DescriptionEditor = (props) => {
         onBlur={stopEdition}
         placeholder={labels.placeholder}
         inputRef={(input) => input && input.focus()}
-        inputProps={{ id: 'description-input' }}
+        slotProps={{
+          htmlInput: { id: 'description-input' },
+        }}
       />
     );
   }, [isEditing, readOnly, descriptionText, value, startEdition, stopEdition, cancelEdition, labels.placeholder]);

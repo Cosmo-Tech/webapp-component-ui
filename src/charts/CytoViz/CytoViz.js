@@ -494,18 +494,25 @@ export const CytoViz = (props) => {
                       helperText={explorationDepthFieldHasError ? labels_.accordion.exploreGraph.limitDepthError : ''}
                       value={explorationDepth}
                       onChange={checkExplorationDepth}
-                      InputProps={{
-                        inputProps: {
-                          max: 1000,
-                          min: 1,
+                      variant="standard"
+                      slotProps={{
+                        input: {
+                          inputProps: {
+                            max: 1000,
+                            min: 1,
+                          },
                         },
                       }}
-                      variant="standard"
                     />
                     <div>
                       <p>{labels_.accordion.exploreGraph.flowDirection}</p>
                       {!(flowDirection.inEdges || flowDirection.outEdges) && (
-                        <Typography variant="inherit" color="error">
+                        <Typography
+                          variant="inherit"
+                          sx={{
+                            color: 'error',
+                          }}
+                        >
                           {labels_.accordion.exploreGraph.flowDirectionError}
                         </Typography>
                       )}
