@@ -394,8 +394,8 @@ export const Table = (props) => {
     >
       <div data-cy="label">
         {visibilityOptions?.label !== false && (
-          <Stack spacing={1} direction="row" alignItems="center">
-            <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }} color="textSecondary">
+          <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
+            <Typography variant="subtitle2" color="textSecondary" sx={{ fontWeight: 'bold' }}>
               {labels.label}
             </Typography>
             <TooltipInfo title={tooltipText} variant="small" />

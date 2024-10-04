@@ -35,7 +35,6 @@ export default {
     'react-virtualized',
     '@mui/material',
     '@mui/icons-material',
-    '@mui/lab',
     '@mui/styles',
     'react-i18next',
     'react-router-dom',

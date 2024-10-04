@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Grid,
+  Grid2 as Grid,
   TextField,
   Autocomplete,
   Chip,
@@ -197,7 +197,7 @@ const CreateScenarioDialog = ({
       <DialogTitle id="form-dialog-title">{dialogLabels.title}</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <TextField
               data-cy="create-scenario-dialog-name-textfield"
               variant="standard"
@@ -212,7 +212,7 @@ const CreateScenarioDialog = ({
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <BasicTextInput
               id="new-scenario-description"
               label={dialogLabels.scenarioDescription ?? 'Description'}
@@ -225,7 +225,7 @@ const CreateScenarioDialog = ({
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Autocomplete
               id="new-scenario-tags"
               freeSolo
@@ -248,10 +248,10 @@ const CreateScenarioDialog = ({
               onChange={(event, values) => setScenarioTags(values)}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <FormControlLabel control={getMasterScenarioCheckBox()} label={dialogLabels.scenarioMaster} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             <Autocomplete
               data-cy="create-scenario-dialog-type-select"
               ListboxProps={{ 'data-cy': 'create-scenario-dialog-type-select-options' }}
@@ -271,7 +271,7 @@ const CreateScenarioDialog = ({
               )}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid size={12}>
             {isMaster || !currentScenarioSelected ? (
               <Autocomplete
                 data-cy="create-scenario-dialog-dataset-select"

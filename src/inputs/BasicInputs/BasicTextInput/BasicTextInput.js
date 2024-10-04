@@ -42,8 +42,8 @@ export const BasicTextInput = (props) => {
       data-cy={`text-input-${id}`}
       direction="row"
       spacing={1}
-      alignItems="center"
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{ alignItems: 'center' }}
     >
       <TextField
         {...textFieldProps}

@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Grid,
+  Grid2 as Grid,
   TextField,
   DialogActions,
   Button,
@@ -137,7 +137,7 @@ export const RolesEditionDialog = ({
       <DialogContent>
         <Grid container spacing={2}>
           {!isReadOnly && (
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Autocomplete
                 data-cy="share-scenario-dialog-agents-select"
                 ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
@@ -163,7 +163,7 @@ export const RolesEditionDialog = ({
               />
             </Grid>
           )}
-          <Grid item xs={12} className={classes.rolesEditorContainer}>
+          <Grid className={classes.rolesEditorContainer} size={12}>
             <Typography variant="subtitle1">{labels.usersAccess}</Typography>
             {newAccessControlList.length > 0 &&
               newAccessControlList.map((agent) => (
@@ -188,12 +188,12 @@ export const RolesEditionDialog = ({
           </Grid>
           <Grid container>
             {hasNoAdmin && (
-              <Typography data-cy="no-admin-error-message" variant="caption" color="error" paragraph={true}>
+              <Typography data-cy="no-admin-error-message" variant="caption" color="error" sx={{ mb: 2 }}>
                 {labels.noAdminError}
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} className={classes.rolesEditorContainer}>
+          <Grid className={classes.rolesEditorContainer} size={12}>
             <Typography variant="subtitle1">{labels.generalAccess}</Typography>
             <RoleEditor
               agentName={defaultAccessScope}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography, Avatar } from '@mui/material';
+import { Grid2 as Grid, Typography, Avatar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,11 +36,11 @@ export const SignInButton = (props) => {
 
   return (
     <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
-      <Grid container spacing={0} direction="row" alignItems="center" justifyContent="flex-start">
-        <Grid item>
+      <Grid container spacing={0} direction="row" sx={{ alignItems: 'center', justifyContent: 'flex-start' }}>
+        <Grid>
           <Avatar className={classes.logo} variant="square" src={logo} />
         </Grid>
-        <Grid item zeroMinWidth>
+        <Grid>
           <Typography noWrap className={classes.label}>
             {label}
           </Typography>

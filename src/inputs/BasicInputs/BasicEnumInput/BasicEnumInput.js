@@ -47,8 +47,10 @@ export const BasicEnumInput = (props) => {
       data-cy={`enum-input-${id}`}
       direction="row"
       spacing={1}
-      alignItems="center"
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{
+        alignItems: 'center',
+      }}
     >
       <TextField
         variant="outlined"
@@ -57,14 +59,16 @@ export const BasicEnumInput = (props) => {
         sx={{ flexGrow: 1 }}
         select
         value={typeof valueKey === 'string' ? valueKey : ''}
-        SelectProps={{
-          renderValue: (key) => (
-            <Box style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{getLabelFromEnumKey(key)}</Box>
-          ), // Prevent extra padding on selected value
-          'data-cy': `enum-input-select-${id}`,
-          MenuProps: { 'data-cy': `enum-input-menu-${id}` },
-        }}
         onChange={(event) => changeEnumField(event.target.value)}
+        slotProps={{
+          select: {
+            renderValue: (key) => (
+              <Box style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{getLabelFromEnumKey(key)}</Box>
+            ), // Prevent extra padding on selected value
+            'data-cy': `enum-input-select-${id}`,
+            MenuProps: { 'data-cy': `enum-input-menu-${id}` },
+          },
+        }}
       >
         {enumValues.map((option) => (
           <MenuItem

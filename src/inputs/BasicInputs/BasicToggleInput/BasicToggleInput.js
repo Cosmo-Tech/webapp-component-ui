@@ -30,7 +30,7 @@ export const BasicToggleInput = (props) => {
       data-cy={`toggle-form-control-${id}`}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
-      <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} alignItems="center">
+      <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         <FormControlLabel
           value="value"
           control={

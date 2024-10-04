@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
-import { Chip, Grid, TextField, Typography } from '@mui/material';
+import { Chip, Grid2 as Grid, TextField, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const DEFAULT_LABELS = {
@@ -87,9 +87,11 @@ export const TagsEditor = (props) => {
         onBlur={(event) => addNewTag(event.target.value)}
         placeholder={labels.placeholder}
         inputRef={(input) => input && input.focus()}
-        inputProps={{ id: 'new-tag-input' }}
-        InputProps={{ sx: { maxHeight: '25px' } }}
         {...textFieldProps}
+        slotProps={{
+          input: { sx: { maxHeight: '25px' } },
+          htmlInput: { id: 'new-tag-input' },
+        }}
       />
     );
   }, [isEditing, addNewTag, readOnly, stopEdition, labels.placeholder, textFieldProps]);
@@ -111,16 +113,18 @@ export const TagsEditor = (props) => {
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Grid item>
+      <Grid>
         <Grid
           container
           sx={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', flexWrap: 'nowrap' }}
         >
-          <Typography sx={{ pr: 1, color: 'text.secondary', ...headerStyle }}>{labels.header}:</Typography>
+          <Typography color="textSecondary" sx={{ pr: 1, ...headerStyle }}>
+            {labels.header}:
+          </Typography>
           {values.length === 0 ? addTagIcon : null}
         </Grid>
       </Grid>
-      <Grid item data-cy={`${id}-tags`} sx={{ ml: 1 }}>
+      <Grid data-cy={`${id}-tags`} sx={{ ml: 1 }}>
         <Grid
           data-cy="tags-container"
           container

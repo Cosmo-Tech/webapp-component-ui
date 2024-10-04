@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
-import { Grid, Stack, TextField, Typography } from '@mui/material';
+import { Grid2 as Grid, Stack, TextField, Typography } from '@mui/material';
 
 const DEFAULT_LABELS = {
   label: 'Description',
@@ -65,10 +65,7 @@ export const DescriptionEditor = (props) => {
         >
           <Typography
             data-cy={'scenario-description-disabled'}
-            sx={{
-              maxHeight: '75px',
-              overflowY: 'auto',
-            }}
+            sx={{ maxHeight: '75px', overflowY: 'auto' }}
             onClick={startEdition}
             gutterBottom={true}
           >
@@ -97,7 +94,7 @@ export const DescriptionEditor = (props) => {
         onBlur={stopEdition}
         placeholder={labels.placeholder}
         inputRef={(input) => input && input.focus()}
-        inputProps={{ id: 'description-input' }}
+        slotProps={{ htmlInput: { id: 'description-input' } }}
       />
     );
   }, [isEditing, readOnly, descriptionText, value, startEdition, stopEdition, cancelEdition, labels.placeholder]);
