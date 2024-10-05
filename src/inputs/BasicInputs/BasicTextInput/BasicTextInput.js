@@ -43,9 +43,7 @@ export const BasicTextInput = (props) => {
       direction="row"
       spacing={1}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{
-        alignItems: 'center',
-      }}
+      sx={{ alignItems: 'center' }}
     >
       <TextField
         {...textFieldProps}
