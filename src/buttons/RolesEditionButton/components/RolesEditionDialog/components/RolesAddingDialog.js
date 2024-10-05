@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   DialogContent,
-  Grid,
+  Grid2 as Grid,
   TextField,
   DialogActions,
   Button,
@@ -63,7 +63,7 @@ export const RolesAddingDialog = ({
           )}
         />
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid size={4}>
             {!selectedRole && (
               <Typography
                 variant="body2"
@@ -97,10 +97,10 @@ export const RolesAddingDialog = ({
               ))}
             </RadioGroup>
           </Grid>
-          <Grid item xs={1}>
+          <Grid size={1}>
             <Divider orientation="vertical" variant="middle" />
           </Grid>
-          <Grid item xs={7}>
+          <Grid size={7}>
             <Typography variant="subtitle2">{labels.grantedPermissions}</Typography>
             {sortedPermissions.granted.map((permission) => (
               <Chip
