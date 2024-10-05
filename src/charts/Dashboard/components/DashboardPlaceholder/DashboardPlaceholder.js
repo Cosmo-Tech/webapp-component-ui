@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Grid, Button, LinearProgress } from '@mui/material';
+import { Typography, Grid2 as Grid, Button, LinearProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +40,7 @@ const DashboardPlaceholder = (props) => {
       <Grid>
         <Typography variant="h3">{title}</Typography>
       </Grid>
-      <Grid item>
+      <Grid>
         {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
         <Typography data-cy="dashboard-placeholder" variant="body1" className={classes.label} color="textSecondary">
           {label}
@@ -48,7 +48,7 @@ const DashboardPlaceholder = (props) => {
         {inProgress && <LinearProgress data-cy="dashboard-in-progress" className={classes.linearProgress} />}
       </Grid>
       {downloadLogsFile && (
-        <Grid item>
+        <Grid>
           <Button variant="contained" color="primary" onClick={downloadLogsFile}>
             {downloadLabel}
           </Button>

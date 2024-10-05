@@ -3,7 +3,7 @@
 import React from 'react';
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
 import PropTypes from 'prop-types';
-import { Grid, Typography } from '@mui/material';
+import { Grid2 as Grid, Typography } from '@mui/material';
 
 export const LoadingLine = (props) => {
   const { title, isLoading, hasError, animations, style } = props;
@@ -16,10 +16,10 @@ export const LoadingLine = (props) => {
   return (
     <>
       <Grid container direction="row" sx={{ alignItems: 'center' }}>
-        <Grid item>
+        <Grid>
           <Typography variant={style.variant}>{title}</Typography>
         </Grid>
-        <Grid item>
+        <Grid>
           {isLoading ? (
             <Lottie animationData={animations.dataLoading} style={spinnerStyle} loop play />
           ) : (
