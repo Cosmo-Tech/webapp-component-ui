@@ -10,7 +10,7 @@ import {
   Link,
   CircularProgress,
   IconButton,
-  Grid,
+  Grid2 as Grid,
   Typography,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
