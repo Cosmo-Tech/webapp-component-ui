@@ -13,6 +13,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DEFAULT_LABELS = {
+  noScenario: {
+    title: 'No scenario yet',
+    label: 'You can create a scenario by clicking on the CREATE button in Scenario View',
+  },
+  noRun: {
+    title: '',
+    label: 'The scenario has not been run yet',
+  },
+  inProgress: {
+    title: '',
+    label: 'Scenario run in progress...',
+  },
+  dataInTransfer: {
+    title: '',
+    label: 'Transfer of scenario results in progress...',
+  },
+  hasErrors: {
+    title: '',
+    label: 'An error occured during the scenario run',
+  },
+  downloadButton: 'Download logs',
+  noResult: {
+    title: '',
+    label: 'No dashboards for this scenario.',
+  },
+};
+
 export const Dashboard = (props) => {
   const classes = useStyles();
   const {
@@ -22,12 +50,13 @@ export const Dashboard = (props) => {
     scenarioId,
     csmSimulationRun,
     scenarioState,
-    noScenario,
+    noScenario = false,
     downloadLogsFile,
-    labels,
+    labels: tmpLabels,
     ...otherProps
   } = props;
 
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const formattedUrl = url
     .replace(/<ScenarioName>/g, scenarioName)
     .replace(/<ScenarioId>/g, scenarioId)
@@ -163,35 +192,4 @@ Dashboard.propTypes = {
       label: PropTypes.string.isRequired,
     }).isRequired,
   }),
-};
-
-Dashboard.defaultProps = {
-  noScenario: false,
-  labels: {
-    noScenario: {
-      title: 'No scenario yet',
-      label: 'You can create a scenario by clicking on the CREATE button in Scenario View',
-    },
-    noRun: {
-      title: '',
-      label: 'The scenario has not been run yet',
-    },
-    inProgress: {
-      title: '',
-      label: 'Scenario run in progress...',
-    },
-    dataInTransfer: {
-      title: '',
-      label: 'Transfer of scenario results in progress...',
-    },
-    hasErrors: {
-      title: '',
-      label: 'An error occured during the scenario run',
-    },
-    downloadButton: 'Download logs',
-    noResult: {
-      title: '',
-      label: 'No dashboards for this scenario.',
-    },
-  },
 };

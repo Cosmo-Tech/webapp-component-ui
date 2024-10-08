@@ -5,6 +5,29 @@ import { Button, IconButton } from '@mui/material';
 import { FadingTooltip } from '../../misc';
 import CreateScenarioDialog from './components';
 
+const DEFAULT_LABELS = {
+  button: {
+    title: 'Create',
+    tooltip: 'Create new Scenario',
+  },
+  dialog: {
+    title: 'Create new Scenario',
+    scenarioName: 'Scenario Name',
+    scenarioMaster: 'Master',
+    scenarioParent: 'Scenario Parent',
+    datasetPlaceholder: 'Dataset',
+    dataset: 'Dataset',
+    scenarioTypePlaceholder: 'Scenario run type',
+    scenarioType: 'Run type',
+    cancel: 'Cancel',
+    create: 'Create',
+  },
+  errors: {
+    emptyScenarioName: 'Scenario Name should not be empty',
+    existingScenarioName: 'Scenario Name already exists',
+    forbiddenCharsInScenarioName: 'Forbidden characters in Scenario Name',
+  },
+};
 export const CreateScenarioButton = ({
   currentScenario,
   datasets,
@@ -15,10 +38,11 @@ export const CreateScenarioButton = ({
   createScenario,
   workspaceId,
   solution,
-  disabled,
-  labels,
+  disabled = false,
+  labels: tmpLabels,
   isIconButton,
 }) => {
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
@@ -154,31 +178,4 @@ CreateScenarioButton.propTypes = {
    *  - false (default value): the button is contained and has a title
    */
   isIconButton: PropTypes.bool,
-};
-
-CreateScenarioButton.defaultProps = {
-  disabled: false,
-  labels: {
-    button: {
-      title: 'Create',
-      tooltip: 'Create new Scenario',
-    },
-    dialog: {
-      title: 'Create new Scenario',
-      scenarioName: 'Scenario Name',
-      scenarioMaster: 'Master',
-      scenarioParent: 'Scenario Parent',
-      datasetPlaceholder: 'Dataset',
-      dataset: 'Dataset',
-      scenarioTypePlaceholder: 'Scenario run type',
-      scenarioType: 'Run type',
-      cancel: 'Cancel',
-      create: 'Create',
-    },
-    errors: {
-      emptyScenarioName: 'Scenario Name should not be empty',
-      existingScenarioName: 'Scenario Name already exists',
-      forbiddenCharsInScenarioName: 'Forbidden characters in Scenario Name',
-    },
-  },
 };

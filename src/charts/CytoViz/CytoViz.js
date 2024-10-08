@@ -46,20 +46,69 @@ const DEFAULT_CONTEXT_MENU_POSITION = {
   mouseX: null,
   mouseY: null,
 };
+const DEFAULT_LABELS = {
+  elementDetails: 'Details',
+  loading: 'Loading...',
+  noSelectedElement: 'Select a node or edge to show its data',
+  settings: {
+    compactMode: 'Compact layout',
+    layout: 'Layout',
+    title: 'Settings',
+    spacingFactor: 'Spacing factor',
+    zoomLimits: 'Min & max zoom',
+    open: 'Open settings',
+    close: 'Close settings',
+    showStats: 'Cytoscape statistics',
+  },
+  elementData: {
+    dictKey: 'Key',
+    dictValue: 'Value',
+  },
+  accordion: {
+    nodeDetails: 'Node details',
+    findNode: {
+      headline: 'Find a node',
+      searchByID: 'Search by ID',
+    },
+    exploreGraph: {
+      headline: 'Explore a subgraph',
+      startingNodes: 'Select the starting node(s)',
+      startingNodesError: 'Select at least one node',
+      limitDepth: 'Limit the search depth',
+      limitDepthError: 'Enter a positive integer',
+      flowDirection: 'Choose the flow direction',
+      flowDirectionError: 'Select at least one',
+      inEdges: 'IN-Edges',
+      outEdges: 'OUT-Edges',
+      excludeEdges: 'Exclude relation types',
+      compoundNeighbors: 'Include the other entities of a compound',
+      launch: 'Explore',
+    },
+  },
+};
+
+const DEFAULT_SETTINGS = {
+  layout: DEFAULT_LAYOUTS[0],
+  minZoom: 0.1,
+  maxZoom: 1,
+  useCompactMode: true,
+  showStats: false,
+  spacingFactor: 1,
+};
 
 export const CytoViz = (props) => {
   const classes = useStyles();
   const {
     bubblesets,
-    cytoscapeStylesheet,
-    defaultSettings,
+    cytoscapeStylesheet = [],
+    defaultSettings = DEFAULT_SETTINGS,
     elements,
     error,
-    extraLayouts,
+    extraLayouts = {},
     getElementDetails,
-    labels,
-    loading,
-    placeholderMessage,
+    labels: tmpLabels,
+    loading = false,
+    placeholderMessage = null,
   } = props;
 
   // Default styles for hidden nodes & edges can be overridden in cytoscapeStylesheet by using the selectors below:
@@ -76,12 +125,11 @@ export const CytoViz = (props) => {
     });
   }, [cytoscapeStylesheet]);
 
-  const labels_ = { ...DEFAULT_LABELS, ...labels };
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   let getElementDetailsCallback = getElementDetails;
   if (!getElementDetailsCallback) {
-    // eslint-disable-next-line react/display-name
-    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels_.elementData} />;
+    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels.elementData} />;
     getElementDetailsCallback.displayName = 'ElementData';
   }
 
@@ -320,10 +368,10 @@ export const CytoViz = (props) => {
     }
   };
 
-  const errorBanner = error && <ErrorBanner error={error} labels={labels_.errorBanner} />;
+  const errorBanner = error && <ErrorBanner error={error} labels={labels.errorBanner} />;
   const loadingPlaceholder = loading && !error && !placeholderMessage && (
     <div data-cy="cytoviz-loading-container" className={classes.loadingContainer}>
-      <span className={classes.loadingText}>{labels_.loading}</span>
+      <span className={classes.loadingText}>{labels.loading}</span>
       <CircularProgress size={18} />
     </div>
   );
@@ -350,7 +398,7 @@ export const CytoViz = (props) => {
         maxZoom={10 ** zoomPrecision[1]}
       />
       <div data-cy="cytoviz-open-drawer-button" className={classes.openDrawerButton}>
-        <FadingTooltip title={labels_.settings.open}>
+        <FadingTooltip title={labels.settings.open}>
           <IconButton onClick={openDrawer} size="large">
             <ChevronRightIcon />
           </IconButton>
@@ -381,14 +429,10 @@ export const CytoViz = (props) => {
             textColor="primary"
             aria-label="Cytoscape visualization side drawer"
           >
-            <Tab
-              data-cy="cytoviz-drawer-details-tab-button"
-              icon={<AccountTreeIcon />}
-              label={labels_.elementDetails}
-            />
-            <Tab data-cy="cytoviz-drawer-settings-tab-button" icon={<SettingsIcon />} label={labels_.settings.title} />
+            <Tab data-cy="cytoviz-drawer-details-tab-button" icon={<AccountTreeIcon />} label={labels.elementDetails} />
+            <Tab data-cy="cytoviz-drawer-settings-tab-button" icon={<SettingsIcon />} label={labels.settings.title} />
           </Tabs>
-          <FadingTooltip title={labels_.settings.close}>
+          <FadingTooltip title={labels.settings.close}>
             <IconButton data-cy="cytoviz-close-drawer-button" onClick={closeDrawer} size="large">
               <ChevronLeftIcon />
             </IconButton>
@@ -411,9 +455,9 @@ export const CytoViz = (props) => {
                 id="nodeDetailsPanel-header"
                 expandIcon={<ExpandMoreIcon />}
               >
-                <Typography variant="body1">{labels_.accordion.nodeDetails}</Typography>
+                <Typography variant="body1">{labels.accordion.nodeDetails}</Typography>
               </AccordionSummary>
-              <AccordionDetails>{currentElementDetails || labels_.noSelectedElement}</AccordionDetails>
+              <AccordionDetails>{currentElementDetails || labels.noSelectedElement}</AccordionDetails>
             </Accordion>
             <Accordion
               square
@@ -425,11 +469,11 @@ export const CytoViz = (props) => {
                 id="findNodePanel-header"
                 expandIcon={<ExpandMoreIcon />}
               >
-                <Typography variant="body1">{labels_.accordion.findNode.headline}</Typography>
+                <Typography variant="body1">{labels.accordion.findNode.headline}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <div className={classes.querySearchByID}>
-                  {labels_.accordion.findNode.searchByID}
+                  {labels.accordion.findNode.searchByID}
                   <Autocomplete
                     onChange={(event, node) => {
                       if (node) {
@@ -446,7 +490,7 @@ export const CytoViz = (props) => {
                     getOptionLabel={(node) => node.data('label')}
                     isOptionEqualToValue={(option, node) => node.data('label') === option.data('label')}
                     renderInput={(params) => (
-                      <TextField {...params} aria-label={labels_.accordion.findNode.searchByID} size="small" />
+                      <TextField {...params} aria-label={labels.accordion.findNode.searchByID} size="small" />
                     )}
                   />
                 </div>
@@ -462,11 +506,11 @@ export const CytoViz = (props) => {
                 id="exploreGraphPanel-header"
                 expandIcon={<ExpandMoreIcon />}
               >
-                <Typography variant="body1">{labels_.accordion.exploreGraph.headline}</Typography>
+                <Typography variant="body1">{labels.accordion.exploreGraph.headline}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <div className={classes.queryTextfields}>
-                  {labels_.accordion.exploreGraph.startingNodes}
+                  {labels.accordion.exploreGraph.startingNodes}
                   <Autocomplete
                     multiple
                     limitTags={2}
@@ -477,21 +521,21 @@ export const CytoViz = (props) => {
                     isOptionEqualToValue={(option, node) => node.data('label') === option.data('label')}
                     renderInput={(params) => (
                       <TextField
-                        aria-label={labels_.accordion.exploreGraph.startingNodes}
-                        helperText={selectedNodesFieldHasError ? labels_.accordion.exploreGraph.startingNodesError : ''}
+                        aria-label={labels.accordion.exploreGraph.startingNodes}
+                        helperText={selectedNodesFieldHasError ? labels.accordion.exploreGraph.startingNodesError : ''}
                         error={selectedNodesFieldHasError}
                         {...params}
                       />
                     )}
                   />
                   <div className={classes.querySearchDepth}>
-                    {labels_.accordion.exploreGraph.limitDepth}
+                    {labels.accordion.exploreGraph.limitDepth}
                     <TextField
-                      aria-label={labels_.accordion.exploreGraph.limitDepth}
+                      aria-label={labels.accordion.exploreGraph.limitDepth}
                       size="small"
                       type="number"
                       error={explorationDepthFieldHasError}
-                      helperText={explorationDepthFieldHasError ? labels_.accordion.exploreGraph.limitDepthError : ''}
+                      helperText={explorationDepthFieldHasError ? labels.accordion.exploreGraph.limitDepthError : ''}
                       value={explorationDepth}
                       onChange={checkExplorationDepth}
                       InputProps={{
@@ -503,26 +547,26 @@ export const CytoViz = (props) => {
                       variant="standard"
                     />
                     <div>
-                      <p>{labels_.accordion.exploreGraph.flowDirection}</p>
+                      <p>{labels.accordion.exploreGraph.flowDirection}</p>
                       {!(flowDirection.inEdges || flowDirection.outEdges) && (
                         <Typography variant="inherit" color="error">
-                          {labels_.accordion.exploreGraph.flowDirectionError}
+                          {labels.accordion.exploreGraph.flowDirectionError}
                         </Typography>
                       )}
                     </div>
                     <div className={classes.queryEdgetypes}>
-                      {labels_.accordion.exploreGraph.inEdges}
+                      {labels.accordion.exploreGraph.inEdges}
                       <Checkbox
-                        aria-label={labels_.accordion.exploreGraph.inEdges}
+                        aria-label={labels.accordion.exploreGraph.inEdges}
                         color="primary"
                         checked={flowDirection.inEdges}
                         onChange={(event) => {
                           setFlowDirection({ ...flowDirection, inEdges: event.target.checked });
                         }}
                       />
-                      {labels_.accordion.exploreGraph.outEdges}
+                      {labels.accordion.exploreGraph.outEdges}
                       <Checkbox
-                        aria-label={labels_.accordion.exploreGraph.outEdges}
+                        aria-label={labels.accordion.exploreGraph.outEdges}
                         color="primary"
                         checked={flowDirection.outEdges}
                         onChange={(event) => {
@@ -531,7 +575,7 @@ export const CytoViz = (props) => {
                       />
                     </div>
                   </div>
-                  {labels_.accordion.exploreGraph.excludeEdges}
+                  {labels.accordion.exploreGraph.excludeEdges}
                   <Autocomplete
                     multiple
                     limitTags={2}
@@ -541,13 +585,13 @@ export const CytoViz = (props) => {
                     }}
                     options={edgeClassOptions}
                     renderInput={(params) => (
-                      <TextField {...params} aria-label={labels_.accordion.exploreGraph.excludeEdges} />
+                      <TextField {...params} aria-label={labels.accordion.exploreGraph.excludeEdges} />
                     )}
                   />
                   <div className={classes.querySearchDepth}>
-                    {labels_.accordion.exploreGraph.compoundNeighbors}
+                    {labels.accordion.exploreGraph.compoundNeighbors}
                     <Checkbox
-                      aria-label={labels_.accordion.exploreGraph.compoundNeighbors}
+                      aria-label={labels.accordion.exploreGraph.compoundNeighbors}
                       color="primary"
                       checked={childrenAreNeighbors}
                       onChange={(event) => {
@@ -566,7 +610,7 @@ export const CytoViz = (props) => {
                       selectedNodesFieldHasError
                     }
                   >
-                    {labels_.accordion.exploreGraph.launch}
+                    {labels.accordion.exploreGraph.launch}
                   </Button>
                 </div>
               </AccordionDetails>
@@ -575,7 +619,7 @@ export const CytoViz = (props) => {
           <TabPanel data-cy="cytoviz-drawer-settings-tab-content" value={currentDrawerTab} index={1}>
             <div className={classes.settingsContainer}>
               <div className={classes.settingLine}>
-                <div className={classes.settingLabel}>{labels_.settings.layout}</div>
+                <div className={classes.settingLabel}>{labels.settings.layout}</div>
                 <div className={classes.settingInputContainer}>
                   <Select
                     variant="standard"
@@ -598,7 +642,7 @@ export const CytoViz = (props) => {
               </div>
               <div className={classes.settingLine}>
                 <div className={classes.settingLabel} onClick={toggleUseCompactMode}>
-                  {labels_.settings.compactMode}
+                  {labels.settings.compactMode}
                 </div>
                 <div className={classes.settingInputContainer}>
                   <Switch
@@ -612,14 +656,14 @@ export const CytoViz = (props) => {
               </div>
               <div className={classes.settingLine}>
                 <div className={classes.settingLabel} onClick={toggleShowStats}>
-                  {labels_.settings.showStats ?? 'Cytoscape statistics'}
+                  {labels.settings.showStats ?? 'Cytoscape statistics'}
                 </div>
                 <div className={classes.settingInputContainer}>
                   <Switch checked={showStats} onChange={changeShowStats} name="showStats" color="primary" />
                 </div>
               </div>
               <div className={classes.settingLine}>
-                <div className={classes.settingLabel}>{labels_.settings.spacingFactor}</div>
+                <div className={classes.settingLabel}>{labels.settings.spacingFactor}</div>
                 <div className={classes.settingInputContainer}>
                   <Slider
                     data-cy="cytoviz-spacing-factor-slider"
@@ -636,7 +680,7 @@ export const CytoViz = (props) => {
                 </div>
               </div>
               <div className={classes.settingLine}>
-                <div className={classes.settingLabel}>{labels_.settings.zoomLimits}</div>
+                <div className={classes.settingLabel}>{labels.settings.zoomLimits}</div>
                 <div className={classes.settingInputContainer}>
                   <Slider
                     data-cy="cytoviz-zoom-limits-slider"
@@ -677,7 +721,7 @@ export const CytoViz = (props) => {
             closeContextMenu();
           }}
         >
-          {labels_.accordion.exploreGraph.launch}
+          {labels.accordion.exploreGraph.launch}
         </MenuItem>
       </Menu>
       {cytoAsState && showStats && <StatsHUD cytoAsState={cytoAsState} />}
@@ -776,62 +820,4 @@ CytoViz.propTypes = {
   of the cytoscape scene.
   */
   placeholderMessage: PropTypes.string,
-};
-
-const DEFAULT_LABELS = {
-  elementDetails: 'Details',
-  loading: 'Loading...',
-  noSelectedElement: 'Select a node or edge to show its data',
-  settings: {
-    compactMode: 'Compact layout',
-    layout: 'Layout',
-    title: 'Settings',
-    spacingFactor: 'Spacing factor',
-    zoomLimits: 'Min & max zoom',
-    open: 'Open settings',
-    close: 'Close settings',
-    showStats: 'Cytoscape statistics',
-  },
-  elementData: {
-    dictKey: 'Key',
-    dictValue: 'Value',
-  },
-  accordion: {
-    nodeDetails: 'Node details',
-    findNode: {
-      headline: 'Find a node',
-      searchByID: 'Search by ID',
-    },
-    exploreGraph: {
-      headline: 'Explore a subgraph',
-      startingNodes: 'Select the starting node(s)',
-      startingNodesError: 'Select at least one node',
-      limitDepth: 'Limit the search depth',
-      limitDepthError: 'Enter a positive integer',
-      flowDirection: 'Choose the flow direction',
-      flowDirectionError: 'Select at least one',
-      inEdges: 'IN-Edges',
-      outEdges: 'OUT-Edges',
-      excludeEdges: 'Exclude relation types',
-      compoundNeighbors: 'Include the other entities of a compound',
-      launch: 'Explore',
-    },
-  },
-};
-
-CytoViz.defaultProps = {
-  cytoscapeStylesheet: [],
-  defaultSettings: {
-    layout: DEFAULT_LAYOUTS[0],
-    minZoom: 0.1,
-    maxZoom: 1,
-    useCompactMode: true,
-    showStats: false,
-    spacingFactor: 1,
-  },
-  extraLayouts: {},
-  groups: {},
-  labels: DEFAULT_LABELS,
-  loading: false,
-  placeholderMessage: null,
 };

@@ -23,7 +23,7 @@ export const BasicNumberInput = (props) => {
     changeNumberField,
     isDirty,
     error,
-    size,
+    size = 'small',
     ...otherProps
   } = props;
 
@@ -155,8 +155,4 @@ BasicNumberInput.propTypes = {
    * Size of the TextField: small (default value), medium or large
    */
   size: PropTypes.string,
-};
-
-BasicNumberInput.defaultProps = {
-  size: 'small',
 };

@@ -6,7 +6,7 @@ import { Typography, Button, Card, CardHeader, CardContent, CardActions } from '
 import { DefaultAvatar } from '../../misc';
 import useStyles from './style';
 
-export const ResourceCard = ({ id, name, description, action, style }) => {
+export const ResourceCard = ({ id, name, description = '', action = null, style }) => {
   const classes = useStyles();
 
   const actionButton = action ? (
@@ -69,9 +69,4 @@ ResourceCard.propTypes = {
    * Style override
    */
   style: PropTypes.object,
-};
-
-ResourceCard.defaultProps = {
-  action: null,
-  description: '',
 };

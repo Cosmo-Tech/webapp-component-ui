@@ -9,9 +9,17 @@ const DEFAULT_ERROR = {
   status: '',
   title: '',
 };
+const DEFAULT_LABELS = {
+  dismissButtonText: 'Dismiss',
+  tooLongErrorMessage:
+    'Detailed error message is too long to be displayed. To read it, please use the COPY button and paste it in ' +
+    'your favorite text editor.',
+  toggledButtonText: 'Copied',
+};
 
-export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels }) => {
+export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels: tmpLabels }) => {
   const classes = useStyles();
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {
     navigator.clipboard.writeText(message).then(() => setCopyButtonText(labels.toggledButtonText));
@@ -68,13 +76,4 @@ ErrorBanner.propTypes = {
     secondButtonText: PropTypes.string.isRequired,
     toggledButtonText: PropTypes.string,
   }),
-};
-ErrorBanner.defaultProps = {
-  labels: {
-    dismissButtonText: 'Dismiss',
-    tooLongErrorMessage:
-      'Detailed error message is too long to be displayed. To read it, please use the COPY button and paste it in ' +
-      'your favorite text editor.',
-    toggledButtonText: 'Copied',
-  },
 };

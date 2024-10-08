@@ -7,6 +7,11 @@ import { Box, ClickAwayListener, IconButton, Menu, MenuItem } from '@mui/materia
 import { DefaultAvatar, FadingTooltip } from '../../misc';
 import useStyles from './style';
 
+const DEFAULT_LABELS = {
+  language: 'Change language',
+  logOut: 'Log out',
+};
+
 export const UserInfo = (props) => {
   const classes = useStyles();
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -34,7 +39,8 @@ export const UserInfo = (props) => {
     handleClose();
   };
 
-  const { userName, profilePlaceholder, languages, onLogout, changeLanguage, language, labels } = props;
+  const { userName, profilePlaceholder, languages, onLogout, changeLanguage, language, labels: tmpLabels } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -148,11 +154,4 @@ UserInfo.propTypes = {
     language: PropTypes.string.isRequired,
     logOut: PropTypes.string.isRequired,
   }),
-};
-
-UserInfo.defaultProps = {
-  labels: {
-    language: 'Change language',
-    logOut: 'Log out',
-  },
 };

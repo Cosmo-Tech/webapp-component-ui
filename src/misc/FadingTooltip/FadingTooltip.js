@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Fade, Tooltip as MuiTooltip } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 
-const Tooltip = ({ children, title, useSpan, spanProps, ...other }) => {
+const Tooltip = ({ children, title, useSpan = false, spanProps = {}, ...other }) => {
   return title ? (
     <MuiTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={title} {...other}>
       {
@@ -35,11 +35,6 @@ Tooltip.propTypes = {
    * Props to be applied to span element if useSpan is set to true
    */
   spanProps: PropTypes.object,
-};
-
-Tooltip.defaultProps = {
-  useSpan: false,
-  spanProps: {},
 };
 
 export const FadingTooltip = withStyles((theme) => ({
