@@ -65,7 +65,15 @@ const DEFAULT_LABELS = {
   },
 };
 export const EditableLink = (props) => {
-  const { value, onNewValue, onClick, checkValue = () => null, labels: tmpLabels, typographyProps, canRenameScenario } = props;
+  const {
+    value,
+    onNewValue,
+    onClick,
+    checkValue = () => null,
+    labels: tmpLabels,
+    typographyProps,
+    canRenameScenario,
+  } = props;
 
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const classes = useStyles();
