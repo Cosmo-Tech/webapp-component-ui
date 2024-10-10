@@ -4,6 +4,7 @@ import { Fade, Tooltip as MuiTooltip } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 
 const Tooltip = ({ children, title, useSpan, spanProps, ...other }) => {
+  const styleProp = { style: { display: 'inline-flex' } };
   return title ? (
     <MuiTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={title} {...other}>
       {
@@ -11,7 +12,13 @@ const Tooltip = ({ children, title, useSpan, spanProps, ...other }) => {
         // https://mui.com/material-ui/react-tooltip/#disabled-elements for more details)
       }
 
-      {useSpan ? <span {...spanProps}>{children}</span> : <div>{children}</div>}
+      {useSpan ? (
+        <span {...styleProp} {...spanProps}>
+          {children}
+        </span>
+      ) : (
+        <div {...styleProp}>{children}</div>
+      )}
     </MuiTooltip>
   ) : (
     children
