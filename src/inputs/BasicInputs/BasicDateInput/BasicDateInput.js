@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Stack, TextField } from '@mui/material';
+import { Stack } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -94,17 +94,16 @@ export const BasicDateInput = (props) => {
           inputFormat={format}
           minDate={minDate}
           maxDate={maxDate}
-          renderInput={({ error: _, ...params }) => (
-            <TextField
-              id={`date-text-field-${id}`}
-              variant="outlined"
-              sx={{ flexGrow: 1 }}
-              size={size}
-              error={error?.message?.length > 0}
-              helperText={error?.message ?? ''}
-              {...params}
-            />
-          )}
+          slotProps={{
+            textField: {
+              id: `date-text-field-${id}`,
+              variant: 'outlined',
+              sx: { flexGrow: 1 },
+              size: 'small',
+              error: error?.message?.length > 0,
+              helperText: error?.message ?? '',
+            },
+          }}
           id={`date-input-${id}`}
           onChange={onChange}
           value={internalDate ?? new Date(undefined)}
