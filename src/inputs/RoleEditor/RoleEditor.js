@@ -46,13 +46,7 @@ export const RoleEditor = ({
             {agentName}
           </Typography>
           {helperText != null && (
-            <Typography
-              data-cy="role-editor-helper-text"
-              variant="body2"
-              sx={{
-                color: 'textSecondary',
-              }}
-            >
+            <Typography data-cy="role-editor-helper-text" variant="body2" color="textSecondary">
               {helperText[agentAccess]}
             </Typography>
           )}

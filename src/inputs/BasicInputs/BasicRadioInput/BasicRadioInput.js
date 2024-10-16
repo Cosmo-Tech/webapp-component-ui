@@ -53,13 +53,7 @@ export const BasicRadioInput = (props) => {
           alignItems: 'center',
         }}
       >
-        <Typography
-          variant="subtitle2"
-          id="slider-input-label"
-          sx={{
-            color: 'textSecondary',
-          }}
-        >
+        <Typography variant="subtitle2" id="slider-input-label" color="textSecondary">
           {label}
         </Typography>
         <TooltipInfo title={tooltipText} variant="small" />

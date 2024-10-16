@@ -118,7 +118,9 @@ export const TagsEditor = (props) => {
           container
           sx={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', flexWrap: 'nowrap' }}
         >
-          <Typography sx={{ pr: 1, color: 'text.secondary', ...headerStyle }}>{labels.header}:</Typography>
+          <Typography color="textSecondary" sx={{ pr: 1, ...headerStyle }}>
+            {labels.header}:
+          </Typography>
           {values.length === 0 ? addTagIcon : null}
         </Grid>
       </Grid>

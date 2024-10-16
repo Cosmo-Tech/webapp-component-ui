@@ -65,12 +65,7 @@ export const RolesAddingDialog = ({
         <Grid container spacing={2}>
           <Grid size={4}>
             {!selectedRole && (
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'textSecondary',
-                }}
-              >
+              <Typography variant="body2" color="textSecondary">
                 {labels.rolesHelperText}
               </Typography>
             )}

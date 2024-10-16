@@ -174,8 +174,8 @@ export const RolesEditionDialog = ({
               <Typography
                 data-cy="no-admin-error-message"
                 variant="caption"
+                color="error"
                 sx={{
-                  color: 'error',
                   marginBottom: '16px',
                 }}
               >

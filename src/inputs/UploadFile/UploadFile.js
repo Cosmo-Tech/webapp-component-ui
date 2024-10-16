@@ -59,39 +59,19 @@ export const UploadFile = (props) => {
       data-cy={`file-upload-${id}`}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
-      <Stack
-        spacing={1}
-        direction="row"
-        sx={{
-          alignItems: 'center',
-        }}
-      >
+      <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
         <Typography
           data-cy="label-disabled-input"
           variant="subtitle2"
-          sx={{
-            color: error != null ? 'error' : 'textSecondary',
-          }}
+          color={error != null ? 'error' : 'textSecondary'}
         >
           {labels.label}
         </Typography>
         <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{
-          alignItems: 'center',
-        }}
-      >
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         {!editMode && (file.status === UPLOAD_FILE_STATUS_KEY.EMPTY || Object.keys(file).length === 0) && (
-          <Typography
-            sx={{
-              color: 'textSecondary',
-              fontStyle: 'italic',
-              ml: 1,
-            }}
-          >
+          <Typography color="textSecondary" sx={{ fontStyle: 'italic', ml: 1 }}>
             {labels.noFileMessage}
           </Typography>
         )}
@@ -152,9 +132,9 @@ export const UploadFile = (props) => {
       </Stack>
       {error != null && (
         <Typography
+          color="error"
           data-cy="file-error-message"
           sx={{
-            color: 'error',
             fontSize: 'small',
             ml: 1,
           }}

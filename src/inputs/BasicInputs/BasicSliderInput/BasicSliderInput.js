@@ -80,8 +80,8 @@ export const BasicSliderInput = (props) => {
         <Typography
           variant="subtitle2"
           id="slider-input-label"
+          color="textSecondary"
           sx={{
-            color: 'textSecondary',
             fontWeight: 'bold',
           }}
         >

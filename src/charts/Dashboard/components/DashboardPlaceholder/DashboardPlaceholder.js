@@ -42,14 +42,7 @@ const DashboardPlaceholder = (props) => {
       </Grid>
       <Grid>
         {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
-        <Typography
-          data-cy="dashboard-placeholder"
-          variant="body1"
-          className={classes.label}
-          sx={{
-            color: 'textSecondary',
-          }}
-        >
+        <Typography data-cy="dashboard-placeholder" variant="body1" className={classes.label} color="textSecondary">
           {label}
         </Typography>
         {inProgress && <LinearProgress data-cy="dashboard-in-progress" className={classes.linearProgress} />}

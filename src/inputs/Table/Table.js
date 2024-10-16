@@ -386,13 +386,7 @@ export const Table = (props) => {
               alignItems: 'center',
             }}
           >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                color: 'textSecondary',
-                fontWeight: 'bold',
-              }}
-            >
+            <Typography variant="subtitle2" color="textSecondary" sx={{ fontWeight: 'bold' }}>
               {labels.label}
             </Typography>
             <TooltipInfo title={tooltipText} variant="small" />

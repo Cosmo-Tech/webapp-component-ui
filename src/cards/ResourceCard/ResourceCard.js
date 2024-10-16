@@ -27,12 +27,7 @@ export const ResourceCard = ({ id, name, description, action, style }) => {
       />
       <CardContent data-cy={'resource-content'}>
         <div className={classes.description}>
-          <Typography
-            variant="body2"
-            sx={{
-              color: 'textSecondary',
-            }}
-          >
+          <Typography variant="body2" color="textSecondary">
             {description}
           </Typography>
         </div>

@@ -507,12 +507,7 @@ export const CytoViz = (props) => {
                     <div>
                       <p>{labels_.accordion.exploreGraph.flowDirection}</p>
                       {!(flowDirection.inEdges || flowDirection.outEdges) && (
-                        <Typography
-                          variant="inherit"
-                          sx={{
-                            color: 'error',
-                          }}
-                        >
+                        <Typography variant="inherit" color="error">
                           {labels_.accordion.exploreGraph.flowDirectionError}
                         </Typography>
                       )}
