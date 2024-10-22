@@ -1,3 +1,17 @@
+## **10.0.0-beta.0** <sub><sup>2024-10-22 (1fb9466...1fb9466)</sup></sub>
+
+### BREAKING CHANGES
+
+- new versions of @cosmotech/ui now require to use at least v4 of the Cosmo Tech API
+
+### Bug Fixes
+
+- fix possible error in SimplePowerBIReportEmbed ([732c050](https://github.com/Cosmo-Tech/webapp-component-ui/commit/732c050))
+
+### Dependencies
+
+- update @cosmotech/azure dependency to v3.0.0
+
 ## **9.5.2** <sub><sup>2024-10-22 (b2ef8cb...b2ef8cb)</sup></sub>
 
 - update @cosmotech/azure dependency to v2.0.1
@@ -5,20 +19,20 @@
 ## **9.5.1** <sub><sup>2024-09-27 (fb76924...4e5eeaf)</sup></sub>
 
 ### Bug Fixes
-*  fix pipe not displayed in scenario manager card if run template name is too long ([fb76924](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb76924))
-*  delete unnecessary margins in ScenarioValidationChip ([4e5eeaf](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e5eeaf))
 
+- fix pipe not displayed in scenario manager card if run template name is too long ([fb76924](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb76924))
+- delete unnecessary margins in ScenarioValidationChip ([4e5eeaf](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e5eeaf))
 
 ## **9.5.0** <sub><sup>2024-09-25 (3e9973a...af47550)</sup></sub>
 
 ### Features
-*  add iconButton option to Create scenario button ([c6501d8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c6501d8))
 
+- add iconButton option to Create scenario button ([c6501d8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c6501d8))
 
 ### Bug Fixes
-*  delete backdrop in flowchart view when the menu drawer is open ([3e9973a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3e9973a))
-*  disable tooltip on contained Share and Create buttons ([ac84379](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ac84379))
 
+- delete backdrop in flowchart view when the menu drawer is open ([3e9973a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3e9973a))
+- disable tooltip on contained Share and Create buttons ([ac84379](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ac84379))
 
 ## **9.4.1** <sub><sup>2024-09-04 (4e2d243...084b056)</sup></sub>
 
