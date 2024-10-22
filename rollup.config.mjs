@@ -48,7 +48,7 @@ export default {
       babelHelpers: 'bundled',
     }),
     resolve(),
-    commonjs(),
+    commonjs({ strictRequires: 'auto' }),
     image(),
     visualizer(),
   ],
