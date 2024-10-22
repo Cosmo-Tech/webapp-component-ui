@@ -402,6 +402,7 @@ SimplePowerBIReportEmbed.defaultProps = {
   refreshable: true,
   refreshTimeout: 15000,
   useAAD: false,
+  visibleScenarios: [],
   labels: {
     noScenario: {
       title: 'No scenario yet',
