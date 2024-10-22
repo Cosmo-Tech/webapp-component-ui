@@ -1,3 +1,7 @@
+## **9.5.2** <sub><sup>2024-10-22 (b2ef8cb...b2ef8cb)</sup></sub>
+
+- update @cosmotech/azure dependency to v2.0.1
+
 ## **9.5.1** <sub><sup>2024-09-27 (fb76924...4e5eeaf)</sup></sub>
 
 ### Bug Fixes
