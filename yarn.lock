@@ -2073,12 +2073,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmotech/azure@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@cosmotech/azure@npm:2.0.1"
+"@cosmotech/azure@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@cosmotech/azure@npm:3.0.0"
   dependencies:
     "@azure/msal-browser": "npm:^3.20.0"
-  checksum: 10c0/2b979753822da383f5b2d6b78a4289d233154b0f738c4e45e08ec68a6761d9f697e112feb71c7b2d8f29ec0fe886b53b646ee8fa4cbfd828ccd7a68125d70e00
+  checksum: 10c0/7e86a771b8a683d2f126f90c9152392300b20d448966b8242e5bc679875259a639952a6d211f7517b46e711715f48fcda1b9fd751ed02ce7aa8be34ece42507d
   languageName: node
   linkType: hard
 
@@ -2103,7 +2103,7 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.2"
     "@babel/preset-react": "npm:^7.24.7"
-    "@cosmotech/azure": "npm:^2.0.1"
+    "@cosmotech/azure": "npm:^3.0.0"
     "@cosmotech/core": "npm:^1.17.0"
     "@emotion/react": "npm:^11.13.0"
     "@emotion/styled": "npm:^11.13.0"
@@ -2162,7 +2162,7 @@ __metadata:
     rollup-plugin-postcss: "npm:^4.0.2"
     rollup-plugin-visualizer: "npm:^5.12.0"
   peerDependencies:
-    "@cosmotech/azure": ^2.0.1
+    "@cosmotech/azure": ^3.0.0
     "@cosmotech/core": ^1.6.3
     "@mui/icons-material": ^5.11.0
     "@mui/lab": ^5.0.0-alpha.117
