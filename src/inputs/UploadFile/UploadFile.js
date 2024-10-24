@@ -13,11 +13,17 @@ import { getCommonInputStyles } from '../style';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
 const useStyles = makeStyles(getCommonInputStyles);
-
+const DEFAULT_LABELS = {
+  label: '',
+  button: 'Browse',
+  invalidFileMessage: 'File format not supported',
+  delete: 'Delete file',
+  noFileMessage: 'None',
+};
 export const UploadFile = (props) => {
   const {
     id,
-    acceptedFileTypes,
+    acceptedFileTypes = '*',
     handleUploadFile,
     handleDeleteFile,
     handleDownloadFile,
@@ -25,16 +31,19 @@ export const UploadFile = (props) => {
     editMode,
     isFileValid,
     error,
-    labels,
+    labels: tmpLabels,
     tooltipText,
     isDirty,
-    shouldHideFileName,
+    shouldHideFileName = false,
   } = props;
   if (isFileValid) {
     console.warn('"isFileValid" prop is deprecated in UploadFile. Please use "error" instead.');
   }
 
   const classes = useStyles();
+  const labels = useMemo(() => {
+    return { ...DEFAULT_LABELS, ...tmpLabels };
+  }, [tmpLabels]);
 
   // TODO: create a generic component to truncate texts in Typography elements
   const fileNameElement = useMemo(() => {
@@ -221,16 +230,4 @@ UploadFile.propTypes = {
    * file extension.
    */
   shouldHideFileName: PropTypes.bool,
-};
-
-UploadFile.defaultProps = {
-  acceptedFileTypes: '*',
-  labels: {
-    label: '',
-    button: 'Browse',
-    invalidFileMessage: 'File format not supported',
-    delete: 'Delete file',
-    noFileMessage: 'None',
-  },
-  shouldHideFileName: false,
 };

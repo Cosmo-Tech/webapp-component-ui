@@ -20,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const TagsEditor = (props) => {
   const {
-    id,
+    id = 'tags-editor',
     values: tmpValues,
-    readOnly,
-    onChange,
+    readOnly = false,
+    onChange = () => {},
     labels: tmpLabels,
-    chipProps,
-    textFieldProps,
-    editIconProps,
-    headerStyle,
+    chipProps = {},
+    textFieldProps = {},
+    editIconProps = {},
+    headerStyle = {},
   } = props;
   const classes = useStyles();
 
@@ -194,19 +194,4 @@ TagsEditor.propTypes = {
    * Props to override header style
    */
   headerStyle: PropTypes.object,
-};
-
-TagsEditor.defaultProps = {
-  id: 'tags-editor',
-  values: [],
-  readOnly: false,
-  onChange: () => {},
-  chipProps: {},
-  textFieldProps: {},
-  editIconProps: {},
-  headerStyle: {},
-  labels: {
-    header: 'Tags',
-    placeholder: 'Edit your tags',
-  },
 };

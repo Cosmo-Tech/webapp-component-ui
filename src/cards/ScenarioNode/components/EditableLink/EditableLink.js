@@ -56,9 +56,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DEFAULT_LABELS = {
+  title: 'Scenario name',
+  edit: 'Edit',
+  errors: {
+    emptyValueName: 'Value cannot be empty',
+    forbiddenCharsInValue: 'Value is invalid',
+  },
+};
 export const EditableLink = (props) => {
-  const { value, onNewValue, onClick, checkValue, labels, typographyProps, canRenameScenario } = props;
+  const {
+    value,
+    onNewValue,
+    onClick,
+    checkValue = () => null,
+    labels: tmpLabels,
+    typographyProps,
+    canRenameScenario,
+  } = props;
 
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const classes = useStyles();
 
   const [error, setError] = useState(null);
@@ -204,16 +221,4 @@ EditableLink.propTypes = {
    * Props to forward to the Typography component
    */
   typographyProps: PropTypes.object,
-};
-
-EditableLink.defaultProps = {
-  labels: {
-    title: 'Scenario name',
-    edit: 'Edit',
-    errors: {
-      emptyValueName: 'Value cannot be empty',
-      forbiddenCharsInValue: 'Value is invalid',
-    },
-  },
-  checkValue: () => null,
 };
