@@ -29,7 +29,7 @@
     "@babel/preset-env": "^7.25.2",
     "@babel/preset-react": "^7.24.7",
     "@cosmotech/azure": "^3.0.0",
-    "@cosmotech/core": "^1.17.0",
+    "@cosmotech/core": "^1.19.1-beta.0",
     "@mui/icons-material": "^5.16.5",
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.16.5",
@@ -73,7 +73,7 @@
   },
   "peerDependencies": {
     "@cosmotech/azure": "^3.0.0",
-    "@cosmotech/core": "^1.6.3",
+    "@cosmotech/core": "^1.19.1-beta.0",
     "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.117",
     "@mui/material": "^5.11.6",

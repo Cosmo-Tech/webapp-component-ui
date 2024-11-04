@@ -2082,17 +2082,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmotech/core@npm:^1.17.0":
-  version: 1.17.0
-  resolution: "@cosmotech/core@npm:1.17.0"
+"@cosmotech/core@npm:^1.19.1-beta.0":
+  version: 1.19.1-beta.0
+  resolution: "@cosmotech/core@npm:1.19.1-beta.0"
   dependencies:
+    "@azure/msal-browser": "npm:^3.20.0"
     csv-string: "npm:^4.1.1"
     date-fns: "npm:^2.30.0"
     js-file-download: "npm:^0.4.12"
     rfdc: "npm:^1.4.1"
     validator: "npm:^13.12.0"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
-  checksum: 10c0/f05caf9fb2d6c4367fcd0d09a05b04ad74b488fe68c82bfe71dfe094326887cb515fafb4809c7058873697e059c99b756b8e2b162377499b6766e203dbbcd67d
+  checksum: 10c0/f2a7901f4842fb21a20ed6700d9c7b9258c708516b1fd4cc153e203638dddcd582b614c069fb623c79ccc11b3f4274ee176aabdeb3186fdc12fc3c0cc51e0514
   languageName: node
   linkType: hard
 
@@ -2104,7 +2105,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.2"
     "@babel/preset-react": "npm:^7.24.7"
     "@cosmotech/azure": "npm:^3.0.0"
-    "@cosmotech/core": "npm:^1.17.0"
+    "@cosmotech/core": "npm:^1.19.1-beta.0"
     "@emotion/react": "npm:^11.13.0"
     "@emotion/styled": "npm:^11.13.0"
     "@mui/icons-material": "npm:^5.16.5"
@@ -2163,7 +2164,7 @@ __metadata:
     rollup-plugin-visualizer: "npm:^5.12.0"
   peerDependencies:
     "@cosmotech/azure": ^3.0.0
-    "@cosmotech/core": ^1.6.3
+    "@cosmotech/core": ^1.19.1-beta.0
     "@mui/icons-material": ^5.11.0
     "@mui/lab": ^5.0.0-alpha.117
     "@mui/material": ^5.11.6
