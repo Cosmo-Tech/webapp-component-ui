@@ -7,9 +7,9 @@ export const TooltipInfo = ({ title, variant = 'medium' }) =>
   title ? (
     <FadingTooltip title={title}>
       {variant === 'small' ? (
-        <InfoOutlinedIcon color="action" fontSize="small" />
+        <InfoOutlinedIcon color="action" fontSize="small" sx={{ display: 'inherit' }} />
       ) : (
-        <InfoOutlinedIcon color="inherit" fontSize="inherit" />
+        <InfoOutlinedIcon color="inherit" fontSize="inherit" sx={{ display: 'inherit' }} />
       )}
     </FadingTooltip>
   ) : null;
