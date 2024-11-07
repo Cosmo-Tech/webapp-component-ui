@@ -31,7 +31,6 @@ export const BasicDateInput = (props) => {
     changeSelectedDate,
     isDirty,
     error,
-    reverseTimezoneOffset = false,
     size = 'small',
     ...otherProps
   } = props;
@@ -131,11 +130,4 @@ BasicDateInput.propTypes = {
    * Size of the TextField: small (default value), medium or large
    */
   size: PropTypes.string,
-  /**
-   * Boolean value that defines whether the component should prevent the date picker component to convert dates in local
-   * time by adding a "reverse offset" to the input value and store it in an internal state. If the input of value prop
-   * is a UTC date, and you want to work only with UTC dates, then you should set reverseTimezoneOffset to true to have
-   * a consistent behavior in all timezones.
-   */
-  reverseTimezoneOffset: PropTypes.bool,
 };
