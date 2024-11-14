@@ -63,8 +63,8 @@
     "postcss": "^8.4.40",
     "prettier": "^3.3.3",
     "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-i18next": "^13.5.0",
     "rollup": "^4.19.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -79,8 +79,8 @@
     "@mui/material": "^5.11.6",
     "@mui/styles": "^5.11.2",
     "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-i18next": "^11.8.13"
   },
   "dependencies": {
