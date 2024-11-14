@@ -1,3 +1,14 @@
+## **10.0.0** <sub><sup>2024-11-14 (e155693...52542f1)</sup></sub>
+
+### Bug Fixes
+*  fix possible error in SimplePowerBIReportEmbed ([e155693](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e155693))
+
+
+### BREAKING CHANGES
+*  upgrade to react 18. This version of the package won't work with the sample webapp based on React 17 ([83e98bb](https://github.com/Cosmo-Tech/webapp-component-ui/commit/83e98bb))
+*  upgrade Material UI to version 6 that breaks display of some components. This version of the package won't 
+work with the sample webapp using Material UI v5 ([557f88b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/557f88b))
+
 ## **9.5.2** <sub><sup>2024-10-22 (b2ef8cb...b2ef8cb)</sup></sub>
 
 - update @cosmotech/azure dependency to v2.0.1
