@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   DialogContent,
-  Grid,
+  Grid2 as Grid,
   TextField,
   DialogActions,
   Button,
@@ -35,9 +35,19 @@ const _sortGrantedPermissionsForRole = (rolesPermissionsMapping, allPermissions,
   return permissions;
 };
 
+const DEFAULT_LABELS = {
+  cancel: 'Cancel',
+  deniedPermissions: 'Permissions not granted',
+  done: 'Done',
+  grantedPermissions: 'Permissions granted',
+  rolesTitle: 'Roles',
+  userSelected: 'User selected',
+  rolesHelperText: 'Select one role',
+};
+
 export const RolesAddingDialog = ({
   selectedAgent,
-  labels,
+  labels: tmpLabels,
   allRoles,
   allPermissions,
   defaultRole,
@@ -46,6 +56,7 @@ export const RolesAddingDialog = ({
   onConfirm,
 }) => {
   const classes = useStyle();
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [selectedRole, setSelectedRole] = useState(defaultRole);
   const sortedPermissions = _sortGrantedPermissionsForRole(rolesPermissionsMapping, allPermissions, selectedRole);
   return (
@@ -63,7 +74,7 @@ export const RolesAddingDialog = ({
           )}
         />
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid size={4}>
             {!selectedRole && (
               <Typography variant="body2" color="textSecondary">
                 {labels.rolesHelperText}
@@ -92,10 +103,10 @@ export const RolesAddingDialog = ({
               ))}
             </RadioGroup>
           </Grid>
-          <Grid item xs={1}>
+          <Grid size={1}>
             <Divider orientation="vertical" variant="middle" />
           </Grid>
-          <Grid item xs={7}>
+          <Grid size={7}>
             <Typography variant="subtitle2">{labels.grantedPermissions}</Typography>
             {sortedPermissions.granted.map((permission) => (
               <Chip
@@ -187,15 +198,4 @@ RolesAddingDialog.propTypes = {
   rolesPermissionsMapping: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-};
-RolesAddingDialog.defaultProps = {
-  labels: {
-    cancel: 'Cancel',
-    deniedPermissions: 'Permissions not granted',
-    done: 'Done',
-    grantedPermissions: 'Permissions granted',
-    rolesTitle: 'Roles',
-    userSelected: 'User selected',
-    rolesHelperText: 'Select one role',
-  },
 };

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Grid, Button, LinearProgress } from '@mui/material';
+import { Typography, Grid2 as Grid, Button, LinearProgress } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,29 +24,31 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardPlaceholder = (props) => {
   const classes = useStyles();
-  const { title, label, icon, downloadLogsFile, downloadLabel, inProgress } = props;
+  const { title = null, label, icon, downloadLogsFile, downloadLabel, inProgress = false } = props;
 
   return (
     <Grid
       container
       direction="column"
-      justifyContent="center"
       wrap="nowrap"
-      alignItems="center"
       className={classes.gridContainer}
+      sx={{
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
       <Grid>
         <Typography variant="h3">{title}</Typography>
       </Grid>
-      <Grid item>
+      <Grid>
         {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
-        <Typography data-cy="dashboard-placeholder" color="textSecondary" variant="body1" className={classes.label}>
+        <Typography data-cy="dashboard-placeholder" variant="body1" className={classes.label} color="textSecondary">
           {label}
         </Typography>
         {inProgress && <LinearProgress data-cy="dashboard-in-progress" className={classes.linearProgress} />}
       </Grid>
       {downloadLogsFile && (
-        <Grid item>
+        <Grid>
           <Button variant="contained" color="primary" onClick={downloadLogsFile}>
             {downloadLabel}
           </Button>
@@ -63,11 +65,6 @@ DashboardPlaceholder.propTypes = {
   downloadLogsFile: PropTypes.func,
   downloadLabel: PropTypes.string,
   inProgress: PropTypes.bool,
-};
-
-DashboardPlaceholder.defaultProps = {
-  title: null,
-  inProgress: false,
 };
 
 export default DashboardPlaceholder;

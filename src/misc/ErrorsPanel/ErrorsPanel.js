@@ -15,9 +15,15 @@ import {
 } from '@mui/material';
 import useStyles from './style';
 
+const DEFAULT_LABELS = {
+  clear: 'Clear',
+  errorsCountLabel: 'Errors:',
+};
+
 export const ErrorsPanel = (props) => {
   const classes = useStyles();
-  const { errors, maxErrorsCount, labels, onClear, buildErrorsCountLabel, className } = props;
+  const { errors, maxErrorsCount = 100, labels: tmpLabels, onClear, buildErrorsCountLabel, className } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   let errorsCountLabel = labels.errorsCountLabel;
   if (buildErrorsCountLabel) {
@@ -36,12 +42,12 @@ export const ErrorsPanel = (props) => {
               aria-controls="errors-panel-content"
               id="errors-panel-header"
             >
-              <Box justifyContent="flex-start">
+              <Box sx={{ justifyContent: 'flex-start' }}>
                 <Typography className={classes.errorSummary}>
                   <CancelIcon className={classes.cancelIcon} />
                 </Typography>
               </Box>
-              <Box flexGrow={1}>
+              <Box sx={{ flexGrow: 1 }}>
                 <Typography className={classes.errorSummary} data-cy={'error-summary'}>
                   {error.summary}
                 </Typography>
@@ -125,12 +131,4 @@ ErrorsPanel.propTypes = {
    */
   buildErrorsCountLabel: PropTypes.func,
   className: PropTypes.string,
-};
-
-ErrorsPanel.defaultProps = {
-  labels: {
-    clear: 'Clear',
-    errorsCountLabel: 'Errors:',
-  },
-  maxErrorsCount: 100,
 };

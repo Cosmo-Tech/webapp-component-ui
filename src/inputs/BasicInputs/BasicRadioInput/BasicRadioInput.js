@@ -20,7 +20,7 @@ export const BasicRadioInput = (props) => {
     textFieldProps,
     changeRadioOption,
     enumValues: radioEnumValues,
-    row,
+    row = true,
     radioStyle,
     isDirty,
     ...otherProps
@@ -46,8 +46,8 @@ export const BasicRadioInput = (props) => {
       data-cy={`radio-input-${id}`}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography variant="subtitle2" color="textSecondary" id="slider-input-label">
+      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+        <Typography variant="subtitle2" id="slider-input-label" color="textSecondary">
           {label}
         </Typography>
         <TooltipInfo title={tooltipText} variant="small" />
@@ -125,8 +125,4 @@ BasicRadioInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
-};
-
-BasicRadioInput.defaultProps = {
-  row: true,
 };

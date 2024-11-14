@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { FadingTooltip } from '../FadingTooltip';
 
-export const TooltipInfo = ({ title, variant }) =>
+export const TooltipInfo = ({ title, variant = 'medium' }) =>
   title ? (
     <FadingTooltip title={title}>
       {variant === 'small' ? (
-        <InfoOutlinedIcon color="action" fontSize="small" />
+        <InfoOutlinedIcon color="action" fontSize="small" sx={{ display: 'inherit' }} />
       ) : (
-        <InfoOutlinedIcon color="inherit" fontSize="inherit" />
+        <InfoOutlinedIcon color="inherit" fontSize="inherit" sx={{ display: 'inherit' }} />
       )}
     </FadingTooltip>
   ) : null;
@@ -23,8 +23,4 @@ TooltipInfo.propTypes = {
    * Tooltip text
    */
   title: PropTypes.string,
-};
-
-TooltipInfo.defaultProps = {
-  variant: 'medium',
 };

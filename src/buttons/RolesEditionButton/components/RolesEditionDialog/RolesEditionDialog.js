@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Grid,
+  Grid2 as Grid,
   TextField,
   DialogActions,
   Button,
@@ -32,18 +32,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const DEFAULT_LABELS = {
+  title: 'Share ',
+  readOnlyTitle: 'Permissions for ',
+  addPeople: 'Add people',
+  cancel: 'Cancel',
+  close: 'Close',
+  share: 'Share',
+  noAdminError: 'The scenario must have at least one administrator',
+  userSelected: 'Selected user',
+  usersAccess: 'Users access',
+  generalAccess: 'General access',
+  removeAccess: 'Remove access',
+  editor: {
+    helperText: null,
+  },
+};
+
 const ADMIN_ROLE = 'admin';
 const sortById = (agentA, agentB) => (agentA.id < agentB.id ? -1 : 1);
 
 export const RolesEditionDialog = ({
-  labels: labelsBeforeDefaultValuesPatch,
-  isReadOnly,
+  labels: tmpLabels,
+  isReadOnly = false,
   resourceRolesPermissionsMapping,
-  preventNoneRoleForAgents,
+  preventNoneRoleForAgents = false,
   onConfirmChanges,
   agents,
   accessControlList,
-  defaultRole,
+  defaultRole = '',
   open,
   closeDialog,
   allRoles,
@@ -56,7 +73,7 @@ export const RolesEditionDialog = ({
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
 
-  const labels = { ...DEFAULT_LABELS, ...labelsBeforeDefaultValuesPatch };
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   useEffect(() => {
     if (open) {
@@ -120,7 +137,7 @@ export const RolesEditionDialog = ({
       <DialogContent>
         <Grid container spacing={2}>
           {!isReadOnly && (
-            <Grid item xs={12}>
+            <Grid size={12}>
               <Autocomplete
                 data-cy="share-scenario-dialog-agents-select"
                 ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
@@ -146,7 +163,7 @@ export const RolesEditionDialog = ({
               />
             </Grid>
           )}
-          <Grid item xs={12} className={classes.rolesEditorContainer}>
+          <Grid className={classes.rolesEditorContainer} size={12}>
             <Typography variant="subtitle1">{labels.usersAccess}</Typography>
             {newAccessControlList.length > 0 &&
               newAccessControlList.map((agent) => (
@@ -171,12 +188,12 @@ export const RolesEditionDialog = ({
           </Grid>
           <Grid container>
             {hasNoAdmin && (
-              <Typography data-cy="no-admin-error-message" variant="caption" color="error" paragraph={true}>
+              <Typography data-cy="no-admin-error-message" variant="caption" color="error" sx={{ mb: 2 }}>
                 {labels.noAdminError}
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} className={classes.rolesEditorContainer}>
+          <Grid className={classes.rolesEditorContainer} size={12}>
             <Typography variant="subtitle1">{labels.generalAccess}</Typography>
             <RoleEditor
               agentName={defaultAccessScope}
@@ -288,28 +305,4 @@ RolesEditionDialog.propTypes = {
     }).isRequired
   ),
   defaultAccessScope: PropTypes.string.isRequired,
-};
-
-const DEFAULT_LABELS = {
-  title: 'Share ',
-  readOnlyTitle: 'Permissions for ',
-  addPeople: 'Add people',
-  cancel: 'Cancel',
-  close: 'Close',
-  share: 'Share',
-  noAdminError: 'The scenario must have at least one administrator',
-  userSelected: 'Selected user',
-  usersAccess: 'Users access',
-  generalAccess: 'General access',
-  removeAccess: 'Remove access',
-  editor: {
-    helperText: null,
-  },
-};
-
-RolesEditionDialog.defaultProps = {
-  labels: DEFAULT_LABELS,
-  isReadOnly: false,
-  preventNoneRoleForAgents: false,
-  defaultRole: '',
 };

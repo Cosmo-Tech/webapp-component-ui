@@ -3,11 +3,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
-import { Grid, Stack, TextField, Typography } from '@mui/material';
+import { Grid2 as Grid, Stack, TextField, Typography } from '@mui/material';
 
+const DEFAULT_LABELS = {
+  label: 'Description',
+  placeholder: 'Description of you scenario',
+};
 export const DescriptionEditor = (props) => {
-  const { onChange, readOnly, value, labels } = props;
+  const { onChange, readOnly = false, value = '', labels: tmpLabels } = props;
 
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [isEditing, setIsEditing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [descriptionText, setDescriptionText] = useState(value);
@@ -60,10 +65,7 @@ export const DescriptionEditor = (props) => {
         >
           <Typography
             data-cy={'scenario-description-disabled'}
-            sx={{
-              maxHeight: '75px',
-              overflowY: 'auto',
-            }}
+            sx={{ maxHeight: '75px', overflowY: 'auto' }}
             onClick={startEdition}
             gutterBottom={true}
           >
@@ -92,7 +94,7 @@ export const DescriptionEditor = (props) => {
         onBlur={stopEdition}
         placeholder={labels.placeholder}
         inputRef={(input) => input && input.focus()}
-        inputProps={{ id: 'description-input' }}
+        slotProps={{ htmlInput: { id: 'description-input' } }}
       />
     );
   }, [isEditing, readOnly, descriptionText, value, startEdition, stopEdition, cancelEdition, labels.placeholder]);
@@ -136,13 +138,4 @@ DescriptionEditor.propTypes = {
     label: PropTypes.string,
     placeholder: PropTypes.string,
   }),
-};
-
-DescriptionEditor.defaultProps = {
-  readOnly: false,
-  value: '',
-  labels: {
-    label: 'Description',
-    placeholder: 'Description of you scenario',
-  },
 };

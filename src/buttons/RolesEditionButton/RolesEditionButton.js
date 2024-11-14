@@ -4,24 +4,32 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ShareIcon from '@mui/icons-material/Share';
 import { Button, IconButton } from '@mui/material';
-import { FadingTooltip } from '../../misc/FadingTooltip';
+import { FadingTooltip } from '../../misc';
 import { RolesEditionDialog } from './components';
 
+const DEFAULT_LABELS = {
+  button: {
+    title: 'Share',
+    tooltip: 'Modify access',
+  },
+};
+
 export const RolesEditionButton = ({
-  labels,
-  isIconButton,
+  labels: tmpLabels,
+  isIconButton = false,
   agents,
   resourceRolesPermissionsMapping,
-  preventNoneRoleForAgents,
-  isReadOnly,
-  disabled,
+  preventNoneRoleForAgents = false,
+  isReadOnly = false,
+  disabled = false,
   onConfirmChanges,
   specificAccessByAgent,
-  defaultRole,
+  defaultRole = '',
   allRoles,
   allPermissions,
   defaultAccessScope,
 }) => {
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [open, setOpen] = useState(false);
   const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
@@ -172,17 +180,4 @@ RolesEditionButton.propTypes = {
     }),
     dialog: PropTypes.object.isRequired,
   }),
-};
-RolesEditionButton.defaultProps = {
-  isIconButton: false,
-  isReadOnly: false,
-  disabled: false,
-  preventNoneRoleForAgents: false,
-  defaultRole: '',
-  labels: {
-    button: {
-      title: 'Share',
-      tooltip: 'Modify access',
-    },
-  },
 };

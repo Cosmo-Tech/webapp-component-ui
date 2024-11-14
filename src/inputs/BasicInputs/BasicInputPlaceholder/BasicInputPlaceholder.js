@@ -8,8 +8,14 @@ import { TooltipInfo } from '../../../misc';
 export const BasicInputPlaceholder = ({ id, label, tooltipText, value, ...otherProps }) => {
   return (
     <Stack data-cy={id}>
-      <Stack spacing={1} direction="row" alignItems="center">
-        <Typography data-cy="disabled-input-label" variant="subtitle2" color="textSecondary">
+      <Stack
+        spacing={1}
+        direction="row"
+        sx={{
+          alignItems: 'center',
+        }}
+      >
+        <Typography data-cy="disabled-input-label" variant="subtitle2" sx={{ color: 'textSecondary' }}>
           {label}
         </Typography>
         <TooltipInfo title={tooltipText} />

@@ -9,10 +9,16 @@ import { BasicInputPlaceholder } from '../BasicInputs';
 import { getCommonInputStyles } from '../style';
 
 const useStyles = makeStyles(getCommonInputStyles);
+const DEFAULT_LABELS = {
+  label: 'Selection',
+  noValue: 'No value selected',
+  noOptions: 'No options available',
+};
 
 export const SingleSelect = (props) => {
   const classes = useStyles();
-  const { id, labels, tooltipText, value, options, disabled, onChange, isDirty } = props;
+  const { id, labels: tmpLabels, tooltipText, value, options, disabled = false, onChange, isDirty } = props;
+  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   const optionValue = useMemo(() => {
     return { key: value, label: options?.find((el) => el.key === value)?.label };
@@ -35,8 +41,8 @@ export const SingleSelect = (props) => {
       data-cy={`single-select-${id}`}
       direction="row"
       spacing={1}
-      alignItems="center"
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{ alignItems: 'center' }}
     >
       <Autocomplete
         id={id}
@@ -108,13 +114,4 @@ SingleSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
-};
-
-SingleSelect.defaultProps = {
-  disabled: false,
-  labels: {
-    label: 'Selection',
-    noValue: 'No value selected',
-    noOptions: 'No options available',
-  },
 };

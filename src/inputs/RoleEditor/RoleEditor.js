@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Typography, Avatar } from '@mui/material';
+import { Grid2 as Grid, Typography, Avatar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { DefaultAvatar } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
@@ -27,19 +27,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 export const RoleEditor = ({
   agentName,
-  agentAccess,
+  agentAccess = null,
   allRoles,
   icon,
   onOptionSelected,
-  isReadOnly,
-  actions,
-  helperText,
+  isReadOnly = false,
+  actions = [],
+  helperText = null,
 }) => {
   const classes = useStyles();
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
   return (
-    <Grid data-cy={`role-editor-${getIdentifierFromUserEmail(agentName)}`} item xs={12} className={classes.rolesEditor}>
-      <Grid item xs={7} className={classes.agentGroup}>
+    <Grid data-cy={`role-editor-${getIdentifierFromUserEmail(agentName)}`} className={classes.rolesEditor} size={12}>
+      <Grid className={classes.agentGroup} size={7}>
         {avatar}
         <div className={classes.nameGroup}>
           <Typography data-cy="role-editor-agent-name" variant="body1">
@@ -52,7 +52,7 @@ export const RoleEditor = ({
           )}
         </div>
       </Grid>
-      <Grid item xs={5}>
+      <Grid size={5}>
         <SelectWithAction
           isReadOnly={isReadOnly}
           options={allRoles}
@@ -102,11 +102,4 @@ RoleEditor.propTypes = {
    *  List of detailed description of each role to display when changing access
    */
   helperText: PropTypes.object,
-};
-
-RoleEditor.defaultProps = {
-  actions: [],
-  isReadOnly: false,
-  agentAccess: null,
-  helperText: null,
 };
