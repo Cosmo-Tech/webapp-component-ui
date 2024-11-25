@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const DefaultAvatar = ({ userName, size, variant }) => {
   const avatarBackgroundColor = stringToColor(userName);
-  const letter = userName.charAt(0).toUpperCase();
+  const letter = String.fromCodePoint(userName.codePointAt(0)).toUpperCase();
 
   const classes = useStyles({ avatarBackgroundColor, size });
 
