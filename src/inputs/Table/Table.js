@@ -365,6 +365,8 @@ export const Table = (props) => {
         stopEditingWhenCellsLoseFocus={true}
         rowSelection={'multiple'}
         onSelectionChanged={onSelectionChanged}
+        suppressColumnVirtualisation={true}
+        suppressRowVirtualisation={true}
       />
     );
   }, [onCellChange, classes, columns, gridRef, dateFormat, editMode, rows, onSelectionChanged]);
