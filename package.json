@@ -86,7 +86,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
-    "@mui/x-date-pickers": "^5.0.20",
+    "@mui/x-date-pickers": "^7.23.6",
     "@nosferatu500/react-sortable-tree": "^3.0.6",
     "ag-grid-community": "~32.0.2",
     "ag-grid-react": "~32.0.2",
