@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     right: 'auto',
     bottom: 'auto',
     position: 'fixed',
+    height: '100%',
     width: '100%',
     // z-index for the fullscreen container must be higher than 1200 to hide the app bar and drawers, but lower than
     // 1300 to still appear under modals & tooltips (see https://mui.com/material-ui/customization/z-index/ for details)
@@ -389,7 +390,7 @@ export const Table = (props) => {
       id="table-container"
       data-cy="table-input"
       {...otherProps}
-      style={{ height }}
+      style={{ height, overflow: 'auto' }}
       className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
     >
       <div data-cy="label">
@@ -406,7 +407,7 @@ export const Table = (props) => {
       <div
         data-cy="grid"
         id="grid-container"
-        style={{ height: `calc(100% - ${TABLE_TOOLBAR_HEIGHT})` }}
+        style={{ height: height === '100%' ? '100%' : undefined }}
         className={`${agTheme} ${isFullscreen && classes.fullscreenGridContainer}`}
       >
         <div
@@ -420,7 +421,7 @@ export const Table = (props) => {
         >
           {errorsPanelElement}
           {tableToolbarElement}
-          <Box style={{ flex: '1 0 0', overflow: 'auto' }} sx={{ width: width ?? '100%' }}>
+          <Box style={{ flex: '1 0 0', overflow: 'auto', minHeight: '200px' }} sx={{ width: width ?? '100%' }}>
             {isReady && !isLoading ? agGridElement : tablePlaceholder}
           </Box>
         </div>
