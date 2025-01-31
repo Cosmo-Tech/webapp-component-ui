@@ -69,14 +69,26 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
   }
 };
 
+const getSortedAttributeNames = (expectedKeys, allKeys) => {
+  // Start with expected keys in desired order
+  const sortedKeys = expectedKeys.filter((key) => allKeys.includes(key));
+  allKeys.filter((key) => !expectedKeys.includes(key)).forEach((key) => sortedKeys.push(key)); // Add unknown keys
+  return sortedKeys;
+};
+
 const ElementData = (props) => {
   const classes = useStyles();
-  const { data, labels } = props;
-  if (!data) {
-    return labels.noData;
-  }
+  const { data, labels, metadata, type } = props;
+  if (!data) return labels.noData;
 
-  let filteredElementAttributes = Object.keys(data)
+  const attributesOrderConfig = metadata?.attributesOrder;
+  const desiredAttributesOrder = type && (attributesOrderConfig?.nodes?.[type] ?? attributesOrderConfig?.edges?.[type]);
+
+  let sortedElementAttributeNames = Object.keys(data);
+  if (desiredAttributesOrder != null)
+    sortedElementAttributeNames = getSortedAttributeNames(desiredAttributesOrder, Object.keys(data));
+
+  let filteredElementAttributes = sortedElementAttributeNames
     .map((key) => _generateAttributeDetails(classes, labels, key, data[key]))
     .filter((el) => el !== null);
   if (filteredElementAttributes.length === 0) {
@@ -89,10 +101,13 @@ const ElementData = (props) => {
 ElementData.propTypes = {
   data: PropTypes.object,
   labels: PropTypes.object,
+  metadata: PropTypes.object,
+  type: PropTypes.string,
 };
 
 ElementData.defaultProps = {
   data: PropTypes.object,
+  metadata: {},
   labels: {
     attributes: {},
     dictKey: 'Key',
