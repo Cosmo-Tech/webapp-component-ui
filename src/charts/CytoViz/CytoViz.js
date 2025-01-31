@@ -54,6 +54,7 @@ export const CytoViz = (props) => {
     cytoscapeStylesheet,
     defaultSettings,
     elements,
+    elementsMetadata,
     error,
     extraLayouts,
     getElementDetails,
@@ -81,7 +82,17 @@ export const CytoViz = (props) => {
   let getElementDetailsCallback = getElementDetails;
   if (!getElementDetailsCallback) {
     // eslint-disable-next-line react/display-name
-    getElementDetailsCallback = (element) => <ElementData data={element.data()} labels={labels_.elementData} />;
+    getElementDetailsCallback = (element) => {
+      const elementType = element.classes && element.classes()?.[0];
+      return (
+        <ElementData
+          data={element.data()}
+          labels={labels_.elementData}
+          metadata={elementsMetadata}
+          type={elementType}
+        />
+      );
+    };
     getElementDetailsCallback.displayName = 'ElementData';
   }
 
@@ -715,6 +726,18 @@ CytoViz.propTypes = {
    */
   elements: PropTypes.array.isRequired,
   /**
+   * Optional array of metadata for cytoscape elements. Currently, it only takes an attributesOrder property to force
+   * the order of attributes when entity details are displayed.
+   * Expected format example:
+   *   {
+   *     attributesOrder: {
+   *       nodes: { nodeType1: ['someImportantAttribute', 'attribute1', 'attribute2', 'attribute3'] },
+   *       edges: { edgeType1: ['attributeA', 'attributeB']}},
+   *     }
+   *   }
+   */
+  elementsMetadata: PropTypes.object,
+  /**
    * Object of extra layouts to register in cytoscape. The keys of this object must be the layout names, and the values
    must be the extension object to provide to cytoscape.use(...). If you want to add a default cytoscape layout
    (e.g. breadthfirst, circle, concentric, ...), use null instead of an extension object.
@@ -829,6 +852,7 @@ CytoViz.defaultProps = {
     showStats: false,
     spacingFactor: 1,
   },
+  elementsMetadata: {},
   extraLayouts: {},
   groups: {},
   labels: DEFAULT_LABELS,
