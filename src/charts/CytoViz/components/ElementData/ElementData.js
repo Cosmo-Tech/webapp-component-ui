@@ -76,15 +76,27 @@ const DEFAULT_LABELS = {
   noData: 'No data to display for this element.',
 };
 
+const getSortedAttributeNames = (expectedKeys, allKeys) => {
+  // Start with expected keys in desired order
+  const sortedKeys = expectedKeys.filter((key) => allKeys.includes(key));
+  allKeys.filter((key) => !expectedKeys.includes(key)).forEach((key) => sortedKeys.push(key)); // Add unknown keys
+  return sortedKeys;
+};
+
 const ElementData = (props) => {
   const classes = useStyles();
-  const { data = {}, labels: tmpLabels } = props;
+  const { data = {}, labels: tmpLabels, metadata = {}, type } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
-  if (!data) {
-    return labels.noData;
-  }
+  if (!data) return labels.noData;
 
-  let filteredElementAttributes = Object.keys(data)
+  const attributesOrderConfig = metadata?.attributesOrder;
+  const desiredAttributesOrder = type && (attributesOrderConfig?.nodes?.[type] ?? attributesOrderConfig?.edges?.[type]);
+
+  let sortedElementAttributeNames = Object.keys(data);
+  if (desiredAttributesOrder != null)
+    sortedElementAttributeNames = getSortedAttributeNames(desiredAttributesOrder, Object.keys(data));
+
+  let filteredElementAttributes = sortedElementAttributeNames
     .map((key) => _generateAttributeDetails(classes, labels, key, data[key]))
     .filter((el) => el !== null);
   if (filteredElementAttributes.length === 0) {
@@ -97,6 +109,8 @@ const ElementData = (props) => {
 ElementData.propTypes = {
   data: PropTypes.object,
   labels: PropTypes.object,
+  metadata: PropTypes.object,
+  type: PropTypes.string,
 };
 
 export default ElementData;
