@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     maxWidth: 'max-content',
+    wordBreak: 'break-all',
     color: theme.palette.primary.main,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
