@@ -1,3 +1,13 @@
+## **9.6.0** <sub><sup>2025-02-11 (6936f32...7d889a1)</sup></sub>
+
+### Features
+
+- [PROD-14225] make attributes order configurable in CytoViz component ([6936f32](https://github.com/Cosmo-Tech/webapp-component-ui/commit/6936f32))
+
+### Bug Fixes
+
+- fix width of ScenarioNode for long scenario names ([7d889a1](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7d889a1))
+
 ## **9.5.3** <sub><sup>2025-01-23 (163f483...2b96b18)</sup></sub>
 
 ### Bug Fixes
