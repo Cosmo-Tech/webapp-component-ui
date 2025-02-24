@@ -106,13 +106,20 @@ const LOADING_STATUS_MAPPING = {
 };
 
 const _formatMinMaxDatesInColumns = (col, dateFormat) => {
+  const formatValueIfNecessary = (value, dateFormat) => {
+    if (DateUtils.isValid(value, dateFormat)) return value;
+    if (DateUtils.isValidDate(value)) return DateUtils.format(value, dateFormat);
+    try {
+      // Fall back to default Date constructor & format to expected dateFormat
+      return DateUtils.format(new Date(value), dateFormat);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (col.type && col.type.indexOf('date') !== -1) {
-    if (col.minValue) {
-      col.minValue = DateUtils.format(new Date(col.minValue), dateFormat) || col.minValue;
-    }
-    if (col.maxValue) {
-      col.maxValue = DateUtils.format(new Date(col.maxValue), dateFormat) || col.maxValue;
-    }
+    if (col.minValue) col.minValue = formatValueIfNecessary(col.minValue, dateFormat);
+    if (col.maxValue) col.maxValue = formatValueIfNecessary(col.maxValue, dateFormat);
   }
 };
 
