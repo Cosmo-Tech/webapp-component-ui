@@ -1,13 +1,27 @@
+## **10.1.0** <sub><sup>2025-07-01 (24fcdc9...ebad080)</sup></sub>
+
+### Features
+
+- make attributes order configurable in CytoViz component ([4e82cba](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e82cba))
+
+### Bug Fixes
+
+- fix support of unicode characters in DefaultAvatar component ([24fcdc9](https://github.com/Cosmo-Tech/webapp-component-ui/commit/24fcdc9))
+- fix Table hidden by errors panel ([5b7f797](https://github.com/Cosmo-Tech/webapp-component-ui/commit/5b7f797))
+- fix layout of ScenarioNode for long scenario names ([e68e88c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e68e88c))
+- fix parsing & formatting of min/max date values in Table columns ([1a16032](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1a16032))
+
 ## **10.0.0** <sub><sup>2024-11-14 (e155693...52542f1)</sup></sub>
 
 ### Bug Fixes
-*  fix possible error in SimplePowerBIReportEmbed ([e155693](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e155693))
 
+- fix possible error in SimplePowerBIReportEmbed ([e155693](https://github.com/Cosmo-Tech/webapp-component-ui/commit/e155693))
 
 ### BREAKING CHANGES
-*  upgrade to react 18. This version of the package won't work with the sample webapp based on React 17 ([83e98bb](https://github.com/Cosmo-Tech/webapp-component-ui/commit/83e98bb))
-*  upgrade Material UI to version 6 that breaks display of some components. This version of the package won't 
-work with the sample webapp using Material UI v5 ([557f88b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/557f88b))
+
+- upgrade to react 18. This version of the package won't work with the sample webapp based on React 17 ([83e98bb](https://github.com/Cosmo-Tech/webapp-component-ui/commit/83e98bb))
+- upgrade Material UI to version 6 that breaks display of some components. This version of the package won't
+  work with the sample webapp using Material UI v5 ([557f88b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/557f88b))
 
 ## **9.5.2** <sub><sup>2024-10-22 (b2ef8cb...b2ef8cb)</sup></sub>
 
@@ -16,20 +30,20 @@ work with the sample webapp using Material UI v5 ([557f88b](https://github.com/C
 ## **9.5.1** <sub><sup>2024-09-27 (fb76924...4e5eeaf)</sup></sub>
 
 ### Bug Fixes
-*  fix pipe not displayed in scenario manager card if run template name is too long ([fb76924](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb76924))
-*  delete unnecessary margins in ScenarioValidationChip ([4e5eeaf](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e5eeaf))
 
+- fix pipe not displayed in scenario manager card if run template name is too long ([fb76924](https://github.com/Cosmo-Tech/webapp-component-ui/commit/fb76924))
+- delete unnecessary margins in ScenarioValidationChip ([4e5eeaf](https://github.com/Cosmo-Tech/webapp-component-ui/commit/4e5eeaf))
 
 ## **9.5.0** <sub><sup>2024-09-25 (3e9973a...af47550)</sup></sub>
 
 ### Features
-*  add iconButton option to Create scenario button ([c6501d8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c6501d8))
 
+- add iconButton option to Create scenario button ([c6501d8](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c6501d8))
 
 ### Bug Fixes
-*  delete backdrop in flowchart view when the menu drawer is open ([3e9973a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3e9973a))
-*  disable tooltip on contained Share and Create buttons ([ac84379](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ac84379))
 
+- delete backdrop in flowchart view when the menu drawer is open ([3e9973a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3e9973a))
+- disable tooltip on contained Share and Create buttons ([ac84379](https://github.com/Cosmo-Tech/webapp-component-ui/commit/ac84379))
 
 ## **9.4.1** <sub><sup>2024-09-04 (4e2d243...084b056)</sup></sub>
 
