@@ -104,7 +104,8 @@ export const ScenarioManagerTreeList = (props) => {
     onScenarioUpdate = () => null,
   } = props;
 
-  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
+  const labels = useMemo(() => ({ ...DEFAULT_LABELS, ...tmpLabels }), [tmpLabels]);
+
   if (buildSearchInfo) {
     console.warn(
       '"buildSearchInfo" prop is deprecated in ScenarioManagerTreeList. Please consider removing this prop.'
