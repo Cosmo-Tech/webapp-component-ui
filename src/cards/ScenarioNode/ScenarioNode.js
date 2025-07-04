@@ -300,6 +300,8 @@ export const ScenarioNode = ({
       <AccordionSummary
         className={classes.accordionSummary}
         expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}
+        component="div"
+        role="button"
       >
         {getScenarioHeader()}
         {showDeleteIcon && (
