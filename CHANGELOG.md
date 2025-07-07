@@ -1,3 +1,9 @@
+## **10.1.1** <sub><sup>2025-07-07 (c59803d...425df50)</sup></sub>
+
+### Bug Fixes
+
+- fix possible re\-render loop in scenario manager tree ([c59803d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/c59803d))
+
 ## **10.1.0** <sub><sup>2025-07-01 (24fcdc9...ebad080)</sup></sub>
 
 ### Features
