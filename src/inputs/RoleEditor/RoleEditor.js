@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid2 as Grid, Typography, Avatar } from '@mui/material';
+import { Grid2 as Grid, Typography, Avatar, Tooltip } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { DefaultAvatar } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     gap: '15px',
     marginLeft: 0,
   },
+  agentName: {
+    overflow:'hidden',
+    textOverflow: 'ellipsis'
+  },
   rolesEditor: {
     display: 'flex',
     alignItems: 'center',
@@ -23,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
   nameGroup: {
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: '80%'
   },
 }));
 export const RoleEditor = ({
@@ -42,9 +47,11 @@ export const RoleEditor = ({
       <Grid className={classes.agentGroup} size={7}>
         {avatar}
         <div className={classes.nameGroup}>
-          <Typography data-cy="role-editor-agent-name" variant="body1">
+          <Tooltip title={agentName} arrow>
+            <Typography className={classes.agentName} data-cy="role-editor-agent-name" variant="body1">
             {agentName}
           </Typography>
+          </Tooltip>
           {helperText != null && (
             <Typography data-cy="role-editor-helper-text" variant="body2" color="textSecondary">
               {helperText[agentAccess]}
