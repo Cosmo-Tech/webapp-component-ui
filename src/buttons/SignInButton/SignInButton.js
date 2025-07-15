@@ -29,26 +29,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SignInButton = (props) => {
-  const classes = useStyles();
+export const SignInButton = React.forwardRef(
+  ({ id, label = 'Sign in', logo = '../../assets/microsoft_logo.png', onClick }, ref) => {
+    const classes = useStyles();
 
-  const { id, label = 'Sign in', logo = '../../assets/microsoft_logo.png', onClick } = props;
+    return (
+      <button ref={ref} className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
+        <Grid container spacing={0} direction="row" sx={{ alignItems: 'center', justifyContent: 'flex-start' }}>
+          <Grid>
+            <Avatar className={classes.logo} variant="square" src={logo} />
+          </Grid>
+          <Grid>
+            <Typography noWrap className={classes.label}>
+              {label}
+            </Typography>
+          </Grid>
+        </Grid>
+      </button>
+    );
+  }
+);
 
-  return (
-    <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
-      <Grid container spacing={0} direction="row" sx={{ alignItems: 'center', justifyContent: 'flex-start' }}>
-        <Grid>
-          <Avatar className={classes.logo} variant="square" src={logo} />
-        </Grid>
-        <Grid>
-          <Typography noWrap className={classes.label}>
-            {label}
-          </Typography>
-        </Grid>
-      </Grid>
-    </button>
-  );
-};
+SignInButton.displayName = 'SignInButton';
 
 SignInButton.propTypes = {
   /**
