@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
 export const SignInButton = (props) => {
   const classes = useStyles();
 
-  const { id, label = 'Sign in', logo = '../../assets/microsoft_logo.png', onClick } = props;
+  const { id, label = 'Sign in', logo = '../../assets/microsoft_logo.png', onClick, autoFocus = false } = props;
 
   return (
-    <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'}>
+    <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'} autoFocus={autoFocus}>
       <Grid container spacing={0} direction="row" sx={{ alignItems: 'center', justifyContent: 'flex-start' }}>
         <Grid>
           <Avatar className={classes.logo} variant="square" src={logo} />
@@ -70,4 +70,8 @@ SignInButton.propTypes = {
    * - Custom one: to do this, use the **Auth.js** file (defined in @cosmotech/core package) as pattern
    */
   onClick: PropTypes.func.isRequired,
+  /**
+   * Autofocus by default
+   */
+  autoFocus: PropTypes.bool,
 };
