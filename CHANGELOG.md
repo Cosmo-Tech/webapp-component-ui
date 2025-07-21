@@ -1,3 +1,10 @@
+## **10.1.2** <sub><sup>2025-07-21 (a5b974a...874be37)</sup></sub>
+
+### Bug Fixes
+
+- fix text overlap in resource sharing dialog ([a5b974a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a5b974a))
+- add auto focus on sign-in button ([874be37](https://github.com/Cosmo-Tech/webapp-component-ui/commit/874be37))
+
 ## **10.1.1** <sub><sup>2025-07-07 (c59803d...425df50)</sup></sub>
 
 ### Bug Fixes
