@@ -5,3 +5,4 @@ export { CytoViz } from './CytoViz';
 export { Dashboard } from './Dashboard';
 export { ScenarioManagerTreeList } from './ScenarioManagerTreeList';
 export { SimplePowerBIReportEmbed } from './SimplePowerBIReportEmbed';
+export { ChartTimeline } from './ChartTimeline';
