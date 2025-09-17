@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const DefaultAvatar = ({ userName, size = 24, variant = 'circular' }) => {
+export const DefaultAvatar = ({ userName = '?', size = 24, variant = 'circular' }) => {
   const avatarBackgroundColor = stringToColor(userName);
-  const letter = String.fromCodePoint(userName.codePointAt(0)).toUpperCase();
+  const letter = userName === '' ? '?' : String.fromCodePoint(userName.codePointAt(0)).toUpperCase();
 
   const classes = useStyles({ avatarBackgroundColor, size });
 
@@ -46,7 +46,7 @@ DefaultAvatar.propTypes = {
   /**
    * User name to get first letter and compute avatar's color
    */
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   /**
    * Icon size in pixels
    */
