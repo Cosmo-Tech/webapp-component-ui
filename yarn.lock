@@ -1860,9 +1860,9 @@ __metadata:
     babel-jest: "npm:^30.1.2"
     clsx: "npm:^2.1.1"
     cytoscape: "npm:^3.33.1"
-    cytoscape-bubblesets: "npm:^3.2.3"
+    cytoscape-bubblesets: "npm:^4.0.0"
     cytoscape-dagre: "npm:^2.5.0"
-    cytoscape-layers: "npm:^2.4.6"
+    cytoscape-layers: "npm:^3.0.0"
     dayjs: "npm:^1.11.18"
     eslint: "npm:^9.35.0"
     eslint-config-prettier: "npm:^10.1.8"
@@ -4952,10 +4952,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bubblesets-js@npm:^2.3.4":
-  version: 2.3.4
-  resolution: "bubblesets-js@npm:2.3.4"
-  checksum: 10c0/68cc5d9d43b496e4756a3f2cbb2d8c614e209bbb77c5ed079572436d216d61c808e26e4f8f55adec252a9074ea4dfc1e9b90f56928533ca2f4c5c194bc3fc086
+"bubblesets-js@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "bubblesets-js@npm:3.0.0"
+  checksum: 10c0/1767558af5a5059a4e6f5a9b3976539a439da9c5c96f319a6819f8456e31fe7dc552c696d6f97d9ff83b254981195273588230c710c777e3790e63d259ed1be0
   languageName: node
   linkType: hard
 
@@ -5487,18 +5487,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cytoscape-bubblesets@npm:^3.2.3":
-  version: 3.2.3
-  resolution: "cytoscape-bubblesets@npm:3.2.3"
+"cytoscape-bubblesets@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cytoscape-bubblesets@npm:4.0.0"
   dependencies:
     "@types/cytoscape": "npm:^3.21.8"
     "@types/lodash.throttle": "npm:^4.1.9"
-    bubblesets-js: "npm:^2.3.4"
+    bubblesets-js: "npm:^3.0.0"
     lodash.throttle: "npm:^4.1.1"
   peerDependencies:
     cytoscape: ^3.23.0
-    cytoscape-layers: ^2.3.0
-  checksum: 10c0/fd1909b3722a5f36049151b55962a58d29bba1aeead5e262e0617eae66ac5f9131c7a7c247b3110b5a2a5a9c0650480e86e0541c1e958f889e00f71a25879203
+    cytoscape-layers: ^3.0.0
+  checksum: 10c0/4655189c6cb240a71b222cbac68d048e9bc8a2d63eec67bf446366cd77fb3ac67cc07ea235a0001a9a86d3c704abc54c713dfa42e0bf987abdb9f0426d8bf0ef
   languageName: node
   linkType: hard
 
@@ -5513,14 +5513,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cytoscape-layers@npm:^2.4.6":
-  version: 2.4.6
-  resolution: "cytoscape-layers@npm:2.4.6"
+"cytoscape-layers@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "cytoscape-layers@npm:3.0.0"
   dependencies:
     "@types/cytoscape": "npm:^3.21.8"
   peerDependencies:
     cytoscape: ^3.23.0
-  checksum: 10c0/02a50f86b241a133cc5bcd073d14a3cd5bd2a962028d06f46e8da187f8d6693e499dca940c210e855191814fe0fc64f60c32d4669f09f00e073e651d1026a9ab
+  checksum: 10c0/3a5270ffad8f2c7446b3143b814ad669b94032c0968bae3dd2ae75ccdd9f2b10966612244c87bc8309d45f9336e224284690d31264277bb8771bb86febcaecd4
   languageName: node
   linkType: hard
 
