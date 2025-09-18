@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Stack, Typography, Box, Button } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
+import { AllCommunityModule, ModuleRegistry, provideGlobalGridOptions } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import rfdc from 'rfdc';
@@ -16,6 +17,9 @@ import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
 import { TableToolbar } from './components';
 import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
+
+ModuleRegistry.registerModules([AllCommunityModule]);
+provideGlobalGridOptions({ theme: 'legacy' });
 
 const clone = rfdc();
 
@@ -386,7 +390,12 @@ export const Table = (props) => {
         rowData={rows}
         context={context}
         stopEditingWhenCellsLoseFocus={true}
-        rowSelection={'multiple'}
+        rowSelection={{
+          mode: 'multiRow',
+          checkboxes: false,
+          headerCheckbox: false,
+          enableClickSelection: true,
+        }}
         onSelectionChanged={onSelectionChanged}
       />
     );
