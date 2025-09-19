@@ -1,3 +1,14 @@
+## **10.1.3** <sub><sup>2025-09-19 (2158502...f807957)</sup></sub>
+
+### Bug Fixes
+
+- fix error when userName is empty or undefined ([f8f4b33](https://github.com/Cosmo-Tech/webapp-component-ui/commit/f8f4b33eafc034219274dbbf7c55642f8646b8f6))
+
+### Dependencies
+
+- upgrade to node 24
+- update dependencies
+
 ## **10.1.2** <sub><sup>2025-07-21 (a5b974a...874be37)</sup></sub>
 
 ### Bug Fixes
