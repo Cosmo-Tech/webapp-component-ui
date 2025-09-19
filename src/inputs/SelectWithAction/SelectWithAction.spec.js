@@ -125,7 +125,7 @@ describe('SelectWithAction', () => {
       await SelectElement.openMenu();
       await SelectElement.selectMenuItem(actionToSelect.label);
 
-      expect(mockActionClick).toBeCalledWith(actionToSelect.id);
+      expect(mockActionClick).toHaveBeenCalledWith(actionToSelect.id);
     });
   });
 
