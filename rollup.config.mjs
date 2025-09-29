@@ -28,11 +28,7 @@ export default {
   external: [
     'react',
     'react-dom',
-    'react-dnd',
     'prop-types',
-    'react-dnd-html5-backend',
-    '@nosferatu500/react-dnd-scrollzone',
-    'react-virtualized',
     '@mui/material',
     '@mui/icons-material',
     '@mui/styles',

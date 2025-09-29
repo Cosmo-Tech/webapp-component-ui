@@ -1,91 +1,82 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import SortableTree from '@nosferatu500/react-sortable-tree';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import clsx from 'clsx';
 import { ScenarioNode } from '../../../../cards';
-import { SHRUNK_NODE_HEIGHT, EXPANDED_NODE_HEIGHT } from '../../../../cards/ScenarioNode/constants';
+
+const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
+  [`& .${treeItemClasses.content}`]: {
+    borderRadius: theme.spacing(0.5),
+    padding: theme.spacing(0.5, 1),
+    margin: theme.spacing(0.2, 0),
+    [`& .${treeItemClasses.label}`]: {
+      fontSize: '0.8rem',
+      fontWeight: 500,
+    },
+  },
+  [`& .${treeItemClasses.groupTransition}`]: {
+    marginLeft: 15,
+    paddingLeft: theme.spacing(2),
+    borderLeft: `1px dashed ${theme.palette.text.primary}`,
+  },
+  ...theme.applyStyles('light', {
+    color: theme.palette.grey[800],
+  }),
+}));
+
+// Ignore MUI events in the MUI tree items to prevent keyboard navigation based on scenario names (this feature breaks
+// input fields in the scenario node cards, plus the scenario manager view renders several trees, which means users
+// can't navigate to all scenarios with only keyboard anyway)
+const ignoreMuiEvents = (event) => (event.defaultMuiPrevented = true);
 
 export const ScenarioSortableTree = ({
-  nodesExpandedChildrenRef,
-  nodesExpandedDetailsRef,
+  treeExpandedNodes,
+  setTreeExpandedNodes,
+  detailExpandedNodes,
+  setDetailExpandedNodes,
   scenarioTree,
   classes,
-  refreshTick,
 }) => {
-  const [nodesExpandedChildren, setNodesExpandedChildren] = useState(nodesExpandedChildrenRef.current);
-  const [nodesExpandedDetails, setNodesExpandedDetails] = useState(nodesExpandedDetailsRef.current);
-
-  const changeNodesExpandedChildren = ({ node, expanded }) => {
-    const newValue = {
-      ...nodesExpandedChildrenRef.current,
-      [node.id]: expanded,
-    };
-    nodesExpandedChildrenRef.current = newValue;
-    setNodesExpandedChildren(newValue);
-  };
-
-  const changeNodesExpandedDetails = (scenarioId, expanded) => {
-    const newValue = {
-      ...nodesExpandedDetailsRef.current,
-      [scenarioId]: expanded,
-    };
-    nodesExpandedDetailsRef.current = newValue;
-    setNodesExpandedDetails(newValue);
+  const toggleNodeAccordionState = (scenarioId, newIsExpanded) => {
+    if (newIsExpanded) setDetailExpandedNodes((prevNodeIds) => [...prevNodeIds, scenarioId]);
+    else setDetailExpandedNodes((prevNodeIds) => prevNodeIds.filter((nodeId) => nodeId !== scenarioId));
   };
 
   const formatScenarioTreeNodeToRtsNode = (scenarioTreeNode) => {
-    const { scenarioNodeProps, children: treeNodeChildren, ...rtsScenario } = scenarioTreeNode;
+    const { scenarioNodeProps, children: treeNodeChildren } = scenarioTreeNode;
 
-    rtsScenario.expanded = nodesExpandedChildren[rtsScenario.id];
-    rtsScenario.expandedDetail = nodesExpandedDetails[rtsScenario.id];
-    rtsScenario.title = (
+    const itemId = scenarioTreeNode.id;
+    const itemLabel = (
       <ScenarioNode
-        isExpanded={nodesExpandedDetails[rtsScenario.id]}
-        setIsExpanded={(newIsExpanded) => changeNodesExpandedDetails(rtsScenario.id, newIsExpanded)}
+        isExpanded={detailExpandedNodes.includes(itemId)}
+        setIsExpanded={(newIsExpanded) => toggleNodeAccordionState(itemId, newIsExpanded)}
         {...scenarioNodeProps}
       />
     );
 
     if (treeNodeChildren && treeNodeChildren.length > 0) {
-      rtsScenario.children = treeNodeChildren.map((treeNodeChild) => formatScenarioTreeNodeToRtsNode(treeNodeChild));
+      const children = treeNodeChildren.map((treeNodeChild) => formatScenarioTreeNodeToRtsNode(treeNodeChild));
+
+      return (
+        <CustomTreeItem key={itemId} itemId={itemId} label={itemLabel} onKeyDown={ignoreMuiEvents}>
+          {children}
+        </CustomTreeItem>
+      );
     }
 
-    return rtsScenario;
+    return <CustomTreeItem key={itemId} itemId={itemId} label={itemLabel} onKeyDown={ignoreMuiEvents} />;
   };
 
-  const [treeData, setTreeData] = useState(formatScenarioTreeNodeToRtsNode(scenarioTree));
-
-  const updateTreeData = () => {
-    setTreeData(formatScenarioTreeNodeToRtsNode(scenarioTree));
-  };
-
-  const refreshTickOnLoad = useRef(refreshTick);
-  useEffect(() => {
-    // prevent double render on load
-    if (refreshTick !== refreshTickOnLoad.current) {
-      setNodesExpandedChildren(nodesExpandedChildrenRef.current);
-      setNodesExpandedDetails(nodesExpandedDetailsRef.current);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshTick]);
+  const [treeData, setTreeData] = useState([formatScenarioTreeNodeToRtsNode(scenarioTree)]);
 
   useEffect(() => {
-    updateTreeData();
+    setTreeData([formatScenarioTreeNodeToRtsNode(scenarioTree)]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scenarioTree, nodesExpandedChildren, nodesExpandedDetails]);
-
-  const generateNodeProps = () => {
-    return {
-      className: classes.scenarioCard,
-    };
-  };
-
-  const ignoreEvent = (event) => {
-    event.preventDefault();
-  };
+  }, [scenarioTree, detailExpandedNodes]);
 
   return (
     <Paper
@@ -93,36 +84,30 @@ export const ScenarioSortableTree = ({
       className={clsx(classes.treeContainer, {
         [classes.rootScenarioHiddenLineBlock]: scenarioTree.children.length === 0,
       })}
-      onDragEnter={ignoreEvent}
-      onDragOver={ignoreEvent}
-      onDrop={ignoreEvent}
     >
-      <SortableTree
-        treeData={[treeData]}
-        generateNodeProps={generateNodeProps}
-        getNodeKey={({ node }) => node.id}
-        onVisibilityToggle={changeNodesExpandedChildren}
-        canDrag={false}
-        onChange={() => null}
-        canDrop={() => false}
-        isVirtualized={false} // Required to prevent bug when rowHeight is a function
-        rowHeight={({ treeIndex, node, path }) => {
-          return 12 + (node.expandedDetail ? EXPANDED_NODE_HEIGHT : SHRUNK_NODE_HEIGHT);
-        }}
-      />
+      <SimpleTreeView
+        disableSelection
+        expandedItems={treeExpandedNodes}
+        onExpandedItemsChange={(event, itemIds) => setTreeExpandedNodes(itemIds)}
+        expansionTrigger="iconContainer"
+      >
+        {treeData}
+      </SimpleTreeView>
     </Paper>
   );
 };
 
 ScenarioSortableTree.propTypes = {
   /**
-   * react ref object contains all nodes with children expended
+   * array of ids of the scenarios with children tree collapsed
    */
-  nodesExpandedChildrenRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
+  treeExpandedNodes: PropTypes.array.isRequired,
+  setTreeExpandedNodes: PropTypes.func.isRequired,
   /**
-   * react ref object contains all nodes details expended
+   * array of ids of the scenarios with accordion details expanded
    */
-  nodesExpandedDetailsRef: PropTypes.shape({ current: PropTypes.any }).isRequired,
+  detailExpandedNodes: PropTypes.array.isRequired,
+  setDetailExpandedNodes: PropTypes.func.isRequired,
   /**
    * classes for styles
    */
@@ -131,8 +116,4 @@ ScenarioSortableTree.propTypes = {
    * tree of scenario
    */
   scenarioTree: PropTypes.object.isRequired,
-  /**
-   * a refresh tick number for force tree to refresh by refs values
-   */
-  refreshTick: PropTypes.number.isRequired,
 };
