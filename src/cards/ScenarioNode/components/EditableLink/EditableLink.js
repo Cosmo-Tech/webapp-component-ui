@@ -10,52 +10,10 @@ import {
   Link,
   CircularProgress,
   IconButton,
-  Grid2 as Grid,
+  Grid,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { FadingTooltip } from '../../../../misc';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%',
-  },
-  labelDisplayContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-  },
-  label: {
-    maxWidth: 'max-content',
-    wordBreak: 'break-all',
-    color: theme.palette.primary.main,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textAlign: 'left',
-    display: '-webkit-box',
-    WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: 1,
-  },
-  outlinedInput: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    '& .MuiOutlinedInput-input': {
-      minWidth: '300px',
-      marginLeft: '4px',
-      padding: '4px',
-    },
-  },
-  editIcon: {
-    margin: 'auto',
-    marginRight: '10px',
-    fontWeight: 'bold',
-    height: '20px',
-    color: theme.palette.primary.main,
-  },
-}));
 
 const DEFAULT_LABELS = {
   title: 'Scenario name',
@@ -65,6 +23,7 @@ const DEFAULT_LABELS = {
     forbiddenCharsInValue: 'Value is invalid',
   },
 };
+
 export const EditableLink = (props) => {
   const {
     value,
@@ -77,7 +36,6 @@ export const EditableLink = (props) => {
   } = props;
 
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
-  const classes = useStyles();
 
   const [error, setError] = useState(null);
   const [textFieldValue, setTextFieldValue] = useState(value);
@@ -121,7 +79,20 @@ export const EditableLink = (props) => {
         >
           <FadingTooltip key="scenario-name-tooltip" title={value}>
             <Link data-cy="scenario-view-redirect" component="button" underline="hover" onClick={onClick}>
-              <Typography className={classes.label} {...typographyProps}>
+              <Typography
+                sx={{
+                  maxWidth: 'max-content',
+                  wordBreak: 'break-all',
+                  color: (theme) => theme.palette.primary.main,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  textAlign: 'left',
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: 1,
+                }}
+                {...typographyProps}
+              >
                 {value}
               </Typography>
             </Link>
@@ -150,7 +121,17 @@ export const EditableLink = (props) => {
       {isEditing ? (
         <FormControl data-cy="editable-link-in-edition-mode">
           <OutlinedInput
-            className={classes.outlinedInput}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'stretch',
+              '& .MuiOutlinedInput-input': {
+                minWidth: '300px',
+                marginLeft: '4px',
+                padding: '4px',
+              },
+            }}
             autoFocus
             defaultValue={value}
             error={error != null}

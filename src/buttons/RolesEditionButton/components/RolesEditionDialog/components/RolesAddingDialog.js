@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
 import {
   DialogContent,
-  Grid2 as Grid,
+  Grid,
   TextField,
   DialogActions,
   Button,
@@ -17,13 +17,6 @@ import {
   Radio,
   Autocomplete,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyle = makeStyles((theme) => ({
-  chip: {
-    margin: '3px',
-  },
-}));
 
 const _sortGrantedPermissionsForRole = (rolesPermissionsMapping, allPermissions, selectedRole) => {
   const permissions = { granted: [], denied: [] };
@@ -55,7 +48,6 @@ export const RolesAddingDialog = ({
   onCancel,
   onConfirm,
 }) => {
-  const classes = useStyle();
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [selectedRole, setSelectedRole] = useState(defaultRole);
   const sortedPermissions = _sortGrantedPermissionsForRole(rolesPermissionsMapping, allPermissions, selectedRole);
@@ -114,7 +106,7 @@ export const RolesAddingDialog = ({
                 key={permission.value}
                 color="secondary"
                 label={permission.label ?? permission.value}
-                className={classes.chip}
+                sx={{ m: '3px' }}
               />
             ))}
             <Typography variant="subtitle2">{labels.deniedPermissions}</Typography>
@@ -124,7 +116,7 @@ export const RolesAddingDialog = ({
                 key={permission.value}
                 disabled
                 label={permission.label ?? permission.value}
-                className={classes.chip}
+                sx={{ m: '3px' }}
               />
             ))}
           </Grid>

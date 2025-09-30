@@ -3,15 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Radio, RadioGroup, FormControl, FormControlLabel, Stack, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../../misc';
-import { getCommonInputStyles } from '../../style';
+import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
-const useStyles = makeStyles(getCommonInputStyles);
-
 export const BasicRadioInput = (props) => {
-  const classes = useStyles();
   const {
     id,
     label,
@@ -42,10 +38,7 @@ export const BasicRadioInput = (props) => {
   }
 
   return (
-    <Stack
-      data-cy={`radio-input-${id}`}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-    >
+    <Stack data-cy={`radio-input-${id}`} sx={getCommonInputSxProps(isDirty)}>
       <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         <Typography variant="subtitle2" id="slider-input-label" color="textSecondary">
           {label}

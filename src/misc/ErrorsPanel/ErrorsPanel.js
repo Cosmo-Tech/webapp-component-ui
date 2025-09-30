@@ -13,7 +13,6 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import useStyles from './style';
 
 const DEFAULT_LABELS = {
   clear: 'Clear',
@@ -21,7 +20,6 @@ const DEFAULT_LABELS = {
 };
 
 export const ErrorsPanel = (props) => {
-  const classes = useStyles();
   const { errors, maxErrorsCount = 100, labels: tmpLabels, onClear, buildErrorsCountLabel, className } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
@@ -37,29 +35,49 @@ export const ErrorsPanel = (props) => {
         {errorsToRender.map((error, index) => (
           <Accordion key={'error' + index} data-cy={'error-accordion-' + index}>
             <AccordionSummary
-              className={classes.errorTitle}
+              sx={{
+                backgroundColor: (theme) => theme.palette.background.default,
+                '& .MuiAccordionSummary-content': {
+                  alignItems: 'center',
+                },
+              }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="errors-panel-content"
               id="errors-panel-header"
             >
               <Box sx={{ justifyContent: 'flex-start' }}>
-                <Typography className={classes.errorSummary}>
-                  <CancelIcon className={classes.cancelIcon} />
+                <Typography
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.background.default,
+                    color: (theme) => theme.palette.error.main,
+                    display: 'flex',
+                    alignContent: 'center',
+                  }}
+                >
+                  <CancelIcon sx={{ marginRight: '16px' }} />
                 </Typography>
               </Box>
               <Box sx={{ flexGrow: 1 }}>
-                <Typography className={classes.errorSummary} data-cy={'error-summary'}>
+                <Typography
+                  sx={{
+                    backgroundColor: (theme) => theme.palette.background.default,
+                    color: (theme) => theme.palette.error.main,
+                    display: 'flex',
+                    alignContent: 'center',
+                  }}
+                  data-cy={'error-summary'}
+                >
                   {error.summary}
                 </Typography>
               </Box>
               <Box>
-                <Typography className={classes.errorLoc} data-cy={'error-loc'}>
+                <Typography sx={{ color: (theme) => theme.palette.warning.main }} data-cy={'error-loc'}>
                   {error.loc}
                 </Typography>
               </Box>
             </AccordionSummary>
-            <AccordionDetails className={classes.errorContextContainer}>
-              <Typography className={classes.errorContext} variant="caption">
+            <AccordionDetails sx={{ backgroundColor: (theme) => theme.palette.background.default }}>
+              <Typography sx={{ color: (theme) => theme.palette.error.main, whiteSpace: 'pre-line' }} variant="caption">
                 {error.context}
               </Typography>
             </AccordionDetails>
@@ -68,11 +86,22 @@ export const ErrorsPanel = (props) => {
         ))}
       </>
     );
-  }, [errors, maxErrorsCount, classes]);
+  }, [errors, maxErrorsCount]);
 
   return (
-    <Paper className={`${classes.errorsContainer} ${className}`} data-cy="errors-panel">
-      <Typography className={classes.errorsHeader} data-cy="errors-header">
+    <Paper
+      sx={{
+        backgroundColor: (theme) => theme.palette.background.default,
+        marginTop: '10px',
+        marginBottom: '32px',
+      }}
+      className={className}
+      data-cy="errors-panel"
+    >
+      <Typography
+        sx={{ backgroundColor: (theme) => theme.palette.background.default, padding: '10px' }}
+        data-cy="errors-header"
+      >
         {labels.mainError} {errorsCountLabel}
       </Typography>
       {getErrors()}

@@ -3,7 +3,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Button, CircularProgress } from '@mui/material';
-import useStyles from './style';
 
 const STATUS = {
   IDLE: 'IDLE',
@@ -15,7 +14,6 @@ const DEFAULT_LABELS = {
   download: 'Download',
 };
 export const SelfDestructLinkButton = (props) => {
-  const classes = useStyles();
   const { generate, height = '40px', width = '143px', labels: tmpLabels, timeout = 15 } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [status, setStatus] = useState(STATUS.IDLE);
@@ -56,7 +54,7 @@ export const SelfDestructLinkButton = (props) => {
   const dimensions = { height, width };
 
   return (
-    <div className={classes.root} style={dimensions}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', ...dimensions }}>
       {status === STATUS.IDLE && (
         <Button variant="contained" color="primary" onClick={startLinkGeneration} style={dimensions}>
           {labels.generateLink}

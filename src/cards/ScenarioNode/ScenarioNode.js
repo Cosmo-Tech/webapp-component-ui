@@ -24,7 +24,8 @@ import { DatasetUtils } from '@cosmotech/core';
 import { DescriptionEditor, TagsEditor } from '../../inputs';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 import { ConfirmDeleteDialog, EditableLink } from './components';
-import useStyles from './style';
+import { SHRUNK_NODE_HEIGHT } from './constants';
+import { classes, Root } from './style';
 
 const DEFAULT_LABELS = {
   status: 'Run status:',
@@ -82,7 +83,6 @@ export const ScenarioNode = ({
   buildScenarioNameToDelete,
   onScenarioUpdate = () => null,
 }) => {
-  const classes = useStyles();
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
@@ -208,8 +208,15 @@ export const ScenarioNode = ({
 
   const getDetailedStatus = () => {
     return (
-      <div className={classes.scenarioDetailsStatusContainer}>
-        <Typography className={classes.cardLabel}>{labels.status}</Typography>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'stretch',
+        }}
+      >
+        <Typography sx={{ fontWeight: 'bold' }}>{labels.status}</Typography>
         {getStatusIcon(true)}
       </div>
     );
@@ -278,10 +285,10 @@ export const ScenarioNode = ({
 
   const getScenarioCreationData = () => {
     return [
-      <span data-cy="scenario-owner-name" key="scenario-owner-name" className={classes.scenarioHeaderItem}>
+      <span data-cy="scenario-owner-name" key="scenario-owner-name" style={{ marginRight: '24px' }}>
         {scenario.ownerName}
       </span>,
-      <span data-cy="scenario-creation-date" key="scenario-creation-date" className={classes.scenarioHeaderItem}>
+      <span data-cy="scenario-creation-date" key="scenario-creation-date" style={{ marginRight: '24px' }}>
         {new Date(scenario.creationDate).toLocaleString()}
       </span>,
     ];
@@ -289,7 +296,16 @@ export const ScenarioNode = ({
 
   const getScenarioHeader = () => {
     return (
-      <Box className={classes.scenarioHeader} sx={{ flexGrow: 1 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+        }}
+      >
         {isExpanded ? getScenarioCreationData() : getScenarioDetailNameLine(false)}
       </Box>
     );
@@ -298,7 +314,13 @@ export const ScenarioNode = ({
   const getAccordionSummary = () => {
     return (
       <AccordionSummary
-        className={classes.accordionSummary}
+        sx={{
+          height: `${SHRUNK_NODE_HEIGHT}px !important`,
+          minHeight: `${SHRUNK_NODE_HEIGHT}px !important`,
+          alignItems: 'center',
+          '& .MuiAccordionSummary-expandIcon': { color: (theme) => theme.palette.primary.main },
+          '& .MuiAccordionSummary-content': { alignItems: 'center' },
+        }}
         expandIcon={<ExpandMoreIcon data-cy="expand-accordion-button" />}
         component="div"
         role="button"
@@ -307,7 +329,7 @@ export const ScenarioNode = ({
         {showDeleteIcon && (
           <FadingTooltip title={labels.delete || 'Delete file'}>
             <IconButton
-              className={classes.scenarioDeleteButton}
+              sx={{ color: (theme) => theme.palette.error.main }}
               data-cy="scenario-delete-button"
               aria-label="delete scenario"
               size="small"
@@ -322,8 +344,25 @@ export const ScenarioNode = ({
   };
   const getAccordionDetails = () => {
     return (
-      <AccordionDetails className={classes.scenarioDetailsContainer} sx={{ gap: 1 }}>
-        <div className={classes.scenarioDetailsNameLine}>{getScenarioDetailNameLine(true)}</div>
+      <AccordionDetails
+        sx={{
+          gap: 1,
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          alignItems: 'stretch',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
+        >
+          {getScenarioDetailNameLine(true)}
+        </div>
         <DescriptionEditor
           labels={labels.description}
           value={scenario.description}
@@ -340,13 +379,13 @@ export const ScenarioNode = ({
           headerStyle={{ color: 'unset', fontWeight: '700' }}
         />
         {getDetailedStatus()}
-        <Typography className={classes.cardLabel}>{labels.runTemplateLabel ?? 'Run type:'}</Typography>
-        <Typography data-cy="scenario-run-template" className={classes.runTemplateName}>
+        <Typography sx={{ fontWeight: 'bold' }}>{labels.runTemplateLabel ?? 'Run type:'}</Typography>
+        <Typography data-cy="scenario-run-template" sx={{ marginLeft: '15px' }}>
           {scenario.runTemplateName}
         </Typography>
-        <Typography className={classes.cardLabel}>{labels.dataset}</Typography>
+        <Typography sx={{ fontWeight: 'bold' }}>{labels.dataset}</Typography>
         <Typography>
-          <span data-cy="scenario-datasets" className={classes.datasets}>
+          <span data-cy="scenario-datasets" style={{ marginLeft: '15px' }}>
             {datasetNames}
           </span>
         </Typography>
@@ -357,16 +396,18 @@ export const ScenarioNode = ({
   const rootClass = isExpanded ? classes.rootExpandedScenarioContainer : classes.rootShrunkScenarioContainer;
   return (
     <Paper key={scenario.id} className={rootClass}>
-      <ConfirmDeleteDialog
-        open={isConfirmDialogOpen}
-        closeDialog={closeConfirmDialog}
-        confirmDelete={confirmScenarioDelete}
-        labels={labels.deleteDialog}
-      ></ConfirmDeleteDialog>
-      <Accordion data-cy={'scenario-accordion-' + scenario.id} expanded={isExpanded} onChange={handleAccordionExpand}>
-        {getAccordionSummary()}
-        {isExpanded ? getAccordionDetails() : null}
-      </Accordion>
+      <Root>
+        <ConfirmDeleteDialog
+          open={isConfirmDialogOpen}
+          closeDialog={closeConfirmDialog}
+          confirmDelete={confirmScenarioDelete}
+          labels={labels.deleteDialog}
+        ></ConfirmDeleteDialog>
+        <Accordion data-cy={'scenario-accordion-' + scenario.id} expanded={isExpanded} onChange={handleAccordionExpand}>
+          {getAccordionSummary()}
+          {isExpanded ? getAccordionDetails() : null}
+        </Accordion>
+      </Root>
     </Paper>
   );
 };

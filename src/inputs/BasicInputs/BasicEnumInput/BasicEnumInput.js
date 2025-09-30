@@ -3,15 +3,11 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Stack, TextField, Tooltip, Fade, Box } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../../misc';
-import { getCommonInputStyles } from '../../style';
+import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
-const useStyles = makeStyles(getCommonInputStyles);
-
 export const BasicEnumInput = (props) => {
-  const classes = useStyles();
   const {
     id,
     label,
@@ -47,10 +43,7 @@ export const BasicEnumInput = (props) => {
       data-cy={`enum-input-${id}`}
       direction="row"
       spacing={1}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{
-        alignItems: 'center',
-      }}
+      sx={{ ...getCommonInputSxProps(isDirty), alignItems: 'center' }}
     >
       <TextField
         variant="outlined"
@@ -137,7 +130,7 @@ BasicEnumInput.propTypes = {
    */
   size: PropTypes.string,
   /**
-   * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
+   * Boolean value that defines whether the input has been modified or not; if true, a special style is applied.
    */
   isDirty: PropTypes.bool,
 };

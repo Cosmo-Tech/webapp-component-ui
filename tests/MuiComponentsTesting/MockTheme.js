@@ -1,8 +1,7 @@
 // Source: https://stackoverflow.com/questions/58627085/jest-manual-mock-for-themeprovider
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const MockTheme = ({ children }) => {
   const theme = createTheme({});

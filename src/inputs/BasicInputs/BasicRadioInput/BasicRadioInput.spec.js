@@ -30,10 +30,6 @@ const defaultProps = {
   changeRadioOption: mockOnValueChanged,
 };
 
-const propsWithDirtyState = {
-  ...defaultProps,
-  isDirty: true,
-};
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicRadioInput {...props} />);
 };

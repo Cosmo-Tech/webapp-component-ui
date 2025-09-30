@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  Grid2 as Grid,
+  Grid,
   TextField,
   DialogActions,
   Button,
@@ -17,17 +17,17 @@ import {
   Typography,
   Autocomplete,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import { RoleEditor } from '../../../../inputs';
 import { getIdentifierFromUserEmail } from '../../../../utils';
 import { RolesAddingDialog } from './components';
 
-const useStyles = makeStyles((theme) => ({
-  rolesEditorContainer: {
-    maxHeight: '300px',
-    overflow: 'auto',
-  },
-  removeButton: {
+const PREFIX = 'RolesEditionDialog';
+
+const classes = { removeButton: `${PREFIX}-removeButton` };
+
+const StyledDialog = styled(Dialog)(({ theme }) => ({
+  [`& .${classes.removeButton}`]: {
     color: theme.palette.error.main,
   },
 }));
@@ -67,7 +67,6 @@ export const RolesEditionDialog = ({
   allPermissions,
   defaultAccessScope,
 }) => {
-  const classes = useStyles();
   const [isFirstScreenShown, setIsFirstScreenShown] = useState(true);
   const [selectedAgentForRoleAddition, setSelectedAgentForRoleAddition] = useState(null);
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
@@ -163,7 +162,8 @@ export const RolesEditionDialog = ({
               />
             </Grid>
           )}
-          <Grid className={classes.rolesEditorContainer} size={12}>
+          <Grid sx={{ maxHeight: '300px', overflow: 'auto' }} size={12}>
+            {' '}
             <Typography variant="subtitle1">{labels.usersAccess}</Typography>
             {newAccessControlList.length > 0 &&
               newAccessControlList.map((agent) => (
@@ -193,7 +193,7 @@ export const RolesEditionDialog = ({
               </Typography>
             )}
           </Grid>
-          <Grid className={classes.rolesEditorContainer} size={12}>
+          <Grid sx={{ maxHeight: '300px', overflow: 'auto' }} size={12}>
             <Typography variant="subtitle1">{labels.generalAccess}</Typography>
             <RoleEditor
               agentName={defaultAccessScope}
@@ -244,7 +244,7 @@ export const RolesEditionDialog = ({
   };
 
   return (
-    <Dialog
+    <StyledDialog
       data-cy="share-scenario-dialog"
       open={open}
       aria-labelledby="form-dialog-title"
@@ -261,7 +261,7 @@ export const RolesEditionDialog = ({
         {isReadOnly ? labels.readOnlyTitle : labels.title}
       </DialogTitle>
       {dialogContent}
-    </Dialog>
+    </StyledDialog>
   );
 };
 

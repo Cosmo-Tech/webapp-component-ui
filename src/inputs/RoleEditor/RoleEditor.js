@@ -2,35 +2,11 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid2 as Grid, Typography, Avatar, Tooltip } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Grid, Typography, Avatar, Tooltip } from '@mui/material';
 import { DefaultAvatar } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
 import { SelectWithAction } from '../SelectWithAction';
 
-const useStyles = makeStyles((theme) => ({
-  agentGroup: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '15px',
-    marginLeft: 0,
-  },
-  agentName: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    textWrap: 'nowrap',
-  },
-  rolesEditor: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: '15px',
-  },
-  nameGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '80%',
-  },
-}));
 export const RoleEditor = ({
   agentName,
   agentAccess = null,
@@ -41,15 +17,26 @@ export const RoleEditor = ({
   actions = [],
   helperText = null,
 }) => {
-  const classes = useStyles();
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
   return (
-    <Grid data-cy={`role-editor-${getIdentifierFromUserEmail(agentName)}`} className={classes.rolesEditor} size={12}>
-      <Grid className={classes.agentGroup} size={7}>
+    <Grid
+      data-cy={`role-editor-${getIdentifierFromUserEmail(agentName)}`}
+      size={12}
+      sx={{ display: 'flex', alignItems: 'center', marginTop: '15px' }}
+    >
+      <Grid size={7} sx={{ display: 'flex', alignItems: 'center', gap: '15px', marginLeft: 0 }}>
         {avatar}
-        <div className={classes.nameGroup}>
+        <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '80%' }}>
           <Tooltip title={agentName} arrow>
-            <Typography className={classes.agentName} data-cy="role-editor-agent-name" variant="body1">
+            <Typography
+              data-cy="role-editor-agent-name"
+              variant="body1"
+              sx={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                textWrap: 'nowrap',
+              }}
+            >
               {agentName}
             </Typography>
           </Tooltip>

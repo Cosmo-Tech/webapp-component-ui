@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CircularProgress } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import {
   FullscreenButton,
   ImportButton,
@@ -11,7 +12,28 @@ import {
   DeleteRowButton,
   RevertDataButton,
 } from './components';
-import { useStyles } from './style';
+
+export const TABLE_TOOLBAR_HEIGHT = '32px';
+
+const TableLoadingSpan = styled('span')(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  color: theme.palette.text.primary,
+  '& .MuiCircularProgress-root': {
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const TableToolbarRoot = styled('div')(({ theme }) => ({
+  border: 'var(--ag-borders) var(--ag-border-color)',
+  padding: theme.spacing(0.2, 0),
+  width: '100%',
+  height: TABLE_TOOLBAR_HEIGHT,
+  color: theme.palette.primary.main,
+  backgroundColor: 'var(--ag-odd-row-background-color)',
+  '& .MuiButtonBase-root': {
+    marginLeft: theme.spacing(1),
+  },
+}));
 
 export const TableToolbar = (props) => {
   const {
@@ -30,10 +52,9 @@ export const TableToolbar = (props) => {
     labels,
     visibilityOptions,
   } = props;
-  const classes = useStyles();
 
   return (
-    <div className={classes.tableToolbar} style={isReady ? { borderBottom: 'none' } : null} data-cy="table-toolbar">
+    <TableToolbarRoot style={isReady ? { borderBottom: 'none' } : null} data-cy="table-toolbar">
       {visibilityOptions?.fullscreen !== false && (
         <FullscreenButton
           isFullscreen={isFullscreen}
@@ -62,14 +83,14 @@ export const TableToolbar = (props) => {
         <RevertDataButton onRevert={onRevert} label={labels.revert} disabled={!editMode || isLoading} />
       )}
       {isLoading ? (
-        <span className={classes.tableLoading}>
+        <TableLoadingSpan>
           {labels.loading}
           <CircularProgress size="10px" />
-        </span>
+        </TableLoadingSpan>
       ) : (
         customToolbarActions
       )}
-    </div>
+    </TableToolbarRoot>
   );
 };
 

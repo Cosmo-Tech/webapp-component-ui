@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 import React from 'react';
-import { SliderTesting, TypographyTesting, ContainerTesting } from '../../../../tests/MuiComponentsTesting';
+import { SliderTesting, TypographyTesting } from '../../../../tests/MuiComponentsTesting';
 import { renderInMuiThemeProvider } from '../../../../tests/utils';
 import { BasicSliderInput } from './BasicSliderInput';
 
@@ -43,7 +43,6 @@ const propsWithDirtyState = {
 const disabledSliderLabel = new TypographyTesting({ dataCy: 'disabled-input-label' });
 const disabledSliderValue = new TypographyTesting({ dataCy: 'disabled-input-value' });
 const sliderEditMode = new SliderTesting({ dataCy: 'slider-input-average_consumption' });
-const sliderEditModeContainer = new ContainerTesting({ dataCy: 'slider-input-average_consumption' });
 
 const setUp = (props) => {
   renderInMuiThemeProvider(<BasicSliderInput {...props} />);

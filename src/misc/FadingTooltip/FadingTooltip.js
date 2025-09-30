@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Fade, Tooltip as MuiTooltip } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
 
-const Tooltip = ({ children, title, useSpan = false, spanProps = {}, ...other }) => {
+export const FadingTooltip = ({ children, title, useSpan = false, spanProps = {}, ...other }) => {
   return title ? (
-    <MuiTooltip TransitionComponent={Fade} TransitionProps={{ timeout: 600 }} title={title} {...other}>
+    <MuiTooltip
+      TransitionComponent={Fade}
+      TransitionProps={{ timeout: 600 }}
+      title={title}
+      sx={{
+        whiteSpace: 'pre-wrap',
+        maxWidth: '600px',
+      }}
+      {...other}
+    >
       {
         // div to prevent warning from triggering when button is disabled (see
         // https://mui.com/material-ui/react-tooltip/#disabled-elements for more details)
@@ -18,7 +26,7 @@ const Tooltip = ({ children, title, useSpan = false, spanProps = {}, ...other })
   );
 };
 
-Tooltip.propTypes = {
+FadingTooltip.propTypes = {
   /**
    * Elements that trigger the tooltip when hovered
    */
@@ -36,10 +44,3 @@ Tooltip.propTypes = {
    */
   spanProps: PropTypes.object,
 };
-
-export const FadingTooltip = withStyles((theme) => ({
-  tooltip: {
-    whiteSpace: 'pre-wrap',
-    maxWidth: '600px',
-  },
-}))(Tooltip);

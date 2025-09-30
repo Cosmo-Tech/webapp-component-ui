@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Collapse, Paper, Typography } from '@mui/material';
-import useStyles from './style';
+import { Button, Collapse, Paper, Typography, styled } from '@mui/material';
 
 const DEFAULT_ERROR = {
   comment: '',
@@ -17,8 +16,11 @@ const DEFAULT_LABELS = {
   toggledButtonText: 'Copied',
 };
 
+const ErrorTextDiv = styled('div')(({ theme }) => ({
+  color: theme.palette.text.primary,
+}));
+
 export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels: tmpLabels }) => {
-  const classes = useStyles();
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [copyButtonText, setCopyButtonText] = useState(labels.secondButtonText);
   const copyToClipboard = (message) => {
@@ -35,28 +37,67 @@ export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels: tmpL
   const errorStatusText = error.status ? error.status + ' ' : '';
   return (
     <Collapse in={errorBeforePatch != null}>
-      <Paper square elevation={0} className={classes.errorContainer} data-cy="error-banner">
+      <Paper
+        square
+        elevation={0}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          backgroundColor: (theme) => theme.palette.error.main,
+        }}
+        data-cy="error-banner"
+      >
         <div>
-          <Typography className={classes.errorTitle}>{errorStatusText + error.title}</Typography>
-          <Typography className={classes.errorText} data-cy="error-detail">
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+              color: (theme) => theme.palette.error.contrastText,
+            }}
+          >
+            {errorStatusText + error.title}
+          </Typography>
+          <Typography sx={{ color: (theme) => theme.palette.error.contrastText }} data-cy="error-detail">
             {error.detail.length < errorMessageMaxLength ? error.detail : labels.tooLongErrorMessage}
           </Typography>
-          <Typography className={classes.errorText} data-cy="error-comment">
+          <Typography sx={{ color: (theme) => theme.palette.error.contrastText }} data-cy="error-comment">
             {error.comment}
           </Typography>
         </div>
-        <div className={classes.errorText}>
+        <ErrorTextDiv>
           {error.detail.length >= errorMessageMaxLength && (
-            <Button className={classes.errorButton} size="small" onClick={() => copyToClipboard(error.detail)}>
+            <Button
+              sx={{
+                marginLeft: '5px',
+                marginRight: '5px',
+                color: (theme) => theme.palette.error.contrastText,
+              }}
+              size="small"
+              onClick={() => copyToClipboard(error.detail)}
+            >
               {copyButtonText}
             </Button>
           )}
           {clearErrors && (
-            <Button className={classes.errorButton} size="small" data-cy="dismiss-error-button" onClick={clearErrors}>
+            <Button
+              sx={{
+                marginLeft: '5px',
+                marginRight: '5px',
+                color: (theme) => theme.palette.error.contrastText,
+              }}
+              size="small"
+              data-cy="dismiss-error-button"
+              onClick={clearErrors}
+            >
               {labels.dismissButtonText}
             </Button>
           )}
-        </div>
+        </ErrorTextDiv>
       </Paper>
     </Collapse>
   );

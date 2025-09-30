@@ -14,9 +14,9 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  styled,
 } from '@mui/material';
 import { FadingTooltip } from '../../misc';
-import useStyles from './style';
 
 const DEFAULT_LABELS = {
   documentation: 'Documentation',
@@ -26,8 +26,12 @@ const DEFAULT_LABELS = {
   close: 'Close',
   title: 'Help',
 };
+
+const StyledLink = styled('a')(({ theme }) => ({
+  color: theme.palette.text.primary,
+}));
+
 export const HelpMenu = (props) => {
-  const classes = useStyles();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [showAboutDialog, setShowAboutDialog] = useState(false);
@@ -64,16 +68,31 @@ export const HelpMenu = (props) => {
           data-cy="help-menu"
           aria-haspopup="true"
           onClick={handleClick}
-          className={`${classes.menuTrigger} ${isMenuOpen ? 'active' : ''}`}
+          sx={{
+            backgroundRepeat: 'no-repeat',
+            minWidth: '32px',
+            backgroundSize: '32px',
+            borderRadius: '50%',
+            flexShrink: 0,
+            transition: 'box-shadow ease-in-out 0.2s',
+            '&:hover': { cursor: 'pointer' },
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            justifyContent: 'center',
+            alignItems: 'stretch',
+          }}
         >
           <FadingTooltip title={labels.title}>
-            <IconButton aria-label="help" color="inherit" size="large">
+            <IconButton aria-label="help" color="inherit" size="large" sx={{ fontSize: 32 }}>
               <HelpOutlineIcon />
             </IconButton>
           </FadingTooltip>
         </Box>
         <Menu
-          className={classes.menu}
+          sx={{
+            transform: 'translate3d(0,30px,0) !important',
+          }}
           anchorOrigin={{
             vertical: 'top',
             horizontal: 'left',
@@ -84,17 +103,17 @@ export const HelpMenu = (props) => {
           onClose={handleClick}
         >
           {documentationUrl && (
-            <MenuItem data-cy="documentation-link" className={classes.link} onClick={handleClick}>
-              <a href={documentationUrl} className={classes.link} target="_blank" rel="noreferrer">
+            <MenuItem data-cy="documentation-link" onClick={handleClick}>
+              <StyledLink href={documentationUrl} target="_blank" rel="noreferrer">
                 {labels.documentation}
-              </a>
+              </StyledLink>
             </MenuItem>
           )}
           {supportUrl && (
-            <MenuItem data-cy="support-link" className={classes.link} onClick={handleClick}>
-              <a href={supportUrl} className={classes.link} target="_blank" rel="noreferrer">
+            <MenuItem data-cy="support-link" onClick={handleClick}>
+              <StyledLink href={supportUrl} target="_blank" rel="noreferrer">
                 {labels.support}
-              </a>
+              </StyledLink>
             </MenuItem>
           )}
           {technicalInfo && (

@@ -2,51 +2,47 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid2 as Grid, Typography, Avatar } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Grid, Typography, Avatar } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    border: 0,
-    background: theme.palette.microsoft.main,
-    boxShadow: 'none',
-    borderRadius: '0px',
-    height: '41px',
-    paddingRight: '12px',
-    cursor: 'pointer',
-  },
-  logo: {
-    height: '21px',
-    width: '21px',
-    marginLeft: '12px',
-    marginRight: '12px',
-  },
-  label: {
-    fontSize: '15px',
-    font: 'Sogoe UI Regular',
-    weight: 600,
-    color: theme.palette.microsoft.contrastText,
-  },
+const StyledButton = styled('button')(({ theme }) => ({
+  border: 0,
+  background: theme.palette.microsoft.main,
+  boxShadow: 'none',
+  borderRadius: '0px',
+  height: '41px',
+  paddingRight: '12px',
+  cursor: 'pointer',
 }));
 
 export const SignInButton = (props) => {
-  const classes = useStyles();
-
   const { id, label = 'Sign in', logo = '../../assets/microsoft_logo.png', onClick, autoFocus = false } = props;
 
   return (
-    <button className={classes.root} onClick={onClick} data-cy={'sign-in-with-' + id + '-button'} autoFocus={autoFocus}>
+    <StyledButton onClick={onClick} data-cy={'sign-in-with-' + id + '-button'} autoFocus={autoFocus}>
       <Grid container spacing={0} direction="row" sx={{ alignItems: 'center', justifyContent: 'flex-start' }}>
         <Grid>
-          <Avatar className={classes.logo} variant="square" src={logo} />
+          <Avatar
+            sx={{ height: '21px', width: '21px', marginLeft: '12px', marginRight: '12px' }}
+            variant="square"
+            src={logo}
+          />
         </Grid>
         <Grid>
-          <Typography noWrap className={classes.label}>
+          <Typography
+            noWrap
+            sx={{
+              fontSize: '15px',
+              font: 'Sogoe UI Regular',
+              weight: 600,
+              color: (theme) => theme.palette.microsoft.contrastText,
+            }}
+          >
             {label}
           </Typography>
         </Grid>
       </Grid>
-    </button>
+    </StyledButton>
   );
 };
 

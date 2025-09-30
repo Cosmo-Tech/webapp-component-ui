@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
-import clsx from 'clsx';
 import { ScenarioNode } from '../../../../cards';
 
 const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
@@ -39,7 +38,6 @@ export const ScenarioSortableTree = ({
   detailExpandedNodes,
   setDetailExpandedNodes,
   scenarioTree,
-  classes,
 }) => {
   const toggleNodeAccordionState = (scenarioId, newIsExpanded) => {
     if (newIsExpanded) setDetailExpandedNodes((prevNodeIds) => [...prevNodeIds, scenarioId]);
@@ -81,9 +79,21 @@ export const ScenarioSortableTree = ({
   return (
     <Paper
       key={scenarioTree.id}
-      className={clsx(classes.treeContainer, {
-        [classes.rootScenarioHiddenLineBlock]: scenarioTree.children.length === 0,
-      })}
+      sx={{
+        backgroundColor: (theme) => theme.palette.background.paper,
+        margin: '12px',
+        padding: '16px',
+        width: '65%',
+        ...(scenarioTree.children.length !== 0
+          ? {}
+          : {
+              // FIXME: class below is no longer used since replacing RST
+              '& .rst__lineBlock': {
+                width: '0px !important',
+                marginLeft: '43px', // Need 43px to align left side with scenarios that have children
+              },
+            }),
+      }}
     >
       <SimpleTreeView
         disableSelection
@@ -108,10 +118,6 @@ ScenarioSortableTree.propTypes = {
    */
   detailExpandedNodes: PropTypes.array.isRequired,
   setDetailExpandedNodes: PropTypes.func.isRequired,
-  /**
-   * classes for styles
-   */
-  classes: PropTypes.object.isRequired,
   /**
    * tree of scenario
    */

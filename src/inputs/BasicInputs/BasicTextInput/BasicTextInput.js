@@ -3,16 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Stack, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../../misc';
-import { getCommonInputStyles } from '../../style';
+import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
-const useStyles = makeStyles(getCommonInputStyles);
-
 export const BasicTextInput = (props) => {
-  const classes = useStyles();
-
   const {
     id,
     label,
@@ -42,8 +37,7 @@ export const BasicTextInput = (props) => {
       data-cy={`text-input-${id}`}
       direction="row"
       spacing={1}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{ alignItems: 'center' }}
+      sx={{ ...getCommonInputSxProps(isDirty), alignItems: 'center' }}
     >
       <TextField
         {...textFieldProps}

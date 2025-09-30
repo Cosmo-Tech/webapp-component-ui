@@ -5,100 +5,82 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import PropTypes from 'prop-types';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Stack, Typography, Box, Button } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import { AllCommunityModule, ModuleRegistry, provideGlobalGridOptions } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-balham.css';
 import rfdc from 'rfdc';
 import { DateUtils } from '@cosmotech/core';
 import { ErrorsPanel, TooltipInfo } from '../../misc';
-import { getCommonInputStyles } from '../style';
+import { getCommonInputSxProps } from '../style';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
-import { TableToolbar } from './components';
-import { TABLE_TOOLBAR_HEIGHT } from './components/TableToolbar/style.js';
+import { TableToolbar, TABLE_TOOLBAR_HEIGHT } from './components';
+
+const PREFIX = 'Table';
+const classes = {
+  nonEditableCell: `${PREFIX}-nonEditableCell`,
+  fullscreenGridBorder: `${PREFIX}-fullscreenGridBorder`,
+};
+
+const TableRoot = styled('div')(({ theme }) => ({
+  [`& .${classes.nonEditableCell}`]: {
+    // used in ColumnTypes.js
+    backgroundColor: theme.palette.action.disabled,
+    color: theme.palette.text.disabled,
+  },
+
+  [`& .${classes.fullscreenGridBorder}`]: {
+    border: theme.spacing(2) + ' solid',
+    borderColor: 'var(--ag-odd-row-background-color)',
+    backgroundColor: 'var(--ag-odd-row-background-color)',
+    overflow: 'scroll',
+  },
+}));
+
+const TablePlaceholder = styled('div')(({ theme }) => ({
+  textAlign: 'center',
+  margin: theme.spacing(2),
+}));
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 provideGlobalGridOptions({ theme: 'legacy' });
 
 const clone = rfdc();
 
-const useStyles = makeStyles((theme) => ({
-  ...getCommonInputStyles(theme),
-  toolBar: {
-    height: '40px',
-    display: 'flex',
-    flexDirection: 'row',
-    flexFlow: 'flex-start',
-    alignItems: 'stretch',
-    marginTop: '10px',
-    marginBottom: '6px;',
-  },
-  errorsContainer: {
-    backgroundColor: theme.palette.black,
-    color: theme.palette.text.error,
-    fontSize: '15px',
-    weight: 600,
-    marginTop: '10px',
-    padding: '4px',
-    whiteSpace: 'pre-line',
-  },
-  loadingLabel: {
-    marginLeft: '15px',
-    marginRight: '15px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-  },
-  nonEditableCell: {
-    backgroundColor: theme.palette.action.disabled,
-    color: theme.palette.text.disabled,
-  },
-  fullscreenGridContainer: {
-    top: '0px',
-    left: '0px',
-    right: 'auto',
-    bottom: 'auto',
-    position: 'fixed',
-    height: '100%',
-    width: '100%',
-    // z-index for the fullscreen container must be higher than 1200 to hide the app bar and drawers, but lower than
-    // 1300 to still appear under modals & tooltips (see https://mui.com/material-ui/customization/z-index/ for details)
-    zIndex: '1250',
-  },
-  fullscreenGridBorder: {
-    border: theme.spacing(2) + ' solid',
-    borderColor: 'var(--ag-odd-row-background-color)',
-    backgroundColor: 'var(--ag-odd-row-background-color)',
-    overflow: 'scroll',
-  },
-  tablePlaceholderWrapper: {
-    height: '100%',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  tablePlaceholderDiv: {
-    textAlign: 'center',
-    margin: theme.spacing(2),
-  },
-  tablePlaceholderTitle: {
-    marginBottom: theme.spacing(1),
-    whiteSpace: 'pre-line',
-  },
-  tablePlaceholderBody: {
-    marginBottom: theme.spacing(1),
-  },
-  errorsPanelFullscreen: {
-    marginTop: '0px',
-    maxHeight: '80%',
-    overflow: 'scroll',
-  },
-  errorsPanel: {
-    maxHeight: '300px',
-    overflow: 'scroll',
-  },
-}));
+const ERROR_PANEL_FULLSCREEN_SX = { marginTop: '0px', maxHeight: '80%', overflow: 'scroll' };
+const ERROR_PANEL_NON_FULLSCREEN_SX = { maxHeight: '300px', overflow: 'scroll' };
+
+const EXTRA_TOOLBAR_ACTIONS_STYLE = {
+  height: '40px',
+  display: 'flex',
+  flexDirection: 'row',
+  flexFlow: 'flex-start',
+  alignItems: 'stretch',
+  marginTop: '10px',
+  marginBottom: '6px;',
+};
+
+const FULLSCREEN_GRID_CONTAINER_STYLE = {
+  top: '0px',
+  left: '0px',
+  right: 'auto',
+  bottom: 'auto',
+  position: 'fixed',
+  height: '100%',
+  width: '100%',
+  // z-index for the fullscreen container must be higher than 1200 to hide the app bar and drawers, but lower than
+  // 1300 to still appear under modals & tooltips (see https://mui.com/material-ui/customization/z-index/ for details)
+  zIndex: '1250',
+};
+
+const TABLE_PLACEHOLDER_WRAPPER_STYLE = {
+  height: '100%',
+  display: 'flex',
+  flexFlow: 'row nowrap',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 const LOADING_STATUS_MAPPING = {
   [TABLE_DATA_STATUS.EMPTY]: false,
@@ -201,7 +183,6 @@ export const Table = (props) => {
   const fallbackRef = useRef(null);
   const gridRef = optionalGridRef || fallbackRef;
 
-  const classes = useStyles();
   const isLoading = LOADING_STATUS_MAPPING[dataStatus];
   const hasErrors = errors && errors.length > 0;
   const isReady = rows.length > 0 && dataStatus === TABLE_DATA_STATUS.READY;
@@ -248,22 +229,12 @@ export const Table = (props) => {
             maxErrorsCount={maxErrorsCount}
             onClear={onClearErrors}
             buildErrorsCountLabel={buildErrorsPanelTitle}
-            className={isFullscreen ? classes.errorsPanelFullscreen : classes.errorsPanel}
+            className={isFullscreen ? ERROR_PANEL_FULLSCREEN_SX : ERROR_PANEL_NON_FULLSCREEN_SX}
           />
         )}
       </>
     );
-  }, [
-    buildErrorsPanelTitle,
-    classes.errorsPanel,
-    classes.errorsPanelFullscreen,
-    errorPanelLabels,
-    errors,
-    hasErrors,
-    isFullscreen,
-    maxErrorsCount,
-    onClearErrors,
-  ]);
+  }, [buildErrorsPanelTitle, errorPanelLabels, errors, hasErrors, isFullscreen, maxErrorsCount, onClearErrors]);
 
   // Deprecated: deleteRows and addRows will be removed in a future version, the api will no longer be an argument sent
   // to onDeleteRow and onAddRow. Use gridRef prop instead to retrieve the ag-grid reference
@@ -332,12 +303,12 @@ export const Table = (props) => {
 
   const tablePlaceholder = useMemo(() => {
     return (
-      <div className={classes.tablePlaceholderWrapper}>
-        <div className={classes.tablePlaceholderDiv} data-cy="empty-table-placeholder">
-          <Typography variant="h5" className={classes.tablePlaceholderTitle}>
+      <div style={TABLE_PLACEHOLDER_WRAPPER_STYLE}>
+        <TablePlaceholder data-cy="empty-table-placeholder">
+          <Typography variant="h5" sx={{ mb: 1, whiteSpace: 'pre-line' }}>
             {labels.placeholderTitle}
           </Typography>
-          <Typography variant="body1" className={classes.tablePlaceholderBody}>
+          <Typography variant="body1" sx={{ mb: 1 }}>
             {labels.placeholderBody}
           </Typography>
           {onImport && visibilityOptions?.import !== false ? (
@@ -354,14 +325,10 @@ export const Table = (props) => {
               <input type="file" accept=".csv, .xlsx" hidden />
             </Button>
           ) : null}
-        </div>
+        </TablePlaceholder>
       </div>
     );
   }, [
-    classes.tablePlaceholderBody,
-    classes.tablePlaceholderDiv,
-    classes.tablePlaceholderTitle,
-    classes.tablePlaceholderWrapper,
     editMode,
     isLoading,
     labels.import,
@@ -399,15 +366,18 @@ export const Table = (props) => {
         onSelectionChanged={onSelectionChanged}
       />
     );
-  }, [onCellChange, classes, columns, gridRef, dateFormat, editMode, rows, onSelectionChanged]);
+  }, [onCellChange, columns, gridRef, dateFormat, editMode, rows, onSelectionChanged]);
 
   return (
-    <div
+    <TableRoot
       id="table-container"
       data-cy="table-input"
       {...otherProps}
-      style={{ height, overflow: 'auto' }}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
+      sx={{
+        ...getCommonInputSxProps(isDirty),
+        height,
+        overflow: 'auto',
+      }}
     >
       <div data-cy="label">
         {visibilityOptions?.label !== false && (
@@ -419,12 +389,15 @@ export const Table = (props) => {
           </Stack>
         )}
       </div>
-      {extraToolbarActions ? <div className={classes.toolBar}>{extraToolbarActions}</div> : null}
+      {extraToolbarActions ? <div style={EXTRA_TOOLBAR_ACTIONS_STYLE}>{extraToolbarActions}</div> : null}
       <div
         data-cy="grid"
         id="grid-container"
-        style={{ height: height === '100%' ? '100%' : undefined }}
-        className={`${agTheme} ${isFullscreen && classes.fullscreenGridContainer}`}
+        style={{
+          height: height === '100%' ? '100%' : undefined,
+          ...(isFullscreen ? FULLSCREEN_GRID_CONTAINER_STYLE : {}),
+        }}
+        className={`${agTheme}`}
       >
         <div
           style={{
@@ -442,7 +415,7 @@ export const Table = (props) => {
           </Box>
         </div>
       </div>
-    </div>
+    </TableRoot>
   );
 };
 

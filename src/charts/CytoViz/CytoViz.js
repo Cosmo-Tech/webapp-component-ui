@@ -29,13 +29,13 @@ import {
   Menu,
   Switch,
   Autocomplete,
+  styled,
 } from '@mui/material';
 import cytoscape from 'cytoscape';
 import BubbleSets from 'cytoscape-bubblesets';
 import dagre from 'cytoscape-dagre';
 import { ErrorBanner, FadingTooltip } from '../../misc';
 import { ElementData, TabPanel, StatsHUD } from './components';
-import useStyles from './style';
 
 cytoscape.use(BubbleSets);
 cytoscape.use(dagre);
@@ -96,8 +96,41 @@ const DEFAULT_SETTINGS = {
   spacingFactor: 1,
 };
 
+const PREFIX = 'CytoViz';
+const classes = {
+  drawerPaper: `${PREFIX}-drawerPaper`,
+  cytoscapeContainer: `${PREFIX}-cytoscapeContainer`,
+};
+
+const CytoVizRoot = styled('div')(({ theme }) => ({
+  position: 'relative',
+  height: '100%',
+
+  [`& .${classes.drawerPaper}`]: {
+    position: 'absolute',
+    left: '0px',
+  },
+
+  [`& .${classes.cytoscapeContainer}`]: {
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+  },
+}));
+
+const SettingItem = styled('div')(() => ({
+  height: '50px',
+  margin: '6px',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+}));
+
+const SettingLabel = styled('div')(() => ({ margin: '4px', flexGrow: '1' }));
+const SettingInputContainer = styled('div')(() => ({ minWidth: '100px', display: 'flex', justifyContent: 'center' }));
+
 export const CytoViz = (props) => {
-  const classes = useStyles();
   const {
     bubblesets,
     cytoscapeStylesheet = [],
@@ -376,14 +409,44 @@ export const CytoViz = (props) => {
 
   const errorBanner = error && <ErrorBanner error={error} labels={labels.errorBanner} />;
   const loadingPlaceholder = loading && !error && !placeholderMessage && (
-    <div data-cy="cytoviz-loading-container" className={classes.loadingContainer}>
-      <span className={classes.loadingText}>{labels.loading}</span>
+    <div
+      data-cy="cytoviz-loading-container"
+      style={{
+        height: '35px',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        padding: '10px',
+      }}
+    >
+      <Typography
+        sx={{
+          color: (theme) => theme.palette.primary.main,
+          fontSize: '15px',
+          padding: '15px',
+        }}
+      >
+        {labels.loading}
+      </Typography>
       <CircularProgress size={18} />
     </div>
   );
   const placeholder = placeholderMessage && (
-    <div data-cy="cytoviz-placeholder" className={classes.placeholder}>
-      <span className={classes.placeholderText}>{placeholderMessage}</span>
+    <div
+      data-cy="cytoviz-placeholder"
+      style={{
+        height: '35px',
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        padding: '10px',
+      }}
+    >
+      <Typography sx={{ color: (theme) => theme.palette.primary.main, fontSize: '15px', padding: '15px' }}>
+        {placeholderMessage}
+      </Typography>
     </div>
   );
 
@@ -403,7 +466,16 @@ export const CytoViz = (props) => {
         minZoom={10 ** zoomPrecision[0]}
         maxZoom={10 ** zoomPrecision[1]}
       />
-      <div data-cy="cytoviz-open-drawer-button" className={classes.openDrawerButton}>
+      <div
+        data-cy="cytoviz-open-drawer-button"
+        style={{
+          position: 'absolute',
+          display: 'flex',
+          top: '0px',
+          left: '0px',
+          height: '80px',
+        }}
+      >
         <FadingTooltip title={labels.settings.open}>
           <IconButton onClick={openDrawer} size="large">
             <ChevronRightIcon />
@@ -413,7 +485,7 @@ export const CytoViz = (props) => {
       <Drawer
         data-cy="cytoviz-drawer"
         elevation={1}
-        className={classes.drawer}
+        sx={{ height: '100%', position: 'absolute', left: '0px' }}
         variant="temporary"
         anchor="left"
         open={isDrawerOpen}
@@ -426,7 +498,7 @@ export const CytoViz = (props) => {
           style: { position: 'static' },
         }}
       >
-        <div className={classes.drawerHeader}>
+        <div style={{ display: 'flex', height: '80px', justifyContent: 'space-between' }}>
           <Tabs
             value={currentDrawerTab}
             onChange={changeDrawerTab}
@@ -444,12 +516,41 @@ export const CytoViz = (props) => {
             </IconButton>
           </FadingTooltip>
         </div>
-        <div className={classes.drawerContent}>
+        <div style={{ height: '100%', width: '350px', overflow: 'auto' }}>
           <TabPanel
             data-cy="cytoviz-drawer-details-tab-content"
             value={currentDrawerTab}
             index={0}
-            className={classes.tabPanel}
+            sx={{
+              '& .MuiBox-root': {
+                padding: 0,
+              },
+              '& .MuiAccordion-root': {
+                border: '1px solid rgba(0, 0, 0, .125)',
+                boxShadow: 'none',
+                '&:not(:last-child)': {
+                  borderBottom: 0,
+                },
+                '&:before': {
+                  display: 'none',
+                },
+              },
+              '& .MuiAccordion-root.Mui-expanded': {
+                margin: 0,
+              },
+              '& .MuiAccordionSummary-root': {
+                borderBottom: '1px solid rgba(0, 0, 0, .125)',
+                minHeight: 56,
+              },
+              '& .MuiAccordionSummary-content.Mui-expanded': {},
+              '& .MuiAccordionDetails-root': {
+                padding: '16px 16px 16px',
+              },
+              '& .MuiButton-root': {
+                width: 'min-content',
+                alignSelf: 'flex-end',
+              },
+            }}
           >
             <Accordion
               square
@@ -478,7 +579,7 @@ export const CytoViz = (props) => {
                 <Typography variant="body1">{labels.accordion.findNode.headline}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <div className={classes.querySearchByID}>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 5fr', gap: '1em', alignItems: 'center' }}>
                   {labels.accordion.findNode.searchByID}
                   <Autocomplete
                     onChange={(event, node) => {
@@ -515,7 +616,7 @@ export const CytoViz = (props) => {
                 <Typography variant="body1">{labels.accordion.exploreGraph.headline}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <div className={classes.queryTextfields}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1em' }}>
                   {labels.accordion.exploreGraph.startingNodes}
                   <Autocomplete
                     multiple
@@ -534,7 +635,7 @@ export const CytoViz = (props) => {
                       />
                     )}
                   />
-                  <div className={classes.querySearchDepth}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr', gap: '1em', alignItems: 'center' }}>
                     {labels.accordion.exploreGraph.limitDepth}
                     <TextField
                       aria-label={labels.accordion.exploreGraph.limitDepth}
@@ -562,7 +663,7 @@ export const CytoViz = (props) => {
                         </Typography>
                       )}
                     </div>
-                    <div className={classes.queryEdgetypes}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1em', alignItems: 'center' }}>
                       {labels.accordion.exploreGraph.inEdges}
                       <Checkbox
                         aria-label={labels.accordion.exploreGraph.inEdges}
@@ -596,7 +697,7 @@ export const CytoViz = (props) => {
                       <TextField {...params} aria-label={labels.accordion.exploreGraph.excludeEdges} />
                     )}
                   />
-                  <div className={classes.querySearchDepth}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr', gap: '1em', alignItems: 'center' }}>
                     {labels.accordion.exploreGraph.compoundNeighbors}
                     <Checkbox
                       aria-label={labels.accordion.exploreGraph.compoundNeighbors}
@@ -625,10 +726,10 @@ export const CytoViz = (props) => {
             </Accordion>
           </TabPanel>
           <TabPanel data-cy="cytoviz-drawer-settings-tab-content" value={currentDrawerTab} index={1}>
-            <div className={classes.settingsContainer}>
-              <div className={classes.settingLine}>
-                <div className={classes.settingLabel}>{labels.settings.layout}</div>
-                <div className={classes.settingInputContainer}>
+            <div style={{ display: 'flex', width: '100%', flexDirection: 'column', alignItems: 'stretch' }}>
+              <SettingItem>
+                <SettingLabel>{labels.settings.layout}</SettingLabel>
+                <SettingInputContainer>
                   <Select
                     variant="standard"
                     data-cy="cytoviz-layout-selector"
@@ -646,13 +747,11 @@ export const CytoViz = (props) => {
                       </MenuItem>
                     ))}
                   </Select>
-                </div>
-              </div>
-              <div className={classes.settingLine}>
-                <div className={classes.settingLabel} onClick={toggleUseCompactMode}>
-                  {labels.settings.compactMode}
-                </div>
-                <div className={classes.settingInputContainer}>
+                </SettingInputContainer>
+              </SettingItem>
+              <SettingItem>
+                <SettingLabel onClick={toggleUseCompactMode}>{labels.settings.compactMode}</SettingLabel>
+                <SettingInputContainer>
                   <Switch
                     data-cy="cytoviz-compact-mode-switch"
                     checked={useCompactMode}
@@ -660,22 +759,22 @@ export const CytoViz = (props) => {
                     name="useCompactMode"
                     color="primary"
                   />
-                </div>
-              </div>
-              <div className={classes.settingLine}>
-                <div className={classes.settingLabel} onClick={toggleShowStats}>
+                </SettingInputContainer>
+              </SettingItem>
+              <SettingItem>
+                <SettingLabel onClick={toggleShowStats}>
                   {labels.settings.showStats ?? 'Cytoscape statistics'}
-                </div>
-                <div className={classes.settingInputContainer}>
+                </SettingLabel>
+                <SettingInputContainer>
                   <Switch checked={showStats} onChange={changeShowStats} name="showStats" color="primary" />
-                </div>
-              </div>
-              <div className={classes.settingLine}>
-                <div className={classes.settingLabel}>{labels.settings.spacingFactor}</div>
-                <div className={classes.settingInputContainer}>
+                </SettingInputContainer>
+              </SettingItem>
+              <SettingItem>
+                <SettingLabel>{labels.settings.spacingFactor}</SettingLabel>
+                <SettingInputContainer>
                   <Slider
                     data-cy="cytoviz-spacing-factor-slider"
-                    className={classes.settingsSlider}
+                    sx={{ '& .MuiSlider-valueLabel': { color: (theme) => theme.palette.primary.main } }}
                     color="primary"
                     size="small"
                     value={spacingFactor}
@@ -685,14 +784,14 @@ export const CytoViz = (props) => {
                     onChange={changeSpacingFactor}
                     valueLabelDisplay="auto"
                   />
-                </div>
-              </div>
-              <div className={classes.settingLine}>
-                <div className={classes.settingLabel}>{labels.settings.zoomLimits}</div>
-                <div className={classes.settingInputContainer}>
+                </SettingInputContainer>
+              </SettingItem>
+              <SettingItem>
+                <SettingLabel>{labels.settings.zoomLimits}</SettingLabel>
+                <SettingInputContainer>
                   <Slider
                     data-cy="cytoviz-zoom-limits-slider"
-                    className={classes.settingsSlider}
+                    sx={{ '& .MuiSlider-valueLabel': { color: (theme) => theme.palette.primary.main } }}
                     color="primary"
                     size="small"
                     value={zoomPrecision}
@@ -703,8 +802,8 @@ export const CytoViz = (props) => {
                     valueLabelFormat={(value) => 10 ** value}
                     valueLabelDisplay="auto"
                   />
-                </div>
-              </div>
+                </SettingInputContainer>
+              </SettingItem>
             </div>
           </TabPanel>
         </div>
@@ -737,12 +836,12 @@ export const CytoViz = (props) => {
   );
 
   return (
-    <div data-cy="cytoviz-container" className={classes.root} id="cytoviz-root">
+    <CytoVizRoot data-cy="cytoviz-container" id="cytoviz-root">
       {errorBanner}
       {placeholder}
       {loadingPlaceholder}
       {cytoscapeScene}
-    </div>
+    </CytoVizRoot>
   );
 };
 

@@ -3,7 +3,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Stack } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,10 +10,9 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import { TooltipInfo } from '../../../misc';
-import { getCommonInputStyles } from '../../style';
+import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
-const useStyles = makeStyles(getCommonInputStyles);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -34,7 +32,6 @@ export const BasicDateInput = (props) => {
     size = 'small',
     ...otherProps
   } = props;
-  const classes = useStyles();
 
   const onChange = useCallback(
     (newValue) => {
@@ -59,8 +56,7 @@ export const BasicDateInput = (props) => {
       data-cy={`date-input-${id}`}
       direction="row"
       spacing={1}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{ alignItems: 'center' }}
+      sx={{ ...getCommonInputSxProps(isDirty), alignItems: 'center' }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
