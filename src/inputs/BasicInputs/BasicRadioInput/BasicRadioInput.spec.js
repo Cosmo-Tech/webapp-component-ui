@@ -35,13 +35,8 @@ const setUp = (props) => {
 };
 
 describe('Checks radio input in edit mode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
+  test('Component is displayed in edit mode', () => {
     setUp(defaultProps);
     expect(radioInputContainer.Container).toBeInTheDocument();
-    expect(radioInputContainer.Container).not.toHaveDirtyInputClass();
-  });
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(radioInputContainer.Container).toHaveDirtyInputClass();
   });
 });

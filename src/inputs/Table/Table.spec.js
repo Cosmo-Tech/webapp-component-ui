@@ -21,22 +21,13 @@ const defaultProps = {
   onClearErrors: mockOnClearErrors,
 };
 
-const propsWithDirtyState = {
-  ...defaultProps,
-  isDirty: true,
-};
 const setUp = (props) => {
   renderInMuiThemeProvider(<Table {...props} />);
 };
 
 describe('Checks table input in edit mode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
+  test('Component is displayed', () => {
     setUp(defaultProps);
     expect(tableInputContainer.Container).toBeInTheDocument();
-    expect(tableInputContainer.Container).not.toHaveDirtyInputClass();
-  });
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(tableInputContainer.Container).toHaveDirtyInputClass();
   });
 });

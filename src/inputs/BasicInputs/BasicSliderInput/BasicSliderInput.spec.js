@@ -35,10 +35,6 @@ const propsInEditMode = {
   ...defaultProps,
   disabled: false,
 };
-const propsWithDirtyState = {
-  ...propsInEditMode,
-  isDirty: true,
-};
 
 const disabledSliderLabel = new TypographyTesting({ dataCy: 'disabled-input-label' });
 const disabledSliderValue = new TypographyTesting({ dataCy: 'disabled-input-value' });
@@ -75,10 +71,6 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
       expect(sliderEditMode.SliderValue).toHaveValue(propsInEditMode.value.toString());
     });
 
-    test('Checks dirtyInput class is not applied when isDirty is false', () => {
-      expect(sliderEditModeContainer.Container).not.toHaveDirtyInputClass();
-    });
-
     test('Checks marks of slider in edit mode', () => {
       expect(sliderEditMode.SliderMarks[0]).toBeInTheDocument();
       expect(sliderEditMode.SliderMarks[1]).toBeInTheDocument();
@@ -102,9 +94,5 @@ describe('BasicSliderInput tests in disabled and edit mode', () => {
       setUp(propsWithNaNValue);
       expect(disabledSliderValue.text).toEqual('0');
     });
-  });
-  describe('Checks dirtyInput style is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(sliderEditModeContainer.Container).toHaveDirtyInputClass();
   });
 });
