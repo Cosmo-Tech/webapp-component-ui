@@ -10,27 +10,13 @@ import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Grid2 as Grid,
+  Grid,
   TextField,
   Autocomplete,
   Chip,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { ScenarioUtils } from '@cosmotech/core';
 import { BasicTextInput, HierarchicalComboBox } from '../../../../inputs';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%',
-  },
-  dialogContent: {
-    marginTop: '16px',
-  },
-  dialogActions: {
-    marginRight: '4px',
-    marginBottom: '4px',
-  },
-}));
 
 const getCurrentScenarioRunTemplate = (currentScenario, runTemplates) => {
   const currentRunTemplateId = currentScenario?.runTemplateId;
@@ -63,8 +49,6 @@ const CreateScenarioDialog = ({
   dialogLabels,
   errorLabels,
 }) => {
-  const classes = useStyles();
-
   const defaultRunTemplate = runTemplates?.[0] || null;
   const currentScenarioSelected = currentScenario.data !== null;
 
@@ -195,7 +179,7 @@ const CreateScenarioDialog = ({
       onClose={onClose}
     >
       <DialogTitle id="form-dialog-title">{dialogLabels.title}</DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent sx={{ marginTop: '16px' }}>
         <Grid container spacing={2}>
           <Grid size={12}>
             <TextField
@@ -303,7 +287,7 @@ const CreateScenarioDialog = ({
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions className={classes.dialogActions}>
+      <DialogActions sx={{ marginRight: '4px', marginBottom: '4px' }}>
         <Button id="cancel" onClick={closeDialog} color="primary" data-cy="create-scenario-dialog-cancel-button">
           {dialogLabels.cancel}
         </Button>

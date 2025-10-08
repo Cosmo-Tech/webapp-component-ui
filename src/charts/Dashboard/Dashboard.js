@@ -2,16 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import makeStyles from '@mui/styles/makeStyles';
 import DashboardPlaceholder from './components';
-
-const useStyles = makeStyles((theme) => ({
-  iframe: {
-    display: 'block',
-    height: '100%',
-    width: '100%',
-  },
-}));
 
 const DEFAULT_LABELS = {
   noScenario: {
@@ -42,7 +33,6 @@ const DEFAULT_LABELS = {
 };
 
 export const Dashboard = (props) => {
-  const classes = useStyles();
   const {
     iframeTitle,
     url,
@@ -89,7 +79,7 @@ export const Dashboard = (props) => {
       )}
       {isReady && formattedUrl !== '' && (
         <iframe
-          className={classes.iframe}
+          style={{ display: 'block', height: '100%', width: '100%' }}
           title={iframeTitle}
           frameBorder="0"
           allowFullScreen={true}

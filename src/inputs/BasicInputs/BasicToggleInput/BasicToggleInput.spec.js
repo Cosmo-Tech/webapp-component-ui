@@ -35,14 +35,9 @@ const setUp = (props) => {
 };
 
 describe('Checks toggle input in edit mode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
+  test('Component is displayed in edit mode', () => {
     setUp(defaultProps);
     expect(toggleInputContainer.Container).toBeInTheDocument();
-    expect(toggleInputContainer.Container).not.toHaveDirtyInputClass();
-  });
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(toggleInputContainer.Container).toHaveDirtyInputClass();
   });
   test("helperText isn't displayed when error is undefined", () => {
     setUp(defaultProps);

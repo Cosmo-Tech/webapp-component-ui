@@ -3,12 +3,10 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Stack, Autocomplete, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../misc';
 import { BasicInputPlaceholder } from '../BasicInputs';
-import { getCommonInputStyles } from '../style';
+import { getCommonInputSxProps } from '../style';
 
-const useStyles = makeStyles(getCommonInputStyles);
 const DEFAULT_LABELS = {
   label: 'Selection',
   noValue: 'No value selected',
@@ -16,7 +14,6 @@ const DEFAULT_LABELS = {
 };
 
 export const SingleSelect = (props) => {
-  const classes = useStyles();
   const { id, labels: tmpLabels, tooltipText, value, options, disabled = false, onChange, isDirty } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
@@ -41,8 +38,7 @@ export const SingleSelect = (props) => {
       data-cy={`single-select-${id}`}
       direction="row"
       spacing={1}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{ alignItems: 'center' }}
+      sx={{ ...getCommonInputSxProps(isDirty), alignItems: 'center' }}
     >
       <Autocomplete
         id={id}

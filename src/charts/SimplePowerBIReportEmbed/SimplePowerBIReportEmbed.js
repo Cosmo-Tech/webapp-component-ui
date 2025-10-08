@@ -5,46 +5,29 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import * as PropTypes from 'prop-types';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { FadingTooltip } from '../../misc';
 import DashboardPlaceholder from '../Dashboard/components';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%',
-    width: '100%',
-    position: 'relative',
-  },
-  divContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  report: {
+const StyledErrorContainerDiv = styled('div')(({ theme }) => ({
+  'z-index': '1', // Need z-index > 0, otherwise the error banner is hidden behind the powerbi loading screen
+  height: '50px',
+  width: '100%',
+  position: 'absolute',
+  textAlign: 'center',
+  padding: '5px 0',
+  backgroundColor: theme.palette.error.main,
+  color: theme.palette.error.contrastText,
+}));
+
+const PREFIX = 'SimplePowerBIReportEmbed';
+const classes = { report: `${PREFIX}-report` };
+
+const Root = styled('div')(({ theme }) => ({
+  [`& .${classes.report}`]: {
     height: '100%',
     flex: 1,
-  },
-  errorContainer: {
-    'z-index': '1', // Need z-index > 0, otherwise the error banner is hidden behind the powerbi loading screen
-    height: '50px',
-    width: '100%',
-    position: 'absolute',
-    textAlign: 'center',
-    padding: '5px 0',
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.error.contrastText,
-  },
-  errorTitle: {
-    fontWeight: 'bold',
-    fontSize: 'large',
-  },
-  errorDescription: {
-    fontWeight: 'bold',
-    fontSize: 'small',
-  },
-  toolbar: {
-    height: '100%',
   },
 }));
 
@@ -128,8 +111,6 @@ export const SimplePowerBIReportEmbed = ({
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
-  const hasNavContentPane = settings?.navContentPaneEnabled;
-  const classes = useStyles({ hasNavContentPane });
 
   // 1 Embed or 0 Aad
   const tokenType = useAAD ? 0 : 1;
@@ -247,7 +228,7 @@ export const SimplePowerBIReportEmbed = ({
     }
 
     return content;
-  }, [classes.report, embedConfig]);
+  }, [embedConfig]);
 
   const placeholder = getPlaceholder();
   const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
@@ -264,15 +245,15 @@ export const SimplePowerBIReportEmbed = ({
   }
 
   return (
-    <div className={classes.root}>
-      <div className={classes.errorContainer} hidden={reports.status !== 'ERROR'}>
-        <div className={classes.errorTitle}>{errorCode}</div>
-        <div className={classes.errorDescription}>{errorDescription}</div>
-      </div>
+    <Root style={{ height: '100%', width: '100%', position: 'relative' }}>
+      <StyledErrorContainerDiv hidden={reports.status !== 'ERROR'}>
+        <div style={{ fontWeight: 'bold', fontSize: 'large' }}>{errorCode}</div>
+        <div style={{ fontWeight: 'bold', fontSize: 'small' }}>{errorDescription}</div>
+      </StyledErrorContainerDiv>
       {placeholder}
-      <div className={classes.divContainer} style={divContainerStyle}>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'row', ...divContainerStyle }}>
         {refreshable && (
-          <div className={classes.toolbar}>
+          <div style={{ height: '100%' }}>
             <FadingTooltip title={labels.refreshTooltip}>
               <IconButton
                 aria-label="refresh"
@@ -288,7 +269,7 @@ export const SimplePowerBIReportEmbed = ({
         )}
         {iframe}
       </div>
-    </div>
+    </Root>
   );
 };
 

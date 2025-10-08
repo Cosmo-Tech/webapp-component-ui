@@ -37,16 +37,11 @@ const setUp = (props) => {
 };
 
 describe('Checks date input in edit mode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
+  test('Component is displayed in edit mode', () => {
     setUp(defaultProps);
     expect(dateInputContainer.Container).toBeInTheDocument();
-    expect(dateInputContainer.Container).not.toHaveDirtyInputClass();
   });
 
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(dateInputContainer.Container).toHaveDirtyInputClass();
-  });
   test("helperText isn't displayed when error is undefined", () => {
     setUp(defaultProps);
     expect(screen.queryByText(/This field is required/i)).not.toBeInTheDocument();

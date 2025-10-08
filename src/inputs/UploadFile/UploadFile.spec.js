@@ -20,11 +20,6 @@ const defaultProps = {
   editMode: true,
 };
 
-const propsWithDirtyState = {
-  ...defaultProps,
-  isDirty: true,
-};
-
 const propsFileReadyToDownload = {
   ...defaultProps,
   file: {
@@ -94,18 +89,12 @@ describe('Checks file upload input in edit mode', () => {
     mockOnFileDownload.mockClear();
   });
 
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(uploadFileInputContainer.Container).toHaveDirtyInputClass();
-  });
-
-  test("Component is displayed in edit mode, dirtyInput class isn't applied when isDirty is false", () => {
+  test('Component is displayed in edit mode', () => {
     setUp(defaultProps);
     expect(downloadButton.Button).not.toBeInTheDocument();
     expect(deleteButton.Button).not.toBeInTheDocument();
     expect(getByDataCy('circular-progress')).not.toBeInTheDocument();
     expect(uploadFileInputContainer.Container).toBeInTheDocument();
-    expect(uploadFileInputContainer.Container).not.toHaveDirtyInputClass();
     expect(fileErrorMessage.Typography).not.toBeInTheDocument();
   });
 

@@ -33,7 +33,6 @@ export {
   ErrorBoundary,
   ErrorsPanel,
   FadingTooltip,
-  FixedRatioContainer,
   LoadingLine,
   PermissionsGate,
   ScenarioValidationStatusChip,

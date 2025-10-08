@@ -4,11 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Button, Card, CardHeader, CardContent, CardActions } from '@mui/material';
 import { DefaultAvatar } from '../../misc';
-import useStyles from './style';
 
 export const ResourceCard = ({ id, name, description = '', action = null, style }) => {
-  const classes = useStyles();
-
   const actionButton = action ? (
     <CardActions>
       <Button color="primary" variant="contained" fullWidth={true} onClick={action.callback}>
@@ -18,7 +15,19 @@ export const ResourceCard = ({ id, name, description = '', action = null, style 
   ) : null;
 
   return (
-    <Card key={id} data-cy={'resource-card-' + id} elevation={1} className={classes.card} style={style}>
+    <Card
+      key={id}
+      data-cy={'resource-card-' + id}
+      elevation={1}
+      sx={{
+        height: '100%',
+        width: '320px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        ...style,
+      }}
+    >
       <CardHeader
         data-cy={'resource-header'}
         avatar={<DefaultAvatar size={40} userName={name} variant="rounded" />}
@@ -26,7 +35,7 @@ export const ResourceCard = ({ id, name, description = '', action = null, style 
         title={name}
       />
       <CardContent data-cy={'resource-content'}>
-        <div className={classes.description}>
+        <div style={{ height: '70px', overflow: 'auto' }}>
           <Typography color="textSecondary" variant="body2">
             {description}
           </Typography>

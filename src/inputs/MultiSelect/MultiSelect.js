@@ -4,18 +4,15 @@ import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon, CheckBox as CheckBoxIcon } from '@mui/icons-material';
 import { Chip, Stack, Autocomplete, TextField, Checkbox } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../misc';
 import { BasicInputPlaceholder } from '../BasicInputs/BasicInputPlaceholder';
-import { getCommonInputStyles } from '../style';
+import { getCommonInputSxProps } from '../style';
 
-const useStyles = makeStyles(getCommonInputStyles);
 const DEFAULT_LABELS = {
   label: 'Selection',
   noValues: 'None',
 };
 export const MultiSelect = (props) => {
-  const classes = useStyles();
   const { id, labels: tmpLabels, tooltipText, selectedKeys, disabled = false, options, onChange, isDirty } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const autocompleteValues = useMemo(() => options?.map((el) => el.key) ?? [], [options]);
@@ -58,8 +55,7 @@ export const MultiSelect = (props) => {
       data-cy={`multi-input-${id}`}
       direction="row"
       spacing={1}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{ alignItems: 'center' }}
+      sx={{ ...getCommonInputSxProps(isDirty), alignItems: 'center' }}
     >
       <Autocomplete
         multiple

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 
 function stringToColor(str) {
   let hash = 0;
@@ -19,24 +18,21 @@ function stringToColor(str) {
   return color;
 }
 
-const useStyles = makeStyles((theme) => ({
-  avatar: {
-    width: (props) => `${props.size}px`,
-    height: (props) => `${props.size}px`,
-    fontSize: (props) => theme.typography.pxToRem(props.size / 2),
-    backgroundColor: (props) => props.avatarBackgroundColor,
-    color: (props) => theme.palette.getContrastText(props.avatarBackgroundColor),
-  },
-}));
-
 export const DefaultAvatar = ({ userName = '?', size = 24, variant = 'circular' }) => {
   const avatarBackgroundColor = stringToColor(userName);
   const letter = userName === '' ? '?' : String.fromCodePoint(userName.codePointAt(0)).toUpperCase();
 
-  const classes = useStyles({ avatarBackgroundColor, size });
-
   return (
-    <Avatar className={classes.avatar} variant={variant}>
+    <Avatar
+      variant={variant}
+      sx={{
+        width: `${size}px`,
+        height: `${size}px`,
+        fontSize: (theme) => theme.typography.pxToRem(size / 2),
+        backgroundColor: avatarBackgroundColor,
+        color: (theme) => theme.palette.getContrastText(avatarBackgroundColor),
+      }}
+    >
       {letter}
     </Avatar>
   );

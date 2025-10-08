@@ -7,13 +7,48 @@ import {
   UnfoldLess as UnfoldLessIcon,
   AccountTree as AccountTreeIcon,
 } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton, styled } from '@mui/material';
 import { ScenarioUtils } from '@cosmotech/core';
 import { SearchBar } from '../../inputs';
 import { FadingTooltip } from '../../misc';
 import { ScenarioSortableTree } from './components';
 import { DEFAULT_LABELS } from './labels';
-import useStyles from './style';
+
+const WEBAPP_HEADER_HEIGHT = 48;
+const SEARCH_FIELD_HEIGHT = 50;
+const SEARCH_FIELD_MARGIN = 32;
+const TREES_CONTAINER_OFFSET = WEBAPP_HEADER_HEIGHT + SEARCH_FIELD_HEIGHT + 2 * SEARCH_FIELD_MARGIN;
+
+const Root = styled('div')(({ theme }) => ({
+  height: '100%',
+  width: '100%',
+  // FIXME: RST classes are no longer used
+  '& .rst__tree': {
+    height: '100%',
+  },
+  '& .rst__lineBlock': {
+    '&::before': {
+      backgroundColor: theme.palette.text.primary,
+    },
+    '&::after': {
+      backgroundColor: theme.palette.text.primary,
+    },
+  },
+  '& .rst__node': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  '& .rst__nodeContent': {
+    flexGrow: '1',
+    position: 'sticky',
+    width: 'min-content',
+  },
+  '& .rst__row': {
+    display: 'block',
+    whiteSpace: 'normal',
+  },
+}));
 
 const filterMatchesName = (scenario, searchStr) => scenario.name.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1;
 const filterMatchesValidationStatus = (labels, scenario, searchStr) => {
@@ -42,7 +77,6 @@ const doesScenarioMatchFilter = (labels, scenario, searchStr) =>
   filterMatchesOwner(scenario, searchStr);
 
 export const ScenarioManagerTreeList = (props) => {
-  const classes = useStyles();
   const {
     datasets,
     scenarios,
@@ -133,38 +167,91 @@ export const ScenarioManagerTreeList = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.searchContainer}>
+    <Root>
+      <div
+        style={{
+          height: `${SEARCH_FIELD_HEIGHT}px`,
+          margin: `${SEARCH_FIELD_MARGIN}px`,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+        }}
+      >
         <SearchBar
           label={labels.searchField}
-          className={classes.searchField}
+          sx={{ mt: '2.5px', mb: '2.5px', maxWidth: '600px', flexBasis: '50%', height: '50px' }}
           onSearchChange={setSearchText}
           id="scenario-manager-search-field"
         />
-        <div className={classes.toolbar}>
+        <div style={{ marginLeft: '16px', display: 'flex', flexDirection: 'row' }}>
           <FadingTooltip title={labels?.toolbar?.collapseAll || 'Collapse all'}>
-            <IconButton className={classes.toolbarPrimaryAction} onClick={collapseAll} size="large">
+            <IconButton
+              sx={{
+                minWidth: '40px',
+                padding: '11px',
+                margin: '8px',
+                '& .MuiButton-startIcon': {
+                  marginLeft: '0px',
+                  marginRight: '0px',
+                },
+              }}
+              onClick={collapseAll}
+              size="large"
+            >
               <UnfoldLessIcon color="primary" />
             </IconButton>
           </FadingTooltip>
           <FadingTooltip title={labels?.toolbar?.expandAll || 'Expand all'}>
-            <IconButton className={classes.toolbarPrimaryAction} onClick={expandAll} size="large">
+            <IconButton
+              sx={{
+                minWidth: '40px',
+                padding: '11px',
+                margin: '8px',
+                '& .MuiButton-startIcon': {
+                  marginLeft: '0px',
+                  marginRight: '0px',
+                },
+              }}
+              onClick={expandAll}
+              size="large"
+            >
               <UnfoldMoreIcon color="primary" />
             </IconButton>
           </FadingTooltip>
           <FadingTooltip title={labels?.toolbar?.expandTree || 'Expand tree'}>
-            <IconButton className={classes.toolbarPrimaryAction} onClick={expandTree} size="large">
+            <IconButton
+              sx={{
+                minWidth: '40px',
+                padding: '11px',
+                margin: '8px',
+                '& .MuiButton-startIcon': {
+                  marginLeft: '0px',
+                  marginRight: '0px',
+                },
+              }}
+              onClick={expandTree}
+              size="large"
+            >
               <AccountTreeIcon color="primary" />
             </IconButton>
           </FadingTooltip>
         </div>
       </div>
-      <div data-cy="scenario-manager-view" className={classes.treesContainer}>
+      <div
+        data-cy="scenario-manager-view"
+        style={{
+          height: `calc(100% - ${TREES_CONTAINER_OFFSET}px)`, // Offset by header height + search bar height
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {scenariosTree.map((rootScenario) => {
           return (
             <ScenarioSortableTree
               key={rootScenario.id}
-              classes={classes}
               treeExpandedNodes={treeExpandedNodes}
               setTreeExpandedNodes={setTreeExpandedNodes}
               detailExpandedNodes={detailExpandedNodes}
@@ -174,7 +261,7 @@ export const ScenarioManagerTreeList = (props) => {
           );
         })}
       </div>
-    </div>
+    </Root>
   );
 };
 

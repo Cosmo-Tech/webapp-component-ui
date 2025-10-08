@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { ArrowRight as ArrowRightIcon, Check as CheckIcon } from '@mui/icons-material';
 import { Box, ClickAwayListener, IconButton, Menu, MenuItem } from '@mui/material';
 import { DefaultAvatar, FadingTooltip } from '../../misc';
-import useStyles from './style';
 
 const DEFAULT_LABELS = {
   language: 'Change language',
@@ -13,7 +12,6 @@ const DEFAULT_LABELS = {
 };
 
 export const UserInfo = (props) => {
-  const classes = useStyles();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setLanguangeMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -58,7 +56,7 @@ export const UserInfo = (props) => {
         </Box>
 
         <Menu
-          className={classes.menu}
+          sx={{ transform: 'translate3d(0,30px,0) !important' }}
           data-cy="main-menu"
           id="main-menu"
           keepMounted
@@ -71,9 +69,17 @@ export const UserInfo = (props) => {
           onClose={handleClick}
         >
           {languages && (
-            <MenuItem data-cy="change-language" onClick={handleLanguageMenuClick} className={classes.menuContainer}>
+            <MenuItem
+              data-cy="change-language"
+              onClick={handleLanguageMenuClick}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
               {labels.language}
-              <ArrowRightIcon className={classes.menuIcon} />
+              <ArrowRightIcon sx={{ marginLeft: '20px' }} />
             </MenuItem>
           )}
           <MenuItem data-cy="logout" onClick={onLogout}>
@@ -82,7 +88,7 @@ export const UserInfo = (props) => {
         </Menu>
         {languages && (
           <Menu
-            className={classes.menu}
+            sx={{ transform: 'translate3d(0,30px,0) !important' }}
             id="languages-menu"
             keepMounted
             anchorEl={langAnchorEl}
@@ -98,12 +104,16 @@ export const UserInfo = (props) => {
                   data-cy={'set-lang-' + langKey}
                   key={langKey}
                   onClick={() => setLanguage(langKey)}
-                  className={classes.menuContainer}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}
                 >
                   {langLabel}
                   {
                     // Add a check mark for the currently selected language
-                    langKey === language && <CheckIcon className={classes.menuIcon} />
+                    langKey === language && <CheckIcon sx={{ marginLeft: '20px' }} />
                   }
                 </MenuItem>
               ))

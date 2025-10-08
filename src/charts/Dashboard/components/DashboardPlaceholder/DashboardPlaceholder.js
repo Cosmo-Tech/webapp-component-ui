@@ -2,28 +2,9 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Typography, Grid2 as Grid, Button, LinearProgress } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme) => ({
-  gridContainer: {
-    height: '100%',
-  },
-  iconContainer: {
-    textAlign: 'center',
-  },
-  linearProgress: {
-    minWidth: '300px',
-    marginTop: '10px',
-  },
-  label: {
-    marginTop: '10px',
-    textAlign: 'center',
-  },
-}));
+import { Typography, Grid, Button, LinearProgress } from '@mui/material';
 
 const DashboardPlaceholder = (props) => {
-  const classes = useStyles();
   const { title = null, label, icon, downloadLogsFile, downloadLabel, inProgress = false } = props;
 
   return (
@@ -31,21 +12,22 @@ const DashboardPlaceholder = (props) => {
       container
       direction="column"
       wrap="nowrap"
-      className={classes.gridContainer}
-      sx={{
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
+      sx={{ justifyContent: 'center', alignItems: 'center', height: '100%' }}
     >
       <Grid>
         <Typography variant="h3">{title}</Typography>
       </Grid>
       <Grid>
-        {icon !== undefined && <div className={classes.iconContainer}>{icon}</div>}
-        <Typography data-cy="dashboard-placeholder" variant="body1" className={classes.label} color="textSecondary">
+        {icon !== undefined && <div style={{ textAlign: 'center' }}>{icon}</div>}
+        <Typography
+          data-cy="dashboard-placeholder"
+          variant="body1"
+          sx={{ marginTop: '10px', textAlign: 'center' }}
+          color="textSecondary"
+        >
           {label}
         </Typography>
-        {inProgress && <LinearProgress data-cy="dashboard-in-progress" className={classes.linearProgress} />}
+        {inProgress && <LinearProgress data-cy="dashboard-in-progress" sx={{ minWidth: '300px', marginTop: '10px' }} />}
       </Grid>
       {downloadLogsFile && (
         <Grid>

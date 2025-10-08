@@ -3,7 +3,7 @@
 import React from 'react';
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
 import PropTypes from 'prop-types';
-import { Grid2 as Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const DEFAULT_STYLE = {
   height: 100,

@@ -34,11 +34,6 @@ const defaultProps = {
   changeEnumField: mockOnValueChanged,
 };
 
-const propsWithDirtyState = {
-  ...defaultProps,
-  isDirty: true,
-};
-
 const propsWithTooltips = {
   ...defaultProps,
   enumValues: defaultProps.enumValues.map((enumValue) => ({ ...enumValue, tooltipText: `tooltip_${enumValue.key}` })),
@@ -51,16 +46,11 @@ const setUp = (props) => {
 };
 
 describe('Checks enumInput in edit mode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", async () => {
+  test('Component is displayed in edit mode', async () => {
     setUp(defaultProps);
     expect(enumInputContainer.Container).toBeInTheDocument();
     expect(enumInputContainer.Container).toHaveTextContent('€');
     expect(enumInputContainer.Container).not.toHaveTextContent('EUR');
-    expect(enumInputContainer.Container).not.toHaveDirtyInputClass();
-  });
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(enumInputContainer.Container).toHaveDirtyInputClass();
   });
 });
 

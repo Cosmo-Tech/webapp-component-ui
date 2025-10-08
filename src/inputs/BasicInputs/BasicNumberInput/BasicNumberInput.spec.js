@@ -35,14 +35,9 @@ const setUp = (props) => {
 };
 
 describe('Checks numberInput in editMode', () => {
-  test("Component is displayed in edit mode and dirtyInput class isn't applied when isDirty is false", () => {
+  test('Component is displayed in edit mode', () => {
     setUp(defaultProps);
     expect(numberInputContainer.Container).toBeInTheDocument();
-    expect(numberInputContainer.Container).not.toHaveDirtyInputClass();
-  });
-  test('dirtyInput class is applied when isDirty is true', () => {
-    setUp(propsWithDirtyState);
-    expect(numberInputContainer.Container).toHaveDirtyInputClass();
   });
   test("helperText isn't displayed when error is undefined", () => {
     setUp(defaultProps);

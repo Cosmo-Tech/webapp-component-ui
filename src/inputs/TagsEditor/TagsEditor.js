@@ -3,20 +3,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import EditIcon from '@mui/icons-material/Edit';
-import { Chip, Grid2 as Grid, TextField, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { Chip, Grid, TextField, Typography } from '@mui/material';
 
 const DEFAULT_LABELS = {
   header: 'Tags',
   placeholder: 'Enter a new tag',
 };
-
-const useStyles = makeStyles((theme) => ({
-  addTagIcon: {
-    width: '16px',
-    height: '16px',
-  },
-}));
 
 export const TagsEditor = (props) => {
   const {
@@ -30,7 +22,6 @@ export const TagsEditor = (props) => {
     editIconProps = {},
     headerStyle = {},
   } = props;
-  const classes = useStyles();
 
   const values = useMemo(() => tmpValues ?? [], [tmpValues]);
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
@@ -99,9 +90,14 @@ export const TagsEditor = (props) => {
   const addTagIcon = useMemo(() => {
     if (readOnly || isEditing || !isHovered) return null;
     return (
-      <EditIcon data-cy="add-tag" className={classes.addTagIcon} onClick={startEdition} {...editIconProps}></EditIcon>
+      <EditIcon
+        data-cy="add-tag"
+        sx={{ width: '16px', height: '16px' }}
+        onClick={startEdition}
+        {...editIconProps}
+      ></EditIcon>
     );
-  }, [readOnly, isEditing, isHovered, classes.addTagIcon, startEdition, editIconProps]);
+  }, [readOnly, isEditing, isHovered, startEdition, editIconProps]);
 
   return (
     <Grid

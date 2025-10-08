@@ -1,4 +1,4 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 
-export { TableToolbar } from './TableToolbar';
+export { TableToolbar, TABLE_TOOLBAR_HEIGHT } from './TableToolbar';

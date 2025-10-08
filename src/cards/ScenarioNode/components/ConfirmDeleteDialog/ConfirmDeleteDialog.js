@@ -3,20 +3,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: '100%',
-  },
-  dialogContent: {
-    marginTop: '16px',
-  },
-  dialogActions: {
-    marginRight: '4px',
-    marginBottom: '4px',
-  },
-}));
 
 const DEFAULT_LABELS = {
   title: 'Confirm delete?',
@@ -28,23 +14,22 @@ const DEFAULT_LABELS = {
 };
 
 export const ConfirmDeleteDialog = ({ open, closeDialog, confirmDelete, labels: tmpLabels }) => {
-  const classes = useStyles();
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   return (
     <Dialog
       data-cy="confirm-scenario-delete-dialog"
-      className={classes.root}
+      sx={{ height: '100%' }}
       open={open}
       onClose={closeDialog}
       aria-labelledby="confirm-scenario-delete"
       aria-describedby="confirm-scenario-delete-description"
     >
       <DialogTitle id="confirm-scenario-delete">{labels.title}</DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent sx={{ marginTop: '16px' }}>
         <DialogContentText id="confirm-scenario-delete-description">{labels.description}</DialogContentText>
       </DialogContent>
-      <DialogActions className={classes.dialogActions}>
+      <DialogActions sx={{ marginRight: '4px', marginBottom: '4px' }}>
         <Button onClick={closeDialog} color="primary" autoFocus>
           {labels.cancel}
         </Button>

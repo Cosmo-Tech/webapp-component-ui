@@ -4,16 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CheckIcon from '@mui/icons-material/Check';
 import { FormControl, Select, Divider, MenuItem, ListItemText, ListItemIcon } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme) => ({
-  selectWithAction: {
-    width: '100%',
-  },
-  listItemIcon: {
-    minWidth: '44px',
-  },
-}));
 
 export const SelectWithAction = ({
   options,
@@ -22,10 +12,8 @@ export const SelectWithAction = ({
   isReadOnly = false,
   actions = [],
 }) => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.selectWithAction}>
+    <div style={{ width: '100%' }}>
       <FormControl variant="outlined" fullWidth={true}>
         <Select
           data-cy="select-with-action"
@@ -51,8 +39,7 @@ export const SelectWithAction = ({
             <MenuItem key={option.value} value={option.value}>
               <ListItemIcon
                 data-cy={`select-${option.value}-checked-icon`}
-                className={classes.listItemIcon}
-                style={selectedOption === option.value ? { visibility: 'visible' } : { visibility: 'hidden' }}
+                style={{ minWidth: '44px', visibility: selectedOption === option.value ? 'visible' : 'hidden' }}
               >
                 <CheckIcon color="secondary" />
               </ListItemIcon>
@@ -66,9 +53,7 @@ export const SelectWithAction = ({
           <ul>
             {actions.map((action) => (
               <MenuItem key={action.id} className={action.classes} value={action.id} onClick={action.onClick}>
-                <ListItemIcon className={classes.listItemIcon} style={{ color: 'inherit' }}>
-                  {action.icon}
-                </ListItemIcon>
+                <ListItemIcon style={{ color: 'inherit', minWidth: '44px' }}>{action.icon}</ListItemIcon>
                 <ListItemText data-cy="select-action-name" primary={action.label} />
               </MenuItem>
             ))}

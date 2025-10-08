@@ -6,13 +6,11 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ErrorIcon from '@mui/icons-material/Error';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { PathUtils } from '@cosmotech/core';
 import { FadingTooltip, TooltipInfo } from '../../misc';
-import { getCommonInputStyles } from '../style';
+import { getCommonInputSxProps } from '../style';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
-const useStyles = makeStyles(getCommonInputStyles);
 const DEFAULT_LABELS = {
   label: '',
   button: 'Browse',
@@ -40,7 +38,6 @@ export const UploadFile = (props) => {
     console.warn('"isFileValid" prop is deprecated in UploadFile. Please use "error" instead.');
   }
 
-  const classes = useStyles();
   const labels = useMemo(() => {
     return { ...DEFAULT_LABELS, ...tmpLabels };
   }, [tmpLabels]);
@@ -64,10 +61,7 @@ export const UploadFile = (props) => {
   }, [file?.name, labels, shouldHideFileName]);
 
   return (
-    <Stack
-      data-cy={`file-upload-${id}`}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-    >
+    <Stack data-cy={`file-upload-${id}`} sx={getCommonInputSxProps(isDirty)}>
       <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
         <Typography
           data-cy="label-disabled-input"

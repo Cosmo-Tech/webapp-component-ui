@@ -3,11 +3,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Autocomplete } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+import { styled } from '@mui/material/styles';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 
-const useStyles = makeStyles((theme) => ({
-  validationStatusChip: {
+const PREFIX = 'HierarchicalComboBox';
+
+const classes = {
+  validationStatusChip: `${PREFIX}-validationStatusChip`,
+};
+
+const OptionContainer = styled('span')(({ theme }) => ({
+  [`& .${classes.validationStatusChip}`]: {
     height: '24px',
     marginLeft: '10px',
     '&:hover': {
@@ -33,7 +39,6 @@ export const HierarchicalComboBox = ({
   renderInputToolType = '',
   ...props
 }) => {
-  const classes = useStyles();
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   // 'label' prop is deprecated but is still used as main source of data if provided, otherwise we fallback to the new
@@ -54,14 +59,14 @@ export const HierarchicalComboBox = ({
         const marginLeft = option.depth * 20 || 0;
         return (
           <li data-testid={'option-' + option.id} {...props} key={option.id}>
-            <span style={{ marginLeft }}>
+            <OptionContainer style={{ marginLeft }}>
               {option.name}
               <ScenarioValidationStatusChip
                 className={classes.validationStatusChip}
                 status={option.validationStatus || 'Unknown'}
                 labels={labels.validationStatus}
               />
-            </span>
+            </OptionContainer>
           </li>
         );
       }}

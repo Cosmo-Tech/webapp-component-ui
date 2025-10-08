@@ -2,9 +2,23 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import useStyles from './style';
+import { styled } from '@mui/material/styles';
 
-const _generateAttributeDetails = (classes, labels, attributeName, attributeValue) => {
+const StyledTable = styled('table')(({ theme }) => ({
+  margin: '5px',
+  border: `1px solid ${theme.palette.text.primary}`,
+  borderCollapse: 'collapse',
+}));
+const StyledTableHeader = styled('th')(({ theme }) => ({
+  border: `1px solid ${theme.palette.text.primary}`,
+  padding: '5px',
+}));
+const StyledTableDataCell = styled('td')(({ theme }) => ({
+  border: `1px solid ${theme.palette.text.primary}`,
+  padding: '5px',
+}));
+
+const _generateAttributeDetails = (labels, attributeName, attributeValue) => {
   const attributeLabel = labels?.attributes?.[attributeName] || attributeName;
   const attributesToIgnore = [
     'label',
@@ -25,28 +39,28 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
       <div
         data-cy={`cytoviz-element-attribute-${attributeName.toLowerCase()}`}
         key={attributeName}
-        className={classes.attributeColumnContainer}
+        style={{ margin: '4px', display: 'flex', flexDirection: 'column' }}
       >
-        <div data-cy="cytoviz-element-attribute-name" className={classes.attributeLabel}>
+        <div data-cy="cytoviz-element-attribute-name" style={{ marginRight: '4px', fontWeight: 'bold' }}>
           {attributeLabel}:
         </div>
-        <div data-cy="cytoviz-element-attribute-value" className={classes.tableContainer}>
-          <table className={classes.table}>
+        <div data-cy="cytoviz-element-attribute-value" style={{ margin: '4px' }}>
+          <StyledTable>
             <thead>
               <tr>
-                <th className={classes.th}>{labels.dictKey}</th>
-                <th className={classes.th}>{labels.dictValue}</th>
+                <StyledTableHeader>{labels.dictKey}</StyledTableHeader>
+                <StyledTableHeader>{labels.dictValue}</StyledTableHeader>
               </tr>
             </thead>
             <tbody>
               {Object.keys(attributeValue).map((key) => (
                 <tr key={key}>
-                  <td className={classes.td}>{key}</td>
-                  <td className={classes.td}>{attributeValue[key]}</td>
+                  <StyledTableDataCell>{key}</StyledTableDataCell>
+                  <StyledTableDataCell>{attributeValue[key]}</StyledTableDataCell>
                 </tr>
               ))}
             </tbody>
-          </table>
+          </StyledTable>
         </div>
       </div>
     );
@@ -56,14 +70,17 @@ const _generateAttributeDetails = (classes, labels, attributeName, attributeValu
       <div
         data-cy={`cytoviz-element-attribute-${attributeName.toLowerCase()}`}
         key={attributeName}
-        className={classes.attributeRowContainer}
+        style={{
+          margin: '4px',
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+        }}
       >
-        <span data-cy="cytoviz-element-attribute-name" className={classes.attributeLabel}>
+        <span data-cy="cytoviz-element-attribute-name" style={{ marginRight: '4px', fontWeight: 'bold' }}>
           {attributeLabel}:
         </span>
-        <span data-cy="cytoviz-element-attribute-value" className={classes.attributeValue}>
-          {JSON.stringify(attributeValue)}
-        </span>
+        <span data-cy="cytoviz-element-attribute-value">{JSON.stringify(attributeValue)}</span>
       </div>
     );
   }
@@ -84,7 +101,6 @@ const getSortedAttributeNames = (expectedKeys, allKeys) => {
 };
 
 const ElementData = (props) => {
-  const classes = useStyles();
   const { data = {}, labels: tmpLabels, metadata = {}, type } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   if (!data) return labels.noData;
@@ -97,13 +113,13 @@ const ElementData = (props) => {
     sortedElementAttributeNames = getSortedAttributeNames(desiredAttributesOrder, Object.keys(data));
 
   let filteredElementAttributes = sortedElementAttributeNames
-    .map((key) => _generateAttributeDetails(classes, labels, key, data[key]))
+    .map((key) => _generateAttributeDetails(labels, key, data[key]))
     .filter((el) => el !== null);
   if (filteredElementAttributes.length === 0) {
     filteredElementAttributes = labels.noData;
   }
 
-  return <div className={classes.elementDetailsContainer}>{filteredElementAttributes}</div>;
+  return <div style={{ display: 'flex', flexDirection: 'column' }}>{filteredElementAttributes}</div>;
 };
 
 ElementData.propTypes = {

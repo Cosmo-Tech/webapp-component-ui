@@ -3,16 +3,12 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Stack, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import { TooltipInfo } from '../../../misc/TooltipInfo';
-import { getCommonInputStyles } from '../../style';
+import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormat } from './components/NumberFormat';
 
-const useStyles = makeStyles(getCommonInputStyles);
-
 export const BasicNumberInput = (props) => {
-  const classes = useStyles();
   const {
     id,
     label,
@@ -89,8 +85,7 @@ export const BasicNumberInput = (props) => {
       data-cy={`number-input-${id}`}
       direction="row"
       spacing={1}
-      className={isDirty ? classes.dirtyInput : isDirty === false ? classes.notDirtyInput : ''}
-      sx={{ alignItems: 'center' }}
+      sx={{ ...getCommonInputSxProps(isDirty), alignItems: 'center' }}
     >
       <TextField
         id={`number-input-${id}`}
