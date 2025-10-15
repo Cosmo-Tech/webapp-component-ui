@@ -1876,6 +1876,7 @@ __metadata:
     "@rollup/plugin-commonjs": "npm:^28.0.6"
     "@rollup/plugin-image": "npm:^3.0.3"
     "@rollup/plugin-node-resolve": "npm:^16.0.1"
+    "@superset-ui/embedded-sdk": "npm:^0.2.0"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.8.0"
     "@testing-library/react": "npm:^16.3.0"
@@ -3527,6 +3528,23 @@ __metadata:
   peerDependencies:
     eslint: ">=8.40.0"
   checksum: 10c0/6ca19b6656be5ed657cf4d1920602fb27144dc5d51ba188e0bdcb2a4e0b740d4fdb27052fc268d164fa1269c972aeab15541c9e15b3ff4b7884ecae47f18ff67
+  languageName: node
+  linkType: hard
+
+"@superset-ui/embedded-sdk@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@superset-ui/embedded-sdk@npm:0.2.0"
+  dependencies:
+    "@superset-ui/switchboard": "npm:^0.20.3"
+    jwt-decode: "npm:^4.0.0"
+  checksum: 10c0/9cae6956fc96361f8b8e495e726b52c9eca7e927de2163e6c69efcdfa80778de90d0912638e738bed8f10e958077ab414cfa264b180d2b316188932f8a5b0154
+  languageName: node
+  linkType: hard
+
+"@superset-ui/switchboard@npm:^0.20.3":
+  version: 0.20.3
+  resolution: "@superset-ui/switchboard@npm:0.20.3"
+  checksum: 10c0/867786b3f1b389dd19e9555eaba6ab2e6cdd3528103bed6bb601e29e10455507d36f2f4ed2978dae1d07030cb35ef612ea4f24db0867a48eab63ac530f7b8a05
   languageName: node
   linkType: hard
 
@@ -8792,6 +8810,13 @@ __metadata:
     object.assign: "npm:^4.1.4"
     object.values: "npm:^1.1.6"
   checksum: 10c0/a32679e9cb55469cb6d8bbc863f7d631b2c98b7fc7bf172629261751a6e7bc8da6ae374ddb74d5fbd8b06cf0eb4572287b259813d92b36e384024ed35e4c13e1
+  languageName: node
+  linkType: hard
+
+"jwt-decode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "jwt-decode@npm:4.0.0"
+  checksum: 10c0/de75bbf89220746c388cf6a7b71e56080437b77d2edb29bae1c2155048b02c6b8c59a3e5e8d6ccdfd54f0b8bda25226e491a4f1b55ac5f8da04cfbadec4e546c
   languageName: node
   linkType: hard
 
