@@ -5,7 +5,13 @@ import PropTypes from 'prop-types';
 import { Box, CircularProgress, Backdrop } from '@mui/material';
 import { embedDashboard } from '@superset-ui/embedded-sdk';
 
-export const SupersetEmbed = ({ isLoading, guestToken, report, style, options }) => {
+export const SupersetEmbed = ({
+  isLoading = false,
+  guestToken,
+  report,
+  style = { width: '100%', height: '800px' },
+  options,
+}) => {
   const containerRef = useRef(null);
   const [isEmbedded, setIsEmbedded] = useState(false);
 
@@ -40,8 +46,8 @@ export const SupersetEmbed = ({ isLoading, guestToken, report, style, options })
     <Box
       sx={{
         position: 'relative',
-        width: style?.width,
-        height: style?.height,
+        width: style?.width ?? '100%',
+        height: style?.height ?? '800px',
         borderRadius: 2,
         overflow: 'hidden',
         boxShadow: 1,
@@ -80,9 +86,4 @@ SupersetEmbed.propTypes = {
   options: PropTypes.shape({
     supersetUrl: PropTypes.string.isRequired,
   }).isRequired,
-};
-
-SupersetEmbed.defaultProps = {
-  isLoading: false,
-  style: { width: '100%', height: '800px' },
 };
