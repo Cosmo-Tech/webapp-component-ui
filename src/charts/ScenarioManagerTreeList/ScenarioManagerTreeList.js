@@ -102,7 +102,7 @@ export const ScenarioManagerTreeList = (props) => {
 
   const formatScenariosToScenariosTree = (scenariosToFormat) => {
     const scenarioList = scenariosToFormat.map((scenario) => {
-      labels.dataset = buildDatasetInfo(scenario.datasetList);
+      labels.dataset = buildDatasetInfo(scenario.datasets.bases);
 
       return {
         parentId: scenario.parentId,

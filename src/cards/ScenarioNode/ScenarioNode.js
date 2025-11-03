@@ -223,9 +223,9 @@ export const ScenarioNode = ({
   };
 
   const datasetNames = useMemo(() => {
-    if (!scenario.datasetList || scenario.datasetList.length === 0) return labels.noDataset ?? 'None';
-    return DatasetUtils.getDatasetNames(datasets, scenario.datasetList) || (labels.datasetNotFound ?? 'Not found');
-  }, [datasets, labels.datasetNotFound, labels.noDataset, scenario.datasetList]);
+    if (!scenario.datasets.bases || scenario.datasets.bases === 0) return labels.noDataset ?? 'None';
+    return DatasetUtils.getDatasetNames(datasets, scenario.datasets.bases) || (labels.datasetNotFound ?? 'Not found');
+  }, [datasets, labels.datasetNotFound, labels.noDataset, scenario.datasets?.bases]);
 
   const getScenarioDetailNameLine = (isExpanded = false) => {
     return (
