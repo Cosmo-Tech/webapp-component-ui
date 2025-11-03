@@ -130,6 +130,7 @@ const CreateScenarioDialog = ({
     if (isMaster) {
       scenarioData.datasetList = [datasetFieldValues.id];
     } else {
+      scenarioData.datasetList = parentScenarioFieldValues.datasets?.bases;
       scenarioData.parentId = parentScenarioFieldValues.id;
     }
     return scenarioData;
