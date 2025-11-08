@@ -13,21 +13,27 @@ export const SupersetEmbed = ({
   options,
 }) => {
   const containerRef = useRef(null);
+  const tokenRef = useRef(guestToken);
   const [isEmbedded, setIsEmbedded] = useState(false);
+  const [dashboard, setDashboard] = useState(null);
 
   useEffect(() => {
-    const loadSuperset = async () => {
-      if (!guestToken || !report?.id || !options?.supersetUrl) return;
+    tokenRef.current = guestToken;
+  }, [guestToken]);
 
+  useEffect(() => {
+    if (!report?.id || !options?.supersetUrl) return;
+
+    const loadSuperset = async () => {
       try {
-        setIsEmbedded(false);
-        await embedDashboard({
+        const embedded = await embedDashboard({
           id: report.id,
           supersetDomain: options.supersetUrl,
           mountPoint: containerRef.current,
-          fetchGuestToken: async () => guestToken,
+          fetchGuestToken: async () => tokenRef.current,
           dashboardUiConfig: report?.uiConfig || {},
         });
+        setDashboard(embedded);
         setIsEmbedded(true);
       } catch (error) {
         console.error('Superset embedding failed:', error);
@@ -40,7 +46,12 @@ export const SupersetEmbed = ({
       containerRef.current.children[0].style.width = '100%';
       containerRef.current.children[0].style.height = '100%';
     }
-  }, [guestToken, report, options]);
+
+    return () => {
+      if (dashboard?.destroy) dashboard.destroy();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [report.id, options.supersetUrl]);
 
   return (
     <Box
