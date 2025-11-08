@@ -18,6 +18,7 @@ export const RolesEditionButton = ({
   labels: tmpLabels,
   isIconButton = false,
   agents,
+  canBeSharedWithAgent,
   resourceRolesPermissionsMapping,
   preventNoneRoleForAgents = false,
   isReadOnly = false,
@@ -69,6 +70,7 @@ export const RolesEditionButton = ({
         accessControlList={specificAccessByAgent}
         defaultRole={defaultRole}
         agents={agents}
+        canBeSharedWithAgent={canBeSharedWithAgent}
         labels={labels.dialog}
         isReadOnly={isReadOnly}
         onConfirmChanges={onConfirmChanges}
@@ -100,8 +102,13 @@ RolesEditionButton.propTypes = {
   /**
    * List of all users or users groups in the workspace
    */
-
-  agents: PropTypes.array.isRequired,
+  agents: PropTypes.arrayOf().isRequired,
+  /**
+   * Function that checks if the resource can be shared with the user
+   * return an object with a attribute 'canBeShared' set to true or false
+   * and an attribute 'reason' explaining why the resource cannot be shared with the agent
+   */
+  canBeSharedWithAgent: PropTypes.func,
   /**
    * List of users or users groups having specific access to the resource
    */
@@ -161,6 +168,7 @@ RolesEditionButton.propTypes = {
               noAdminError: 'string',
               userSelected: 'string',
               usersAccess: 'string',
+              disabledUserTooltip: 'function',
               generalAccess: 'string',
               removeAccess: 'string',
               add: 'object',

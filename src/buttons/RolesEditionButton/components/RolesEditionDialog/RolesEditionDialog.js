@@ -16,9 +16,11 @@ import {
   IconButton,
   Typography,
   Autocomplete,
+  Box,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RoleEditor } from '../../../../inputs';
+import { FadingTooltip } from '../../../../misc';
 import { getIdentifierFromUserEmail } from '../../../../utils';
 import { RolesAddingDialog } from './components';
 
@@ -59,6 +61,7 @@ export const RolesEditionDialog = ({
   preventNoneRoleForAgents = false,
   onConfirmChanges,
   agents,
+  canBeSharedWithAgent,
   accessControlList,
   defaultRole = '',
   open,
@@ -71,7 +74,6 @@ export const RolesEditionDialog = ({
   const [selectedAgentForRoleAddition, setSelectedAgentForRoleAddition] = useState(null);
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
-
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   useEffect(() => {
@@ -140,6 +142,7 @@ export const RolesEditionDialog = ({
               <Autocomplete
                 data-cy="share-scenario-dialog-agents-select"
                 ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
+                getOptionDisabled={(option) => !canBeSharedWithAgent(option)?.canBeShared}
                 autoComplete
                 disableClearable={true}
                 options={agentsWithoutSpecificAccess}
@@ -151,12 +154,25 @@ export const RolesEditionDialog = ({
                   <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
                 )}
                 renderOption={(props, option) => {
+                  const { canBeShared, reason } = canBeSharedWithAgent(option);
+                  const tooltip = !canBeShared ? reason : null;
                   return (
-                    <li {...props}>
-                      <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
-                        {option.id}
-                      </span>
-                    </li>
+                    <Box key={option.id} sx={{ display: 'flex', alignItems: 'center' }}>
+                      <FadingTooltip title={tooltip} placement="right">
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            width: 'fit-content',
+                            cursor: !canBeShared ? 'not-allowed' : 'pointer',
+                          }}
+                          data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
+                        >
+                          <Box component="li" {...props}>
+                            {option.id}
+                          </Box>
+                        </span>
+                      </FadingTooltip>
+                    </Box>
                   );
                 }}
               />
@@ -289,6 +305,7 @@ RolesEditionDialog.propTypes = {
   onConfirmChanges: PropTypes.func.isRequired,
   accessControlList: PropTypes.array.isRequired,
   agents: PropTypes.array.isRequired,
+  canBeSharedWithAgent: PropTypes.func,
   defaultRole: PropTypes.string,
   open: PropTypes.bool.isRequired,
   closeDialog: PropTypes.func.isRequired,
