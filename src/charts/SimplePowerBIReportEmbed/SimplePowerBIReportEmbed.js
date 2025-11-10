@@ -10,17 +10,6 @@ import { PowerBIUtils } from '@cosmotech/azure';
 import { FadingTooltip } from '../../misc';
 import DashboardPlaceholder from '../Dashboard/components';
 
-const StyledErrorContainerDiv = styled('div')(({ theme }) => ({
-  'z-index': '1', // Need z-index > 0, otherwise the error banner is hidden behind the powerbi loading screen
-  height: '50px',
-  width: '100%',
-  position: 'absolute',
-  textAlign: 'center',
-  padding: '5px 0',
-  backgroundColor: theme.palette.error.main,
-  color: theme.palette.error.contrastText,
-}));
-
 const PREFIX = 'SimplePowerBIReportEmbed';
 const classes = { report: `${PREFIX}-report` };
 
@@ -30,15 +19,6 @@ const Root = styled('div')(({ theme }) => ({
     flex: 1,
   },
 }));
-
-function getErrorCode(labels, reports) {
-  if (!reports?.error?.status && !reports?.error?.statusText) return labels.errors.unknown;
-  return `${reports?.error?.status ?? ''} ${reports?.error?.statusText ?? ''}`;
-}
-
-function getErrorDescription(labels, reports) {
-  return reports?.error?.powerBIErrorInfo ?? labels.errors.details;
-}
 
 function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters, additionalFilters) {
   if (pageName !== undefined && pageName[lang] !== undefined) {
@@ -189,9 +169,6 @@ export const SimplePowerBIReportEmbed = ({
     }
   }, [theme, report]);
 
-  const errorCode = getErrorCode(labels, reports);
-  const errorDescription = getErrorDescription(labels, reports);
-
   const refreshReport = useCallback(
     (triggerTimeout = true) => {
       if (!report) return;
@@ -246,10 +223,6 @@ export const SimplePowerBIReportEmbed = ({
 
   return (
     <Root style={{ height: '100%', width: '100%', position: 'relative' }}>
-      <StyledErrorContainerDiv hidden={reports.status !== 'ERROR'}>
-        <div style={{ fontWeight: 'bold', fontSize: 'large' }}>{errorCode}</div>
-        <div style={{ fontWeight: 'bold', fontSize: 'small' }}>{errorDescription}</div>
-      </StyledErrorContainerDiv>
       {placeholder}
       <div style={{ width: '100%', display: 'flex', flexDirection: 'row', ...divContainerStyle }}>
         {refreshable && (
