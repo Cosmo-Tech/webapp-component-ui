@@ -3,29 +3,67 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Paper } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import { SimpleTreeView, TreeItem, treeItemClasses } from '@mui/x-tree-view';
 import { ScenarioNode } from '../../../../cards';
 
-const CustomTreeItem = styled(TreeItem)(({ theme }) => ({
-  [`& .${treeItemClasses.content}`]: {
-    borderRadius: theme.spacing(0.5),
-    padding: theme.spacing(0.5, 1),
-    margin: theme.spacing(0.2, 0),
-    [`& .${treeItemClasses.label}`]: {
-      fontSize: '0.8rem',
-      fontWeight: 500,
+const CustomTreeItem = styled(TreeItem)(({ theme }) => {
+  const isDark = theme.palette.mode === 'dark';
+  const cardBg = isDark ? alpha(theme.palette.background.paper, 0.9) : theme.palette.grey[50];
+  const cardBorder = alpha(theme.palette.common.white, isDark ? 0.08 : 0.2);
+
+  const bracketColor = alpha(isDark ? theme.palette.common.white : theme.palette.text.primary, 0.18);
+
+  return {
+    [`& .${treeItemClasses.content}`]: {
+      borderRadius: theme.spacing(0.5),
+      padding: theme.spacing(0.5, 1),
+      margin: theme.spacing(0.2, 0),
+      border: `1px solid ${cardBorder}`,
+
+      // Horizontal “bracket” line from the left rail into the card
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        left: -18,
+        top: '50%',
+        width: 18,
+        borderBottom: `1px solid ${bracketColor}`,
+        transform: 'translateY(-50%)',
+      },
     },
-  },
-  [`& .${treeItemClasses.groupTransition}`]: {
-    marginLeft: 15,
-    paddingLeft: theme.spacing(2),
-    borderLeft: `1px dashed ${theme.palette.text.primary}`,
-  },
-  ...theme.applyStyles('light', {
-    color: theme.palette.grey[800],
-  }),
-}));
+    // Remove horizontal connector for root level
+    '&[data-tree-item-level="0"]': {
+      [`& > .${treeItemClasses.content}::before`]: {
+        borderBottom: 'none',
+      },
+    },
+
+    // Subtle interaction states
+    [`& .${treeItemClasses.content}:hover`]: {
+      backgroundColor: alpha(cardBg, isDark ? 0.9 : 0.96),
+      boxShadow: theme.shadows[2],
+    },
+
+    [`&.${treeItemClasses.focused} > .${treeItemClasses.content}`]: {
+      outline: `1px solid ${alpha(theme.palette.primary.main, 0.7)}`,
+      outlineOffset: 1,
+      boxShadow: theme.shadows[3],
+    },
+
+    [`&.${treeItemClasses.selected} > .${treeItemClasses.content}`]: {
+      backgroundColor: alpha(theme.palette.primary.main, 0.18),
+      borderColor: alpha(theme.palette.primary.main, 0.6),
+    },
+
+    // Vertical bracket rail for children
+    [`& .${treeItemClasses.groupTransition}`]: {
+      marginLeft: 18,
+      paddingLeft: theme.spacing(2),
+      borderLeft: `1px solid ${bracketColor}`,
+    },
+  };
+});
 
 // Ignore MUI events in the MUI tree items to prevent keyboard navigation based on scenario names (this feature breaks
 // input fields in the scenario node cards, plus the scenario manager view renders several trees, which means users
