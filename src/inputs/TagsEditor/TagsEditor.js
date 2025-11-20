@@ -44,8 +44,13 @@ export const TagsEditor = (props) => {
   const addNewTag = useCallback(
     (newTag) => {
       setIsEditing(false);
-      if (newTag.trim().length === 0) return;
-      onChange([...values, newTag]);
+      const trimmedTag = newTag.trim();
+      if (trimmedTag.length === 0) return;
+
+      const tagAlreadyExists = values.some((existingTag) => existingTag === trimmedTag);
+      if (tagAlreadyExists) return;
+
+      onChange([...values, trimmedTag]);
     },
     [onChange, values]
   );

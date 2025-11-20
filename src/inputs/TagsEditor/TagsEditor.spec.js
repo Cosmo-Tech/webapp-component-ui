@@ -135,5 +135,41 @@ describe('TagsEditor', () => {
       expect(onChangeMockFunction).not.toHaveBeenCalled();
       expect(newTagTextField.TextField).not.toBeInTheDocument();
     });
+
+    test('should not add duplicate tags', async () => {
+      await tagsEditorContainer.hover();
+      expect(queryByTestId(document, 'EditIcon')).toBeVisible();
+
+      await userEvent.click(queryByTestId(document, 'EditIcon'));
+      expect(newTagTextField.TextField).toBeVisible();
+
+      await newTagTextField.type('tag1{enter}');
+      expect(onChangeMockFunction).not.toHaveBeenCalled();
+      expect(newTagTextField.TextField).not.toBeInTheDocument();
+    });
+
+    test('should not add duplicate tags even with whitespace', async () => {
+      await tagsEditorContainer.hover();
+      expect(queryByTestId(document, 'EditIcon')).toBeVisible();
+
+      await userEvent.click(queryByTestId(document, 'EditIcon'));
+      expect(newTagTextField.TextField).toBeVisible();
+
+      await newTagTextField.type('  tag2  {enter}');
+      expect(onChangeMockFunction).not.toHaveBeenCalled();
+      expect(newTagTextField.TextField).not.toBeInTheDocument();
+    });
+
+    test('should trim whitespace when adding new tags', async () => {
+      await tagsEditorContainer.hover();
+      expect(queryByTestId(document, 'EditIcon')).toBeVisible();
+
+      await userEvent.click(queryByTestId(document, 'EditIcon'));
+      expect(newTagTextField.TextField).toBeVisible();
+
+      await newTagTextField.type('  newtag  {enter}');
+      expect(onChangeMockFunction).toHaveBeenCalledWith(['tag1', 'tag2', 'tag3', 'newtag']);
+      expect(newTagTextField.TextField).not.toBeInTheDocument();
+    });
   });
 });
