@@ -18,9 +18,11 @@ export const RolesEditionButton = ({
   labels: tmpLabels,
   isIconButton = false,
   agents,
+  hasWriteSecurityPermission,
+  specificSharingRestriction,
+  canBeSharedWithAgent,
   resourceRolesPermissionsMapping,
   preventNoneRoleForAgents = false,
-  isReadOnly = false,
   disabled = false,
   onConfirmChanges,
   specificAccessByAgent,
@@ -69,8 +71,10 @@ export const RolesEditionButton = ({
         accessControlList={specificAccessByAgent}
         defaultRole={defaultRole}
         agents={agents}
+        canBeSharedWithAgent={canBeSharedWithAgent}
         labels={labels.dialog}
-        isReadOnly={isReadOnly}
+        hasWriteSecurityPermission={hasWriteSecurityPermission}
+        specificSharingRestriction={specificSharingRestriction}
         onConfirmChanges={onConfirmChanges}
         closeDialog={closeDialog}
         allRoles={allRoles}
@@ -88,9 +92,15 @@ RolesEditionButton.propTypes = {
    */
   isIconButton: PropTypes.bool,
   /**
-   *  Defines whether user can edit or only see the resource's permissions; false by default
+   *  Defines if current user has write security permission on the resource
+   * - true : selectors are enabled and share button is visible
+   * - false : selectors and share button are hidden
    */
-  isReadOnly: PropTypes.bool,
+  hasWriteSecurityPermission: PropTypes.bool,
+  /**
+   * *  Defines restriction for sharing the resource
+   */
+  specificSharingRestriction: PropTypes.string,
   /**
    *  Defines the RolesEditionButton's state:
    *  - true : the button is disabled (the tooltip will guide users on how to enable the button)
@@ -100,8 +110,13 @@ RolesEditionButton.propTypes = {
   /**
    * List of all users or users groups in the workspace
    */
-
   agents: PropTypes.array.isRequired,
+  /**
+   * Function that checks if the resource can be shared with the user
+   * - returns null if the resource can be shared with the user
+   * - returns a string (reason) if the resource cannot be shared with the user
+   */
+  canBeSharedWithAgent: PropTypes.func,
   /**
    * List of users or users groups having specific access to the resource
    */
@@ -161,6 +176,7 @@ RolesEditionButton.propTypes = {
               noAdminError: 'string',
               userSelected: 'string',
               usersAccess: 'string',
+              disabledUserTooltip: 'function',
               generalAccess: 'string',
               removeAccess: 'string',
               add: 'object',

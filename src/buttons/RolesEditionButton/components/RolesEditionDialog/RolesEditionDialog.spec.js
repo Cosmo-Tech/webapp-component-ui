@@ -53,7 +53,6 @@ const selectRoleForAgent = (agentId, newRole) => {
 
 const propsWithoutUsers = {
   labels: LABELS.dialog,
-  isReadOnly: false,
   resourceRolesPermissionsMapping: RESOURCE_ROLES_PERMISSIONS_MAPPING,
   allRoles: ALL_ROLES,
   allPermissions: ALL_PERMISSIONS,
@@ -78,9 +77,9 @@ const propsWithPreventNoneRole = {
   preventNoneRoleForAgents: true,
 };
 
-const propsWithReadOnly = {
+const propsWithWriteSecurityPermissionToFalse = {
   ...propsWithUsers,
-  isReadOnly: true,
+  hasWriteSecurityPermission: false,
 };
 
 const allRolesWithoutNone = ALL_ROLES.filter((role) => role.value.toLowerCase() !== 'none');
@@ -384,9 +383,9 @@ describe('RolesEditionDialog', () => {
     });
   });
 
-  describe('Read-only', () => {
+  describe('Write security to false', () => {
     beforeEach(() => {
-      setUp(propsWithReadOnly);
+      setUp(propsWithWriteSecurityPermissionToFalse);
     });
 
     test('New user cannot be added', () => {

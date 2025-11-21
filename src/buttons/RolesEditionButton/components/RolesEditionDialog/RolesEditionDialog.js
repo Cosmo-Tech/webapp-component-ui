@@ -16,9 +16,11 @@ import {
   IconButton,
   Typography,
   Autocomplete,
+  Box,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RoleEditor } from '../../../../inputs';
+import { FadingTooltip } from '../../../../misc';
 import { getIdentifierFromUserEmail } from '../../../../utils';
 import { RolesAddingDialog } from './components';
 
@@ -54,7 +56,9 @@ const sortById = (agentA, agentB) => (agentA.id < agentB.id ? -1 : 1);
 
 export const RolesEditionDialog = ({
   labels: tmpLabels,
-  isReadOnly = false,
+  hasWriteSecurityPermission = true,
+  specificSharingRestriction,
+  canBeSharedWithAgent = () => null,
   resourceRolesPermissionsMapping,
   preventNoneRoleForAgents = false,
   onConfirmChanges,
@@ -71,7 +75,6 @@ export const RolesEditionDialog = ({
   const [selectedAgentForRoleAddition, setSelectedAgentForRoleAddition] = useState(null);
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
-
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   useEffect(() => {
@@ -135,12 +138,14 @@ export const RolesEditionDialog = ({
     <>
       <DialogContent>
         <Grid container spacing={2}>
-          {!isReadOnly && (
+          {hasWriteSecurityPermission && (
             <Grid size={12}>
               <Autocomplete
                 data-cy="share-scenario-dialog-agents-select"
                 ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
+                getOptionDisabled={(option) => canBeSharedWithAgent(option) != null}
                 autoComplete
+                disabled={specificSharingRestriction != null}
                 disableClearable={true}
                 options={agentsWithoutSpecificAccess}
                 value={selectedAgentForRoleAddition?.id}
@@ -151,12 +156,24 @@ export const RolesEditionDialog = ({
                   <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
                 )}
                 renderOption={(props, option) => {
+                  const tooltip = canBeSharedWithAgent(option);
                   return (
-                    <li {...props}>
-                      <span data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}>
-                        {option.id}
-                      </span>
-                    </li>
+                    <Box key={option.id} sx={{ display: 'flex', alignItems: 'center' }}>
+                      <FadingTooltip title={tooltip} placement="right">
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            width: 'fit-content',
+                            cursor: canBeSharedWithAgent(option) == null ? 'not-allowed' : 'pointer',
+                          }}
+                          data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
+                        >
+                          <Box component="li" {...props}>
+                            {option.id}
+                          </Box>
+                        </span>
+                      </FadingTooltip>
+                    </Box>
                   );
                 }}
               />
@@ -173,7 +190,7 @@ export const RolesEditionDialog = ({
                   agentAccess={agent.role}
                   allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
                   onOptionSelected={(event) => editSpecificAccess(event, agent)}
-                  isReadOnly={isReadOnly}
+                  isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
                   actions={[
                     {
                       id: 'remove_specific_access',
@@ -201,7 +218,7 @@ export const RolesEditionDialog = ({
               helperText={labels.editor.helperText}
               allRoles={allRoles}
               icon={workspaceIcon}
-              isReadOnly={isReadOnly}
+              isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
               onOptionSelected={(event) => setNewDefaultRole(event.target.value)}
             />
           </Grid>
@@ -209,18 +226,20 @@ export const RolesEditionDialog = ({
       </DialogContent>
       <DialogActions>
         <Button data-cy="share-scenario-dialog-first-cancel-button" onClick={closeDialog} color="primary">
-          {isReadOnly ? labels.close : labels.cancel}
+          {hasWriteSecurityPermission ? labels.cancel : labels.close}
         </Button>
-        {!isReadOnly && (
-          <Button
-            data-cy="share-scenario-dialog-submit-button"
-            onClick={confirmAndCloseDialog}
-            color="primary"
-            variant="contained"
-            disabled={hasNoAdmin}
-          >
-            {labels.share}
-          </Button>
+        {hasWriteSecurityPermission && (
+          <FadingTooltip title={specificSharingRestriction}>
+            <Button
+              data-cy="share-scenario-dialog-submit-button"
+              onClick={confirmAndCloseDialog}
+              color="primary"
+              variant="contained"
+              disabled={hasNoAdmin || specificSharingRestriction != null}
+            >
+              {labels.share}
+            </Button>
+          </FadingTooltip>
         )}
       </DialogActions>
     </>
@@ -258,7 +277,7 @@ export const RolesEditionDialog = ({
             <ArrowBackIcon />
           </IconButton>
         )}
-        {isReadOnly ? labels.readOnlyTitle : labels.title}
+        {hasWriteSecurityPermission ? labels.readOnlyTitle : labels.title}
       </DialogTitle>
       {dialogContent}
     </StyledDialog>
@@ -283,12 +302,14 @@ RolesEditionDialog.propTypes = {
       helperText: PropTypes.object,
     }),
   }),
-  isReadOnly: PropTypes.bool,
+  hasWriteSecurityPermission: PropTypes.bool,
+  specificSharingRestriction: PropTypes.string,
   resourceRolesPermissionsMapping: PropTypes.object.isRequired,
   preventNoneRoleForAgents: PropTypes.bool,
   onConfirmChanges: PropTypes.func.isRequired,
   accessControlList: PropTypes.array.isRequired,
   agents: PropTypes.array.isRequired,
+  canBeSharedWithAgent: PropTypes.func,
   defaultRole: PropTypes.string,
   open: PropTypes.bool.isRequired,
   closeDialog: PropTypes.func.isRequired,
