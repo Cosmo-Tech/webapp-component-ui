@@ -7,6 +7,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import { IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PowerBIUtils } from '@cosmotech/azure';
+import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { FadingTooltip } from '../../misc';
 import DashboardPlaceholder from '../Dashboard/components';
 
@@ -54,9 +55,6 @@ const DEFAULT_LABELS = {
   },
   inProgress: {
     label: 'Scenario run in progress...',
-  },
-  dataInTransfer: {
-    label: 'Transfer of scenario results in progress...',
   },
   hasErrors: {
     label: 'An error occured during the scenario run',
@@ -115,12 +113,11 @@ export const SimplePowerBIReportEmbed = ({
   );
   const resultsDisplayDisabled = reports?.status === 'DISABLED';
   const noScenario = scenario === null;
-  const scenarioState = noScenario ? 'Created' : scenarioDTO.state;
-  const noRun = scenarioState === 'Created' || scenarioState === null;
-  const runInProgress = scenarioState === 'Running';
-  const dataInTransfer = scenarioState === 'DataIngestionInProgress';
-  const hasError = scenarioState === 'Failed';
-  const hasUnknownStatus = scenarioState === 'Unknown';
+  const scenarioState = noScenario ? RUNNER_RUN_STATE.CREATED : scenarioDTO.state;
+  const noRun = scenarioState === RUNNER_RUN_STATE.CREATED || scenarioState === null;
+  const runInProgress = scenarioState === RUNNER_RUN_STATE.RUNNING;
+  const hasError = scenarioState === RUNNER_RUN_STATE.FAILED;
+  const hasUnknownStatus = scenarioState === RUNNER_RUN_STATE.UNKNOWN;
   const noDashboardConfigured = reportConfiguration[index] === undefined;
   const getPlaceholder = () => {
     if (alwaysShowReports) return null;
@@ -128,11 +125,6 @@ export const SimplePowerBIReportEmbed = ({
     if (noRun) return <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />;
     if (runInProgress)
       return <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
-    if (dataInTransfer) {
-      return (
-        <DashboardPlaceholder label={labels.dataInTransfer.label} title={labels.dataInTransfer.title} inProgress />
-      );
-    }
     if (hasError)
       return (
         <DashboardPlaceholder
@@ -185,7 +177,7 @@ export const SimplePowerBIReportEmbed = ({
   );
 
   useEffect(() => {
-    if (scenarioState === 'Successful') refreshReport(false);
+    if (scenarioState === RUNNER_RUN_STATE.SUCCESSFUL) refreshReport(false);
   }, [refreshReport, scenarioState]);
 
   const iframe = useMemo(() => {
@@ -208,7 +200,7 @@ export const SimplePowerBIReportEmbed = ({
   }, [embedConfig]);
 
   const placeholder = getPlaceholder();
-  const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
+  const isReady = (scenarioState === undefined || scenarioState === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
 
   const divContainerStyle = {};
   if (!isReady && !alwaysShowReports) {
@@ -354,10 +346,6 @@ SimplePowerBIReportEmbed.propTypes = {
       label: PropTypes.string.isRequired,
     }).isRequired,
     inProgress: PropTypes.shape({
-      title: PropTypes.string,
-      label: PropTypes.string.isRequired,
-    }).isRequired,
-    dataInTransfer: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
     }).isRequired,

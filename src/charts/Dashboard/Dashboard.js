@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
+import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import DashboardPlaceholder from './components';
 
 const DEFAULT_LABELS = {
@@ -16,10 +17,6 @@ const DEFAULT_LABELS = {
   inProgress: {
     title: '',
     label: 'Scenario run in progress...',
-  },
-  dataInTransfer: {
-    title: '',
-    label: 'Transfer of scenario results in progress...',
   },
   hasErrors: {
     title: '',
@@ -53,11 +50,10 @@ export const Dashboard = (props) => {
     .replace(/<CsmSimulationRun>/g, csmSimulationRun);
 
   // Handle optional status property
-  const noRun = scenarioState === 'Created' || scenarioState === null;
-  const runInProgress = scenarioState === 'Running';
-  const dataInTransfer = scenarioState === 'DataIngestionInProgress';
-  const hasError = scenarioState === 'Failed';
-  const isReady = (scenarioState === undefined || scenarioState === 'Successful') && !noScenario;
+  const noRun = scenarioState === RUNNER_RUN_STATE.CREATED || scenarioState === null;
+  const runInProgress = scenarioState === RUNNER_RUN_STATE.RUNNING;
+  const hasError = scenarioState === RUNNER_RUN_STATE.FAILED;
+  const isReady = (scenarioState === undefined || scenarioState === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
 
   return (
     <>
@@ -65,9 +61,6 @@ export const Dashboard = (props) => {
       {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
       {runInProgress && (
         <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />
-      )}
-      {dataInTransfer && (
-        <DashboardPlaceholder label={labels.dataInTransfer.label} title={labels.dataInTransfer.title} inProgress />
       )}
       {hasError && (
         <DashboardPlaceholder
@@ -165,10 +158,6 @@ Dashboard.propTypes = {
       label: PropTypes.string.isRequired,
     }).isRequired,
     inProgress: PropTypes.shape({
-      title: PropTypes.string,
-      label: PropTypes.string.isRequired,
-    }).isRequired,
-    dataInTransfer: PropTypes.shape({
       title: PropTypes.string,
       label: PropTypes.string.isRequired,
     }).isRequired,

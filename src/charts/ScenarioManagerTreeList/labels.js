@@ -6,7 +6,6 @@ export const DEFAULT_LABELS = {
   runTemplateLabel: 'Run type:',
   successful: 'Successful',
   running: 'Running',
-  dataingestioninprogress: 'Transferring results',
   failed: 'Failed',
   created: 'Created',
   delete: 'Delete this scenario',

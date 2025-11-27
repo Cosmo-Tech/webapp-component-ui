@@ -21,6 +21,7 @@ import {
   Typography,
 } from '@mui/material';
 import { DatasetUtils } from '@cosmotech/core';
+import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { DescriptionEditor, TagsEditor } from '../../inputs';
 import { FadingTooltip, ScenarioValidationStatusChip } from '../../misc';
 import { ConfirmDeleteDialog, EditableLink } from './components';
@@ -67,6 +68,12 @@ const DEFAULT_LABELS = {
   },
 };
 
+const getLabelKeyFromStatus = (status) => {
+  const labelKey = status.toLowerCase();
+  if (labelKey === 'notstarted') return 'created'; // Work-around for API v5 breaking change
+  return labelKey;
+};
+
 export const ScenarioNode = ({
   datasets,
   isExpanded,
@@ -108,36 +115,36 @@ export const ScenarioNode = ({
     if (!scenario.state) {
       return '';
     }
-    return labels[scenario.state.toLowerCase()] ? labels[scenario.state.toLowerCase()] : scenario.state;
+    return labels[getLabelKeyFromStatus(scenario.state)] ?? scenario.state;
   };
 
   const getStatusIconClassName = () => {
-    if (scenario.state === 'Created') {
+    if (scenario.state === RUNNER_RUN_STATE.CREATED) {
       return null;
     }
-    if (scenario.state === 'Running' || scenario.state === 'DataIngestionInProgress') {
+    if (scenario.state === RUNNER_RUN_STATE.RUNNING) {
       return classes.statusRunningIcon;
     }
-    if (scenario.state === 'Successful') {
+    if (scenario.state === RUNNER_RUN_STATE.SUCCESSFUL) {
       return classes.statusSuccessfulIcon;
     }
-    if (scenario.state === 'Failed') {
+    if (scenario.state === RUNNER_RUN_STATE.FAILED) {
       return classes.statusFailedIcon;
     }
     return classes.statusUnknownIcon;
   };
 
   const getStatusClassName = () => {
-    if (scenario.state === 'Created') {
+    if (scenario.state === RUNNER_RUN_STATE.CREATED) {
       return classes.statusCreated;
     }
-    if (scenario.state === 'Running' || scenario.state === 'DataIngestionInProgress') {
+    if (scenario.state === RUNNER_RUN_STATE.RUNNING) {
       return classes.statusRunning;
     }
-    if (scenario.state === 'Successful') {
+    if (scenario.state === RUNNER_RUN_STATE.SUCCESSFUL) {
       return classes.statusSuccessful;
     }
-    if (scenario.state === 'Failed') {
+    if (scenario.state === RUNNER_RUN_STATE.FAILED) {
       return classes.statusFailed;
     }
     return classes.statusUnknown;
@@ -149,18 +156,17 @@ export const ScenarioNode = ({
     const status = getTranslatedStatus(labels, scenario.state);
     let icon = null;
     switch (scenario.state) {
-      case 'Successful':
+      case RUNNER_RUN_STATE.SUCCESSFUL:
         icon = <CheckCircleIcon className={iconClassName} aria-label={status} />;
         break;
-      case 'Failed':
+      case RUNNER_RUN_STATE.FAILED:
         icon = <CancelIcon className={iconClassName} aria-label={status} />;
         break;
-      case 'Running':
-      case 'DataIngestionInProgress':
+      case RUNNER_RUN_STATE.RUNNING:
         icon = <CircularProgress size={25} className={iconClassName} aria-label={status} />;
         break;
-      case 'Created':
-      case 'Unknown':
+      case RUNNER_RUN_STATE.CREATED:
+      case RUNNER_RUN_STATE.UNKNOWN:
       default:
         icon = <HelpIcon className={classes.statusUnknownIcon} aria-label={status} />;
         break;
@@ -172,7 +178,7 @@ export const ScenarioNode = ({
             {status}
           </Typography>
         ) : null}
-        {scenario.state === 'Created' ? null : (
+        {scenario.state === RUNNER_RUN_STATE.CREATED ? null : (
           <FadingTooltip key="scenario-status-tooltip" title={status}>
             {icon}
           </FadingTooltip>
@@ -186,7 +192,7 @@ export const ScenarioNode = ({
     return (
       <ScenarioValidationStatusChip
         className={className}
-        status={scenario.validationStatus || 'Unknown'}
+        status={scenario.validationStatus ?? RUNNER_RUN_STATE.UNKNOWN}
         labels={labels.validationStatus}
       />
     );
