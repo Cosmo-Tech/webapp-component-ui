@@ -40,7 +40,6 @@ describe('SimplePowerBiReportEmbed', () => {
 
     test.each([
       { scenarioState: SCENARIO_STATES.noRun, placeHolderLabel: LABELS.noRun.label },
-      { scenarioState: SCENARIO_STATES.dataInTransfer, placeHolderLabel: LABELS.dataInTransfer.label },
       { scenarioState: SCENARIO_STATES.hasError, placeHolderLabel: LABELS.hasErrors.label },
       { scenarioState: SCENARIO_STATES.runInProgress, placeHolderLabel: LABELS.inProgress.label },
       { scenarioState: SCENARIO_STATES.unknown, placeHolderLabel: LABELS.hasUnknownStatus.label },
@@ -54,7 +53,6 @@ describe('SimplePowerBiReportEmbed', () => {
 
     test.each([
       { scenarioState: SCENARIO_STATES.noRun, displayInProgress: false },
-      { scenarioState: SCENARIO_STATES.dataInTransfer, displayInProgress: true },
       { scenarioState: SCENARIO_STATES.hasError, displayInProgress: false },
       { scenarioState: SCENARIO_STATES.runInProgress, displayInProgress: true },
       { scenarioState: SCENARIO_STATES.unknown, displayInProgress: false },

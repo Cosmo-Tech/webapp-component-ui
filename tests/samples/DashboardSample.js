@@ -15,9 +15,6 @@ export const LABELS = {
   inProgress: {
     label: 'ut_inProgress_label',
   },
-  dataInTransfer: {
-    label: 'ut_dataInTransfer_label',
-  },
   hasErrors: {
     label: 'ut_hasErrors_label',
   },
@@ -33,9 +30,8 @@ export const LABELS = {
 };
 
 export const SCENARIO_STATES = {
-  noRun: 'Created',
+  noRun: 'NotStarted',
   runInProgress: 'Running',
-  dataInTransfer: 'DataIngestionInProgress',
   hasError: 'Failed',
   success: 'Successful',
   unknown: 'Unknown',
