@@ -292,10 +292,10 @@ export const ScenarioNode = ({
   const getScenarioCreationData = () => {
     return [
       <span data-cy="scenario-owner-name" key="scenario-owner-name" style={{ marginRight: '24px' }}>
-        {scenario.ownerName}
+        {scenario.additionalData?.webapp?.ownerName ?? scenario.ownerName}
       </span>,
       <span data-cy="scenario-creation-date" key="scenario-creation-date" style={{ marginRight: '24px' }}>
-        {new Date(scenario.creationDate).toLocaleString()}
+        {new Date(scenario.createInfo?.timestamp ?? scenario.creationDate).toLocaleString()}
       </span>,
     ];
   };

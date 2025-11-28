@@ -65,8 +65,11 @@ const filterMatchesDescription = (scenario, searchString) =>
   scenario.description?.toLowerCase().includes(searchString.toLowerCase());
 const filterMatchesTag = (scenario, searchString) =>
   scenario.tags?.join(' ').toLowerCase().includes(searchString.toLowerCase());
-const filterMatchesOwner = (scenario, searchString) =>
-  scenario.ownerName?.toLowerCase().includes(searchString.toLowerCase());
+
+const filterMatchesOwner = (scenario, searchString) => {
+  const ownerName = scenario.additionalData?.webapp?.ownerName ?? scenario.ownerName;
+  return ownerName?.toLowerCase().includes(searchString.toLowerCase());
+};
 
 const doesScenarioMatchFilter = (labels, scenario, searchStr) =>
   filterMatchesName(scenario, searchStr) ||
