@@ -1,3 +1,9 @@
+## **9.6.1** <sub><sup>2025-12-01 (b0313a7...34957a3)</sup></sub>
+
+### Bug Fixes
+
+- fix parsing & formatting of min/max date values in Table columns ([b0313a7](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b0313a7))
+
 ## **9.6.0** <sub><sup>2025-02-11 (6936f32...7d889a1)</sup></sub>
 
 ### Features
