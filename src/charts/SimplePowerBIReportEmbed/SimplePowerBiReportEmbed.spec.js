@@ -1,3 +1,5 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
 import React from 'react';
 import { SimplePowerBIReportEmbed } from '.';
 import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
@@ -26,12 +28,12 @@ const setUp = (props) => {
 
 describe('SimplePowerBiReportEmbed', () => {
   describe('PlaceHolder', () => {
-    const setUpWithScenarioState = (scenarioState) => {
+    const setUpWithLastRunStatus = (lastRunStatus) => {
       const props = {
         ...defaultProps,
         scenario: {
           ...defaultProps.scenario,
-          state: scenarioState,
+          lastRunInfo: { lastRunId: 'run-00000000', lastRunStatus },
         },
       };
 
@@ -39,27 +41,27 @@ describe('SimplePowerBiReportEmbed', () => {
     };
 
     test.each([
-      { scenarioState: SCENARIO_STATES.noRun, placeHolderLabel: LABELS.noRun.label },
-      { scenarioState: SCENARIO_STATES.hasError, placeHolderLabel: LABELS.hasErrors.label },
-      { scenarioState: SCENARIO_STATES.runInProgress, placeHolderLabel: LABELS.inProgress.label },
-      { scenarioState: SCENARIO_STATES.unknown, placeHolderLabel: LABELS.hasUnknownStatus.label },
+      { lastRunStatus: SCENARIO_STATES.noRun, placeHolderLabel: LABELS.noRun.label },
+      { lastRunStatus: SCENARIO_STATES.hasError, placeHolderLabel: LABELS.hasErrors.label },
+      { lastRunStatus: SCENARIO_STATES.runInProgress, placeHolderLabel: LABELS.inProgress.label },
+      { lastRunStatus: SCENARIO_STATES.unknown, placeHolderLabel: LABELS.hasUnknownStatus.label },
     ])(
-      '$scenarioState Scenario state display placeholder with label $placeHolderLabel',
-      ({ scenarioState, placeHolderLabel }) => {
-        setUpWithScenarioState(scenarioState);
+      '$lastRunStatus Scenario state display placeholder with label $placeHolderLabel',
+      ({ lastRunStatus, placeHolderLabel }) => {
+        setUpWithLastRunStatus(lastRunStatus);
         expect(TypographyPlaceholderLabel.text).toEqual(placeHolderLabel);
       }
     );
 
     test.each([
-      { scenarioState: SCENARIO_STATES.noRun, displayInProgress: false },
-      { scenarioState: SCENARIO_STATES.hasError, displayInProgress: false },
-      { scenarioState: SCENARIO_STATES.runInProgress, displayInProgress: true },
-      { scenarioState: SCENARIO_STATES.unknown, displayInProgress: false },
+      { lastRunStatus: SCENARIO_STATES.noRun, displayInProgress: false },
+      { lastRunStatus: SCENARIO_STATES.hasError, displayInProgress: false },
+      { lastRunStatus: SCENARIO_STATES.runInProgress, displayInProgress: true },
+      { lastRunStatus: SCENARIO_STATES.unknown, displayInProgress: false },
     ])(
-      '$scenarioState Scenario state display progress bar $displayInProgress',
-      ({ scenarioState, displayInProgress }) => {
-        setUpWithScenarioState(scenarioState);
+      '$lastRunStatus Scenario state display progress bar $displayInProgress',
+      ({ lastRunStatus, displayInProgress }) => {
+        setUpWithLastRunStatus(lastRunStatus);
         const linearProgress = getLinearProgress();
         if (displayInProgress) {
           expect(linearProgress).toBeInTheDocument();

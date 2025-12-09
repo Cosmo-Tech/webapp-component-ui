@@ -113,11 +113,11 @@ export const SimplePowerBIReportEmbed = ({
   );
   const resultsDisplayDisabled = reports?.status === 'DISABLED';
   const noScenario = scenario === null;
-  const scenarioState = noScenario ? RUNNER_RUN_STATE.CREATED : scenarioDTO.state;
-  const noRun = scenarioState === RUNNER_RUN_STATE.CREATED || scenarioState === null;
-  const runInProgress = scenarioState === RUNNER_RUN_STATE.RUNNING;
-  const hasError = scenarioState === RUNNER_RUN_STATE.FAILED;
-  const hasUnknownStatus = scenarioState === RUNNER_RUN_STATE.UNKNOWN;
+  const scenarioLastRunStatus = noScenario ? RUNNER_RUN_STATE.CREATED : scenarioDTO.lastRunStatus;
+  const noRun = scenarioLastRunStatus === RUNNER_RUN_STATE.CREATED || scenarioLastRunStatus === null;
+  const runInProgress = scenarioLastRunStatus === RUNNER_RUN_STATE.RUNNING;
+  const hasError = scenarioLastRunStatus === RUNNER_RUN_STATE.FAILED;
+  const hasUnknownStatus = scenarioLastRunStatus === RUNNER_RUN_STATE.UNKNOWN;
   const noDashboardConfigured = reportConfiguration[index] === undefined;
   const getPlaceholder = () => {
     if (alwaysShowReports) return null;
@@ -177,8 +177,8 @@ export const SimplePowerBIReportEmbed = ({
   );
 
   useEffect(() => {
-    if (scenarioState === RUNNER_RUN_STATE.SUCCESSFUL) refreshReport(false);
-  }, [refreshReport, scenarioState]);
+    if (scenarioLastRunStatus === RUNNER_RUN_STATE.SUCCESSFUL) refreshReport(false);
+  }, [refreshReport, scenarioLastRunStatus]);
 
   const iframe = useMemo(() => {
     if (!embedConfig?.embedUrl) {
@@ -200,7 +200,8 @@ export const SimplePowerBIReportEmbed = ({
   }, [embedConfig]);
 
   const placeholder = getPlaceholder();
-  const isReady = (scenarioState === undefined || scenarioState === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
+  const isReady =
+    (scenarioLastRunStatus === undefined || scenarioLastRunStatus === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
 
   const divContainerStyle = {};
   if (!isReady && !alwaysShowReports) {
