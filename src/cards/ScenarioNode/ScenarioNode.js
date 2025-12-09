@@ -92,6 +92,7 @@ export const ScenarioNode = ({
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const scenarioStatus = useMemo(() => scenario?.lastRunInfo?.lastRunStatus ?? RUNNER_RUN_STATE.UNKNOWN, [scenario]);
   labels.deleteDialog.title = buildScenarioNameToDelete(scenario.name);
 
   const openConfirmDialog = (event) => {
@@ -112,50 +113,50 @@ export const ScenarioNode = ({
   };
 
   const getTranslatedStatus = () => {
-    if (!scenario.state) {
+    if (!scenarioStatus) {
       return '';
     }
-    return labels[getLabelKeyFromStatus(scenario.state)] ?? scenario.state;
+    return labels[getLabelKeyFromStatus(scenarioStatus)] ?? scenarioStatus;
   };
 
   const getStatusIconClassName = () => {
-    if (scenario.state === RUNNER_RUN_STATE.CREATED) {
+    if (scenarioStatus === RUNNER_RUN_STATE.CREATED) {
       return null;
     }
-    if (scenario.state === RUNNER_RUN_STATE.RUNNING) {
+    if (scenarioStatus === RUNNER_RUN_STATE.RUNNING) {
       return classes.statusRunningIcon;
     }
-    if (scenario.state === RUNNER_RUN_STATE.SUCCESSFUL) {
+    if (scenarioStatus === RUNNER_RUN_STATE.SUCCESSFUL) {
       return classes.statusSuccessfulIcon;
     }
-    if (scenario.state === RUNNER_RUN_STATE.FAILED) {
+    if (scenarioStatus === RUNNER_RUN_STATE.FAILED) {
       return classes.statusFailedIcon;
     }
     return classes.statusUnknownIcon;
   };
 
   const getStatusClassName = () => {
-    if (scenario.state === RUNNER_RUN_STATE.CREATED) {
+    if (scenarioStatus === RUNNER_RUN_STATE.CREATED) {
       return classes.statusCreated;
     }
-    if (scenario.state === RUNNER_RUN_STATE.RUNNING) {
+    if (scenarioStatus === RUNNER_RUN_STATE.RUNNING) {
       return classes.statusRunning;
     }
-    if (scenario.state === RUNNER_RUN_STATE.SUCCESSFUL) {
+    if (scenarioStatus === RUNNER_RUN_STATE.SUCCESSFUL) {
       return classes.statusSuccessful;
     }
-    if (scenario.state === RUNNER_RUN_STATE.FAILED) {
+    if (scenarioStatus === RUNNER_RUN_STATE.FAILED) {
       return classes.statusFailed;
     }
     return classes.statusUnknown;
   };
 
   const getStatusIcon = (showLabel) => {
-    const statusClassName = getStatusClassName(classes, scenario.state);
-    const iconClassName = getStatusIconClassName(classes, scenario.state);
-    const status = getTranslatedStatus(labels, scenario.state);
+    const statusClassName = getStatusClassName(classes, scenarioStatus);
+    const iconClassName = getStatusIconClassName(classes, scenarioStatus);
+    const status = getTranslatedStatus(labels, scenarioStatus);
     let icon = null;
-    switch (scenario.state) {
+    switch (scenarioStatus) {
       case RUNNER_RUN_STATE.SUCCESSFUL:
         icon = <CheckCircleIcon className={iconClassName} aria-label={status} />;
         break;
@@ -174,11 +175,11 @@ export const ScenarioNode = ({
     return (
       <>
         {showLabel ? (
-          <Typography data-cy={'scenario-status-' + scenario.state.toLowerCase()} className={statusClassName}>
+          <Typography data-cy={'scenario-status-' + scenarioStatus.toLowerCase()} className={statusClassName}>
             {status}
           </Typography>
         ) : null}
-        {scenario.state === RUNNER_RUN_STATE.CREATED ? null : (
+        {scenarioStatus === RUNNER_RUN_STATE.CREATED ? null : (
           <FadingTooltip key="scenario-status-tooltip" title={status}>
             {icon}
           </FadingTooltip>

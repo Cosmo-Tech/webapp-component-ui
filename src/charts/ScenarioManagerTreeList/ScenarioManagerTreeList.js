@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import { IconButton, styled } from '@mui/material';
 import { ScenarioUtils } from '@cosmotech/core';
+import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { SearchBar } from '../../inputs';
 import { FadingTooltip } from '../../misc';
 import { ScenarioSortableTree } from './components';
@@ -57,8 +58,8 @@ const filterMatchesValidationStatus = (labels, scenario, searchStr) => {
   return validationStatusLabel && validationStatusLabel.indexOf(searchStr.toLowerCase()) !== -1;
 };
 const filterMatchesRunStatus = (labels, scenario, searchStr) => {
-  if (!scenario.state) return false;
-  const runStatusLabel = labels?.[scenario.state.toLowerCase()]?.toLowerCase();
+  const scenarioStatus = scenario?.lastRunInfo?.lastRunStatus ?? RUNNER_RUN_STATE.UNKNOWN;
+  const runStatusLabel = labels?.[scenarioStatus.toLowerCase()]?.toLowerCase();
   return runStatusLabel && runStatusLabel.indexOf(searchStr.toLowerCase()) !== -1;
 };
 const filterMatchesDescription = (scenario, searchString) =>
