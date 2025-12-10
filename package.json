@@ -28,7 +28,7 @@
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
-    "@cosmotech/azure": "^2.0.2",
+    "@cosmotech/azure": "^4.0.0-dev.0",
     "@cosmotech/core": "^2.0.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -80,7 +80,7 @@
     "rollup-plugin-visualizer": "^6.0.3"
   },
   "peerDependencies": {
-    "@cosmotech/azure": "^2.0.2",
+    "@cosmotech/azure": "^4.0.0-dev.0",
     "@cosmotech/core": "^2.0.1",
     "@mui/icons-material": "^7.3.2",
     "@mui/lab": "^7.0.0-beta.17",
