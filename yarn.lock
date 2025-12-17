@@ -1510,7 +1510,7 @@ __metadata:
     jest-environment-jsdom: "npm:^30.2.0"
     neostandard: "npm:^0.12.2"
     postcss: "npm:^8.5.6"
-    powerbi-client-react: "npm:^1.4.0"
+    powerbi-client-react: "npm:^2.0.0"
     prettier: "npm:^3.7.4"
     prop-types: "npm:^15.8.1"
     react: "npm:^19.2.3"
@@ -8605,19 +8605,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"powerbi-client-react@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "powerbi-client-react@npm:1.4.0"
+"powerbi-client-react@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "powerbi-client-react@npm:2.0.0"
   dependencies:
     lodash.isequal: "npm:^4.5.0"
-    powerbi-client: "npm:^2.21.1"
+    powerbi-client: "npm:^2.23.1"
   peerDependencies:
-    react: ">= 16"
-  checksum: 10c0/75aab8381b0e23bc4e2e0e1fe8eb4cb883520260dd3c8e22f2ddba9b36a747718abba318ce3f2987a123243d4caa7cd177fc66c9c5da6fa04a2224f48138b10f
+    react: ">= 18"
+  checksum: 10c0/681c6c3f96e23653242df6b992077277a00f8ffa3314bb3bad854f8fa4350c3ddd79303e170eb4c14546a924d0d589898fdf57d441868fd848d684db25d20f65
   languageName: node
   linkType: hard
 
-"powerbi-client@npm:^2.21.1":
+"powerbi-client@npm:^2.23.1":
   version: 2.23.9
   resolution: "powerbi-client@npm:2.23.9"
   dependencies:
