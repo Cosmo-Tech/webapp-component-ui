@@ -95,7 +95,6 @@
     "@superset-ui/embedded-sdk": "^0.3.0",
     "ag-grid-community": "~35.0.0",
     "ag-grid-react": "~35.0.0",
-    "clsx": "^2.1.1",
     "cytoscape": "^3.33.1",
     "cytoscape-bubblesets": "^4.1.0",
     "cytoscape-dagre": "^2.5.0",

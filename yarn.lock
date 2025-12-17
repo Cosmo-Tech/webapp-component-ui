@@ -1484,7 +1484,6 @@ __metadata:
     ag-grid-community: "npm:~35.0.0"
     ag-grid-react: "npm:~35.0.0"
     babel-jest: "npm:^30.2.0"
-    clsx: "npm:^2.1.1"
     cytoscape: "npm:^3.33.1"
     cytoscape-bubblesets: "npm:^4.1.0"
     cytoscape-dagre: "npm:^2.5.0"
