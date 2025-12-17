@@ -1516,7 +1516,7 @@ __metadata:
     react: "npm:^19.2.3"
     react-cytoscapejs: "npm:^2.0.0"
     react-dom: "npm:^19.2.3"
-    react-i18next: "npm:^15.7.4"
+    react-i18next: "npm:^16.5.0"
     react-lottie-player: "npm:^2.1.0"
     react-number-format: "npm:^5.4.4"
     rfdc: "npm:^1.4.1"
@@ -8765,14 +8765,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-i18next@npm:^15.7.4":
-  version: 15.7.4
-  resolution: "react-i18next@npm:15.7.4"
+"react-i18next@npm:^16.5.0":
+  version: 16.5.0
+  resolution: "react-i18next@npm:16.5.0"
   dependencies:
     "@babel/runtime": "npm:^7.27.6"
     html-parse-stringify: "npm:^3.0.1"
+    use-sync-external-store: "npm:^1.6.0"
   peerDependencies:
-    i18next: ">= 23.4.0"
+    i18next: ">= 25.6.2"
     react: ">= 16.8.0"
     typescript: ^5
   peerDependenciesMeta:
@@ -8782,7 +8783,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/643c5d3ced4b44084c871a55e876159561c14f378f90bf53286c1291082703e293573da18ad692b43b357b60d2f7251bc417feb0b522de8cec5c414e5ebdf6c1
+  checksum: 10c0/33ee736f5df01fbc3922f1c1b1e9f768c4930364a9f9695b5dcdf8ec997d8eee71c0fc7f2ccbd75f0d98aa2915890c4554fa4a6afe129582de50af84b1d959d8
   languageName: node
   linkType: hard
 
