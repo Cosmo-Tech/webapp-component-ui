@@ -1360,7 +1360,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.27.6, @babel/runtime@npm:^7.28.3, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.18.3, @babel/runtime@npm:^7.27.6, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 10c0/792ce7af9750fb9b93879cc9d1db175701c4689da890e6ced242ea0207c9da411ccf16dc04e689cc01158b28d7898c40d75598f4559109f761c12ce01e959bf7
@@ -1468,7 +1468,6 @@ __metadata:
     "@eslint/eslintrc": "npm:^3.3.3"
     "@eslint/js": "npm:^9.39.2"
     "@mui/icons-material": "npm:^7.3.6"
-    "@mui/lab": "npm:^7.0.0-beta.17"
     "@mui/material": "npm:^7.3.6"
     "@mui/x-date-pickers": "npm:^8.22.0"
     "@mui/x-tree-view": "npm:^8.22.0"
@@ -1528,7 +1527,6 @@ __metadata:
     "@cosmotech/azure": ^4.0.0-dev.0
     "@cosmotech/core": ^2.0.1
     "@mui/icons-material": ^7.3.2
-    "@mui/lab": ^7.0.0-beta.17
     "@mui/material": ^7.3.2
     prop-types: ^15.7.2
     react: ^19.1.1
@@ -2326,37 +2324,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/lab@npm:^7.0.0-beta.17":
-  version: 7.0.0-beta.17
-  resolution: "@mui/lab@npm:7.0.0-beta.17"
-  dependencies:
-    "@babel/runtime": "npm:^7.28.3"
-    "@mui/system": "npm:^7.3.2"
-    "@mui/types": "npm:^7.4.6"
-    "@mui/utils": "npm:^7.3.2"
-    clsx: "npm:^2.1.1"
-    prop-types: "npm:^15.8.1"
-  peerDependencies:
-    "@emotion/react": ^11.5.0
-    "@emotion/styled": ^11.3.0
-    "@mui/material": ^7.3.2
-    "@mui/material-pigment-css": ^7.3.2
-    "@types/react": ^17.0.0 || ^18.0.0 || ^19.0.0
-    react: ^17.0.0 || ^18.0.0 || ^19.0.0
-    react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    "@emotion/styled":
-      optional: true
-    "@mui/material-pigment-css":
-      optional: true
-    "@types/react":
-      optional: true
-  checksum: 10c0/3b8b7d230934f96f71b4ecb2badcf2b4546a5bcc8ac6da296daa9f2fedd19e62e06bb740283eb7e3cf2710493c4981a7dae13d0d595d710c4313ec555521ac80
-  languageName: node
-  linkType: hard
-
 "@mui/material@npm:^7.3.6":
   version: 7.3.6
   resolution: "@mui/material@npm:7.3.6"
@@ -2433,7 +2400,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^7.3.2, @mui/system@npm:^7.3.6":
+"@mui/system@npm:^7.3.6":
   version: 7.3.6
   resolution: "@mui/system@npm:7.3.6"
   dependencies:
@@ -2461,7 +2428,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/types@npm:^7.4.6, @mui/types@npm:^7.4.9":
+"@mui/types@npm:^7.4.9":
   version: 7.4.9
   resolution: "@mui/types@npm:7.4.9"
   dependencies:
@@ -2475,7 +2442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^7.3.2, @mui/utils@npm:^7.3.5, @mui/utils@npm:^7.3.6":
+"@mui/utils@npm:^7.3.5, @mui/utils@npm:^7.3.6":
   version: 7.3.6
   resolution: "@mui/utils@npm:7.3.6"
   dependencies:
