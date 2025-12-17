@@ -1482,8 +1482,8 @@ __metadata:
     "@testing-library/react": "npm:^16.3.1"
     "@testing-library/user-event": "npm:^14.6.1"
     "@trivago/prettier-plugin-sort-imports": "npm:^6.0.0"
-    ag-grid-community: "npm:~34.2.0"
-    ag-grid-react: "npm:~34.2.0"
+    ag-grid-community: "npm:~35.0.0"
+    ag-grid-react: "npm:~35.0.0"
     babel-jest: "npm:^30.2.0"
     clsx: "npm:^2.1.1"
     cytoscape: "npm:^3.33.1"
@@ -3562,32 +3562,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-charts-types@npm:12.2.0":
-  version: 12.2.0
-  resolution: "ag-charts-types@npm:12.2.0"
-  checksum: 10c0/6fad0c096482411f670b7084f009a6c9687048b3f2ca3ce1a5f790f724a9b7170f7a14f249ed6c8d4f590bc39c43b7effcdd88000e22dea2ed21c129777350a1
+"ag-charts-types@npm:13.0.0":
+  version: 13.0.0
+  resolution: "ag-charts-types@npm:13.0.0"
+  checksum: 10c0/c7e3a55c260b5b99eb7deb3c8d9fe4fc9fb9ef53953c5ca66539dedec7a69da8464c372fe97f3a6dcc5010d88b7eb6fb04a75ec6f73004e33ece68b21b0ee305
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:34.2.0, ag-grid-community@npm:~34.2.0":
-  version: 34.2.0
-  resolution: "ag-grid-community@npm:34.2.0"
+"ag-grid-community@npm:35.0.0, ag-grid-community@npm:~35.0.0":
+  version: 35.0.0
+  resolution: "ag-grid-community@npm:35.0.0"
   dependencies:
-    ag-charts-types: "npm:12.2.0"
-  checksum: 10c0/a5b92c9c701ffe0b7b2855ea2ff9189060efde62fe033a0fc2bc77d924fcc3899c74256c54ac86b18cebed8fff6929ef630e801e562ef0172ed28ca3865a6454
+    ag-charts-types: "npm:13.0.0"
+  checksum: 10c0/7452ed2ddc57617dcd4ebaecc80a238f8ef04634dd021822ae363c6f2401292e325fb4cc787b87377bb3515c2a973baadd193e289c28760b83fcb43e84ae1f21
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:~34.2.0":
-  version: 34.2.0
-  resolution: "ag-grid-react@npm:34.2.0"
+"ag-grid-react@npm:~35.0.0":
+  version: 35.0.0
+  resolution: "ag-grid-react@npm:35.0.0"
   dependencies:
-    ag-grid-community: "npm:34.2.0"
+    ag-grid-community: "npm:35.0.0"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10c0/5d43d3be043fadda2cb2b219ea82262d14e91b81c58000f5e240c0c8bbbe4a0314ec4c059cc51c91fd46dffe0a061de19d56fdc7717bd742519835f5a73c490f
+  checksum: 10c0/248f6a778800c4c36deb89d9b2b3a2b3d6859619a52d077f823a08fc84fddb4fee588a28c7c67fb45e45b0611ecda9c87d13809e22ef675032ab0b68543344ac
   languageName: node
   linkType: hard
 
