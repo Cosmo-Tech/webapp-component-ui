@@ -92,7 +92,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
-    "@mui/x-date-pickers": "^7.29.4",
+    "@mui/x-date-pickers": "^8.22.0",
     "@mui/x-tree-view": "^8.22.0",
     "@superset-ui/embedded-sdk": "^0.3.0",
     "ag-grid-community": "~35.0.0",
