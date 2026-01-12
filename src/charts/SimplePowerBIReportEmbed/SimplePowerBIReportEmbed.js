@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { FadingTooltip } from '../../misc';
-import DashboardPlaceholder from '../Dashboard/components';
+import DashboardPlaceholderLayout from '../Dashboard/components';
 
 const PREFIX = 'SimplePowerBIReportEmbed';
 const classes = { report: `${PREFIX}-report` };
@@ -121,22 +121,23 @@ export const SimplePowerBIReportEmbed = ({
   const noDashboardConfigured = reportConfiguration[index] === undefined;
   const getPlaceholder = () => {
     if (alwaysShowReports) return null;
-    if (noScenario) return <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />;
-    if (noRun) return <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />;
+    if (noScenario)
+      return <DashboardPlaceholderLayout label={labels.noScenario.label} title={labels.noScenario.title} />;
+    if (noRun) return <DashboardPlaceholderLayout label={labels.noRun.label} title={labels.noRun.title} />;
     if (runInProgress)
-      return <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
+      return <DashboardPlaceholderLayout label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
     if (hasError)
       return (
-        <DashboardPlaceholder
+        <DashboardPlaceholderLayout
           label={labels.hasErrors.label}
           title={labels.hasErrors.title}
           downloadLogsFile={downloadLogsFile}
           downloadLabel={labels.downloadButton}
         />
       );
-    if (hasUnknownStatus) return <DashboardPlaceholder label={labels.hasUnknownStatus.label} />;
-    if (resultsDisplayDisabled) return <DashboardPlaceholder label={labels.resultsDisplayDisabled} />;
-    if (noDashboardConfigured) return <DashboardPlaceholder label={labels.noDashboard.label} />;
+    if (hasUnknownStatus) return <DashboardPlaceholderLayout label={labels.hasUnknownStatus.label} />;
+    if (resultsDisplayDisabled) return <DashboardPlaceholderLayout label={labels.resultsDisplayDisabled} />;
+    if (noDashboardConfigured) return <DashboardPlaceholderLayout label={labels.noDashboard.label} />;
     return null;
   };
 

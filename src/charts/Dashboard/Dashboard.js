@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RUNNER_RUN_STATE } from '../../common/apiConstants';
-import DashboardPlaceholder from './components';
+import DashboardPlaceholderLayout from './components';
 
 const DEFAULT_LABELS = {
   noScenario: {
@@ -57,13 +57,13 @@ export const Dashboard = (props) => {
 
   return (
     <>
-      {noScenario && <DashboardPlaceholder label={labels.noScenario.label} title={labels.noScenario.title} />}
-      {noRun && <DashboardPlaceholder label={labels.noRun.label} title={labels.noRun.title} />}
+      {noScenario && <DashboardPlaceholderLayout label={labels.noScenario.label} title={labels.noScenario.title} />}
+      {noRun && <DashboardPlaceholderLayout label={labels.noRun.label} title={labels.noRun.title} />}
       {runInProgress && (
-        <DashboardPlaceholder label={labels.inProgress.label} title={labels.inProgress.title} inProgress />
+        <DashboardPlaceholderLayout label={labels.inProgress.label} title={labels.inProgress.title} inProgress />
       )}
       {hasError && (
-        <DashboardPlaceholder
+        <DashboardPlaceholderLayout
           label={labels.hasErrors.label}
           title={labels.hasErrors.title}
           downloadLogsFile={downloadLogsFile}
@@ -81,7 +81,7 @@ export const Dashboard = (props) => {
         />
       )}
       {isReady && formattedUrl === '' && (
-        <DashboardPlaceholder label={labels.noResult.label} title={labels.noResult.title} />
+        <DashboardPlaceholderLayout label={labels.noResult.label} title={labels.noResult.title} />
       )}
     </>
   );

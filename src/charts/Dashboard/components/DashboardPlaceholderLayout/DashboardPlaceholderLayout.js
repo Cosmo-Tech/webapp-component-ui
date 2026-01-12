@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Grid, Button, LinearProgress } from '@mui/material';
 
-const DashboardPlaceholder = (props) => {
+const DashboardPlaceholderLayout = (props) => {
   const { title = null, label, icon, downloadLogsFile, downloadLabel, inProgress = false } = props;
 
   return (
@@ -40,7 +40,7 @@ const DashboardPlaceholder = (props) => {
   );
 };
 
-DashboardPlaceholder.propTypes = {
+DashboardPlaceholderLayout.propTypes = {
   label: PropTypes.string.isRequired,
   title: PropTypes.string,
   icon: PropTypes.object,
@@ -49,4 +49,4 @@ DashboardPlaceholder.propTypes = {
   inProgress: PropTypes.bool,
 };
 
-export default DashboardPlaceholder;
+export default DashboardPlaceholderLayout;
