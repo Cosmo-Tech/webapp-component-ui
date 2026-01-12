@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { FadingTooltip } from '../../misc';
-import DashboardPlaceholder from '../DashboardPlaceholder';
+import { useDashboardPlaceholder } from '../DashboardPlaceholder/useDashboardPlaceholder';
 
 const PREFIX = 'PowerBIReport';
 const classes = { report: `${PREFIX}-report` };
@@ -64,6 +64,7 @@ export const PowerBIReport = ({
 }) => {
   const labels = useMemo(() => ({ ...DEFAULT_LABELS, ...tmpLabels }), [tmpLabels]);
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
+  const { getDashboardPlaceholder } = useDashboardPlaceholder();
 
   // 1 Embed or 0 Aad
   const tokenType = useAAD ? 0 : 1;
@@ -90,19 +91,27 @@ export const PowerBIReport = ({
     [dynamicFilters, scenarioDTO]
   );
 
-  const placeholder = useMemo(() => {
-    return (
-      <DashboardPlaceholder
-        alwaysShowReports={alwaysShowReports}
-        disabled={reports?.status === 'DISABLED'}
-        downloadLogsFile={downloadLogsFile}
-        noDashboardConfigured={reportConfiguration[index] == null}
-        scenario={scenario}
-        scenarioDTO={scenarioDTO}
-        labels={labels}
-      />
-    );
-  }, [alwaysShowReports, reports, downloadLogsFile, reportConfiguration, index, scenario, scenarioDTO, labels]);
+  const { placeholder } = useMemo(() => {
+    return getDashboardPlaceholder({
+      alwaysShowReports,
+      disabled: reports?.status === 'DISABLED',
+      downloadLogsFile,
+      noDashboardConfigured: reportConfiguration[index] == null,
+      scenario,
+      scenarioDTO,
+      labels,
+    });
+  }, [
+    getDashboardPlaceholder,
+    alwaysShowReports,
+    reports,
+    downloadLogsFile,
+    reportConfiguration,
+    index,
+    scenario,
+    scenarioDTO,
+    labels,
+  ]);
 
   useEffect(() => {
     const newConfig = {

@@ -1,1 +1,1 @@
-export { default } from './DashboardPlaceholder';
+export { default } from './DashboardPlaceholderLayout';

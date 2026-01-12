@@ -1,9 +1,8 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import { RUNNER_RUN_STATE } from '../../common/apiConstants';
-import DashboardPlaceholderLayout from '../DashboardPlaceholderLayout';
+import DashboardPlaceholderLayout from './DashboardPlaceholderLayout';
 
 const DEFAULT_LABELS = {
   noScenario: {
@@ -25,16 +24,15 @@ const DEFAULT_LABELS = {
   },
 };
 
-const DashboardPlaceholder = (props) => {
-  const {
-    alwaysShowReports,
-    disabled,
-    downloadLogsFile,
-    noDashboardConfigured,
-    labels: tmpLabels,
-    scenario,
-    scenarioDTO,
-  } = props;
+const forgeDashboardPlaceholder = ({
+  alwaysShowReports,
+  disabled,
+  downloadLogsFile,
+  noDashboardConfigured,
+  labels: tmpLabels,
+  scenario,
+  scenarioDTO,
+}) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   const noScenario = scenario === null;
@@ -64,14 +62,11 @@ const DashboardPlaceholder = (props) => {
   return null;
 };
 
-DashboardPlaceholder.propTypes = {
-  alwaysShowReports: PropTypes.bool,
-  disabled: PropTypes.bool,
-  downloadLogsFile: PropTypes.func,
-  noDashboardConfigured: PropTypes.bool,
-  scenario: PropTypes.object,
-  scenarioDTO: PropTypes.object,
-  labels: PropTypes.object,
-};
+export const useDashboardPlaceholder = () => {
+  const getDashboardPlaceholder = useCallback((params) => {
+    const placeholder = forgeDashboardPlaceholder(params);
+    return { placeholder, showPlaceholder: placeholder != null };
+  }, []);
 
-export default DashboardPlaceholder;
+  return { getDashboardPlaceholder };
+};
