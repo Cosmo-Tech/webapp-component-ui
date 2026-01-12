@@ -1,7 +1,7 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
 import React from 'react';
-import { SimplePowerBIReportEmbed } from '.';
+import { PowerBIReport } from '.';
 import { TypographyTesting } from '../../../tests/MuiComponentsTesting';
 import { LABELS, DEFAULT_SCENARIO, SCENARIO_STATES } from '../../../tests/samples/DashboardSample';
 import { getByDataCy, renderInMuiThemeProvider } from '../../../tests/utils';
@@ -23,7 +23,7 @@ const TypographyPlaceholderLabel = new TypographyTesting({ dataCy: 'dashboard-pl
 const getLinearProgress = () => getByDataCy('dashboard-in-progress');
 
 const setUp = (props) => {
-  renderInMuiThemeProvider(<SimplePowerBIReportEmbed {...props} />);
+  renderInMuiThemeProvider(<PowerBIReport {...props} />);
 };
 
 describe('SimplePowerBiReportEmbed', () => {

@@ -11,7 +11,7 @@ import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { FadingTooltip } from '../../misc';
 import DashboardPlaceholderLayout from '../DashboardPlaceholderLayout';
 
-const PREFIX = 'SimplePowerBIReportEmbed';
+const PREFIX = 'PowerBIReport';
 const classes = { report: `${PREFIX}-report` };
 
 const Root = styled('div')(({ theme }) => ({
@@ -71,7 +71,7 @@ const DEFAULT_LABELS = {
   },
 };
 
-export const SimplePowerBIReportEmbed = ({
+export const PowerBIReport = ({
   index = 0,
   reports,
   reportConfiguration,
@@ -240,7 +240,7 @@ export const SimplePowerBIReportEmbed = ({
   );
 };
 
-SimplePowerBIReportEmbed.propTypes = {
+PowerBIReport.propTypes = {
   /**
    * Index of reportConfiguration
    */

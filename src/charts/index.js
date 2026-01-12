@@ -3,5 +3,5 @@
 
 export { CytoViz } from './CytoViz';
 export { ScenarioManagerTreeList } from './ScenarioManagerTreeList';
-export { SimplePowerBIReportEmbed } from './SimplePowerBIReportEmbed';
+export { PowerBIReport } from './PowerBIReport';
 export { SupersetReport } from './SupersetReport';
