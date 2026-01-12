@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { FadingTooltip } from '../../misc';
-import DashboardPlaceholderLayout from '../DashboardPlaceholderLayout';
+import DashboardPlaceholder from '../DashboardPlaceholder';
 
 const PREFIX = 'PowerBIReport';
 const classes = { report: `${PREFIX}-report` };
@@ -43,32 +43,7 @@ function addDynamicParameters(pageName, lang, newConfig, settings, staticFilters
 }
 
 const DEFAULT_LABELS = {
-  noScenario: {
-    title: 'No scenario yet',
-    label: 'You can create a scenario by clicking on the CREATE button',
-  },
-  noDashboard: {
-    label: "There isn't any dashboard configured for this run type",
-  },
-  noRun: {
-    label: 'The scenario has not been run yet',
-  },
-  inProgress: {
-    label: 'Scenario run in progress...',
-  },
-  hasErrors: {
-    label: 'An error occured during the scenario run',
-  },
-  hasUnknownStatus: {
-    label: 'This scenario has an unknown state, if the problem persists, please, contact your administrator',
-  },
-  resultsDisplayDisabled: 'Display of results is disabled',
-  downloadButton: 'Download logs',
   refreshTooltip: 'Refresh',
-  errors: {
-    unknown: 'Unknown error',
-    details: 'Something went wrong when fetching PowerBI reports info',
-  },
 };
 
 export const PowerBIReport = ({
@@ -87,7 +62,7 @@ export const PowerBIReport = ({
   visibleScenarios = [],
   theme,
 }) => {
-  const labels = { ...DEFAULT_LABELS, ...tmpLabels };
+  const labels = useMemo(() => ({ ...DEFAULT_LABELS, ...tmpLabels }), [tmpLabels]);
   const { reportId, settings, staticFilters, dynamicFilters, pageName } = reportConfiguration[index] || {};
 
   // 1 Embed or 0 Aad
@@ -107,39 +82,27 @@ export const PowerBIReport = ({
     () => PowerBIUtils.constructScenarioDTO(scenario, visibleScenarios),
     [scenario, visibleScenarios]
   );
+  const noScenario = scenario === null;
+  const scenarioLastRunStatus = noScenario ? RUNNER_RUN_STATE.CREATED : scenarioDTO.lastRunStatus;
+
   const additionalFilters = useMemo(
     () => PowerBIUtils.constructDynamicFilters(dynamicFilters, scenarioDTO),
     [dynamicFilters, scenarioDTO]
   );
-  const resultsDisplayDisabled = reports?.status === 'DISABLED';
-  const noScenario = scenario === null;
-  const scenarioLastRunStatus = noScenario ? RUNNER_RUN_STATE.CREATED : scenarioDTO.lastRunStatus;
-  const noRun = scenarioLastRunStatus === RUNNER_RUN_STATE.CREATED || scenarioLastRunStatus === null;
-  const runInProgress = scenarioLastRunStatus === RUNNER_RUN_STATE.RUNNING;
-  const hasError = scenarioLastRunStatus === RUNNER_RUN_STATE.FAILED;
-  const hasUnknownStatus = scenarioLastRunStatus === RUNNER_RUN_STATE.UNKNOWN;
-  const noDashboardConfigured = reportConfiguration[index] === undefined;
-  const getPlaceholder = () => {
-    if (alwaysShowReports) return null;
-    if (noScenario)
-      return <DashboardPlaceholderLayout label={labels.noScenario.label} title={labels.noScenario.title} />;
-    if (noRun) return <DashboardPlaceholderLayout label={labels.noRun.label} title={labels.noRun.title} />;
-    if (runInProgress)
-      return <DashboardPlaceholderLayout label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
-    if (hasError)
-      return (
-        <DashboardPlaceholderLayout
-          label={labels.hasErrors.label}
-          title={labels.hasErrors.title}
-          downloadLogsFile={downloadLogsFile}
-          downloadLabel={labels.downloadButton}
-        />
-      );
-    if (hasUnknownStatus) return <DashboardPlaceholderLayout label={labels.hasUnknownStatus.label} />;
-    if (resultsDisplayDisabled) return <DashboardPlaceholderLayout label={labels.resultsDisplayDisabled} />;
-    if (noDashboardConfigured) return <DashboardPlaceholderLayout label={labels.noDashboard.label} />;
-    return null;
-  };
+
+  const placeholder = useMemo(() => {
+    return (
+      <DashboardPlaceholder
+        alwaysShowReports={alwaysShowReports}
+        disabled={reports?.status === 'DISABLED'}
+        downloadLogsFile={downloadLogsFile}
+        noDashboardConfigured={reportConfiguration[index] == null}
+        scenario={scenario}
+        scenarioDTO={scenarioDTO}
+        labels={labels}
+      />
+    );
+  }, [alwaysShowReports, reports, downloadLogsFile, reportConfiguration, index, scenario, scenarioDTO, labels]);
 
   useEffect(() => {
     const newConfig = {
@@ -200,7 +163,6 @@ export const PowerBIReport = ({
     return content;
   }, [embedConfig]);
 
-  const placeholder = getPlaceholder();
   const isReady =
     (scenarioLastRunStatus === undefined || scenarioLastRunStatus === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
 
