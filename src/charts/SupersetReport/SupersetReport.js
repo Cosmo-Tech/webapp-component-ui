@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Box, CircularProgress, Backdrop } from '@mui/material';
 import { embedDashboard } from '@superset-ui/embedded-sdk';
 
-export const SupersetEmbed = ({
+export const SupersetReport = ({
   isLoading = false,
   guestToken,
   report,
@@ -86,7 +86,7 @@ export const SupersetEmbed = ({
   );
 };
 
-SupersetEmbed.propTypes = {
+SupersetReport.propTypes = {
   isLoading: PropTypes.bool,
   guestToken: PropTypes.string.isRequired,
   report: PropTypes.shape({
