@@ -9,7 +9,7 @@ import { styled } from '@mui/material/styles';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { RUNNER_RUN_STATE } from '../../common/apiConstants';
 import { FadingTooltip } from '../../misc';
-import DashboardPlaceholderLayout from '../Dashboard/components';
+import DashboardPlaceholderLayout from '../DashboardPlaceholderLayout';
 
 const PREFIX = 'SimplePowerBIReportEmbed';
 const classes = { report: `${PREFIX}-report` };
