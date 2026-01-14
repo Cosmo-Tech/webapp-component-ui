@@ -25,7 +25,7 @@ export const SupersetReport = ({
   options,
   report,
   scenario,
-  style = { width: '100%', height: '800px' },
+  style,
   visibleScenarios,
 }) => {
   const containerRef = useRef(null);
@@ -98,6 +98,8 @@ export const SupersetReport = ({
   ]);
 
   const isReportVisible = isEmbedded && !showPlaceholder;
+  const containerHeight = isReportVisible ? (report?.height ?? style?.height ?? '800px') : '100%';
+  const containerWidth = isReportVisible ? (report?.width ?? style?.width ?? '100%') : '100%';
   const reportContainerDisplay = isReportVisible ? undefined : 'none';
   const showLoadingSpinner =
     !isParentLoading &&
@@ -106,15 +108,7 @@ export const SupersetReport = ({
     (!isEmbedded || guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.LOADING);
 
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        width: style?.width ?? '100%',
-        height: style?.height ?? '800px',
-        overflow: 'hidden',
-        ...style,
-      }}
-    >
+    <Box sx={{ position: 'relative', width: containerWidth, height: containerHeight, overflow: 'hidden' }}>
       {placeholder}
       <Backdrop
         open={showLoadingSpinner}
@@ -143,7 +137,12 @@ SupersetReport.propTypes = {
   labels: PropTypes.object,
   noDashboardConfigured: PropTypes.bool,
   options: PropTypes.shape({ supersetUrl: PropTypes.string.isRequired }).isRequired,
-  report: PropTypes.shape({ id: PropTypes.string.isRequired, uiConfig: PropTypes.object }).isRequired,
+  report: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    height: PropTypes.string,
+    width: PropTypes.string,
+    uiConfig: PropTypes.object,
+  }).isRequired,
   scenario: PropTypes.object,
   style: PropTypes.object,
   visibleScenarios: PropTypes.array,
