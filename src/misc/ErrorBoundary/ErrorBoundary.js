@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import DashboardPlaceholder from '../../charts/Dashboard/components/DashboardPlaceholder';
+import DashboardPlaceholderLayout from '../../charts/DashboardPlaceholder';
 
 // As of React 17.0, error boundaries can only be implemented with class components
 class ErrorBoundary extends React.Component {
@@ -23,7 +23,7 @@ class ErrorBoundary extends React.Component {
   render() {
     const { title, description } = this.props;
     if (this.state.hasError) {
-      return <DashboardPlaceholder title={title} label={description} />;
+      return <DashboardPlaceholderLayout title={title} label={description} />;
     }
 
     return this.props.children;
