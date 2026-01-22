@@ -107,11 +107,12 @@ export const SupersetReport = ({
   const containerHeight = isReportVisible ? (report?.height ?? style?.height ?? '800px') : '100%';
   const containerWidth = isReportVisible ? (report?.width ?? style?.width ?? '100%') : '100%';
   const reportContainerDisplay = isReportVisible ? undefined : 'none';
+  const isWaitingForToken = guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.LOADING && guestToken?.value === '';
   const showLoadingSpinner =
     !isParentLoading &&
     guestToken?.status !== SUPERSET_GUEST_TOKEN_STATUS.ERROR &&
     placeholder == null &&
-    (!isEmbedded || guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.LOADING);
+    (!isEmbedded || isWaitingForToken);
 
   return (
     <Box sx={{ position: 'relative', width: containerWidth, height: containerHeight, overflow: 'hidden' }}>
