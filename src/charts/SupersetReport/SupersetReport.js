@@ -30,6 +30,8 @@ export const SupersetReport = ({
 }) => {
   const containerRef = useRef(null);
   const tokenRef = useRef(null);
+  const previousUiConfigRef = useRef(null);
+
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [dashboard, setDashboard] = useState(null);
 
@@ -45,15 +47,19 @@ export const SupersetReport = ({
     if (!report?.id || !options?.supersetUrl) return;
 
     const loadSuperset = async () => {
-      if (isEmbedded || guestToken?.status !== SUPERSET_GUEST_TOKEN_STATUS.SUCCESS) return;
+      if (guestToken?.status !== SUPERSET_GUEST_TOKEN_STATUS.SUCCESS) return;
 
+      const forceRefresh = JSON.stringify(report?.uiConfig) !== JSON.stringify(previousUiConfigRef.current);
+      if (isEmbedded && !forceRefresh) return;
+
+      previousUiConfigRef.current = report?.uiConfig;
       try {
         const embedded = await embedDashboard({
           id: report.id,
           supersetDomain: options.supersetUrl,
           mountPoint: containerRef.current,
           fetchGuestToken: async () => tokenRef.current,
-          dashboardUiConfig: report?.uiConfig || {},
+          dashboardUiConfig: report?.uiConfig ?? {},
         });
         setDashboard(embedded);
         setIsEmbedded(true);
@@ -73,7 +79,7 @@ export const SupersetReport = ({
       if (dashboard?.destroy) dashboard.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [report.id, options.supersetUrl, guestToken]);
+  }, [isEmbedded, report?.id, report?.uiConfig, options.supersetUrl, guestToken]);
 
   const { placeholder, showPlaceholder } = useMemo(() => {
     const scenarioDTO = PowerBIUtils.constructScenarioDTO(scenario, visibleScenarios);
