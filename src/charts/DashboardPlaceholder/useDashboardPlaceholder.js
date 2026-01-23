@@ -42,7 +42,7 @@ const forgeDashboardPlaceholder = ({
   const hasError = scenarioLastRunStatus === RUNNER_RUN_STATE.FAILED;
   const hasUnknownStatus = scenarioLastRunStatus === RUNNER_RUN_STATE.UNKNOWN;
 
-  if (alwaysShowReports) return null;
+  if (alwaysShowReports && !disabled) return null;
   if (noScenario) return <DashboardPlaceholderLayout label={labels.noScenario.label} title={labels.noScenario.title} />;
   if (noRun) return <DashboardPlaceholderLayout label={labels.noRun.label} title={labels.noRun.title} />;
   if (runInProgress)
