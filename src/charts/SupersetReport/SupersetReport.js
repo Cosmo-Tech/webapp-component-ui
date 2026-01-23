@@ -26,7 +26,7 @@ export const SupersetReport = ({
   report,
   scenario,
   style,
-  visibleScenarios,
+  visibleScenarios = [],
 }) => {
   const containerRef = useRef(null);
   const tokenRef = useRef(null);
