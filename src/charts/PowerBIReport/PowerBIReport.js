@@ -92,6 +92,7 @@ export const PowerBIReport = ({
   );
 
   const disabled = useMemo(() => reports?.status === 'DISABLED', [reports]);
+  const hasTokenFetchFailed = useMemo(() => reports?.status === 'ERROR', [reports]);
   const { placeholder } = useMemo(() => {
     return getDashboardPlaceholder({
       alwaysShowReports,
@@ -101,11 +102,13 @@ export const PowerBIReport = ({
       scenario,
       scenarioDTO,
       labels,
+      hasTokenForBI: embedConfig?.accessToken != null && embedConfig.accessToken.length > 0,
     });
   }, [
+    disabled,
+    embedConfig.accessToken,
     getDashboardPlaceholder,
     alwaysShowReports,
-    reports,
     downloadLogsFile,
     reportConfiguration,
     index,
@@ -175,7 +178,7 @@ export const PowerBIReport = ({
     (scenarioLastRunStatus === undefined || scenarioLastRunStatus === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
 
   const divContainerStyle = {};
-  if (disabled || (!isReady && !alwaysShowReports)) {
+  if (disabled || hasTokenFetchFailed || (!isReady && !alwaysShowReports)) {
     divContainerStyle.display = 'none';
   }
 
@@ -330,6 +333,7 @@ PowerBIReport.propTypes = {
       label: PropTypes.string,
     }),
     resultsDisplayDisabled: PropTypes.string,
+    noTokenForBI: PropTypes.string,
     downloadButton: PropTypes.string.isRequired,
     refreshTooltip: PropTypes.string.isRequired,
     errors: PropTypes.shape({

@@ -14,14 +14,11 @@ const DEFAULT_LABELS = {
   inProgress: { label: 'Scenario run in progress...' },
   hasErrors: { label: 'An error occured during the scenario run' },
   hasUnknownStatus: {
-    label: 'This scenario has an unknown state, if the problem persists, please, contact your administrator',
+    label: 'This scenario has an unknown state. If the problem persists, please contact your administrator.',
   },
   resultsDisplayDisabled: 'Display of results is disabled',
   downloadButton: 'Download logs',
-  errors: {
-    unknown: 'Unknown error',
-    details: 'Something went wrong when fetching PowerBI reports info',
-  },
+  noTokenForBI: 'Authentication failed. If the problem persists, please contact your administrator.',
 };
 
 const forgeDashboardPlaceholder = ({
@@ -32,6 +29,7 @@ const forgeDashboardPlaceholder = ({
   labels: tmpLabels,
   scenario,
   scenarioDTO,
+  hasTokenForBI,
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
@@ -44,14 +42,12 @@ const forgeDashboardPlaceholder = ({
 
   if (alwaysShowReports && !disabled) return null;
   if (noScenario) return <DashboardPlaceholderLayout label={labels.noScenario.label} title={labels.noScenario.title} />;
-  if (noRun) return <DashboardPlaceholderLayout label={labels.noRun.label} title={labels.noRun.title} />;
-  if (runInProgress)
-    return <DashboardPlaceholderLayout label={labels.inProgress.label} title={labels.inProgress.title} inProgress />;
+  if (noRun) return <DashboardPlaceholderLayout label={labels.noRun.label} />;
+  if (runInProgress) return <DashboardPlaceholderLayout label={labels.inProgress.label} inProgress />;
   if (hasError)
     return (
       <DashboardPlaceholderLayout
         label={labels.hasErrors.label}
-        title={labels.hasErrors.title}
         downloadLogsFile={downloadLogsFile}
         downloadLabel={labels.downloadButton}
       />
@@ -59,6 +55,7 @@ const forgeDashboardPlaceholder = ({
   if (hasUnknownStatus) return <DashboardPlaceholderLayout label={labels.hasUnknownStatus.label} />;
   if (disabled) return <DashboardPlaceholderLayout label={labels.resultsDisplayDisabled} />;
   if (noDashboardConfigured) return <DashboardPlaceholderLayout label={labels.noDashboard.label} />;
+  if (!hasTokenForBI) return <DashboardPlaceholderLayout label={labels.noTokenForBI} />;
   return null;
 };
 

@@ -91,8 +91,10 @@ export const SupersetReport = ({
       scenario,
       scenarioDTO,
       labels,
+      hasTokenForBI: guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.SUCCESS,
     });
   }, [
+    guestToken?.status,
     getDashboardPlaceholder,
     alwaysShowReports,
     disabled,
