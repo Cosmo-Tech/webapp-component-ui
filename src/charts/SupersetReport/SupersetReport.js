@@ -26,10 +26,12 @@ export const SupersetReport = ({
   report,
   scenario,
   style,
-  visibleScenarios,
+  visibleScenarios = [],
 }) => {
   const containerRef = useRef(null);
   const tokenRef = useRef(null);
+  const previousUiConfigRef = useRef(null);
+
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [dashboard, setDashboard] = useState(null);
 
@@ -45,15 +47,19 @@ export const SupersetReport = ({
     if (!report?.id || !options?.supersetUrl) return;
 
     const loadSuperset = async () => {
-      if (isEmbedded || guestToken?.status !== SUPERSET_GUEST_TOKEN_STATUS.SUCCESS) return;
+      if (guestToken?.status !== SUPERSET_GUEST_TOKEN_STATUS.SUCCESS) return;
 
+      const forceRefresh = JSON.stringify(report?.uiConfig) !== JSON.stringify(previousUiConfigRef.current);
+      if (isEmbedded && !forceRefresh) return;
+
+      previousUiConfigRef.current = report?.uiConfig;
       try {
         const embedded = await embedDashboard({
           id: report.id,
           supersetDomain: options.supersetUrl,
           mountPoint: containerRef.current,
           fetchGuestToken: async () => tokenRef.current,
-          dashboardUiConfig: report?.uiConfig || {},
+          dashboardUiConfig: report?.uiConfig ?? {},
         });
         setDashboard(embedded);
         setIsEmbedded(true);
@@ -73,7 +79,7 @@ export const SupersetReport = ({
       if (dashboard?.destroy) dashboard.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [report.id, options.supersetUrl, guestToken]);
+  }, [isEmbedded, report?.id, report?.uiConfig, options.supersetUrl, guestToken]);
 
   const { placeholder, showPlaceholder } = useMemo(() => {
     const scenarioDTO = PowerBIUtils.constructScenarioDTO(scenario, visibleScenarios);
@@ -85,8 +91,10 @@ export const SupersetReport = ({
       scenario,
       scenarioDTO,
       labels,
+      hasTokenForBI: guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.SUCCESS,
     });
   }, [
+    guestToken?.status,
     getDashboardPlaceholder,
     alwaysShowReports,
     disabled,
@@ -101,11 +109,12 @@ export const SupersetReport = ({
   const containerHeight = isReportVisible ? (report?.height ?? style?.height ?? '800px') : '100%';
   const containerWidth = isReportVisible ? (report?.width ?? style?.width ?? '100%') : '100%';
   const reportContainerDisplay = isReportVisible ? undefined : 'none';
+  const isWaitingForToken = guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.LOADING && guestToken?.value === '';
   const showLoadingSpinner =
     !isParentLoading &&
     guestToken?.status !== SUPERSET_GUEST_TOKEN_STATUS.ERROR &&
     placeholder == null &&
-    (!isEmbedded || guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.LOADING);
+    (!isEmbedded || isWaitingForToken);
 
   return (
     <Box sx={{ position: 'relative', width: containerWidth, height: containerHeight, overflow: 'hidden' }}>

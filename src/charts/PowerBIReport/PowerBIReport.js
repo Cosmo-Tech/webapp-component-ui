@@ -70,7 +70,7 @@ export const PowerBIReport = ({
   const tokenType = useAAD ? 0 : 1;
   // PowerBI Report object (received via callback)
   const [report, setReport] = useState();
-  const [disabled, setDisabled] = useState(false);
+  const [canTriggerRefresh, setCanTriggerRefresh] = useState(true);
   const [embedConfig, setEmbedConfig] = useState({
     type: 'report',
     id: reportId,
@@ -91,20 +91,24 @@ export const PowerBIReport = ({
     [dynamicFilters, scenarioDTO]
   );
 
+  const disabled = useMemo(() => reports?.status === 'DISABLED', [reports]);
+  const hasTokenFetchFailed = useMemo(() => reports?.status === 'ERROR', [reports]);
   const { placeholder } = useMemo(() => {
     return getDashboardPlaceholder({
       alwaysShowReports,
-      disabled: reports?.status === 'DISABLED',
+      disabled,
       downloadLogsFile,
       noDashboardConfigured: reportConfiguration[index] == null,
       scenario,
       scenarioDTO,
       labels,
+      hasTokenForBI: embedConfig?.accessToken != null && embedConfig.accessToken.length > 0,
     });
   }, [
+    disabled,
+    embedConfig.accessToken,
     getDashboardPlaceholder,
     alwaysShowReports,
-    reports,
     downloadLogsFile,
     reportConfiguration,
     index,
@@ -140,10 +144,8 @@ export const PowerBIReport = ({
       report.refresh();
 
       if (triggerTimeout) {
-        setDisabled(true);
-        setTimeout(() => {
-          setDisabled(false);
-        }, refreshTimeout);
+        setCanTriggerRefresh(false);
+        setTimeout(() => setCanTriggerRefresh(true), refreshTimeout);
       }
     },
     [refreshTimeout, report]
@@ -164,7 +166,7 @@ export const PowerBIReport = ({
         <PowerBIEmbed cssClassName={classes.report} embedConfig={embedConfig} getEmbeddedComponent={setReport} />
       );
     } catch (error) {
-      console.log('Error when intializing the PowerBIEmbed component.');
+      console.log('Error when initializing the PowerBIEmbed component.');
       console.error(error);
       return null;
     }
@@ -176,7 +178,7 @@ export const PowerBIReport = ({
     (scenarioLastRunStatus === undefined || scenarioLastRunStatus === RUNNER_RUN_STATE.SUCCESSFUL) && !noScenario;
 
   const divContainerStyle = {};
-  if (!isReady && !alwaysShowReports) {
+  if (disabled || hasTokenFetchFailed || (!isReady && !alwaysShowReports)) {
     divContainerStyle.display = 'none';
   }
 
@@ -195,7 +197,7 @@ export const PowerBIReport = ({
             <FadingTooltip title={labels.refreshTooltip}>
               <IconButton
                 aria-label="refresh"
-                disabled={!report || disabled}
+                disabled={!report || !canTriggerRefresh}
                 color="primary"
                 onClick={refreshReport}
                 size="large"
@@ -331,6 +333,7 @@ PowerBIReport.propTypes = {
       label: PropTypes.string,
     }),
     resultsDisplayDisabled: PropTypes.string,
+    noTokenForBI: PropTypes.string,
     downloadButton: PropTypes.string.isRequired,
     refreshTooltip: PropTypes.string.isRequired,
     errors: PropTypes.shape({
