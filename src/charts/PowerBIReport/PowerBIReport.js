@@ -267,13 +267,7 @@ PowerBIReport.propTypes = {
    *  - runId (optional): scenario run identifier
    *  - csmSimulationRun (optional): identifier of the csmSimulationRun
    */
-  visibleScenarios: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      runId: PropTypes.string,
-      csmSimulationRun: PropTypes.string,
-    })
-  ),
+  visibleScenarios: PropTypes.arrayOf(PropTypes.object),
   /**
    *  Display ratio (width/height) of the PowerBI iframe, expressed as a number.
    */

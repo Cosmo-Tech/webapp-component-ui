@@ -154,5 +154,5 @@ SupersetReport.propTypes = {
   }).isRequired,
   scenario: PropTypes.object,
   style: PropTypes.object,
-  visibleScenarios: PropTypes.array,
+  visibleScenarios: PropTypes.arrayOf(PropTypes.object),
 };
