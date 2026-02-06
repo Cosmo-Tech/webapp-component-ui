@@ -1,3 +1,36 @@
+## **11.0.0** <sub><sup>2026-02-06</sup></sub>
+
+### BREAKING CHANGES
+
+- upgraded Material-UI to v7
+- migrated to Cosmo Tech API v5:
+  - added constraints on runner base datasets to share runners
+  - the scenario tree component will now read runner.datasets.bases instead of runner.datasetList
+  - use runner.lastRunInfo.lastRunStatus instead of runner.state
+  - when creating a new child scenario, the dataset list will be read from runner.datasets.base in the parent scenario, instead of simply copying runner.datasetList
+  - run status "DataIngestionInProgress" is no longer supported
+  - run status "Created" has been renamed to "NotStarted"
+  - prop "labels.dataInTransfer" removed in SimplePowerBIReportEmbed component
+  - prop "labels.dataInTransfer" removed in Dashboard component
+- ScenarioManagerTreeList component:
+  - replace react-sortable-tree by MUI tree view
+  - removed deprecated props showDeleteIcon and userId (use prop canUserDeleteScenario instead)
+  - removed deprecated prop buildSearchInfo
+- removed FixedRatioContainer component
+- the error banner is no longer included in the SimplePowerBIReportEmbed component
+- removed "Dashboard" component from the exports
+- renamed SimplePowerBIReportEmbed to PowerBIReport
+
+### Features
+
+- added component for superset ui embedded dashboards
+
+### Bug Fixes
+
+- prevent duplicated tags in TagsEditor component
+- fix placeholder and refresh button visibility in BI reports
+- fix placeholder layout and missing case when authentication failed
+
 ## **10.1.3** <sub><sup>2025-09-19 (2158502...f807957)</sup></sub>
 
 ### Bug Fixes
