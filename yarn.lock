@@ -25,19 +25,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/msal-browser@npm:^4.27.0":
-  version: 4.27.0
-  resolution: "@azure/msal-browser@npm:4.27.0"
+"@azure/msal-browser@npm:^4.28.1":
+  version: 4.28.1
+  resolution: "@azure/msal-browser@npm:4.28.1"
   dependencies:
-    "@azure/msal-common": "npm:15.13.3"
-  checksum: 10c0/da10b0adc1c9c937a57ae66eb70ab53682e71171a0a48499931b745bc91c4f68f81e6cf52e5280a78b5865963e2246f60321822a551ed9a340cc3c4ae1ccfdcd
+    "@azure/msal-common": "npm:15.14.1"
+  checksum: 10c0/cf69fd06ab9f7343302e53233f197cd009e4f1cb304025f8e62dc13df858ebcb14362ab0b326980070cace75d7ce8d37a642debb4ef09ca646a9cd6ee0282e6b
   languageName: node
   linkType: hard
 
-"@azure/msal-common@npm:15.13.3":
-  version: 15.13.3
-  resolution: "@azure/msal-common@npm:15.13.3"
-  checksum: 10c0/0d71c31ad098153985cb918c2bda9698aae0a15b659da5c0867728313ba6743854cc112332b39ba1a187b81dfc0abba22b1c22ee6f245e511c5ecec179832b03
+"@azure/msal-common@npm:15.14.1":
+  version: 15.14.1
+  resolution: "@azure/msal-common@npm:15.14.1"
+  checksum: 10c0/0782278648609e13a67361d1c4600d0bb2c74d85b3580ff045acc19b352b206e8d021266420bce59f40d69da3789da060c03291aa3f83d31ed0569bc2c3e89bb
   languageName: node
   linkType: hard
 
@@ -1670,27 +1670,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmotech/azure@npm:^4.0.0-dev.1":
-  version: 4.0.0-dev.1
-  resolution: "@cosmotech/azure@npm:4.0.0-dev.1"
+"@cosmotech/azure@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@cosmotech/azure@npm:4.0.0"
   dependencies:
-    "@azure/msal-browser": "npm:^4.27.0"
-  checksum: 10c0/a09a3951801f7168bb77f6170d86dfd458dde836826ae544a55b9a578ce4a66848739f2b3ae181c75f74b6d5daa514c2763e03d212bb80017f3367a4e34a5cd5
+    "@azure/msal-browser": "npm:^4.28.1"
+  checksum: 10c0/39e0ddf971724dd9cde63be652027bcefd0beef6893ad1d82eba54e920616f8f69438e765a0bd8877deb7047f363e8e3add8de08140ee127b9f6ab2555ec4129
   languageName: node
   linkType: hard
 
-"@cosmotech/core@npm:^3.0.0-dev.0":
-  version: 3.0.0-dev.0
-  resolution: "@cosmotech/core@npm:3.0.0-dev.0"
+"@cosmotech/core@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@cosmotech/core@npm:3.0.0"
   dependencies:
-    "@azure/msal-browser": "npm:^4.27.0"
+    "@azure/msal-browser": "npm:^4.28.1"
     csv-string: "npm:^4.1.1"
     date-fns: "npm:^4.1.0"
     js-file-download: "npm:^0.4.12"
     rfdc: "npm:^1.4.1"
-    validator: "npm:^13.15.23"
+    validator: "npm:^13.15.26"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
-  checksum: 10c0/7bc8e070ac95c4374cefbd2794f1d7176258025c0386bff44985c30d3702ec0c2af3af2c1183aaa5285e967888d9e8fe1f1ce04070b76661d7f6ed5a21acbcf6
+  checksum: 10c0/a2f61f3633d5881b292b489fe9902abf2edf93d0bd864e9cff5d64da416f525880ce0ea1982e32b25c48ad289ae5d4f152ea0a48e08016d045ca2e2f644e7571
   languageName: node
   linkType: hard
 
@@ -1701,8 +1701,8 @@ __metadata:
     "@babel/core": "npm:^7.29.0"
     "@babel/preset-env": "npm:^7.29.0"
     "@babel/preset-react": "npm:^7.28.5"
-    "@cosmotech/azure": "npm:^4.0.0-dev.1"
-    "@cosmotech/core": "npm:^3.0.0-dev.0"
+    "@cosmotech/azure": "npm:^4.0.0"
+    "@cosmotech/core": "npm:^3.0.0"
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
     "@eslint/compat": "npm:^2.0.2"
@@ -10604,7 +10604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.15.23":
+"validator@npm:^13.15.26":
   version: 13.15.26
   resolution: "validator@npm:13.15.26"
   checksum: 10c0/d66041685c531423f6b514d0481228503b96682fe30ed7925ad77ff3cd08c3983dc94f45e18457e44f62f89027b94a3342009d65421800ce65f6e0d2c6eaf7fc
