@@ -1,3 +1,7 @@
+## **11.0.1** <sub><sup>2026-02-23 (87e471d...c259353)</sup></sub>
+
+- update dependencies
+
 ## **11.0.0** <sub><sup>2026-02-06</sup></sub>
 
 ### BREAKING CHANGES
