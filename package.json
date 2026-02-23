@@ -28,8 +28,8 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-env": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
-    "@cosmotech/azure": "^4.0.0",
-    "@cosmotech/core": "^3.0.0",
+    "@cosmotech/azure": "^4.0.1",
+    "@cosmotech/core": "^3.0.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@eslint/compat": "^2.0.2",
@@ -78,8 +78,8 @@
     "rollup-plugin-visualizer": "^6.0.5"
   },
   "peerDependencies": {
-    "@cosmotech/azure": "^4.0.0-dev.1",
-    "@cosmotech/core": "^3.0.0-dev.0",
+    "@cosmotech/azure": "^4.0.1",
+    "@cosmotech/core": "^3.0.1",
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
     "prop-types": "^15.7.2",
