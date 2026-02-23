@@ -106,7 +106,9 @@
     "rfdc": "^1.4.1"
   },
   "resolutions": {
-    "glob": "^13.0.1"
+    "get-pkg-repo": "4.1.1",
+    "glob": "^13.0.1",
+    "hosted-git-info": "^2.1.4"
   },
   "packageManager": "yarn@4.9.4"
 }
