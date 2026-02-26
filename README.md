@@ -15,7 +15,7 @@ Documentation for the components is available in the [doc](https://github.com/Co
 
 ## Use locally with yalc
 
-yalc is a tool that allow you to use local compiled packages in projets instead of published packages.
+yalc is a tool that allow you to use local compiled packages in projects instead of published packages.
 
 - First use:
 
