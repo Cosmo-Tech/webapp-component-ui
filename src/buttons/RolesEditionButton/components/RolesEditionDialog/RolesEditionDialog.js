@@ -277,7 +277,7 @@ export const RolesEditionDialog = ({
             <ArrowBackIcon />
           </IconButton>
         )}
-        {hasWriteSecurityPermission ? labels.readOnlyTitle : labels.title}
+        {hasWriteSecurityPermission ? labels.title : labels.readOnlyTitle}
       </DialogTitle>
       {dialogContent}
     </StyledDialog>
