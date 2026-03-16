@@ -26,6 +26,7 @@ export const SupersetReport = ({
   report,
   scenario,
   style,
+  theme = 'system',
   visibleScenarios = [],
 }) => {
   const containerRef = useRef(null);
@@ -34,6 +35,8 @@ export const SupersetReport = ({
 
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [dashboard, setDashboard] = useState(null);
+
+  const normalizedTheme = ['dark', 'default', 'system'].includes(theme) ? theme : 'system';
 
   const { getDashboardPlaceholder } = useDashboardPlaceholder();
 
@@ -80,6 +83,20 @@ export const SupersetReport = ({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEmbedded, report?.id, report?.uiConfig, options.supersetUrl, guestToken]);
+
+  useEffect(() => {
+    if (!dashboard) return;
+
+    // 1st attempt with setThemeMode: not working
+    // dashboard.setThemeMode(normalizedTheme);
+
+    // work-around attempt with another method: not working either
+    dashboard.setThemeConfig({ algorithm: normalizedTheme === 'dark' ? 'dark' : 'default' });
+
+    // console.log is called as expected, the value is correctly updated when users switch beetween light & dark modes
+    console.log('-------------');
+    console.log(normalizedTheme);
+  }, [dashboard, normalizedTheme]);
 
   const { placeholder, showPlaceholder } = useMemo(() => {
     const scenarioDTO = PowerBIUtils.constructScenarioDTO(scenario, visibleScenarios);
@@ -154,5 +171,6 @@ SupersetReport.propTypes = {
   }).isRequired,
   scenario: PropTypes.object,
   style: PropTypes.object,
+  theme: PropTypes.string,
   visibleScenarios: PropTypes.arrayOf(PropTypes.object),
 };
