@@ -5,7 +5,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import { readFileSync } from 'fs';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 const pkg = JSON.parse(readFileSync('./package.json'));
 
@@ -45,6 +44,5 @@ export default {
     resolve(),
     commonjs({ strictRequires: 'auto' }),
     image(),
-    visualizer(),
   ],
 };
