@@ -1,3 +1,10 @@
+## **11.0.2** <sub><sup>2026-03-17 (00c95a7...e5d9db5)</sup></sub>
+
+### Bug Fixes
+
+- fix title label in role edition Dialog ([00c95a7](https://github.com/Cosmo-Tech/webapp-component-ui/commit/00c95a7))
+- [PROD-11566] updated height on ScenarioManagerTreeList ([072fbf0](https://github.com/Cosmo-Tech/webapp-component-ui/commit/072fbf0))
+
 ## **11.0.1** <sub><sup>2026-02-23 (87e471d...c259353)</sup></sub>
 
 - update dependencies
