@@ -106,9 +106,11 @@
   },
   "resolutions": {
     "ajv": "6.14.0",
+    "flatted": "^3.4.0",
     "get-pkg-repo": "4.1.1",
     "hosted-git-info": "^2.1.4",
-    "tar": "7.5.8"
+    "svgo": "^2.8.1",
+    "tar": "^7.5.10"
   },
   "packageManager": "yarn@4.9.4"
 }
