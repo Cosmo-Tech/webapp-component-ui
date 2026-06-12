@@ -25,7 +25,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@azure/msal-browser@npm:^4.29.1":
+"@azure/msal-browser@npm:^4.30.0":
   version: 4.30.0
   resolution: "@azure/msal-browser@npm:4.30.0"
   dependencies:
@@ -1426,27 +1426,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmotech/azure@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "@cosmotech/azure@npm:4.0.2"
+"@cosmotech/azure@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@cosmotech/azure@npm:4.0.3"
   dependencies:
-    "@azure/msal-browser": "npm:^4.29.1"
-  checksum: 10c0/9093704cf2b7e5fa46c820b77f1f01f6e8e48da34c6e056a05c09762b1c3561fdd8c30bda0c8a545a80c5ec741492a7e1d94bdf8b13bded6a3920f4e5ca4db8e
+    "@azure/msal-browser": "npm:^4.30.0"
+  checksum: 10c0/d9ecaf07b13f79176b0dbe3ba89267521ab7f1a39eb537d2b8795bfd18a39566f7d2509dc6c3ae695945759c3cce5336c7a3d2934857bbc86dc67d5e675ba8c0
   languageName: node
   linkType: hard
 
-"@cosmotech/core@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@cosmotech/core@npm:3.0.2"
+"@cosmotech/core@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@cosmotech/core@npm:3.0.3"
   dependencies:
-    "@azure/msal-browser": "npm:^4.29.1"
+    "@azure/msal-browser": "npm:^4.30.0"
     csv-string: "npm:^4.1.1"
-    date-fns: "npm:^4.1.0"
+    date-fns: "npm:^4.4.0"
     js-file-download: "npm:^0.4.12"
     rfdc: "npm:^1.4.1"
-    validator: "npm:^13.15.26"
+    validator: "npm:^13.15.35"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
-  checksum: 10c0/549e3268b0c1efe1f96d0b1f5b478089a2e52a46ea03524d146e5917a92482d610e6254d64adaae755d9a52f4a594d03234540cb16e23d70f63361a0266a51e3
+  checksum: 10c0/017abb3a0e5d9e0c962c955afcec00e8f27d22604987cca2d7a9b6731f4e064243fc9c93d798d75c3195f4e2b8c54c02ebfa06400f907d7b0e4679f0afef328f
   languageName: node
   linkType: hard
 
@@ -1457,8 +1457,8 @@ __metadata:
     "@babel/core": "npm:^7.29.7"
     "@babel/preset-env": "npm:^7.29.7"
     "@babel/preset-react": "npm:^7.29.7"
-    "@cosmotech/azure": "npm:^4.0.2"
-    "@cosmotech/core": "npm:^3.0.2"
+    "@cosmotech/azure": "npm:^4.0.3"
+    "@cosmotech/core": "npm:^3.0.3"
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
     "@eslint/compat": "npm:^2.1.0"
@@ -4495,7 +4495,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^4.1.0":
+"date-fns@npm:^4.4.0":
   version: 4.4.0
   resolution: "date-fns@npm:4.4.0"
   checksum: 10c0/988f0a13db183f5dfc85c36bbb6847a9c135a9225888bbea4005876ec15539a8613c21a07370a4e7ea543918d5a1cafb423c528b42cdbbde5fdfddb178126b21
@@ -9859,7 +9859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"validator@npm:^13.15.26":
+"validator@npm:^13.15.35":
   version: 13.15.35
   resolution: "validator@npm:13.15.35"
   checksum: 10c0/1958ebcad578128d154853a2b9bf5b95e7738dcc7d1d065e50a969812272312ec379dcaf375b9d7545e04a71de6755f60f5a4b49c1405737a9c80e11da297eef
