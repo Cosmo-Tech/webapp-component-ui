@@ -1,3 +1,7 @@
+## **11.0.3** <sub><sup>2026-06-12 (d43e092...a92aca5)</sup></sub>
+
+- update dependencies
+
 ## **11.0.2** <sub><sup>2026-03-17 (00c95a7...e5d9db5)</sup></sub>
 
 ### Bug Fixes
