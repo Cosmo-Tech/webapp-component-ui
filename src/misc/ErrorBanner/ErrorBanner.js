@@ -29,8 +29,8 @@ export const ErrorBanner = ({ error: errorBeforePatch, clearErrors, labels: tmpL
 
   const error = useMemo(() => {
     if (typeof errorBeforePatch !== 'object' || errorBeforePatch == null) return DEFAULT_ERROR;
-    Object.keys(errorBeforePatch).forEach((key) => errorBeforePatch[key] == null && delete errorBeforePatch[key]);
-    return { ...DEFAULT_ERROR, ...errorBeforePatch };
+    const filtered = Object.fromEntries(Object.entries(errorBeforePatch).filter(([, value]) => value != null));
+    return { ...DEFAULT_ERROR, ...filtered };
   }, [errorBeforePatch]);
 
   const errorMessageMaxLength = 200;
