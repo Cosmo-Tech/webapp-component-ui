@@ -1,3 +1,9 @@
+## **11.0.4** <sub><sup>2026-06-19 (a7d6f13...a7d6f13)</sup></sub>
+
+### Bug Fixes
+
+- fix possible webapp crash in ErrorBanner component ([a7d6f13](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a7d6f13))
+
 ## **11.0.3** <sub><sup>2026-06-12 (d43e092...a92aca5)</sup></sub>
 
 - update dependencies
