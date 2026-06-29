@@ -134,116 +134,8 @@ export const RolesEditionDialog = ({
     preventNoneRoleForAgents && newDefaultRole === 'none' ? allRolesWithoutNone?.[0]?.value : newDefaultRole;
   const hasNoAdmin = newAccessControlList.filter((access) => access.role === ADMIN_ROLE).length === 0;
   const workspaceIcon = <DesktopMacOutlinedIcon />;
-  const dialogContent = isFirstScreenShown ? (
-    <>
-      <DialogContent>
-        <Grid container spacing={2}>
-          {hasWriteSecurityPermission && (
-            <Grid size={12}>
-              <Autocomplete
-                data-cy="share-scenario-dialog-agents-select"
-                ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
-                getOptionDisabled={(option) => canBeSharedWithAgent(option) != null}
-                autoComplete
-                disabled={specificSharingRestriction != null}
-                disableClearable={true}
-                options={agentsWithoutSpecificAccess}
-                value={selectedAgentForRoleAddition?.id}
-                onChange={(event, agent) => startAccessAddition(agent)}
-                getOptionLabel={(option) => (option.id ? option.id : '')}
-                isOptionEqualToValue={(option, value) => option.id === value.id}
-                renderInput={(params) => (
-                  <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
-                )}
-                renderOption={(props, option) => {
-                  const tooltip = canBeSharedWithAgent(option);
-                  return (
-                    <Box key={option.id} sx={{ display: 'flex', alignItems: 'center' }}>
-                      <FadingTooltip title={tooltip} placement="right">
-                        <span
-                          style={{
-                            display: 'inline-block',
-                            width: 'fit-content',
-                            cursor: canBeSharedWithAgent(option) == null ? 'not-allowed' : 'pointer',
-                          }}
-                          data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
-                        >
-                          <Box component="li" {...props}>
-                            {option.id}
-                          </Box>
-                        </span>
-                      </FadingTooltip>
-                    </Box>
-                  );
-                }}
-              />
-            </Grid>
-          )}
-          <Grid sx={{ maxHeight: '300px', overflow: 'auto' }} size={12}>
-            {' '}
-            <Typography variant="subtitle1">{labels.usersAccess}</Typography>
-            {newAccessControlList.length > 0 &&
-              newAccessControlList.map((agent) => (
-                <RoleEditor
-                  key={agent.id}
-                  agentName={agent.id}
-                  agentAccess={agent.role}
-                  allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
-                  onOptionSelected={(event) => editSpecificAccess(event, agent)}
-                  isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
-                  actions={[
-                    {
-                      id: 'remove_specific_access',
-                      label: labels.removeAccess,
-                      classes: classes.removeButton,
-                      icon: <DeleteForeverIcon />,
-                      onClick: (event) => removeSpecificAccess(event, agent),
-                    },
-                  ]}
-                />
-              ))}
-          </Grid>
-          <Grid container>
-            {hasNoAdmin && (
-              <Typography data-cy="no-admin-error-message" variant="caption" color="error" sx={{ mb: 2 }}>
-                {labels.noAdminError}
-              </Typography>
-            )}
-          </Grid>
-          <Grid sx={{ maxHeight: '300px', overflow: 'auto' }} size={12}>
-            <Typography variant="subtitle1">{labels.generalAccess}</Typography>
-            <RoleEditor
-              agentName={defaultAccessScope}
-              agentAccess={newDefaultRole}
-              helperText={labels.editor.helperText}
-              allRoles={allRoles}
-              icon={workspaceIcon}
-              isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
-              onOptionSelected={(event) => setNewDefaultRole(event.target.value)}
-            />
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <Button data-cy="share-scenario-dialog-first-cancel-button" onClick={closeDialog} color="primary">
-          {hasWriteSecurityPermission ? labels.cancel : labels.close}
-        </Button>
-        {hasWriteSecurityPermission && (
-          <FadingTooltip title={specificSharingRestriction}>
-            <Button
-              data-cy="share-scenario-dialog-submit-button"
-              onClick={confirmAndCloseDialog}
-              color="primary"
-              variant="contained"
-              disabled={hasNoAdmin || specificSharingRestriction != null}
-            >
-              {labels.share}
-            </Button>
-          </FadingTooltip>
-        )}
-      </DialogActions>
-    </>
-  ) : (
+
+  let dialogContent = (
     <RolesAddingDialog
       selectedAgent={selectedAgentForRoleAddition}
       allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
@@ -255,6 +147,126 @@ export const RolesEditionDialog = ({
       labels={labels.add}
     />
   );
+
+  if (isFirstScreenShown) {
+    const isAutocompleteDisabled = specificSharingRestriction != null;
+    const autocomplete = (
+      <Autocomplete
+        data-cy="share-scenario-dialog-agents-select"
+        ListboxProps={{ 'data-cy': 'share-scenario-dialog-agents-select-options' }}
+        getOptionDisabled={(option) => canBeSharedWithAgent(option) != null}
+        autoComplete
+        disabled={isAutocompleteDisabled}
+        disableClearable={true}
+        options={agentsWithoutSpecificAccess}
+        value={selectedAgentForRoleAddition?.id}
+        onChange={(event, agent) => startAccessAddition(agent)}
+        getOptionLabel={(option) => (option.id ? option.id : '')}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        renderInput={(params) => (
+          <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
+        )}
+        renderOption={(props, option) => {
+          const tooltip = canBeSharedWithAgent(option);
+          return (
+            <Box key={option.id} sx={{ display: 'flex', alignItems: 'center' }}>
+              <FadingTooltip title={tooltip} placement="right">
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: 'fit-content',
+                    cursor: tooltip == null ? 'not-allowed' : 'pointer',
+                  }}
+                  data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
+                >
+                  <Box component="li" {...props}>
+                    {option.id}
+                  </Box>
+                </span>
+              </FadingTooltip>
+            </Box>
+          );
+        }}
+      />
+    );
+
+    const autocompleteWithOptionalTooltip = isAutocompleteDisabled ? (
+      <FadingTooltip title={specificSharingRestriction}>{autocomplete}</FadingTooltip>
+    ) : (
+      autocomplete
+    );
+
+    dialogContent = (
+      <>
+        <DialogContent>
+          <Grid container spacing={2}>
+            {hasWriteSecurityPermission && <Grid size={12}>{autocompleteWithOptionalTooltip}</Grid>}
+            <Grid sx={{ maxHeight: '300px', overflow: 'auto' }} size={12}>
+              {' '}
+              <Typography variant="subtitle1">{labels.usersAccess}</Typography>
+              {newAccessControlList.length > 0 &&
+                newAccessControlList.map((agent) => (
+                  <RoleEditor
+                    key={agent.id}
+                    agentName={agent.id}
+                    agentAccess={agent.role}
+                    allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
+                    onOptionSelected={(event) => editSpecificAccess(event, agent)}
+                    isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
+                    actions={[
+                      {
+                        id: 'remove_specific_access',
+                        label: labels.removeAccess,
+                        classes: classes.removeButton,
+                        icon: <DeleteForeverIcon />,
+                        onClick: (event) => removeSpecificAccess(event, agent),
+                      },
+                    ]}
+                  />
+                ))}
+            </Grid>
+            <Grid container>
+              {hasNoAdmin && (
+                <Typography data-cy="no-admin-error-message" variant="caption" color="error" sx={{ mb: 2 }}>
+                  {labels.noAdminError}
+                </Typography>
+              )}
+            </Grid>
+            <Grid sx={{ maxHeight: '300px', overflow: 'auto' }} size={12}>
+              <Typography variant="subtitle1">{labels.generalAccess}</Typography>
+              <RoleEditor
+                agentName={defaultAccessScope}
+                agentAccess={newDefaultRole}
+                helperText={labels.editor.helperText}
+                allRoles={allRoles}
+                icon={workspaceIcon}
+                isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
+                onOptionSelected={(event) => setNewDefaultRole(event.target.value)}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button data-cy="share-scenario-dialog-first-cancel-button" onClick={closeDialog} color="primary">
+            {hasWriteSecurityPermission ? labels.cancel : labels.close}
+          </Button>
+          {hasWriteSecurityPermission && (
+            <FadingTooltip title={specificSharingRestriction}>
+              <Button
+                data-cy="share-scenario-dialog-submit-button"
+                onClick={confirmAndCloseDialog}
+                color="primary"
+                variant="contained"
+                disabled={hasNoAdmin || specificSharingRestriction != null}
+              >
+                {labels.share}
+              </Button>
+            </FadingTooltip>
+          )}
+        </DialogActions>
+      </>
+    );
+  }
 
   const onClose = (event, reason) => {
     if (reason !== 'backdropClick') {
