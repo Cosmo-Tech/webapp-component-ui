@@ -7,6 +7,8 @@ import { embedDashboard } from '@superset-ui/embedded-sdk';
 import { PowerBIUtils } from '@cosmotech/azure';
 import { useDashboardPlaceholder } from '../DashboardPlaceholder/useDashboardPlaceholder';
 
+const SCROLL_SIZE_POLL_DELAY_MS = 1500;
+
 export const SUPERSET_GUEST_TOKEN_STATUS = {
   IDLE: 'IDLE',
   LOADING: 'LOADING',
@@ -34,6 +36,7 @@ export const SupersetReport = ({
 
   const [isEmbedded, setIsEmbedded] = useState(false);
   const [dashboard, setDashboard] = useState(null);
+  const [iframeHeight, setIframeHeight] = useState(null);
 
   const { getDashboardPlaceholder } = useDashboardPlaceholder();
 
@@ -63,6 +66,14 @@ export const SupersetReport = ({
         });
         setDashboard(embedded);
         setIsEmbedded(true);
+        setTimeout(async () => {
+          try {
+            const size = await embedded.getScrollSize();
+            if (size?.height > 0) setIframeHeight(`${Math.ceil(size.height)}px`);
+          } catch (e) {
+            console.warn('SupersetReport: getScrollSize failed, using fallback height', e);
+          }
+        }, SCROLL_SIZE_POLL_DELAY_MS);
       } catch (error) {
         console.error('Superset embedding failed:', error);
       }
@@ -76,6 +87,7 @@ export const SupersetReport = ({
     }
 
     return () => {
+      setIframeHeight(null);
       if (dashboard?.destroy) dashboard.destroy();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,7 +118,7 @@ export const SupersetReport = ({
   ]);
 
   const isReportVisible = isEmbedded && !showPlaceholder;
-  const containerHeight = isReportVisible ? (report?.height ?? style?.height ?? '800px') : '100%';
+  const containerHeight = isReportVisible ? (report?.height ?? iframeHeight ?? style?.height ?? '800px') : '100%';
   const containerWidth = isReportVisible ? (report?.width ?? style?.width ?? '100%') : '100%';
   const reportContainerDisplay = isReportVisible ? undefined : 'none';
   const isWaitingForToken = guestToken?.status === SUPERSET_GUEST_TOKEN_STATUS.LOADING && guestToken?.value === '';
