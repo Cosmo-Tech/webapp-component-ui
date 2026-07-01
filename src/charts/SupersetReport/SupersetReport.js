@@ -60,6 +60,8 @@ export const SupersetReport = ({
 
       previousUiConfigRef.current = report?.uiConfig;
       try {
+        console.log('--->');
+        console.log(report?.uiConfig);
         const embedded = await embedDashboard({
           id: report.id,
           supersetDomain: options.supersetUrl,
@@ -100,13 +102,13 @@ export const SupersetReport = ({
     if (!dashboard) return;
 
     // 1st attempt with setThemeMode: not working
-    // dashboard.setThemeMode(normalizedTheme);
+    dashboard.setThemeMode({ mode: normalizedTheme});
 
     // work-around attempt with another method: not working either
-    dashboard.setThemeConfig({ algorithm: normalizedTheme === 'dark' ? 'dark' : 'default' });
+    // dashboard.setThemeConfig({ algorithm: normalizedTheme === 'dark' ? 'dark' : 'default' });
 
     // console.log is called as expected, the value is correctly updated when users switch beetween light & dark modes
-    console.log('-------------');
+    console.log('===');
     console.log(normalizedTheme);
   }, [dashboard, normalizedTheme]);
 
