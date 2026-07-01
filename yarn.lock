@@ -1426,18 +1426,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cosmotech/azure@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "@cosmotech/azure@npm:4.0.3"
+"@cosmotech/azure@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@cosmotech/azure@npm:5.0.0"
   dependencies:
     "@azure/msal-browser": "npm:^4.30.0"
-  checksum: 10c0/d9ecaf07b13f79176b0dbe3ba89267521ab7f1a39eb537d2b8795bfd18a39566f7d2509dc6c3ae695945759c3cce5336c7a3d2934857bbc86dc67d5e675ba8c0
+  checksum: 10c0/6e8e23867a5b21397bfd57faa9061196a8ee276b5791a9ed5cee0cc96e9618b7fb5daa91e86a9eecb75ef24d976f854928ac34a86bb1d6307f743529d339ab98
   languageName: node
   linkType: hard
 
-"@cosmotech/core@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@cosmotech/core@npm:3.0.3"
+"@cosmotech/core@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@cosmotech/core@npm:4.0.0"
   dependencies:
     "@azure/msal-browser": "npm:^4.30.0"
     csv-string: "npm:^4.1.1"
@@ -1446,7 +1446,7 @@ __metadata:
     rfdc: "npm:^1.4.1"
     validator: "npm:^13.15.35"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
-  checksum: 10c0/017abb3a0e5d9e0c962c955afcec00e8f27d22604987cca2d7a9b6731f4e064243fc9c93d798d75c3195f4e2b8c54c02ebfa06400f907d7b0e4679f0afef328f
+  checksum: 10c0/ac13aa1a2469aab4de31eb4ff5af782ad844f11cf98b7a5cbfe312f042b169b072d6f5013cf5424736ae8f5c8df482835c02f4928255c5d85b63cf6c29f35814
   languageName: node
   linkType: hard
 
@@ -1457,8 +1457,8 @@ __metadata:
     "@babel/core": "npm:^7.29.7"
     "@babel/preset-env": "npm:^7.29.7"
     "@babel/preset-react": "npm:^7.29.7"
-    "@cosmotech/azure": "npm:^4.0.3"
-    "@cosmotech/core": "npm:^3.0.3"
+    "@cosmotech/azure": "npm:^5.0.0"
+    "@cosmotech/core": "npm:^4.0.0"
     "@emotion/react": "npm:^11.14.0"
     "@emotion/styled": "npm:^11.14.1"
     "@eslint/compat": "npm:^2.1.0"
@@ -4689,9 +4689,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.376":
-  version: 1.5.382
-  resolution: "electron-to-chromium@npm:1.5.382"
-  checksum: 10c0/88bfcd7af66384fe423dae5c415e2d683754d64c6cd5f34ef0fe5fd5a669dd7f7a3b44eef04a156b1f1e978450b17bea213e961ed3c7fe66d82ebe899a8d2805
+  version: 1.5.383
+  resolution: "electron-to-chromium@npm:1.5.383"
+  checksum: 10c0/e7477dfd91e93c22db7525416f5f532cc2c3b4d16904132e658e918496bad006f05ea652af8ba98ea845f1007b342b376321a4f5322a0a85653c24b6588782bd
   languageName: node
   linkType: hard
 
