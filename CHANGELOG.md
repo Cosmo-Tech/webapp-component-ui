@@ -1,3 +1,11 @@
+## **12.0.0** <sub><sup>2026-07-01 (8c46827...8c46827)</sup></sub>
+
+### BREAKING CHANGES ([8c46827](https://github.com/Cosmo-Tech/webapp-component-ui/commit/8c46827))
+
+- for all auth providers, authentication data will now be stored in sessionStorage instead of localStorage
+- major version upgrade of @cosmotech/azure, from v4 to v5
+- major version upgrade of @cosmotech/core, from v3 to v4
+
 ## **11.0.5** <sub><sup>2026-07-01 (1dcd16f...9ffbc1a)</sup></sub>
 
 ### Bug Fixes
