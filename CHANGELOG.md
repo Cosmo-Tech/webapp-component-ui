@@ -1,3 +1,10 @@
+## **11.0.5** <sub><sup>2026-07-01 (1dcd16f...9ffbc1a)</sup></sub>
+
+### Bug Fixes
+
+- add missing tooltip on Autocomplete to warn users they cannot share the scenario ([1dcd16f](https://github.com/Cosmo-Tech/webapp-component-ui/commit/1dcd16f))
+- \[PROD\-16291\] fix double scrollbar in superset dashboards ([7f9d12d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7f9d12d))
+
 ## **11.0.4** <sub><sup>2026-06-19 (a7d6f13...a7d6f13)</sup></sub>
 
 ### Bug Fixes
