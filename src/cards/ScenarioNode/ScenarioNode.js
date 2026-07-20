@@ -200,12 +200,18 @@ export const ScenarioNode = ({
   };
 
   const getScenarioName = () => {
+    const onClick = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onScenarioRedirect(scenario.id);
+    };
+
     return (
       <EditableLink
         value={scenario.name}
         checkValue={checkScenarioNameValue}
         onNewValue={(newScenarioName) => onScenarioRename(scenario.id, newScenarioName, scenario.runTemplateId)}
-        onClick={() => onScenarioRedirect(scenario.id)}
+        onClick={onClick}
         labels={labels.scenarioRename}
         typographyProps={{ variant: 'h6', flexGrow: 1 }}
         canRenameScenario={canRenameScenario}
