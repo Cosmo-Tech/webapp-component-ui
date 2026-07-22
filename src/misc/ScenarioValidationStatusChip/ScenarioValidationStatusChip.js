@@ -17,7 +17,7 @@ export const ScenarioValidationStatusChip = (props) => {
     } else if (['draft', 'loading', 'unknown'].includes(lowerCaseStatus) === false) {
       console.warn(`No label found for scenario status "${lowerCaseStatus}".`);
     }
-    return 'Unknown';
+    return status ?? 'Unknown';
   };
 
   if (lowerCaseStatus === 'loading') {
