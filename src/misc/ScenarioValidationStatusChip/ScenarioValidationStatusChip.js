@@ -3,21 +3,22 @@ import PropTypes from 'prop-types';
 import { Chip, CircularProgress } from '@mui/material';
 
 const DEFAULT_LABELS = {
+  draft: 'Draft',
   rejected: 'Rejected',
   validated: 'Validated',
 };
-export const ScenarioValidationStatusChip = (props) => {
-  const { labels: tmpLabels, status, onDelete, className } = props;
+
+export const ScenarioValidationStatusChip = ({ labels: tmpLabels, status, onDelete, className, showDraft = false }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const lowerCaseStatus = status?.toLowerCase() || 'unknown';
 
   const getLabel = () => {
     if (lowerCaseStatus in labels) {
       return labels[lowerCaseStatus];
-    } else if (['draft', 'loading', 'unknown'].includes(lowerCaseStatus) === false) {
+    } else if (['loading', 'unknown'].includes(lowerCaseStatus) === false) {
       console.warn(`No label found for scenario status "${lowerCaseStatus}".`);
     }
-    return 'Unknown';
+    return status ?? 'Unknown';
   };
 
   if (lowerCaseStatus === 'loading') {
@@ -31,18 +32,22 @@ export const ScenarioValidationStatusChip = (props) => {
     );
   }
 
-  const colorProp = lowerCaseStatus === 'validated' ? 'success' : 'error';
+  if ((!showDraft && lowerCaseStatus === 'draft') || ['validated', 'rejected', 'draft'].inludes === false) return null;
 
-  return lowerCaseStatus === 'rejected' || lowerCaseStatus === 'validated' ? (
+  let color;
+  if (lowerCaseStatus === 'validated') color = 'success';
+  else if (lowerCaseStatus === 'rejected') color = 'error';
+
+  return (
     <Chip
       clickable={false}
       data-cy="scenario-validation-status"
       label={getLabel()}
       onDelete={onDelete}
-      color={colorProp}
+      color={color}
       className={className}
     />
-  ) : null;
+  );
 };
 
 ScenarioValidationStatusChip.propTypes = {
@@ -69,6 +74,10 @@ ScenarioValidationStatusChip.propTypes = {
    * This prop is optional: if it is not provided, the delete button in the chip will not be displayed.
    */
   onDelete: PropTypes.func,
+  /**
+   * Boolean value defining whether the Chip must be shown when the status is "Draft" (false by default)
+   */
+  showDraft: PropTypes.bool,
   /**
    * Scenario status. Must be one of these values: 'Draft', 'Loading', 'Rejected', 'Validated' or 'Unknown'.
    */
