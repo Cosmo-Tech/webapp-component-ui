@@ -25,6 +25,8 @@ export const RolesEditionButton = ({
   resourceRolesPermissionsMapping,
   preventNoneRoleForAgents = false,
   disabled = false,
+  onClick,
+  onClose,
   onConfirmChanges,
   specificAccessByAgent,
   defaultRole = '',
@@ -34,7 +36,10 @@ export const RolesEditionButton = ({
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [open, setOpen] = useState(false);
-  const closeDialog = () => setOpen(false);
+  const closeDialog = () => {
+    setOpen(false);
+    onClose && onClose();
+  };
   const buttonTitle = labels.button?.title ?? 'Share';
 
   useEffect(() => {
@@ -46,7 +51,10 @@ export const RolesEditionButton = ({
   }, [isIconButton]);
 
   const buttonContent = useMemo(() => {
-    const openDialog = () => setOpen(true);
+    const openDialog = (event) => {
+      onClick && onClick(event);
+      setOpen(true);
+    };
 
     if (variant === 'icon' || isIconButton === true)
       return (
@@ -84,7 +92,7 @@ export const RolesEditionButton = ({
         {buttonTitle}
       </Button>
     );
-  }, [isIconButton, variant, disabled, buttonTitle]);
+  }, [onClick, isIconButton, variant, disabled, buttonTitle]);
 
   return (
     <div>
@@ -194,6 +202,16 @@ RolesEditionButton.propTypes = {
    * Name of general access scope (e.g., name of chosen workspace)
    */
   defaultAccessScope: PropTypes.string.isRequired,
+  /**
+   * Optional callback function to call when the button element is clicked on.
+   * Function signature: (event) => null
+   */
+  onClick: PropTypes.func,
+  /**
+   * Optional callback function to call when the dialog associated to the button is closed.
+   * Function signature: () => null
+   */
+  onClose: PropTypes.func,
   /**
    * Function that change specific user's access to the resource
    */
