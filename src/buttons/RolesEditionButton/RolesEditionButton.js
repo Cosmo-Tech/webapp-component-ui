@@ -1,9 +1,9 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ShareIcon from '@mui/icons-material/Share';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, MenuItem, Stack, Typography } from '@mui/material';
 import { FadingTooltip } from '../../misc';
 import { RolesEditionDialog } from './components';
 
@@ -16,7 +16,8 @@ const DEFAULT_LABELS = {
 
 export const RolesEditionButton = ({
   labels: tmpLabels,
-  isIconButton = false,
+  isIconButton,
+  variant = 'button',
   agents,
   hasWriteSecurityPermission,
   specificSharingRestriction,
@@ -33,35 +34,64 @@ export const RolesEditionButton = ({
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [open, setOpen] = useState(false);
-  const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
   const buttonTitle = labels.button?.title ?? 'Share';
-  const buttonContent = isIconButton ? (
-    <IconButton
-      data-cy="share-scenario-button"
-      size="medium"
-      variant="outlined"
-      onClick={openDialog}
-      color="primary"
-      disabled={disabled}
-    >
-      <ShareIcon />
-    </IconButton>
-  ) : (
-    <Button
-      disabled={disabled}
-      data-cy="share-scenario-button"
-      size="medium"
-      variant="outlined"
-      onClick={openDialog}
-      color="primary"
-    >
-      {buttonTitle}
-    </Button>
-  );
+
+  useEffect(() => {
+    if (isIconButton != null)
+      console.warn(
+        'DEPRECATED: the prop isIconButton in the RolesEditionButton has been deprecated. ' +
+          'Please use the prop variant="icon"|"menuItem"|"button" instead.'
+      );
+  }, [isIconButton]);
+
+  const buttonContent = useMemo(() => {
+    const openDialog = () => setOpen(true);
+
+    if (variant === 'icon' || isIconButton === true)
+      return (
+        <IconButton
+          data-cy="share-scenario-button"
+          size="medium"
+          variant="outlined"
+          onClick={openDialog}
+          color="primary"
+          disabled={disabled}
+        >
+          <ShareIcon />
+        </IconButton>
+      );
+
+    if (variant === 'menuItem')
+      return (
+        <MenuItem data-cy="share-scenario-button" onClick={openDialog} disabled={disabled}>
+          <Stack spacing={2} direction="row">
+            <ShareIcon size="small" />
+            <Typography>{buttonTitle}</Typography>
+          </Stack>
+        </MenuItem>
+      );
+
+    return (
+      <Button
+        disabled={disabled}
+        data-cy="share-scenario-button"
+        size="medium"
+        variant="outlined"
+        onClick={openDialog}
+        color="primary"
+      >
+        {buttonTitle}
+      </Button>
+    );
+  }, [isIconButton, variant, disabled, buttonTitle]);
+
   return (
     <div>
-      <FadingTooltip title={labels.button?.tooltip ?? 'Share'} disableHoverListener={!isIconButton && !disabled}>
+      <FadingTooltip
+        title={labels.button?.tooltip ?? 'Share'}
+        disableHoverListener={isIconButton !== true && variant !== 'icon' && !disabled}
+      >
         {buttonContent}
       </FadingTooltip>
       <RolesEditionDialog
@@ -84,13 +114,22 @@ export const RolesEditionButton = ({
     </div>
   );
 };
+
 RolesEditionButton.propTypes = {
   /**
+   *  DEPRECATED: use the "variant" prop instead
    *  Defines the RolesEditionButton's form:
    *  - true : the button is round shaped and has a share icon instead of title
    *  - false (default value): the button is contained and has a title
    */
   isIconButton: PropTypes.bool,
+  /**
+   *  Defines the style of the RolesEditionButton element:
+   *  - icon : the button is round shaped and has a share icon instead of title
+   *  - menuItem : a MenuItem element is returned, containing an icon and a label
+   *  - button (default value): the button is contained and has a title
+   */
+  variant: PropTypes.string,
   /**
    *  Defines if current user has write security permission on the resource
    * - true : selectors are enabled and share button is visible
