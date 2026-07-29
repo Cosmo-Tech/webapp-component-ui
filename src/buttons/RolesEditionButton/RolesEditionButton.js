@@ -45,7 +45,7 @@ export const RolesEditionButton = ({
   useEffect(() => {
     if (isIconButton != null)
       console.warn(
-        'DEPRECATED: the prop isIconButton in the RolesEditionButton has been deprecated. ' +
+        'DEPRECATED: the prop isIconButton in the RolesEditionButton component has been deprecated. ' +
           'Please use the prop variant="icon"|"menuItem"|"button" instead.'
       );
   }, [isIconButton]);
@@ -94,14 +94,18 @@ export const RolesEditionButton = ({
     );
   }, [onClick, isIconButton, variant, disabled, buttonTitle]);
 
-  return (
-    <div>
-      <FadingTooltip
-        title={labels.button?.tooltip ?? 'Share'}
-        disableHoverListener={isIconButton !== true && variant !== 'icon' && !disabled}
-      >
+  const buttonWrapper = useMemo(() => {
+    if (isIconButton !== true && variant !== 'icon' && !disabled) return buttonContent;
+    return (
+      <FadingTooltip disableInteractive title={labels.button?.tooltip ?? 'Share'}>
         {buttonContent}
       </FadingTooltip>
+    );
+  }, [buttonContent, isIconButton, disabled, labels.button?.tooltip, variant]);
+
+  return (
+    <>
+      {buttonWrapper}
       <RolesEditionDialog
         open={open}
         resourceRolesPermissionsMapping={resourceRolesPermissionsMapping}
@@ -119,7 +123,7 @@ export const RolesEditionButton = ({
         allPermissions={allPermissions}
         defaultAccessScope={defaultAccessScope}
       />
-    </div>
+    </>
   );
 };
 

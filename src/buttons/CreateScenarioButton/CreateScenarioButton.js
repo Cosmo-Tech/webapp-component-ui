@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, MenuItem, Stack, Typography } from '@mui/material';
 import { FadingTooltip } from '../../misc';
 import CreateScenarioDialog from './components';
 
@@ -28,6 +28,7 @@ const DEFAULT_LABELS = {
     forbiddenCharsInScenarioName: 'Forbidden characters in Scenario Name',
   },
 };
+
 export const CreateScenarioButton = ({
   currentScenario,
   datasets,
@@ -41,33 +42,72 @@ export const CreateScenarioButton = ({
   disabled = false,
   labels: tmpLabels,
   isIconButton,
+  variant = 'button',
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [open, setOpen] = useState(false);
-  const openDialog = () => setOpen(true);
   const closeDialog = () => setOpen(false);
 
-  const buttonContent = isIconButton ? (
-    <IconButton data-cy="create-scenario-button" size="medium" onClick={openDialog} color="primary" disabled={disabled}>
-      <AddCircleIcon />
-    </IconButton>
-  ) : (
-    <Button
-      data-cy="create-scenario-button"
-      size="medium"
-      variant="contained"
-      onClick={openDialog}
-      color="primary"
-      disabled={disabled}
-    >
-      {labels.button.title}
-    </Button>
-  );
-  return (
-    <div>
-      <FadingTooltip arrow title={labels.button.tooltip} disableHoverListener={!isIconButton && !disabled}>
+  useEffect(() => {
+    if (isIconButton != null)
+      console.warn(
+        'DEPRECATED: the prop isIconButton in the CreateScenarioButton component has been deprecated. ' +
+          'Please use the prop variant="icon"|"menuItem"|"button" instead.'
+      );
+  }, [isIconButton]);
+
+  const buttonContent = useMemo(() => {
+    const openDialog = () => setOpen(true);
+
+    if (variant === 'icon' || isIconButton === true)
+      return (
+        <IconButton
+          data-cy="create-scenario-button"
+          size="medium"
+          onClick={openDialog}
+          color="primary"
+          disabled={disabled}
+        >
+          <AddCircleIcon />
+        </IconButton>
+      );
+
+    if (variant === 'menuItem')
+      return (
+        <MenuItem data-cy="create-scenario-button" onClick={openDialog} disabled={disabled}>
+          <Stack spacing={2} direction="row">
+            <AddCircleIcon size="small" />
+            <Typography>{labels.button.title}</Typography>
+          </Stack>
+        </MenuItem>
+      );
+
+    return (
+      <Button
+        data-cy="create-scenario-button"
+        size="medium"
+        variant="contained"
+        onClick={openDialog}
+        color="primary"
+        disabled={disabled}
+      >
+        {labels.button.title}
+      </Button>
+    );
+  }, [isIconButton, variant, disabled, labels.button.title]);
+
+  const buttonWrapper = useMemo(() => {
+    if (isIconButton !== true && variant !== 'icon' && !disabled) return buttonContent;
+    return (
+      <FadingTooltip disableInteractive title={labels.button.tooltip}>
         {buttonContent}
       </FadingTooltip>
+    );
+  }, [buttonContent, isIconButton, disabled, labels.button.tooltip, variant]);
+
+  return (
+    <>
+      {buttonWrapper}
       <CreateScenarioDialog
         createScenario={createScenario}
         workspaceId={workspaceId}
@@ -83,7 +123,7 @@ export const CreateScenarioButton = ({
         dialogLabels={labels.dialog}
         errorLabels={labels.errors}
       />
-    </div>
+    </>
   );
 };
 
@@ -173,9 +213,17 @@ CreateScenarioButton.propTypes = {
     }).isRequired,
   }),
   /**
+   *  DEPRECATED: use the "variant" prop instead
    *  Defines the CreateScenarioButton's form:
    *  - true : the button is round shaped and has an Add icon instead of title
    *  - false (default value): the button is contained and has a title
    */
   isIconButton: PropTypes.bool,
+  /**
+   *  Defines the style of the RolesEditionButton element:
+   *  - button (default value): the button is contained and has a title
+   *  - icon : the button is round shaped icon, the label is replaced by a tolltip on mouse hover
+   *  - menuItem : a MenuItem element is returned, containing an icon and a label
+   */
+  variant: PropTypes.string,
 };
