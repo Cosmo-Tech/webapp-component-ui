@@ -23,7 +23,7 @@ jest.mock('./components', () => ({
 
 const defaultProps = {
   labels: LABELS,
-  isIconButton: false,
+  variant: 'button',
   agents: SAMPLE_AGENTS.agents,
   specificAccessByAgent: SAMPLE_AGENTS.specificAccessByAgent,
   resourceRolesPermissionsMapping: RESOURCE_ROLES_PERMISSIONS_MAPPING,

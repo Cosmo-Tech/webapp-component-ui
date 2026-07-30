@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import EditIcon from '@mui/icons-material/Edit';
 import { Button, IconButton, MenuItem, Stack, Typography } from '@mui/material';
 import { FadingTooltip } from '../../misc';
 import CreateScenarioDialog from './components';
@@ -37,17 +38,22 @@ export const CreateScenarioButton = ({
   defaultRunTemplateDataset,
   user,
   createScenario,
+  onConfirm,
+  onClose,
   workspaceId,
   solution,
   disabled = false,
+  editMode = false,
   labels: tmpLabels,
   isIconButton,
   variant = 'button',
 }) => {
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const [open, setOpen] = useState(false);
-  const closeDialog = () => setOpen(false);
-
+  const closeDialog = () => {
+    setOpen(false);
+    onClose && onClose();
+  };
   useEffect(() => {
     if (isIconButton != null)
       console.warn(
@@ -68,7 +74,7 @@ export const CreateScenarioButton = ({
           color="primary"
           disabled={disabled}
         >
-          <AddCircleIcon />
+          {editMode ? <EditIcon /> : <AddCircleIcon />}
         </IconButton>
       );
 
@@ -76,7 +82,7 @@ export const CreateScenarioButton = ({
       return (
         <MenuItem data-cy="create-scenario-button" onClick={openDialog} disabled={disabled}>
           <Stack spacing={2} direction="row">
-            <AddCircleIcon size="small" />
+            {editMode ? <EditIcon size="small" /> : <AddCircleIcon size="small" />}
             <Typography>{labels.button.title}</Typography>
           </Stack>
         </MenuItem>
@@ -94,7 +100,7 @@ export const CreateScenarioButton = ({
         {labels.button.title}
       </Button>
     );
-  }, [isIconButton, variant, disabled, labels.button.title]);
+  }, [editMode, isIconButton, variant, disabled, labels.button.title]);
 
   const buttonWrapper = useMemo(() => {
     if (isIconButton !== true && variant !== 'icon' && !disabled) return buttonContent;
@@ -110,9 +116,11 @@ export const CreateScenarioButton = ({
       {buttonWrapper}
       <CreateScenarioDialog
         createScenario={createScenario}
+        onConfirm={onConfirm}
         workspaceId={workspaceId}
         solution={solution}
         open={open}
+        editMode={editMode}
         currentScenario={currentScenario}
         datasets={datasets}
         closeDialog={closeDialog}
@@ -153,25 +161,43 @@ CreateScenarioButton.propTypes = {
   /**
    * User information (will be sent for scenario creation)
    */
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   /**
-   * Function that create a scenario
+   * DEPRECATED: use onConfirm instead
+   * Function signature: (workspaceId, scenario) => null
+   * Function that creates a scenario
    */
-  createScenario: PropTypes.func.isRequired,
+  createScenario: PropTypes.func,
+  /**
+   * Function that creates a new scenario, or updates an existing scenario when editMode is true
+   * Function signature: (scenario) => null
+   * This prop may become strictly required in a future version, but this is not the case right now for backward
+   * compatibility (until the "createScenario" prop is removed)
+   */
+  onConfirm: PropTypes.func,
+  /**
+   * Called when the dialog is closed (on cancel or confirm)
+   */
+  onClose: PropTypes.func,
   /**
    * Current workspace id
    */
-  workspaceId: PropTypes.string.isRequired,
+  workspaceId: PropTypes.string,
   /**
    * Current solution
    */
-  solution: PropTypes.object.isRequired,
+  solution: PropTypes.object,
   /**
    *  Defines the CreateScenarioButton's state:
    *  - true : the button is disabled (the tooltip will guide users on how to enable the button)
    *  - false : the button is enabled
    */
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
+  /**
+   *  If true, it switches the button and dialog behavior to edit an existing scenario instead of creating a new one
+   *  (false by default)
+   */
+  editMode: PropTypes.bool,
   /**
    * Structure:
    * <pre>
