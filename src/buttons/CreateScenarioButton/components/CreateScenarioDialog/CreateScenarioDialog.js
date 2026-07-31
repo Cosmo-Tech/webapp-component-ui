@@ -227,6 +227,13 @@ const CreateScenarioDialog = ({
       maxWidth={'sm'}
       fullWidth={true}
       onClose={onDialogClose}
+      onKeyUp={(event) => {
+        event.stopPropagation();
+        // Trigger form confirmation button on Ctrl+Enter
+        const ENTER = 13;
+        if (event.ctrlKey && event.keyCode === ENTER && !isConfirmButtonDisabled) handleCreateScenario();
+      }}
+      onKeyDown={(event) => event.stopPropagation()}
     >
       <DialogTitle id="form-dialog-title">{dialogLabels.title}</DialogTitle>
       <DialogContent sx={{ marginTop: '16px' }}>
