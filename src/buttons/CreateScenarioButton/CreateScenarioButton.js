@@ -31,6 +31,7 @@ const DEFAULT_LABELS = {
 };
 
 export const CreateScenarioButton = ({
+  autoFocus,
   currentScenario,
   datasets,
   scenarios,
@@ -80,7 +81,7 @@ export const CreateScenarioButton = ({
 
     if (variant === 'menuItem')
       return (
-        <MenuItem data-cy="create-scenario-button" onClick={openDialog} disabled={disabled}>
+        <MenuItem autoFocus={autoFocus} data-cy="create-scenario-button" onClick={openDialog} disabled={disabled}>
           <Stack spacing={2} direction="row">
             {editMode ? <EditIcon size="small" /> : <AddCircleIcon size="small" />}
             <Typography>{labels.button.title}</Typography>
@@ -100,7 +101,7 @@ export const CreateScenarioButton = ({
         {labels.button.title}
       </Button>
     );
-  }, [editMode, isIconButton, variant, disabled, labels.button.title]);
+  }, [autoFocus, editMode, isIconButton, variant, disabled, labels.button.title]);
 
   const buttonWrapper = useMemo(() => {
     if (isIconButton !== true && variant !== 'icon' && !disabled) return buttonContent;
@@ -136,6 +137,11 @@ export const CreateScenarioButton = ({
 };
 
 CreateScenarioButton.propTypes = {
+  /**
+   *  When variant is menuItem, if autoFocus is true, the list item is focused during the first mount, and when
+   *  autoFocus value changes from false to true
+   */
+  autoFocus: PropTypes.bool,
   /**
    * Selected scenario in context
    */
