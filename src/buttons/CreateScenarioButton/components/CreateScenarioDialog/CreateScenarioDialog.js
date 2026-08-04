@@ -71,7 +71,12 @@ const CreateScenarioDialog = ({
   const [parentScenarioFieldValues, setParentScenarioFieldValues] = useState({});
   const [selectedRunTemplate, setSelectedRunTemplate] = useState(defaultRunTemplate);
 
-  const idPrefix = useMemo(() => (editMode ? 'edit' : 'create'), [editMode]);
+  const { idPrefix, newOrEditPrefix } = useMemo(() => {
+    const idPrefix = editMode ? 'edit' : 'create';
+    const newOrEditPrefix = editMode ? 'edit' : 'new';
+    return { idPrefix, newOrEditPrefix };
+  }, [editMode]);
+
   const scenariosToCheckForNameUniqueness = useMemo(() => {
     if (editMode) return scenarios.filter((scenario) => scenario.name.trim() !== currentScenario?.data?.name.trim());
     return scenarios;
@@ -255,20 +260,17 @@ const CreateScenarioDialog = ({
           </Grid>
           <Grid size={12}>
             <BasicTextInput
-              id="new-scenario-description"
+              id={`${newOrEditPrefix}-scenario-description`}
               label={dialogLabels.scenarioDescription ?? 'Description'}
               value={scenarioDescription}
               changeTextField={(newValue) => setScenarioDescription(newValue)}
               size="medium"
-              textFieldProps={{
-                multiline: true,
-                rows: 3,
-              }}
+              textFieldProps={{ multiline: true, rows: 3 }}
             />
           </Grid>
           <Grid size={12}>
             <Autocomplete
-              id="new-scenario-tags"
+              id={`${newOrEditPrefix}-scenario-tags`}
               freeSolo
               multiple
               disableClearable
@@ -279,7 +281,7 @@ const CreateScenarioDialog = ({
                   <Chip
                     key={index}
                     label={tagText}
-                    data-cy={`new-scenario-tags-tag-${index}`}
+                    data-cy={`${newOrEditPrefix}-scenario-tags-tag-${index}`}
                     color="primary"
                     {...getTagProps({ index })}
                   />
