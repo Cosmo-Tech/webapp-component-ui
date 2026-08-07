@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, InputAdornment } from '@mui/material';
 
-export const SearchBar = ({ onSearchChange, className, label, icon, id, ...otherProps }) => {
+export const SearchBar = ({ onSearchChange, className, label, icon, id, debounceDelay = 500, ...otherProps }) => {
   const [textValue, setTextValue] = useState('');
 
   const timeoutHandle = useRef();
@@ -25,13 +25,17 @@ export const SearchBar = ({ onSearchChange, className, label, icon, id, ...other
 
   const onTextChange = (event) => {
     const newValue = event.target.value;
+    if (debounceDelay > 0) {
+      setTextValue(newValue);
+      clearCurrentTimeout();
 
-    setTextValue(newValue);
-    clearCurrentTimeout();
-
-    timeoutHandle.current = setTimeout(() => {
+      timeoutHandle.current = setTimeout(() => {
+        onSearchChange(newValue);
+      }, debounceDelay);
+    } else {
+      setTextValue(newValue);
       onSearchChange(newValue);
-    }, 500);
+    }
   };
 
   return (
@@ -61,9 +65,13 @@ SearchBar.propTypes = {
    */
   id: PropTypes.string,
   /**
-   * callback for change search value
+   * Callback called after debounce when the value of the search input text field has changed
    */
   onSearchChange: PropTypes.func.isRequired,
+  /**
+   * Debounce delay in ms before triggering the onSearchChange callback (default: 500 ms)
+   */
+  debounceDelay: PropTypes.number,
   /**
    * className for TextField style (optional)
    */
