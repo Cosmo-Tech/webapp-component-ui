@@ -1,3 +1,21 @@
+## **12.1.0** <sub><sup>2026-08-10 (409853e...ad50e0a)</sup></sub>
+
+### Features
+
+- add 'showDraft' prop to ScenarioValidationStatusChip to force display of Chip with 'Draft' status ([33878b6](https://github.com/Cosmo-Tech/webapp-component-ui/commit/33878b6))
+- add 'variant' prop in RolesEditionButton component, with a new MenuItem style ([b14e221](https://github.com/Cosmo-Tech/webapp-component-ui/commit/b14e221))
+- add optional props onClick and onClose to the RolesEditionButton component ([55d0945](https://github.com/Cosmo-Tech/webapp-component-ui/commit/55d0945))
+- add 'variant' prop in CreateScenarioButton component, with a new MenuItem style ([5800bdc](https://github.com/Cosmo-Tech/webapp-component-ui/commit/5800bdc))
+- add edit mode support to CreateScenarioButton component ([75462fa](https://github.com/Cosmo-Tech/webapp-component-ui/commit/75462fa))
+- add dialog confirmation trigger on Ctrl\+Enter in CreateScenarioDialog component ([eb0c67a](https://github.com/Cosmo-Tech/webapp-component-ui/commit/eb0c67a))
+- add autoFocus prop to CreateScenarioButton when using menuItem variant ([683a955](https://github.com/Cosmo-Tech/webapp-component-ui/commit/683a955))
+- add prop debounceDelay in SearchBar component to let users override the default value ([07b7a23](https://github.com/Cosmo-Tech/webapp-component-ui/commit/07b7a23))
+
+### Bug Fixes
+
+- fix glitch when clicking on scenario redirection from scenario manager ([409853e](https://github.com/Cosmo-Tech/webapp-component-ui/commit/409853e))
+- return actual status value instead of 'Unknown' as fallback when labels are missing ([2f75f17](https://github.com/Cosmo-Tech/webapp-component-ui/commit/2f75f17))
+
 ## **12.0.0** <sub><sup>2026-07-01 (8c46827...8c46827)</sup></sub>
 
 ### BREAKING CHANGES ([8c46827](https://github.com/Cosmo-Tech/webapp-component-ui/commit/8c46827))
