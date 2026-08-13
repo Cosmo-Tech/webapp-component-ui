@@ -45,7 +45,7 @@ export const SingleSelect = (props) => {
         options={options}
         noOptionsText={labels.noOptions}
         value={optionValue}
-        isOptionEqualToValue={(option, value) => option.key === value.key || value.key == null}
+        isOptionEqualToValue={(option, value) => value?.key != null && option.key === value.key}
         onChange={(event, newValue) => onChange(newValue?.key)}
         getOptionLabel={(option) => option?.label ?? ''}
         renderOption={(props, option) => (
