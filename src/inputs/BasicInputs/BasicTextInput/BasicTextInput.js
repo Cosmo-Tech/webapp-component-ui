@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Stack, TextField } from '@mui/material';
 import { TooltipInfo } from '../../../misc';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
@@ -18,6 +19,7 @@ export const BasicTextInput = (props) => {
     isDirty,
     error,
     size = 'small',
+    required = false,
     ...otherProps
   } = props;
 
@@ -28,6 +30,7 @@ export const BasicTextInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={value}
+        required={required}
         {...otherProps}
       />
     );
@@ -42,7 +45,7 @@ export const BasicTextInput = (props) => {
       <TextField
         {...textFieldProps}
         variant="outlined"
-        label={label}
+        label={<FormFieldLabel label={label} required={required} />}
         size={size}
         value={value}
         sx={{ flexGrow: 1 }}
@@ -92,4 +95,8 @@ BasicTextInput.propTypes = {
    * Error object that contains the type of error and its message
    */
   error: PropTypes.object,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

@@ -8,6 +8,7 @@ import GetAppIcon from '@mui/icons-material/GetApp';
 import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
 import { PathUtils } from '@cosmotech/core';
 import { FadingTooltip, TooltipInfo } from '../../misc';
+import { FormFieldLabel } from '../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../style';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
@@ -33,6 +34,7 @@ export const UploadFile = (props) => {
     tooltipText,
     isDirty,
     shouldHideFileName = false,
+    required = false,
   } = props;
   if (isFileValid) {
     console.warn('"isFileValid" prop is deprecated in UploadFile. Please use "error" instead.');
@@ -63,13 +65,13 @@ export const UploadFile = (props) => {
   return (
     <Stack data-cy={`file-upload-${id}`} sx={getCommonInputSxProps(isDirty)}>
       <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
-        <Typography
-          data-cy="label-disabled-input"
+        <FormFieldLabel
+          label={labels.label}
+          required={required}
           variant="subtitle2"
           color={error != null ? 'error' : 'textSecondary'}
-        >
-          {labels.label}
-        </Typography>
+          sx={{ fontWeight: 'bold' }}
+        />
         <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
       <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
@@ -108,8 +110,7 @@ export const UploadFile = (props) => {
         )}
         {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && fileNameElement}
         {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
-          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD ||
-          error != null) &&
+          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
           editMode && (
             <FadingTooltip title={labels.delete}>
               <IconButton
@@ -224,4 +225,8 @@ UploadFile.propTypes = {
    * file extension.
    */
   shouldHideFileName: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

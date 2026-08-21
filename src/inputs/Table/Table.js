@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Stack, Typography, Box, Button } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { AllCommunityModule, ModuleRegistry, provideGlobalGridOptions } from 'ag-grid-community';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -12,6 +12,7 @@ import 'ag-grid-community/styles/ag-theme-balham.css';
 import rfdc from 'rfdc';
 import { DateUtils } from '@cosmotech/core';
 import { ErrorsPanel, TooltipInfo } from '../../misc';
+import { FormFieldLabel } from '../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../style';
 import { getColumnTypes, getDefaultColumnsProperties } from './ColumnTypes.js';
 import { TABLE_DATA_STATUS } from './TableDataStatus';
@@ -177,6 +178,7 @@ export const Table = (props) => {
     onRevert,
     customToolbarActions,
     visibilityOptions,
+    required = false,
     ...otherProps
   } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
@@ -382,9 +384,13 @@ export const Table = (props) => {
       <div data-cy="label">
         {visibilityOptions?.label !== false && (
           <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
-            <Typography variant="subtitle2" color="textSecondary" sx={{ fontWeight: 'bold' }}>
-              {labels.label}
-            </Typography>
+            <FormFieldLabel
+              label={labels.label}
+              required={required}
+              variant="subtitle2"
+              color="textSecondary"
+              sx={{ fontWeight: 'bold' }}
+            />
             <TooltipInfo title={tooltipText} variant="small" />
           </Stack>
         )}
@@ -573,4 +579,8 @@ Table.propTypes = {
     deleteRow: PropTypes.bool,
     revert: PropTypes.bool,
   }),
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };
