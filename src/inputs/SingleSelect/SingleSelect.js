@@ -3,8 +3,8 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Stack, Autocomplete, TextField } from '@mui/material';
-import { TooltipInfo } from '../../misc';
 import { BasicInputPlaceholder } from '../BasicInputs';
+import { FormFieldLabel } from '../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../style';
 
 const DEFAULT_LABELS = {
@@ -14,7 +14,17 @@ const DEFAULT_LABELS = {
 };
 
 export const SingleSelect = (props) => {
-  const { id, labels: tmpLabels, tooltipText, value, options, disabled = false, onChange, isDirty } = props;
+  const {
+    id,
+    labels: tmpLabels,
+    tooltipText,
+    value,
+    options,
+    disabled = false,
+    onChange,
+    isDirty,
+    required = false,
+  } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
 
   const optionValue = useMemo(() => {
@@ -29,6 +39,7 @@ export const SingleSelect = (props) => {
         label={labels.label ?? id}
         tooltipText={tooltipText}
         value={selectedValues}
+        required={required}
       />
     );
   }
@@ -56,10 +67,14 @@ export const SingleSelect = (props) => {
         style={{ width: 500 }}
         ListboxProps={{ 'data-cy': 'single-select-listbox' }}
         renderInput={(params) => (
-          <TextField {...params} data-cy={`single-select-text-${id}`} placeholder={labels.label} label={labels.label} />
+          <TextField
+            {...params}
+            data-cy={`single-select-text-${id}`}
+            placeholder={labels.label}
+            label={<FormFieldLabel label={labels.label} required={required} tooltipText={tooltipText} />}
+          />
         )}
       />
-      <TooltipInfo title={tooltipText} variant="small" />
     </Stack>
   );
 };
@@ -110,4 +125,8 @@ SingleSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

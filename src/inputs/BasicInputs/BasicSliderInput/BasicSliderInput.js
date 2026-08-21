@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Slider, Stack, Typography } from '@mui/material';
-import { TooltipInfo } from '../../../misc';
+import { Slider, Stack } from '@mui/material';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
@@ -28,6 +28,7 @@ export const BasicSliderInput = (props) => {
     sliderStyle,
     color = 'secondary',
     isDirty,
+    required = false,
     ...otherProps
   } = props;
 
@@ -57,18 +58,14 @@ export const BasicSliderInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={getValue(value).toString()}
+        required={required}
         {...otherProps}
       />
     );
 
   return (
     <Stack data-cy={`slider-input-${id}`} sx={getCommonInputSxProps(isDirty)}>
-      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-        <Typography variant="subtitle2" id="slider-input-label" color="textSecondary" sx={{ fontWeight: 'bold' }}>
-          {label}
-        </Typography>
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
+      <FormFieldLabel label={label} required={required} tooltipText={tooltipText} variant="subtitle2" />
       <Slider
         value={getValue(value)}
         sx={sliderStyle}
@@ -153,4 +150,8 @@ BasicSliderInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

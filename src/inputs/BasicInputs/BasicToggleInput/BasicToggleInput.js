@@ -3,12 +3,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Stack, Switch, FormControlLabel, FormHelperText, FormControl } from '@mui/material';
-import { TooltipInfo } from '../../../misc';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
 export const BasicToggleInput = (props) => {
-  const { id, label, tooltipText, value, switchProps, changeSwitchType, isDirty, error, ...otherProps } = props;
+  const {
+    id,
+    label,
+    tooltipText,
+    value,
+    switchProps,
+    changeSwitchType,
+    isDirty,
+    error,
+    required = false,
+    ...otherProps
+  } = props;
 
   if (switchProps.disabled)
     return (
@@ -17,6 +28,7 @@ export const BasicToggleInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={value ? 'ON' : 'OFF'}
+        required={required}
         {...otherProps}
       />
     );
@@ -34,10 +46,9 @@ export const BasicToggleInput = (props) => {
               {...switchProps}
             />
           }
-          label={label}
+          label={<FormFieldLabel label={label} required={required} tooltipText={tooltipText} />}
           labelPlacement="end"
         />
-        <TooltipInfo title={tooltipText} variant="small" />
       </Stack>
       <FormHelperText error={error?.message?.length > 0}>{error?.message ?? ''}</FormHelperText>
     </FormControl>
@@ -77,4 +88,8 @@ BasicToggleInput.propTypes = {
    * Error object that contains the type of error and its message
    */
   error: PropTypes.object,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

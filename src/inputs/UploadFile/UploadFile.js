@@ -7,7 +7,8 @@ import ErrorIcon from '@mui/icons-material/Error';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { Button, CircularProgress, IconButton, Link, Stack, Typography } from '@mui/material';
 import { PathUtils } from '@cosmotech/core';
-import { FadingTooltip, TooltipInfo } from '../../misc';
+import { FadingTooltip } from '../../misc';
+import { FormFieldLabel } from '../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../style';
 import { UPLOAD_FILE_STATUS_KEY } from './StatusConstants';
 
@@ -33,6 +34,7 @@ export const UploadFile = (props) => {
     tooltipText,
     isDirty,
     shouldHideFileName = false,
+    required = false,
   } = props;
   if (isFileValid) {
     console.warn('"isFileValid" prop is deprecated in UploadFile. Please use "error" instead.');
@@ -62,16 +64,13 @@ export const UploadFile = (props) => {
 
   return (
     <Stack data-cy={`file-upload-${id}`} sx={getCommonInputSxProps(isDirty)}>
-      <Stack spacing={1} direction="row" sx={{ alignItems: 'center' }}>
-        <Typography
-          data-cy="label-disabled-input"
-          variant="subtitle2"
-          color={error != null ? 'error' : 'textSecondary'}
-        >
-          {labels.label}
-        </Typography>
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
+      <FormFieldLabel
+        label={labels.label}
+        required={required}
+        tooltipText={tooltipText}
+        variant="subtitle2"
+        color="textSecondary"
+      />
       <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         {!editMode && (file.status === UPLOAD_FILE_STATUS_KEY.EMPTY || Object.keys(file).length === 0) && (
           <Typography color="textSecondary" sx={{ fontStyle: 'italic', ml: 1 }}>
@@ -224,4 +223,8 @@ UploadFile.propTypes = {
    * file extension.
    */
   shouldHideFileName: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

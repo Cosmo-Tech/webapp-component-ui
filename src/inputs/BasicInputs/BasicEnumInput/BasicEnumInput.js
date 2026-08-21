@@ -3,7 +3,7 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem, Stack, TextField, Tooltip, Fade, Box } from '@mui/material';
-import { TooltipInfo } from '../../../misc';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
@@ -18,6 +18,7 @@ export const BasicEnumInput = (props) => {
     changeEnumField,
     isDirty,
     size = 'small',
+    required = false,
     ...otherProps
   } = props;
 
@@ -34,6 +35,7 @@ export const BasicEnumInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={getLabelFromEnumKey(valueKey)}
+        required={required}
         {...otherProps}
       />
     );
@@ -47,7 +49,7 @@ export const BasicEnumInput = (props) => {
     >
       <TextField
         variant="outlined"
-        label={label}
+        label={<FormFieldLabel label={label} required={required} tooltipText={tooltipText} />}
         size={size}
         sx={{ flexGrow: 1 }}
         select
@@ -87,7 +89,6 @@ export const BasicEnumInput = (props) => {
           </MenuItem>
         ))}
       </TextField>
-      <TooltipInfo title={tooltipText} variant="small" />
     </Stack>
   );
 };
@@ -133,4 +134,8 @@ BasicEnumInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special style is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

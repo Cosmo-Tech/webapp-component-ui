@@ -2,8 +2,8 @@
 // Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radio, RadioGroup, FormControl, FormControlLabel, Stack, Typography } from '@mui/material';
-import { TooltipInfo } from '../../../misc';
+import { Radio, RadioGroup, FormControl, FormControlLabel, Stack } from '@mui/material';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
@@ -19,6 +19,7 @@ export const BasicRadioInput = (props) => {
     row = true,
     radioStyle,
     isDirty,
+    required = false,
     ...otherProps
   } = props;
 
@@ -32,6 +33,7 @@ export const BasicRadioInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={valueString}
+        required={required}
         {...otherProps}
       />
     );
@@ -39,12 +41,7 @@ export const BasicRadioInput = (props) => {
 
   return (
     <Stack data-cy={`radio-input-${id}`} sx={getCommonInputSxProps(isDirty)}>
-      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-        <Typography variant="subtitle2" id="slider-input-label" color="textSecondary">
-          {label}
-        </Typography>
-        <TooltipInfo title={tooltipText} variant="small" />
-      </Stack>
+      <FormFieldLabel label={label} required={required} tooltipText={tooltipText} variant="subtitle2" />
       <FormControl>
         <RadioGroup
           sx={{ ml: 1 }}
@@ -118,4 +115,8 @@ BasicRadioInput.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

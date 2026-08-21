@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Stack, TextField } from '@mui/material';
-import { TooltipInfo } from '../../../misc/TooltipInfo';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 import { NumberFormat } from './components/NumberFormat';
@@ -20,6 +20,7 @@ export const BasicNumberInput = (props) => {
     isDirty,
     error,
     size = 'small',
+    required = false,
     ...otherProps
   } = props;
 
@@ -75,6 +76,7 @@ export const BasicNumberInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={convToStringValue(value)}
+        required={required}
         {...otherProps}
       />
     );
@@ -91,7 +93,7 @@ export const BasicNumberInput = (props) => {
         id={`number-input-${id}`}
         sx={{ flexGrow: 1 }}
         variant="outlined"
-        label={label}
+        label={<FormFieldLabel label={label} required={required} tooltipText={tooltipText} />}
         size={size}
         value={textInput}
         onChange={handleChangeEvent}
@@ -104,7 +106,6 @@ export const BasicNumberInput = (props) => {
           htmlInput: inputProps,
         }}
       />
-      <TooltipInfo title={tooltipText} variant="small" />
     </Stack>
   );
 };
@@ -150,4 +151,8 @@ BasicNumberInput.propTypes = {
    * Size of the TextField: small (default value), medium or large
    */
   size: PropTypes.string,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

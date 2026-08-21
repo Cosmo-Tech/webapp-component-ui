@@ -1,5 +1,6 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
+import { screen } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { SelectTesting, ContainerTesting } from '../../../../tests/MuiComponentsTesting';
@@ -78,5 +79,19 @@ describe('Wrong enum values', () => {
     expect(document.getElementsByClassName('MuiMenuItem-root').length).toEqual(0);
     warn.mockReset();
     error.mockReset();
+  });
+});
+
+describe('Check required indicator', () => {
+  test('Required asterisk is displayed when required prop is true', () => {
+    setUp({ ...defaultProps, label: 'Currency', required: true });
+    expect(enumInputContainer.Container).toHaveTextContent('*');
+  });
+
+  test('Required asterisk is not displayed when required prop is false or omitted', () => {
+    setUp({ ...defaultProps, label: 'Currency', required: false });
+    const asterisks = screen.queryAllByText('*');
+    expect(asterisks.length).toBe(0);
+    expect(enumInputContainer.Container).not.toHaveTextContent('*');
   });
 });

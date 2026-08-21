@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { TooltipInfo } from '../../../misc';
+import { FormFieldLabel } from '../../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../../style';
 import { BasicInputPlaceholder } from '../BasicInputPlaceholder';
 
@@ -30,6 +30,7 @@ export const BasicDateInput = (props) => {
     isDirty,
     error,
     size = 'small',
+    required = false,
     ...otherProps
   } = props;
 
@@ -47,6 +48,7 @@ export const BasicDateInput = (props) => {
         label={label}
         tooltipText={tooltipText}
         value={value?.toLocaleDateString('en-US', { timeZone: TIME_ZONE }) ?? ''}
+        required={required}
         {...otherProps}
       />
     );
@@ -60,7 +62,7 @@ export const BasicDateInput = (props) => {
     >
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
-          label={label}
+          label={<FormFieldLabel label={label} required={required} tooltipText={tooltipText} />}
           inputFormat={format}
           minDate={dateProps.minDate ? dayjs(dateProps.minDate) : null}
           maxDate={dateProps.minDate ? dayjs(dateProps.maxDate) : null}
@@ -80,7 +82,6 @@ export const BasicDateInput = (props) => {
           value={dayjs(value)}
         />
       </LocalizationProvider>
-      <TooltipInfo title={tooltipText} variant="small" />
     </Stack>
   );
 };
@@ -126,4 +127,8 @@ BasicDateInput.propTypes = {
    * Size of the TextField: small (default value), medium or large
    */
   size: PropTypes.string,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };

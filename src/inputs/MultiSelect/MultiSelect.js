@@ -4,8 +4,8 @@ import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon, CheckBox as CheckBoxIcon } from '@mui/icons-material';
 import { Chip, Stack, Autocomplete, TextField, Checkbox } from '@mui/material';
-import { TooltipInfo } from '../../misc';
 import { BasicInputPlaceholder } from '../BasicInputs/BasicInputPlaceholder';
+import { FormFieldLabel } from '../common/FormFieldLabel';
 import { getCommonInputSxProps } from '../style';
 
 const DEFAULT_LABELS = {
@@ -13,7 +13,17 @@ const DEFAULT_LABELS = {
   noValues: 'None',
 };
 export const MultiSelect = (props) => {
-  const { id, labels: tmpLabels, tooltipText, selectedKeys, disabled = false, options, onChange, isDirty } = props;
+  const {
+    id,
+    labels: tmpLabels,
+    tooltipText,
+    selectedKeys,
+    disabled = false,
+    options,
+    onChange,
+    isDirty,
+    required = false,
+  } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
   const autocompleteValues = useMemo(() => options?.map((el) => el.key) ?? [], [options]);
   const getLabelFromEnumKey = useCallback(
@@ -46,6 +56,7 @@ export const MultiSelect = (props) => {
         label={labels.label ?? id}
         tooltipText={tooltipText}
         value={selectedValues}
+        required={required}
       />
     );
   }
@@ -76,10 +87,14 @@ export const MultiSelect = (props) => {
         value={selectedKeys}
         onChange={(event, newValues) => onChange(newValues)}
         style={{ width: 500 }}
-        renderInput={(params) => <TextField {...params} label={labels.label ?? id} />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={<FormFieldLabel label={labels.label ?? id} required={required} tooltipText={tooltipText} />}
+          />
+        )}
         ListboxProps={{ 'data-cy': 'multi-input-listbox' }}
       />
-      <TooltipInfo title={tooltipText} variant="small" />
     </Stack>
   );
 };
@@ -128,4 +143,8 @@ MultiSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Whether the input field is required; when true, displays a red asterisk indicator
+   */
+  required: PropTypes.bool,
 };
