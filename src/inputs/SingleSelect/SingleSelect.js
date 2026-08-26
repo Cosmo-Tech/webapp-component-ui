@@ -23,6 +23,7 @@ export const SingleSelect = (props) => {
     disabled = false,
     onChange,
     isDirty,
+    error,
     required = false,
   } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
@@ -69,6 +70,8 @@ export const SingleSelect = (props) => {
         renderInput={(params) => (
           <TextField
             {...params}
+            error={!!error}
+            helperText={error?.message ?? ''}
             data-cy={`single-select-text-${id}`}
             placeholder={labels.label}
             label={<FormFieldLabel label={labels.label} required={required} tooltipText={tooltipText} />}
@@ -125,6 +128,10 @@ SingleSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
   /**
    * Whether the input field is required; when true, displays a red asterisk indicator
    */

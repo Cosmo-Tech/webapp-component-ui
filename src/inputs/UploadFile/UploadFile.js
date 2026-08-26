@@ -69,7 +69,7 @@ export const UploadFile = (props) => {
         required={required}
         tooltipText={tooltipText}
         variant="subtitle2"
-        color="textSecondary"
+        color={error != null ? 'error' : 'textSecondary'}
       />
       <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         {!editMode && (file.status === UPLOAD_FILE_STATUS_KEY.EMPTY || Object.keys(file).length === 0) && (
@@ -107,8 +107,7 @@ export const UploadFile = (props) => {
         )}
         {file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD && fileNameElement}
         {(file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_DOWNLOAD ||
-          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD ||
-          error != null) &&
+          file.status === UPLOAD_FILE_STATUS_KEY.READY_TO_UPLOAD) &&
           editMode && (
             <FadingTooltip title={labels.delete}>
               <IconButton

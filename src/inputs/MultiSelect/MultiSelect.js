@@ -22,6 +22,7 @@ export const MultiSelect = (props) => {
     options,
     onChange,
     isDirty,
+    error,
     required = false,
   } = props;
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
@@ -90,6 +91,8 @@ export const MultiSelect = (props) => {
         renderInput={(params) => (
           <TextField
             {...params}
+            error={!!error}
+            helperText={error?.message ?? ''}
             label={<FormFieldLabel label={labels.label ?? id} required={required} tooltipText={tooltipText} />}
           />
         )}
@@ -143,6 +146,10 @@ MultiSelect.propTypes = {
    * Boolean value that defines whether the input has been modified or not; if true, a special css class is applied.
    */
   isDirty: PropTypes.bool,
+  /**
+   * Error object that contains the type of error and its message
+   */
+  error: PropTypes.object,
   /**
    * Whether the input field is required; when true, displays a red asterisk indicator
    */
