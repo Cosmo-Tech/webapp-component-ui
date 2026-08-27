@@ -26,7 +26,7 @@ export const MultiSelect = (props) => {
       const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
       const checkedIcon = <CheckBoxIcon fontSize="small" />;
       return (
-        <li {...props}>
+        <li data-cy={`multi-select-option-${optionKey}`} {...props}>
           <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
           {getLabelFromEnumKey(optionKey)}
         </li>
