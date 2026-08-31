@@ -25,7 +25,7 @@ export const BasicToggleInput = (props) => {
     <FormControl data-cy={`toggle-form-control-${id}`} sx={getCommonInputSxProps(isDirty)}>
       <Stack data-cy={`toggle-input-${id}`} direction="row" spacing={1} sx={{ alignItems: 'center' }}>
         <FormControlLabel
-          value="value"
+          value={value}
           control={
             <Switch
               color="secondary"
