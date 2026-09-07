@@ -1,3 +1,14 @@
+## **12.2.0** <sub><sup>2026-09-07 (3b88696...824081d)</sup></sub>
+
+### Features
+
+- add 'required' prop to input components ([824081d](https://github.com/Cosmo-Tech/webapp-component-ui/commit/824081d))
+
+### Bug Fixes
+
+- fix SingleSelect showing all values as selected when none are selected ([3b88696](https://github.com/Cosmo-Tech/webapp-component-ui/commit/3b88696))
+- fix 'value' prop in DOM for BasicToggleInput component ([a001f8c](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a001f8c))
+
 ## **12.1.0** <sub><sup>2026-08-10 (409853e...ad50e0a)</sup></sub>
 
 ### Features
