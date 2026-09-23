@@ -174,7 +174,7 @@ export const RolesEditionDialog = ({
                 <span
                   style={{
                     display: 'inline-block',
-                    width: 'fit-content',
+                    width: '100%',
                     cursor: tooltip == null ? 'not-allowed' : 'pointer',
                   }}
                   data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
