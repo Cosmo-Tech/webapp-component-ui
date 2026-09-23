@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { FadingTooltip } from '../FadingTooltip';
 
-export const TooltipInfo = ({ title, variant = 'medium' }) =>
+export const TooltipInfo = ({ title, variant = 'medium', ...other }) =>
   title ? (
-    <FadingTooltip title={title}>
+    <FadingTooltip title={title} {...other}>
       {variant === 'small' ? (
         <InfoOutlinedIcon color="action" fontSize="small" sx={{ display: 'inherit' }} />
       ) : (
