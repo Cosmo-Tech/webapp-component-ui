@@ -1,3 +1,14 @@
+## **12.3.0** <sub><sup>2026-09-25 (ee52b18...ddec208)</sup></sub>
+
+### Features
+
+- add support for groups in RolesEditionDialog component ([674a272](https://github.com/Cosmo-Tech/webapp-component-ui/commit/674a272))
+
+### Bug Fixes
+
+- fix width of dropdown options in role edition dialog ([522adc3](https://github.com/Cosmo-Tech/webapp-component-ui/commit/522adc3))
+- fix cursor icon for disabled options in role edition dialog ([7fc775b](https://github.com/Cosmo-Tech/webapp-component-ui/commit/7fc775b))
+
 ## **12.2.0** <sub><sup>2026-09-07 (3b88696...824081d)</sup></sub>
 
 ### Features
