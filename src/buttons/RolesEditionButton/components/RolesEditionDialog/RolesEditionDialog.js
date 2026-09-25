@@ -1,10 +1,11 @@
 // Copyright (c) Cosmo Tech.
 // Licensed under the MIT license.
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DesktopMacOutlinedIcon from '@mui/icons-material/DesktopMacOutlined';
+import GroupIcon from '@mui/icons-material/Group';
 import {
   Dialog,
   DialogTitle,
@@ -76,6 +77,8 @@ export const RolesEditionDialog = ({
   const [newAccessControlList, setNewAccessControlList] = useState([...accessControlList].sort(sortById));
   const [newDefaultRole, setNewDefaultRole] = useState(defaultRole || '');
   const labels = { ...DEFAULT_LABELS, ...tmpLabels };
+
+  const hasGroups = useMemo(() => agents.some((agent) => agent.isGroup), [agents]);
 
   useEffect(() => {
     if (open) {
@@ -167,22 +170,57 @@ export const RolesEditionDialog = ({
           <TextField {...params} placeholder={labels.addPeople} label={labels.addPeople} variant="filled" />
         )}
         renderOption={(props, option) => {
+          // eslint-disable-next-line react/prop-types
+          const { key, ...optionProps } = props;
           const tooltip = canBeSharedWithAgent(option);
+          const isDisabled = tooltip != null;
+          // Restore pointerEvents for mouse hovering on disabled elements, but prevent click propagation
+          const disabledHoverSx = isDisabled ? { pointerEvents: 'auto' } : undefined;
+          const stopPropagationIfDisabled = isDisabled ? (event) => event.stopPropagation() : undefined;
           return (
-            <Box key={option.id} sx={{ display: 'flex', alignItems: 'center' }}>
-              <FadingTooltip title={tooltip} placement="right">
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: 'fit-content',
-                    cursor: tooltip == null ? 'not-allowed' : 'pointer',
-                  }}
-                  data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
+            <Box
+              key={key}
+              component="li"
+              {...optionProps}
+              data-cy={`share-scenario-dialog-agents-select-${getIdentifierFromUserEmail(option.id)}`}
+              sx={{ display: 'flex', alignItems: 'center' }}
+            >
+              {hasGroups && (
+                <FadingTooltip
+                  title={option.isGroup ? (option.users ?? []).join('\n') : undefined}
+                  disableInteractive
+                  placement="right"
+                  useSpan
+                  spanProps={{ style: { display: 'flex', alignItems: 'center' } }}
+                  slotProps={{ tooltip: { sx: { whiteSpace: 'pre-line' } } }}
                 >
-                  <Box component="li" {...props}>
-                    {option.id}
+                  <Box
+                    component="span"
+                    sx={{
+                      display: 'inline-flex',
+                      flexShrink: 0,
+                      width: 20,
+                      mr: 1,
+                      ...disabledHoverSx,
+                    }}
+                    onClick={stopPropagationIfDisabled}
+                  >
+                    {option.isGroup && <GroupIcon fontSize="small" />}
                   </Box>
-                </span>
+                </FadingTooltip>
+              )}
+              <FadingTooltip title={tooltip} placement="right" useSpan>
+                <Box
+                  component="span"
+                  sx={{
+                    flexGrow: 1,
+                    cursor: isDisabled ? 'not-allowed' : 'pointer',
+                    ...disabledHoverSx,
+                  }}
+                  onClick={stopPropagationIfDisabled}
+                >
+                  {option.id}
+                </Box>
               </FadingTooltip>
             </Box>
           );
@@ -205,25 +243,30 @@ export const RolesEditionDialog = ({
               {' '}
               <Typography variant="subtitle1">{labels.usersAccess}</Typography>
               {newAccessControlList.length > 0 &&
-                newAccessControlList.map((agent) => (
-                  <RoleEditor
-                    key={agent.id}
-                    agentName={agent.id}
-                    agentAccess={agent.role}
-                    allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
-                    onOptionSelected={(event) => editSpecificAccess(event, agent)}
-                    isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
-                    actions={[
-                      {
-                        id: 'remove_specific_access',
-                        label: labels.removeAccess,
-                        classes: classes.removeButton,
-                        icon: <DeleteForeverIcon />,
-                        onClick: (event) => removeSpecificAccess(event, agent),
-                      },
-                    ]}
-                  />
-                ))}
+                newAccessControlList.map((aclEntry) => {
+                  const agent = agents.find((agent) => agent.id === aclEntry.id);
+                  const groupMembers = agent?.isGroup ? (agent?.users ?? []) : null;
+                  return (
+                    <RoleEditor
+                      key={aclEntry.id}
+                      agentName={aclEntry.id}
+                      agentAccess={aclEntry.role}
+                      groupMembers={groupMembers}
+                      allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
+                      onOptionSelected={(event) => editSpecificAccess(event, aclEntry)}
+                      isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
+                      actions={[
+                        {
+                          id: 'remove_specific_access',
+                          label: labels.removeAccess,
+                          classes: classes.removeButton,
+                          icon: <DeleteForeverIcon />,
+                          onClick: (event) => removeSpecificAccess(event, aclEntry),
+                        },
+                      ]}
+                    />
+                  );
+                })}
             </Grid>
             <Grid container>
               {hasNoAdmin && (

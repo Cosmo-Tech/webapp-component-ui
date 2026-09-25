@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Avatar, Tooltip } from '@mui/material';
-import { DefaultAvatar } from '../../misc';
+import { DefaultAvatar, TooltipInfo } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
 import { SelectWithAction } from '../SelectWithAction';
 
@@ -12,6 +12,7 @@ export const RoleEditor = ({
   agentAccess = null,
   allRoles,
   icon,
+  groupMembers = null,
   onOptionSelected,
   isReadOnly = false,
   actions = [],
@@ -27,19 +28,26 @@ export const RoleEditor = ({
       <Grid size={7} sx={{ display: 'flex', alignItems: 'center', gap: '15px', marginLeft: 0 }}>
         {avatar}
         <div style={{ display: 'flex', flexDirection: 'column', maxWidth: '80%' }}>
-          <Tooltip title={agentName} arrow>
-            <Typography
-              data-cy="role-editor-agent-name"
-              variant="body1"
-              sx={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                textWrap: 'nowrap',
-              }}
-            >
-              {agentName}
-            </Typography>
-          </Tooltip>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Tooltip title={agentName} arrow>
+              <Typography
+                data-cy="role-editor-agent-name"
+                variant="body1"
+                sx={{ overflow: 'hidden', textOverflow: 'ellipsis', textWrap: 'nowrap' }}
+              >
+                {agentName}
+              </Typography>
+            </Tooltip>
+            {groupMembers != null && (
+              <TooltipInfo
+                title={groupMembers.join('\n')}
+                variant="small"
+                style={{ paddingLeft: '4px' }}
+                slotProps={{ tooltip: { sx: { whiteSpace: 'pre-line' } } }}
+                disableInteractive
+              />
+            )}
+          </div>
           {helperText != null && (
             <Typography data-cy="role-editor-helper-text" variant="body2" color="textSecondary">
               {helperText[agentAccess]}
@@ -68,6 +76,10 @@ RoleEditor.propTypes = {
    *  Role already granted to user or workspace
    */
   agentAccess: PropTypes.string,
+  /**
+   *  List of users of the group; set it to null or undefined if the provided agent is not a group
+   */
+  groupMembers: PropTypes.array,
   /**
    *  Function that handles change of user's access
    */
