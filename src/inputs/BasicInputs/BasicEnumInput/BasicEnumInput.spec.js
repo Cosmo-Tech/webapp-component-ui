@@ -76,7 +76,7 @@ describe('Wrong enum values', () => {
     const error = jest.spyOn(console, 'error').mockImplementation(() => {});
     setUp({ ...defaultProps, enumValues });
     await enumSelect.openMenu();
-    expect(document.getElementsByClassName('MuiMenuItem-root').length).toEqual(0);
+    expect(document.getElementsByClassName('MuiMenuItem-root')).toHaveLength(0);
     warn.mockReset();
     error.mockReset();
   });
@@ -91,7 +91,7 @@ describe('Check required indicator', () => {
   test('Required asterisk is not displayed when required prop is false or omitted', () => {
     setUp({ ...defaultProps, label: 'Currency', required: false });
     const asterisks = screen.queryAllByText('*');
-    expect(asterisks.length).toBe(0);
+    expect(asterisks).toHaveLength(0);
     expect(enumInputContainer.Container).not.toHaveTextContent('*');
   });
 });
