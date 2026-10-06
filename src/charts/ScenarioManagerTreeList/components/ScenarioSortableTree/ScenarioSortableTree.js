@@ -125,7 +125,7 @@ export const ScenarioSortableTree = ({
         ...(scenarioTree.children.length !== 0
           ? {}
           : {
-              // FIXME: class below is no longer used since replacing RST
+              // TODO: class below is no longer used since replacing RST
               '& .rst__lineBlock': {
                 width: '0px !important',
                 marginLeft: '43px', // Need 43px to align left side with scenarios that have children

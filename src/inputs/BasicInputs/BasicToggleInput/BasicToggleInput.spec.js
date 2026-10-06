@@ -43,8 +43,8 @@ describe('Checks toggle input in edit mode', () => {
     setUp(defaultProps);
     expect(screen.queryByText(/This field must be equal to the field comment/i)).not.toBeInTheDocument();
   });
-  test("helperText isn't displayed when error is undefined", () => {
+  test('helperText is displayed when error is defined', () => {
     setUp(propsWithError);
-    expect(screen.queryByText(/This field must be equal to the field comment/i)).toBeInTheDocument();
+    expect(screen.getByText(/This field must be equal to the field comment/i)).toBeInTheDocument();
   });
 });

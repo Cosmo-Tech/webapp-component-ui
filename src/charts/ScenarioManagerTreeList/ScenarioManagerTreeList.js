@@ -23,7 +23,7 @@ const TREES_CONTAINER_OFFSET = WEBAPP_HEADER_HEIGHT + SEARCH_FIELD_HEIGHT + 5 * 
 const Root = styled('div')(({ theme }) => ({
   height: '100%',
   width: '100%',
-  // FIXME: RST classes are no longer used
+  // TODO: remove RST classes, they are no longer used
   '& .rst__tree': {
     height: '100%',
   },

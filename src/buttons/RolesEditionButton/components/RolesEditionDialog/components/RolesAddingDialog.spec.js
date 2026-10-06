@@ -69,7 +69,7 @@ describe('RoleAddingDialog', () => {
     });
 
     test('All roles are displayed', () => {
-      expect(RolesRadioGroup.Radios.length).toEqual(ALL_ROLES.length);
+      expect(RolesRadioGroup.Radios).toHaveLength(ALL_ROLES.length);
     });
 
     test('DefaultRole is selected', () => {
@@ -122,15 +122,18 @@ describe('RoleAddingDialog', () => {
     });
 
     test('Granted permission match to selected role', () => {
+      expect(getSelectedRole()).toBe(propsWithDefaultRole.defaultRole);
       testGrantedPermissionMatchingToSelectedRole();
     });
 
     test('Not granted permission match to selected role', () => {
+      expect(getSelectedRole()).toBe(propsWithDefaultRole.defaultRole);
       testNotGrantedPermissionMatchingToSelectedRole();
     });
 
     test('Permissions match with new role selected', async () => {
       await RolesRadioGroup.check('editor');
+      expect(getSelectedRole()).toBe('editor');
       testGrantedPermissionMatchingToSelectedRole();
       testNotGrantedPermissionMatchingToSelectedRole();
     });

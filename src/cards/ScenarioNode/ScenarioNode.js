@@ -152,9 +152,9 @@ export const ScenarioNode = ({
   };
 
   const getStatusIcon = (showLabel) => {
-    const statusClassName = getStatusClassName(classes, scenarioStatus);
-    const iconClassName = getStatusIconClassName(classes, scenarioStatus);
-    const status = getTranslatedStatus(labels, scenarioStatus);
+    const statusClassName = getStatusClassName();
+    const iconClassName = getStatusIconClassName();
+    const status = getTranslatedStatus();
     let icon = null;
     switch (scenarioStatus) {
       case RUNNER_RUN_STATE.SUCCESSFUL:

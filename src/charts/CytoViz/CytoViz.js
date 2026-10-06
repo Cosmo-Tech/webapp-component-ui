@@ -227,7 +227,7 @@ export const CytoViz = (props) => {
   }, [loading]);
   const checkExplorationDepth = (event) => {
     const newValue = event.target.value;
-    if (newValue.match(/^[0-9][0-9]*/)) {
+    if (newValue.match(/^\d\d*/)) {
       setExplorationDepth(parseInt(newValue));
       setExplorationDepthFieldHasError(false);
     } else if (newValue.match(/^$/)) {
