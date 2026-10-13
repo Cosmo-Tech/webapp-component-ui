@@ -220,6 +220,8 @@ const CreateScenarioDialog = ({
     editMode
   );
 
+  const scenarioNameHelperText = editMode ? dialogLabels.scenarioNameEditModeHelperText : undefined;
+
   const onDialogClose = (event, reason) => {
     if (reason !== 'backdropClick') closeDialog();
   };
@@ -254,7 +256,7 @@ const CreateScenarioDialog = ({
               value={scenarioName}
               error={scenarioNameFieldError !== null}
               label={dialogLabels.scenarioName}
-              helperText={scenarioNameFieldError}
+              helperText={scenarioNameFieldError ?? scenarioNameHelperText}
               fullWidth
             />
           </Grid>
@@ -390,6 +392,7 @@ CreateScenarioDialog.propTypes = {
   dialogLabels: PropTypes.shape({
     title: PropTypes.string.isRequired,
     scenarioName: PropTypes.string.isRequired,
+    scenarioNameEditModeHelperText: PropTypes.string,
     scenarioDescription: PropTypes.string,
     scenarioTags: PropTypes.string,
     scenarioMaster: PropTypes.string.isRequired,

@@ -215,6 +215,7 @@ CreateScenarioButton.propTypes = {
           dialog: {
             title: 'string',
             scenarioName: 'string',
+            scenarioNameEditModeHelperText: 'string' (optional, only displayed when editMode is true),
             scenarioMaster: 'string',
             scenarioParent: 'string',
             datasetPlaceholder: 'string',
