@@ -240,6 +240,7 @@ RolesEditionButton.propTypes = {
               disabledUserTooltip: 'function',
               generalAccess: 'string',
               removeAccess: 'string',
+              emptyGroup: 'string',
               add: 'object',
               editor: {
                 helperText: 'object'

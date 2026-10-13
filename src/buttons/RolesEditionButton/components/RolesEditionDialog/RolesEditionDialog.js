@@ -47,6 +47,7 @@ const DEFAULT_LABELS = {
   usersAccess: 'Users access',
   generalAccess: 'General access',
   removeAccess: 'Remove access',
+  emptyGroup: 'This group is empty',
   editor: {
     helperText: null,
   },
@@ -172,6 +173,11 @@ export const RolesEditionDialog = ({
         renderOption={(props, option) => {
           // eslint-disable-next-line react/prop-types
           const { key, ...optionProps } = props;
+          const groupMembers = option.users ?? [];
+          let groupTooltipText;
+          if (option.isGroup)
+            groupTooltipText = groupMembers.length === 0 ? labels.emptyGroup : groupMembers.join('\n');
+
           const tooltip = canBeSharedWithAgent(option);
           const isDisabled = tooltip != null;
           // Restore pointerEvents for mouse hovering on disabled elements, but prevent click propagation
@@ -187,7 +193,7 @@ export const RolesEditionDialog = ({
             >
               {hasGroups && (
                 <FadingTooltip
-                  title={option.isGroup ? (option.users ?? []).join('\n') : undefined}
+                  title={groupTooltipText}
                   disableInteractive
                   placement="right"
                   useSpan
@@ -252,6 +258,7 @@ export const RolesEditionDialog = ({
                       agentName={aclEntry.id}
                       agentAccess={aclEntry.role}
                       groupMembers={groupMembers}
+                      labels={{ emptyGroup: labels.emptyGroup }}
                       allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
                       onOptionSelected={(event) => editSpecificAccess(event, aclEntry)}
                       isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
@@ -352,6 +359,7 @@ RolesEditionDialog.propTypes = {
     usersAccess: PropTypes.string,
     generalAccess: PropTypes.string,
     removeAccess: PropTypes.string,
+    emptyGroup: PropTypes.string,
     add: PropTypes.object,
     editor: PropTypes.shape({
       helperText: PropTypes.object,

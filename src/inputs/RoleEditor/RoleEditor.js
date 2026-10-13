@@ -17,6 +17,7 @@ export const RoleEditor = ({
   isReadOnly = false,
   actions = [],
   helperText = null,
+  labels = {},
 }) => {
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
   return (
@@ -40,7 +41,7 @@ export const RoleEditor = ({
             </Tooltip>
             {groupMembers != null && (
               <TooltipInfo
-                title={groupMembers.join('\n')}
+                title={groupMembers.length === 0 ? labels.emptyGroup : groupMembers.join('\n')}
                 variant="small"
                 style={{ paddingLeft: '4px' }}
                 slotProps={{ tooltip: { sx: { whiteSpace: 'pre-line' } } }}
@@ -109,4 +110,10 @@ RoleEditor.propTypes = {
    *  List of detailed description of each role to display when changing access
    */
   helperText: PropTypes.object,
+  /**
+   * Labels used by the role editor
+   */
+  labels: PropTypes.shape({
+    emptyGroup: PropTypes.string,
+  }),
 };
