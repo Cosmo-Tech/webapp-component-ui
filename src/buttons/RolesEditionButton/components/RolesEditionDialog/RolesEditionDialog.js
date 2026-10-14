@@ -338,7 +338,10 @@ export const RolesEditionDialog = ({
       fullWidth={true}
       onClose={onClose}
     >
-      <DialogTitle data-cy="share-scenario-dialog-title">
+      <DialogTitle
+        data-cy="share-scenario-dialog-title"
+        sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+      >
         {!isFirstScreenShown && (
           <IconButton onClick={cancelAccessAddition} size="large">
             <ArrowBackIcon />
