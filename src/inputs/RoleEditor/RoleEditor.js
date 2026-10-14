@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Avatar, Tooltip } from '@mui/material';
-import { DefaultAvatar, TooltipInfo } from '../../misc';
+import { DefaultAvatar, GroupMembersTooltipContent, TooltipInfo } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
 import { SelectWithAction } from '../SelectWithAction';
 
@@ -41,10 +41,14 @@ export const RoleEditor = ({
             </Tooltip>
             {groupMembers != null && (
               <TooltipInfo
-                title={groupMembers.length === 0 ? labels.emptyGroup : groupMembers.join('\n')}
+                title={
+                  <GroupMembersTooltipContent
+                    members={groupMembers}
+                    labels={{ header: labels.groupMembers, emptyGroup: labels.emptyGroup }}
+                  />
+                }
                 variant="small"
                 style={{ paddingLeft: '4px' }}
-                slotProps={{ tooltip: { sx: { whiteSpace: 'pre-line' } } }}
                 disableInteractive
               />
             )}
@@ -114,6 +118,7 @@ RoleEditor.propTypes = {
    * Labels used by the role editor
    */
   labels: PropTypes.shape({
+    groupMembers: PropTypes.string,
     emptyGroup: PropTypes.string,
   }),
 };

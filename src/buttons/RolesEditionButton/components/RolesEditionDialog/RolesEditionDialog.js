@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RoleEditor } from '../../../../inputs';
-import { FadingTooltip } from '../../../../misc';
+import { FadingTooltip, GroupMembersTooltipContent } from '../../../../misc';
 import { getIdentifierFromUserEmail } from '../../../../utils';
 import { RolesAddingDialog } from './components';
 
@@ -47,6 +47,7 @@ const DEFAULT_LABELS = {
   usersAccess: 'Users access',
   generalAccess: 'General access',
   removeAccess: 'Remove access',
+  groupMembers: 'Group members:',
   emptyGroup: 'This group is empty',
   editor: {
     helperText: null,
@@ -174,9 +175,14 @@ export const RolesEditionDialog = ({
           // eslint-disable-next-line react/prop-types
           const { key, ...optionProps } = props;
           const groupMembers = option.users ?? [];
-          let groupTooltipText;
+          let groupTooltip;
           if (option.isGroup)
-            groupTooltipText = groupMembers.length === 0 ? labels.emptyGroup : groupMembers.join('\n');
+            groupTooltip = (
+              <GroupMembersTooltipContent
+                members={groupMembers}
+                labels={{ header: labels.groupMembers, emptyGroup: labels.emptyGroup }}
+              />
+            );
 
           const tooltip = canBeSharedWithAgent(option);
           const isDisabled = tooltip != null;
@@ -193,12 +199,11 @@ export const RolesEditionDialog = ({
             >
               {hasGroups && (
                 <FadingTooltip
-                  title={groupTooltipText}
+                  title={groupTooltip}
                   disableInteractive
                   placement="right"
                   useSpan
                   spanProps={{ style: { display: 'flex', alignItems: 'center' } }}
-                  slotProps={{ tooltip: { sx: { whiteSpace: 'pre-line' } } }}
                 >
                   <Box
                     component="span"
@@ -258,7 +263,7 @@ export const RolesEditionDialog = ({
                       agentName={aclEntry.id}
                       agentAccess={aclEntry.role}
                       groupMembers={groupMembers}
-                      labels={{ emptyGroup: labels.emptyGroup }}
+                      labels={{ groupMembers: labels.groupMembers, emptyGroup: labels.emptyGroup }}
                       allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
                       onOptionSelected={(event) => editSpecificAccess(event, aclEntry)}
                       isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
@@ -359,6 +364,7 @@ RolesEditionDialog.propTypes = {
     usersAccess: PropTypes.string,
     generalAccess: PropTypes.string,
     removeAccess: PropTypes.string,
+    groupMembers: PropTypes.string,
     emptyGroup: PropTypes.string,
     add: PropTypes.object,
     editor: PropTypes.shape({

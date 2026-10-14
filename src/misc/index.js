@@ -9,4 +9,5 @@ export { ErrorBanner } from './ErrorBanner';
 export { DefaultAvatar } from './DefaultAvatar';
 export { FadingTooltip } from './FadingTooltip';
 export { TooltipInfo } from './TooltipInfo';
+export { GroupMembersTooltipContent } from './GroupMembersTooltipContent';
 export { PermissionsGate } from './PermissionsGate';
