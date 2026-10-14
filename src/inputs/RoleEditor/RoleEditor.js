@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Avatar, Tooltip } from '@mui/material';
-import { DefaultAvatar, TooltipInfo } from '../../misc';
+import { DefaultAvatar, GroupMembersTooltipContent, TooltipInfo } from '../../misc';
 import { getIdentifierFromUserEmail } from '../../utils';
 import { SelectWithAction } from '../SelectWithAction';
 
@@ -17,6 +17,7 @@ export const RoleEditor = ({
   isReadOnly = false,
   actions = [],
   helperText = null,
+  labels = {},
 }) => {
   const avatar = icon ? <Avatar>{icon}</Avatar> : <DefaultAvatar userName={agentName} />;
   return (
@@ -40,10 +41,18 @@ export const RoleEditor = ({
             </Tooltip>
             {groupMembers != null && (
               <TooltipInfo
-                title={groupMembers.join('\n')}
+                title={
+                  <GroupMembersTooltipContent
+                    members={groupMembers}
+                    labels={{
+                      header: labels.groupMembers,
+                      emptyGroup: labels.emptyGroup,
+                      otherMembers: labels.otherMembers,
+                    }}
+                  />
+                }
                 variant="small"
                 style={{ paddingLeft: '4px' }}
-                slotProps={{ tooltip: { sx: { whiteSpace: 'pre-line' } } }}
                 disableInteractive
               />
             )}
@@ -109,4 +118,12 @@ RoleEditor.propTypes = {
    *  List of detailed description of each role to display when changing access
    */
   helperText: PropTypes.object,
+  /**
+   * Labels used by the role editor
+   */
+  labels: PropTypes.shape({
+    groupMembers: PropTypes.string,
+    emptyGroup: PropTypes.string,
+    otherMembers: PropTypes.string,
+  }),
 };

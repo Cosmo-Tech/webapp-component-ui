@@ -1,3 +1,5 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -22,5 +24,5 @@ TooltipInfo.propTypes = {
   /**
    * Tooltip text
    */
-  title: PropTypes.string,
+  title: PropTypes.node,
 };

@@ -1,3 +1,5 @@
+// Copyright (c) Cosmo Tech.
+// Licensed under the MIT license.
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Fade, Tooltip as MuiTooltip } from '@mui/material';
@@ -34,7 +36,7 @@ FadingTooltip.propTypes = {
   /**
    * Tooltip text
    */
-  title: PropTypes.string,
+  title: PropTypes.node,
   /**
    * Boolean value, if set to true, children component will be wrapped in span tag
    */
