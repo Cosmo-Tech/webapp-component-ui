@@ -242,6 +242,7 @@ RolesEditionButton.propTypes = {
               removeAccess: 'string',
               groupMembers: 'string',
               emptyGroup: 'string',
+              otherMembers: 'string',
               add: 'object',
               editor: {
                 helperText: 'object'

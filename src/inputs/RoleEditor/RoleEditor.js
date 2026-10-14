@@ -44,7 +44,11 @@ export const RoleEditor = ({
                 title={
                   <GroupMembersTooltipContent
                     members={groupMembers}
-                    labels={{ header: labels.groupMembers, emptyGroup: labels.emptyGroup }}
+                    labels={{
+                      header: labels.groupMembers,
+                      emptyGroup: labels.emptyGroup,
+                      otherMembers: labels.otherMembers,
+                    }}
                   />
                 }
                 variant="small"
@@ -120,5 +124,6 @@ RoleEditor.propTypes = {
   labels: PropTypes.shape({
     groupMembers: PropTypes.string,
     emptyGroup: PropTypes.string,
+    otherMembers: PropTypes.string,
   }),
 };

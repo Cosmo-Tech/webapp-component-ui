@@ -49,6 +49,7 @@ const DEFAULT_LABELS = {
   removeAccess: 'Remove access',
   groupMembers: 'Group members:',
   emptyGroup: 'This group is empty',
+  otherMembers: 'other member(s)',
   editor: {
     helperText: null,
   },
@@ -180,7 +181,11 @@ export const RolesEditionDialog = ({
             groupTooltip = (
               <GroupMembersTooltipContent
                 members={groupMembers}
-                labels={{ header: labels.groupMembers, emptyGroup: labels.emptyGroup }}
+                labels={{
+                  header: labels.groupMembers,
+                  emptyGroup: labels.emptyGroup,
+                  otherMembers: labels.otherMembers,
+                }}
               />
             );
 
@@ -263,7 +268,11 @@ export const RolesEditionDialog = ({
                       agentName={aclEntry.id}
                       agentAccess={aclEntry.role}
                       groupMembers={groupMembers}
-                      labels={{ groupMembers: labels.groupMembers, emptyGroup: labels.emptyGroup }}
+                      labels={{
+                        groupMembers: labels.groupMembers,
+                        emptyGroup: labels.emptyGroup,
+                        otherMembers: labels.otherMembers,
+                      }}
                       allRoles={preventNoneRoleForAgents ? allRolesWithoutNone : allRoles}
                       onOptionSelected={(event) => editSpecificAccess(event, aclEntry)}
                       isReadOnly={!hasWriteSecurityPermission || specificSharingRestriction != null}
@@ -369,6 +378,7 @@ RolesEditionDialog.propTypes = {
     removeAccess: PropTypes.string,
     groupMembers: PropTypes.string,
     emptyGroup: PropTypes.string,
+    otherMembers: PropTypes.string,
     add: PropTypes.object,
     editor: PropTypes.shape({
       helperText: PropTypes.object,
