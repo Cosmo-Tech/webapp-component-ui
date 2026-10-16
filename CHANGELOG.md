@@ -1,3 +1,17 @@
+## **12.4.0** <sub><sup>2026-10-16 (9cc93b5f...78216661)</sup></sub>
+
+### Features
+
+- add optional prop `scenarioNameEditModeHelperText` in CreateScenarioButton ([101e291](https://github.com/Cosmo-Tech/webapp-component-ui/commit/101e291a))
+- add suport for React nodes as `value` prop of `BasicInputPlaceholder` component ([7821666](https://github.com/Cosmo-Tech/webapp-component-ui/commit/78216661))
+
+### Bug Fixes
+
+- improve tooltip for empty groups in role edition components ([93c2fac](https://github.com/Cosmo-Tech/webapp-component-ui/commit/93c2fac8))
+- improve format of tooltips listing group members in resource sharing components ([04741be](https://github.com/Cosmo-Tech/webapp-component-ui/commit/04741be3))
+- truncate sharing dialog title when resource name is too long ([bfb3cbe](https://github.com/Cosmo-Tech/webapp-component-ui/commit/bfb3cbed))
+- add limit to number of group members shown in sharing dialog tooltips ([a29dc78](https://github.com/Cosmo-Tech/webapp-component-ui/commit/a29dc78f))
+
 ## **12.3.0** <sub><sup>2026-09-25 (ee52b18...ddec208)</sup></sub>
 
 ### Features
