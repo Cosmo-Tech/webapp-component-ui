@@ -19,9 +19,13 @@ export const BasicInputPlaceholder = ({ id, label, tooltipText, value, required 
         <FormFieldLabel label={label} required={required} variant="subtitle2" data-cy="disabled-input-label" />
         <TooltipInfo title={tooltipText} />
       </Stack>
-      <Typography data-cy="disabled-input-value" variant="body2" sx={{ ml: 1 }}>
-        {value}
-      </Typography>
+      {typeof value === 'string' ? (
+        <Typography data-cy="disabled-input-value" variant="body2" sx={{ ml: 1 }}>
+          {value}
+        </Typography>
+      ) : (
+        value
+      )}
     </Stack>
   );
 };
@@ -42,7 +46,7 @@ BasicInputPlaceholder.propTypes = {
   /**
    * Value to be displayed
    */
-  value: PropTypes.string,
+  value: PropTypes.node,
   /**
    * Whether the input field is required; when true, displays a red asterisk indicator
    */
